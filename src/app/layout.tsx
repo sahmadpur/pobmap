@@ -27,7 +27,7 @@ export default function RootLayout({
       className={`${roboto.variable} h-full antialiased`}
     >
       <body
-        data-theme="dark"
+        data-theme="light"
         suppressHydrationWarning
         className="min-h-full flex flex-col"
       >

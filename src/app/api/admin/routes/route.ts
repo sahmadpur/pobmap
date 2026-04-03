@@ -13,7 +13,13 @@ export async function POST(request: Request) {
     const parsed = corridorRouteSchema.safeParse(await request.json());
 
     if (!parsed.success) {
-      return NextResponse.json({ error: "Invalid route payload." }, { status: 400 });
+      return NextResponse.json(
+        {
+          error: "Invalid route payload.",
+          issues: parsed.error.flatten(),
+        },
+        { status: 400 },
+      );
     }
 
     const route = await upsertRoute(parsed.data);
@@ -22,4 +28,3 @@ export async function POST(request: Request) {
     return NextResponse.json({ error: "Failed to save route." }, { status: 500 });
   }
 }
-

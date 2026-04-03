@@ -1,9 +1,9 @@
 import { z } from "zod";
 
 const localizedTextSchema = z.object({
-  az: z.string().min(1),
-  en: z.string().min(1),
-  ru: z.string().min(1),
+  az: z.string(),
+  en: z.string(),
+  ru: z.string(),
 });
 
 const coordinateSchema = z.tuple([z.number(), z.number()]);
@@ -14,7 +14,8 @@ export const corridorSegmentSchema = z.object({
   from: localizedTextSchema,
   to: localizedTextSchema,
   distanceKm: z.coerce.number().int().nonnegative(),
-  coordinates: z.array(coordinateSchema).min(2),
+  coordinates: z.array(coordinateSchema),
+  stopIds: z.array(z.string().min(1)).optional(),
 });
 
 export const corridorRouteSchema = z.object({
@@ -24,11 +25,11 @@ export const corridorRouteSchema = z.object({
   type: z.enum(["primary", "secondary"]),
   totalDistanceKm: z.coerce.number().int().nonnegative(),
   transitTime: localizedTextSchema,
-  countries: z.array(z.string().min(2)).min(1),
+  countries: z.array(z.string().min(2)),
   description: localizedTextSchema,
   status: z.enum(["active", "planned", "suspended"]),
   animationSpeed: z.coerce.number().positive(),
-  segments: z.array(corridorSegmentSchema).min(1),
+  segments: z.array(corridorSegmentSchema),
 });
 
 export const adminMarkerSchema = z.object({
@@ -45,4 +46,3 @@ export const loginSchema = z.object({
   email: z.string().email(),
   password: z.string().min(6),
 });
-

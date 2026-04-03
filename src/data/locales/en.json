@@ -12,7 +12,7 @@
     "modes": "Transport mode",
     "statuses": "Status",
     "enableAll": "Enable all",
-    "clearAll": "Clear all"
+    "clearAll": "Disable all"
   },
   "controls": {
     "resetView": "Reset view",

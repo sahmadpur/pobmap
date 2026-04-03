@@ -73,6 +73,13 @@
               43.2389,
               76.8897
             ]
+          ],
+          "stopIds": [
+            "xian",
+            "beijing",
+            "shenyang",
+            "urumqi",
+            "almaty"
           ]
         },
         {
@@ -102,6 +109,11 @@
               43.6532,
               51.1975
             ]
+          ],
+          "stopIds": [
+            "almaty",
+            "atyrau",
+            "aktau"
           ]
         },
         {
@@ -131,6 +143,11 @@
               40.3572,
               49.835
             ]
+          ],
+          "stopIds": [
+            "aktau",
+            "caspian-crossing",
+            "baku-port"
           ]
         },
         {
@@ -172,6 +189,14 @@
               47.4979,
               19.0402
             ]
+          ],
+          "stopIds": [
+            "baku-port",
+            "tbilisi",
+            "kars",
+            "istanbul",
+            "bucharest",
+            "budapest"
           ]
         },
         {
@@ -209,6 +234,13 @@
               40.4168,
               -3.7038
             ]
+          ],
+          "stopIds": [
+            "budapest",
+            "paris",
+            "brussels",
+            "amsterdam",
+            "madrid"
           ]
         }
       ]
@@ -422,6 +454,14 @@
               40.3572,
               49.835
             ]
+          ],
+          "stopIds": [
+            "helsinki",
+            "st-petersburg",
+            "moscow",
+            "astrakhan",
+            "baku-city",
+            "baku-port"
           ]
         },
         {
@@ -459,6 +499,13 @@
               27.1832,
               56.2666
             ]
+          ],
+          "stopIds": [
+            "baku-port",
+            "lankaran",
+            "tabriz",
+            "tehran",
+            "bandar-abbas"
           ]
         },
         {
@@ -488,6 +535,11 @@
               18.96,
               72.82
             ]
+          ],
+          "stopIds": [
+            "bandar-abbas",
+            "karachi",
+            "mumbai"
           ]
         }
       ]
@@ -899,6 +951,82 @@
               33.5138,
               36.2765
             ]
+          ]
+        }
+      ]
+    },
+    {
+      "id": "route-7888649e-5466-42a7-92bc-163ab5d7e220",
+      "name": {
+        "az": "Yeni yol",
+        "en": "Yeni yol",
+        "ru": "Yeni yol"
+      },
+      "routeColor": "#0f172a",
+      "type": "primary",
+      "totalDistanceKm": 1255553,
+      "transitTime": {
+        "az": "14 days",
+        "en": "14 days",
+        "ru": "14 days"
+      },
+      "countries": [
+        "AZ",
+        "TR",
+        "IQ",
+        "IR",
+        "CN"
+      ],
+      "description": {
+        "az": "14 days",
+        "en": "14 days",
+        "ru": "14 days"
+      },
+      "status": "active",
+      "animationSpeed": 0.1,
+      "segments": [
+        {
+          "id": "segment-6dd350cb-c462-4fd5-b07d-408a64e53138",
+          "mode": "rail",
+          "from": {
+            "az": "",
+            "en": "",
+            "ru": ""
+          },
+          "to": {
+            "az": "",
+            "en": "",
+            "ru": ""
+          },
+          "distanceKm": 1500,
+          "coordinates": [
+            [
+              40.3572,
+              49.835
+            ],
+            [
+              41.0082,
+              28.9784
+            ],
+            [
+              30.5085,
+              47.7804
+            ],
+            [
+              35.6892,
+              51.389
+            ],
+            [
+              34.3416,
+              108.9398
+            ]
+          ],
+          "stopIds": [
+            "baku-port",
+            "istanbul",
+            "basra",
+            "tehran",
+            "xian"
           ]
         }
       ]

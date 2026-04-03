@@ -39,6 +39,7 @@ model RouteSegment {
   toJson     Json
   distanceKm Int
   coordinates Json
+  stopIds    String[]
   position   Int
 }
 

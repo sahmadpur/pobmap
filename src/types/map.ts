@@ -17,6 +17,7 @@ export interface CorridorSegment {
   to: LocalizedText;
   distanceKm: number;
   coordinates: Coordinate[];
+  stopIds?: string[];
 }
 
 export interface CorridorRoute {

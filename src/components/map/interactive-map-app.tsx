@@ -18,7 +18,6 @@ import {
 
 import "@/lib/i18n";
 import {
-  CORRIDORS,
   getLocalizedText,
   SUPPORTED_LOCALES,
   TRANSPORT_MODE_META,
@@ -66,20 +65,25 @@ function ModeGlyph({ mode }: { mode: TransportMode }) {
   return <Truck className="h-4 w-4" aria-hidden="true" />;
 }
 
-export function InteractiveMapApp() {
+export function InteractiveMapApp({
+  routes,
+}: {
+  routes: CorridorRoute[];
+}) {
   const { t, i18n } = useTranslation();
-  const [theme, setTheme] = useState<ThemeMode>("dark");
+  const [theme, setTheme] = useState<ThemeMode>("light");
   const [locale, setLocale] = useState<SupportedLocale>("az");
   const [selectedRouteId, setSelectedRouteId] = useState<string | null>(null);
   const [selectedSegmentId, setSelectedSegmentId] = useState<string | null>(null);
   const [hoveredRouteId, setHoveredRouteId] = useState<string | null>(null);
   const [enabledRouteIds, setEnabledRouteIds] = useState<string[]>(
-    CORRIDORS.map((route) => route.id),
+    routes.map((route) => route.id),
   );
   const [enabledModes, setEnabledModes] = useState<TransportMode[]>(DEFAULT_MODES);
   const [enabledStatuses, setEnabledStatuses] = useState<CorridorStatus[]>(DEFAULT_STATUSES);
   const [showFlowAnimation, setShowFlowAnimation] = useState(true);
   const [resetCount, setResetCount] = useState(0);
+  const availableRouteIds = routes.map((route) => route.id);
 
   useEffect(() => {
     const frameId = window.requestAnimationFrame(() => {
@@ -116,8 +120,23 @@ export function InteractiveMapApp() {
     window.localStorage.setItem("baku-port-theme", theme);
   }, [theme]);
 
-  const visibleRoutes: CorridorRoute[] = CORRIDORS.filter((route) => {
-    if (!enabledRouteIds.includes(route.id) || !enabledStatuses.includes(route.status)) {
+  const effectiveEnabledRouteIds = (() => {
+    const nextRouteIds = enabledRouteIds.filter((routeId) =>
+      availableRouteIds.includes(routeId),
+    );
+
+    if (enabledRouteIds.length === 0) {
+      return [];
+    }
+
+    return nextRouteIds;
+  })();
+
+  const visibleRoutes: CorridorRoute[] = routes.filter((route) => {
+    if (
+      !effectiveEnabledRouteIds.includes(route.id) ||
+      !enabledStatuses.includes(route.status)
+    ) {
       return false;
     }
 
@@ -243,7 +262,7 @@ export function InteractiveMapApp() {
                   <button
                     type="button"
                     onClick={() => {
-                      setEnabledRouteIds(CORRIDORS.map((route) => route.id));
+                      setEnabledRouteIds(availableRouteIds);
                       setEnabledModes(DEFAULT_MODES);
                       setEnabledStatuses(DEFAULT_STATUSES);
                     }}
@@ -268,8 +287,8 @@ export function InteractiveMapApp() {
                       </button>
                     </div>
                     <div className="flex max-h-48 flex-wrap gap-2 overflow-y-auto pr-1">
-                      {CORRIDORS.map((route) => {
-                        const enabled = enabledRouteIds.includes(route.id);
+                      {routes.map((route) => {
+                        const enabled = effectiveEnabledRouteIds.includes(route.id);
 
                         return (
                           <button

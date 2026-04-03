@@ -25,11 +25,22 @@ export async function PATCH(
     const { id } = await context.params;
     const parsed = corridorRouteSchema.safeParse(await request.json());
 
-    if (!parsed.success || parsed.data.id !== id) {
-      return NextResponse.json({ error: "Invalid route payload." }, { status: 400 });
+    if (!parsed.success) {
+      return NextResponse.json(
+        {
+          error: "Invalid route payload.",
+          issues: parsed.error.flatten(),
+        },
+        { status: 400 },
+      );
     }
 
     const route = await upsertRoute(parsed.data);
+
+    if (parsed.data.id !== id) {
+      await deleteRoute(id);
+    }
+
     return NextResponse.json(route);
   } catch {
     return NextResponse.json({ error: "Failed to update route." }, { status: 500 });
@@ -48,4 +59,3 @@ export async function DELETE(
     return NextResponse.json({ error: "Failed to delete route." }, { status: 500 });
   }
 }
-

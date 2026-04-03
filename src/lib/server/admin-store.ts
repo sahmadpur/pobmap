@@ -8,6 +8,7 @@ import {
   CORRIDORS,
   DEFAULT_MAP_VIEW,
 } from "@/data/corridors";
+import { normalizeCorridorRoute, normalizeCorridorSegment } from "@/lib/corridor-stop-utils";
 import { getPrismaClient } from "@/lib/server/prisma";
 import type { AppSettings, AdminMarker, AdminStore } from "@/types/admin";
 import type { CorridorRoute, LocalizedText } from "@/types/map";
@@ -29,7 +30,7 @@ function isLocalizedText(value: unknown): value is LocalizedText {
 
 function createSeedStore(): AdminStore {
   return {
-    routes: CORRIDORS,
+    routes: CORRIDORS.map(normalizeCorridorRoute),
     markers: [
       {
         id: BAKU_PORT.id,
@@ -83,6 +84,7 @@ function routeFromPrisma(route: {
     toJson: Prisma.JsonValue;
     distanceKm: number;
     coordinates: Prisma.JsonValue;
+    stopIds: string[];
   }>;
 }): CorridorRoute {
   if (
@@ -113,14 +115,15 @@ function routeFromPrisma(route: {
         throw new Error("Invalid route segment payload in database.");
       }
 
-      return {
+      return normalizeCorridorSegment({
         id: segment.id,
         mode: segment.mode as CorridorRoute["segments"][number]["mode"],
         from: segment.fromJson,
         to: segment.toJson,
         distanceKm: segment.distanceKm,
         coordinates: segment.coordinates as CorridorRoute["segments"][number]["coordinates"],
-      };
+        stopIds: segment.stopIds,
+      });
     }),
   };
 }
@@ -197,75 +200,79 @@ export async function listRoutes(): Promise<CorridorRoute[]> {
   }
 
   const store = await ensureFileStore();
-  return store.routes;
+  return store.routes.map(normalizeCorridorRoute);
 }
 
 export async function upsertRoute(route: CorridorRoute): Promise<CorridorRoute> {
+  const normalizedRoute = normalizeCorridorRoute(route);
+
   if (SHOULD_USE_PRISMA) {
     await getPrismaClient().route.upsert({
-      where: { id: route.id },
+      where: { id: normalizedRoute.id },
       update: {
-        name: route.name,
-        routeColor: route.routeColor,
-        type: route.type,
-        totalDistanceKm: route.totalDistanceKm,
-        transitTime: route.transitTime,
-        countries: route.countries,
-        description: route.description,
-        status: route.status,
-        animationSpeed: route.animationSpeed,
+        name: normalizedRoute.name,
+        routeColor: normalizedRoute.routeColor,
+        type: normalizedRoute.type,
+        totalDistanceKm: normalizedRoute.totalDistanceKm,
+        transitTime: normalizedRoute.transitTime,
+        countries: normalizedRoute.countries,
+        description: normalizedRoute.description,
+        status: normalizedRoute.status,
+        animationSpeed: normalizedRoute.animationSpeed,
         segments: {
           deleteMany: {},
-          create: route.segments.map((segment, index) => ({
+          create: normalizedRoute.segments.map((segment, index) => ({
             id: segment.id,
             mode: segment.mode,
             fromJson: segment.from,
             toJson: segment.to,
             distanceKm: segment.distanceKm,
             coordinates: segment.coordinates,
+            stopIds: segment.stopIds ?? [],
             position: index,
           })),
         },
       },
       create: {
-        id: route.id,
-        name: route.name,
-        routeColor: route.routeColor,
-        type: route.type,
-        totalDistanceKm: route.totalDistanceKm,
-        transitTime: route.transitTime,
-        countries: route.countries,
-        description: route.description,
-        status: route.status,
-        animationSpeed: route.animationSpeed,
+        id: normalizedRoute.id,
+        name: normalizedRoute.name,
+        routeColor: normalizedRoute.routeColor,
+        type: normalizedRoute.type,
+        totalDistanceKm: normalizedRoute.totalDistanceKm,
+        transitTime: normalizedRoute.transitTime,
+        countries: normalizedRoute.countries,
+        description: normalizedRoute.description,
+        status: normalizedRoute.status,
+        animationSpeed: normalizedRoute.animationSpeed,
         segments: {
-          create: route.segments.map((segment, index) => ({
+          create: normalizedRoute.segments.map((segment, index) => ({
             id: segment.id,
             mode: segment.mode,
             fromJson: segment.from,
             toJson: segment.to,
             distanceKm: segment.distanceKm,
             coordinates: segment.coordinates,
+            stopIds: segment.stopIds ?? [],
             position: index,
           })),
         },
       },
     });
 
-    return route;
+    return normalizedRoute;
   }
 
   const store = await ensureFileStore();
-  const existingIndex = store.routes.findIndex((item) => item.id === route.id);
+  const existingIndex = store.routes.findIndex((item) => item.id === normalizedRoute.id);
 
   if (existingIndex >= 0) {
-    store.routes[existingIndex] = route;
+    store.routes[existingIndex] = normalizedRoute;
   } else {
-    store.routes.push(route);
+    store.routes.push(normalizedRoute);
   }
 
   await saveFileStore(store);
-  return route;
+  return normalizedRoute;
 }
 
 export async function deleteRoute(id: string) {
