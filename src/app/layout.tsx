@@ -23,11 +23,14 @@ export default function RootLayout({
   return (
     <html
       lang="az"
-      data-theme="dark"
       suppressHydrationWarning
       className={`${roboto.variable} h-full antialiased`}
     >
-      <body suppressHydrationWarning className="min-h-full flex flex-col">
+      <body
+        data-theme="dark"
+        suppressHydrationWarning
+        className="min-h-full flex flex-col"
+      >
         {children}
       </body>
     </html>

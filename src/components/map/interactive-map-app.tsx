@@ -109,11 +109,10 @@ export function InteractiveMapApp() {
   useEffect(() => {
     i18n.changeLanguage(locale);
     window.localStorage.setItem("baku-port-language", locale);
-    document.documentElement.lang = locale;
   }, [i18n, locale]);
 
   useEffect(() => {
-    document.documentElement.dataset.theme = theme;
+    document.body.dataset.theme = theme;
     window.localStorage.setItem("baku-port-theme", theme);
   }, [theme]);
 

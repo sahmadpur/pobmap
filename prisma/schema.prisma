@@ -1,0 +1,65 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+model AdminUser {
+  id           String   @id @default(cuid())
+  email        String   @unique
+  passwordHash String
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+}
+
+model Route {
+  id              String         @id
+  name            Json
+  routeColor      String
+  type            String
+  totalDistanceKm Int
+  transitTime     Json
+  countries       String[]
+  description     Json
+  status          String
+  animationSpeed  Float
+  createdAt       DateTime       @default(now())
+  updatedAt       DateTime       @updatedAt
+  segments        RouteSegment[]
+}
+
+model RouteSegment {
+  id         String @id
+  routeId    String
+  route      Route  @relation(fields: [routeId], references: [id], onDelete: Cascade)
+  mode       String
+  fromJson   Json
+  toJson     Json
+  distanceKm Int
+  coordinates Json
+  position   Int
+}
+
+model Marker {
+  id                  String   @id
+  name                Json
+  description         Json
+  category            String
+  icon                String
+  coordinates         Json
+  connectedCorridorIds String[]
+  createdAt           DateTime @default(now())
+  updatedAt           DateTime @updatedAt
+}
+
+model AppSettings {
+  id               String   @id @default("default")
+  defaultMapCenter Json
+  defaultZoom      Int
+  defaultLanguage  String
+  animationEnabled Boolean
+  createdAt        DateTime @default(now())
+  updatedAt        DateTime @updatedAt
+}
