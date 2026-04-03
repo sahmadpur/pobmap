@@ -1,0 +1,60 @@
+{
+  "app": {
+    "eyebrow": "Strategic transport showcase",
+    "title": "Baku Port Interactive Transport Corridors",
+    "subtitle": "A presentation-ready map of Azerbaijan's gateway role across Eurasian trade routes.",
+    "seededRoutes": "{{count}} strategic corridors loaded",
+    "loadingMap": "Loading the interactive map..."
+  },
+  "filters": {
+    "title": "Filters",
+    "corridors": "By corridor",
+    "modes": "Transport mode",
+    "statuses": "Status",
+    "enableAll": "Enable all",
+    "clearAll": "Clear all"
+  },
+  "controls": {
+    "resetView": "Reset view",
+    "clearSelection": "Clear selection",
+    "showFlow": "Show flow animation",
+    "hideFlow": "Hide flow animation",
+    "switchToDark": "Dark mode",
+    "switchToLight": "Light mode"
+  },
+  "panel": {
+    "emptyTitle": "Select a corridor",
+    "emptyBody": "Tap or click any route to inspect route status, distance, segment mix, and corridor notes.",
+    "routeOverview": "Route overview",
+    "countries": "Countries",
+    "transitTime": "Transit time",
+    "totalDistance": "Total distance",
+    "segments": "Transport segments",
+    "description": "Description",
+    "connectedCorridors": "Connected corridors"
+  },
+  "legend": {
+    "title": "Legend",
+    "primary": "Primary corridors",
+    "secondary": "Secondary corridors",
+    "bakuPort": "Baku Port hub",
+    "transportModes": "Transport colors"
+  },
+  "status": {
+    "active": "Active",
+    "planned": "Planned",
+    "suspended": "Suspended"
+  },
+  "mode": {
+    "rail": "Rail",
+    "ship": "Ship",
+    "road": "Road"
+  },
+  "port": {
+    "roleTitle": "Baku Port",
+    "quickLinks": "Quick links"
+  },
+  "map": {
+    "customAttribution": "Basemap by CARTO and OpenStreetMap contributors"
+  }
+}

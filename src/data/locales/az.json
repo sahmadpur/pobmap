@@ -1,0 +1,60 @@
+{
+  "app": {
+    "eyebrow": "Strateji nəqliyyat təqdimatı",
+    "title": "Bakı Limanı İnteraktiv Nəqliyyat Dəhlizləri",
+    "subtitle": "Azərbaycanın Avrasiya ticarət marşrutlarındakı qapı rolunu təqdimat üçün hazır xəritədə göstərin.",
+    "seededRoutes": "{{count}} strateji dəhliz yüklənib",
+    "loadingMap": "İnteraktiv xəritə yüklənir..."
+  },
+  "filters": {
+    "title": "Filtrlər",
+    "corridors": "Dəhlizə görə",
+    "modes": "Nəqliyyat növü",
+    "statuses": "Status",
+    "enableAll": "Hamısını aktiv et",
+    "clearAll": "Hamısını söndür"
+  },
+  "controls": {
+    "resetView": "Görünüşü sıfırla",
+    "clearSelection": "Seçimi təmizlə",
+    "showFlow": "Axın animasiyasını göstər",
+    "hideFlow": "Axın animasiyasını gizlət",
+    "switchToDark": "Qaranlıq rejim",
+    "switchToLight": "İşıqlı rejim"
+  },
+  "panel": {
+    "emptyTitle": "Dəhliz seçin",
+    "emptyBody": "Statusu, məsafəni, seqmentləri və qeydləri görmək üçün istənilən marşruta toxunun və ya klikləyin.",
+    "routeOverview": "Marşrut icmalı",
+    "countries": "Ölkələr",
+    "transitTime": "Tranzit müddəti",
+    "totalDistance": "Ümumi məsafə",
+    "segments": "Nəqliyyat seqmentləri",
+    "description": "Təsvir",
+    "connectedCorridors": "Bağlı dəhlizlər"
+  },
+  "legend": {
+    "title": "İzah",
+    "primary": "Əsas dəhlizlər",
+    "secondary": "İkinci dərəcəli dəhlizlər",
+    "bakuPort": "Bakı Limanı qovşağı",
+    "transportModes": "Nəqliyyat rəngləri"
+  },
+  "status": {
+    "active": "Aktiv",
+    "planned": "Planlaşdırılır",
+    "suspended": "Dayandırılıb"
+  },
+  "mode": {
+    "rail": "Dəmir yolu",
+    "ship": "Dəniz",
+    "road": "Avtomobil"
+  },
+  "port": {
+    "roleTitle": "Bakı Limanı",
+    "quickLinks": "Sürətli keçidlər"
+  },
+  "map": {
+    "customAttribution": "Xəritə bazası CARTO və OpenStreetMap iştirakçıları tərəfindən təmin edilir"
+  }
+}
