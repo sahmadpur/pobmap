@@ -15,6 +15,7 @@ export const corridorSegmentSchema = z.object({
   to: localizedTextSchema,
   distanceKm: z.coerce.number().int().nonnegative(),
   coordinates: z.array(coordinateSchema),
+  displayCoordinates: z.array(coordinateSchema).optional(),
   stopIds: z.array(z.string().min(1)).optional(),
 });
 

@@ -2,6 +2,7 @@
 
 import dynamic from "next/dynamic";
 
+import type { AdminMarker } from "@/types/admin";
 import type { CorridorRoute } from "@/types/map";
 
 const InteractiveMapApp = dynamic(
@@ -30,6 +31,12 @@ const InteractiveMapApp = dynamic(
   },
 );
 
-export function InteractiveMapShell({ routes }: { routes: CorridorRoute[] }) {
-  return <InteractiveMapApp routes={routes} />;
+export function InteractiveMapShell({
+  routes,
+  markers,
+}: {
+  routes: CorridorRoute[];
+  markers?: AdminMarker[];
+}) {
+  return <InteractiveMapApp routes={routes} markers={markers ?? []} />;
 }

@@ -23,6 +23,7 @@ import {
   TRANSPORT_MODE_META,
 } from "@/data/corridors";
 import { RouteDetailsPanel } from "@/components/map/route-details-panel";
+import type { AdminMarker } from "@/types/admin";
 import type {
   CorridorRoute,
   CorridorStatus,
@@ -67,9 +68,12 @@ function ModeGlyph({ mode }: { mode: TransportMode }) {
 
 export function InteractiveMapApp({
   routes,
+  markers,
 }: {
   routes: CorridorRoute[];
+  markers?: AdminMarker[];
 }) {
+  const safeMarkers = markers ?? [];
   const { t, i18n } = useTranslation();
   const [theme, setTheme] = useState<ThemeMode>("light");
   const [locale, setLocale] = useState<SupportedLocale>("az");
@@ -162,6 +166,33 @@ export function InteractiveMapApp({
   function handleRouteSelect(routeId: string, segmentId: string | null = null) {
     setSelectedRouteId(routeId);
     setSelectedSegmentId(segmentId);
+  }
+
+  function handlePortCorridorSelect(routeId: string) {
+    const route = routes.find((item) => item.id === routeId);
+
+    if (!route) {
+      handleRouteSelect(routeId);
+      return;
+    }
+
+    setEnabledRouteIds((current) =>
+      current.includes(routeId) ? current : [...current, routeId],
+    );
+    setEnabledStatuses((current) =>
+      current.includes(route.status) ? current : [...current, route.status],
+    );
+    setEnabledModes((current) => {
+      const nextModes = new Set(current);
+
+      route.segments.forEach((segment) => {
+        nextModes.add(segment.mode);
+      });
+
+      return Array.from(nextModes);
+    });
+
+    handleRouteSelect(routeId);
   }
 
   const isDark = theme === "dark";
@@ -459,6 +490,8 @@ export function InteractiveMapApp({
           <div className="absolute inset-0">
             <CorridorMapCanvas
               routes={visibleRoutes}
+              allRoutes={routes}
+              markers={safeMarkers}
               selectedRouteId={activeSelectedRouteId}
               selectedSegmentId={activeSelectedSegmentId}
               hoveredRouteId={hoveredRouteId}
@@ -473,7 +506,7 @@ export function InteractiveMapApp({
                 setSelectedSegmentId(null);
                 setHoveredRouteId(null);
               }}
-              onPortCorridorSelect={(routeId) => handleRouteSelect(routeId)}
+              onPortCorridorSelect={handlePortCorridorSelect}
               t={t}
             />
           </div>

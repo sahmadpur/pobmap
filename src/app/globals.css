@@ -185,7 +185,14 @@ body[data-theme="light"] .corridor-tooltip {
 .baku-port-icon__core svg {
   width: 24px;
   height: 24px;
-  fill: #f8fafc;
+  display: block;
+  color: #f8fafc;
+}
+
+.fa-marker-icon-svg {
+  width: 1em;
+  height: 1em;
+  display: block;
 }
 
 .flow-icon-wrapper {

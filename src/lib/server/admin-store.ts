@@ -17,6 +17,11 @@ const STORE_FILE_PATH = path.join(process.cwd(), "src/data/admin-store.json");
 const SHOULD_USE_PRISMA =
   Boolean(process.env.DATABASE_URL) &&
   process.env.ADMIN_STORAGE_PROVIDER === "prisma";
+const SEED_ROUTE_SEGMENTS = new Map(
+  CORRIDORS.flatMap((route) =>
+    route.segments.map((segment) => [`${route.id}:${segment.id}`, segment] as const),
+  ),
+);
 
 function isLocalizedText(value: unknown): value is LocalizedText {
   return (
@@ -48,6 +53,23 @@ function createSeedStore(): AdminStore {
       defaultLanguage: "az",
       animationEnabled: true,
     },
+  };
+}
+
+function mergeSeedPresentationPath(route: CorridorRoute): CorridorRoute {
+  return {
+    ...route,
+    segments: route.segments.map((segment) => {
+      const seedSegment = SEED_ROUTE_SEGMENTS.get(`${route.id}:${segment.id}`);
+
+      return {
+        ...segment,
+        displayCoordinates:
+          segment.displayCoordinates && segment.displayCoordinates.length > 0
+            ? segment.displayCoordinates
+            : seedSegment?.displayCoordinates,
+      };
+    }),
   };
 }
 
@@ -84,6 +106,7 @@ function routeFromPrisma(route: {
     toJson: Prisma.JsonValue;
     distanceKm: number;
     coordinates: Prisma.JsonValue;
+    displayCoordinates: Prisma.JsonValue | null;
     stopIds: string[];
   }>;
 }): CorridorRoute {
@@ -95,7 +118,7 @@ function routeFromPrisma(route: {
     throw new Error("Invalid localized route payload in database.");
   }
 
-  return {
+  return mergeSeedPresentationPath({
     id: route.id,
     name: route.name,
     routeColor: route.routeColor,
@@ -122,10 +145,13 @@ function routeFromPrisma(route: {
         to: segment.toJson,
         distanceKm: segment.distanceKm,
         coordinates: segment.coordinates as CorridorRoute["segments"][number]["coordinates"],
+        displayCoordinates: Array.isArray(segment.displayCoordinates)
+          ? (segment.displayCoordinates as CorridorRoute["segments"][number]["coordinates"])
+          : undefined,
         stopIds: segment.stopIds,
       });
     }),
-  };
+  });
 }
 
 function markerFromPrisma(marker: {
@@ -200,11 +226,13 @@ export async function listRoutes(): Promise<CorridorRoute[]> {
   }
 
   const store = await ensureFileStore();
-  return store.routes.map(normalizeCorridorRoute);
+  return store.routes.map((route) =>
+    mergeSeedPresentationPath(normalizeCorridorRoute(route)),
+  );
 }
 
 export async function upsertRoute(route: CorridorRoute): Promise<CorridorRoute> {
-  const normalizedRoute = normalizeCorridorRoute(route);
+  const normalizedRoute = mergeSeedPresentationPath(normalizeCorridorRoute(route));
 
   if (SHOULD_USE_PRISMA) {
     await getPrismaClient().route.upsert({
@@ -228,6 +256,7 @@ export async function upsertRoute(route: CorridorRoute): Promise<CorridorRoute> 
             toJson: segment.to,
             distanceKm: segment.distanceKm,
             coordinates: segment.coordinates,
+            displayCoordinates: segment.displayCoordinates,
             stopIds: segment.stopIds ?? [],
             position: index,
           })),
@@ -252,6 +281,7 @@ export async function upsertRoute(route: CorridorRoute): Promise<CorridorRoute> 
             toJson: segment.to,
             distanceKm: segment.distanceKm,
             coordinates: segment.coordinates,
+            displayCoordinates: segment.displayCoordinates,
             stopIds: segment.stopIds ?? [],
             position: index,
           })),
@@ -293,7 +323,7 @@ export async function listMarkers(): Promise<AdminMarker[]> {
   }
 
   const store = await ensureFileStore();
-  return store.markers;
+  return store.markers ?? [];
 }
 
 export async function upsertMarker(marker: AdminMarker): Promise<AdminMarker> {

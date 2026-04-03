@@ -1,14 +1,22 @@
-import type { Coordinate, CorridorRoute } from "@/types/map";
+import type { Coordinate, CorridorRoute, CorridorSegment } from "@/types/map";
 
 function getDistance(first: Coordinate, second: Coordinate): number {
   return Math.hypot(second[0] - first[0], second[1] - first[1]);
+}
+
+export function getSegmentRenderCoordinates(segment: CorridorSegment): Coordinate[] {
+  if (segment.displayCoordinates && segment.displayCoordinates.length >= 2) {
+    return segment.displayCoordinates;
+  }
+
+  return segment.coordinates;
 }
 
 export function flattenRouteCoordinates(route: CorridorRoute): Coordinate[] {
   const flattened: Coordinate[] = [];
 
   route.segments.forEach((segment) => {
-    segment.coordinates.forEach((coordinate, index) => {
+    getSegmentRenderCoordinates(segment).forEach((coordinate, index) => {
       const previous = flattened[flattened.length - 1];
       const isDuplicate =
         index === 0 &&
@@ -65,4 +73,3 @@ export function interpolateAlongPath(
 
   return coordinates[coordinates.length - 1];
 }
-

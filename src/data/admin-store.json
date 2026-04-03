@@ -1058,6 +1058,28 @@
         "lapis-lazuli",
         "zangazur"
       ]
+    },
+    {
+      "id": "marker-e66418f8-bf82-4ca6-9089-1fe54e53923c",
+      "name": {
+        "az": "Bus station",
+        "en": "Bus station",
+        "ru": "Bus station"
+      },
+      "description": {
+        "az": "Bus station",
+        "en": "Bus station",
+        "ru": "Bus station"
+      },
+      "category": "station",
+      "icon": "far:building",
+      "coordinates": [
+        39.5663,
+        45.6586
+      ],
+      "connectedCorridorIds": [
+        "zangazur"
+      ]
     }
   ],
   "settings": {

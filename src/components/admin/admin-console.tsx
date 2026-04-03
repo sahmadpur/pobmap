@@ -1,10 +1,17 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { LogOut, MapPinned, Plus, Route, Save, Trash2 } from "lucide-react";
+import { ChevronDown, LogOut, MapPinned, Plus, Route, Save, Trash2 } from "lucide-react";
 import { useRouter } from "next/navigation";
 
 import { COUNTRY_NAMES, getCountryFlagEmoji } from "@/data/corridors";
+import {
+  DEFAULT_MARKER_ICON_BY_CATEGORY,
+  FEATURED_MARKER_ICON_IDS,
+  getMarkerIconSvg,
+  isDefaultMarkerIconForCategory,
+  MARKER_ICON_OPTIONS,
+} from "@/data/marker-icons";
 import {
   getTransportStop,
   getTransportStopCountryLabel,
@@ -70,7 +77,7 @@ function createEmptyMarker(): AdminMarker {
     name: emptyLocalizedText(),
     description: emptyLocalizedText(),
     category: "port",
-    icon: "anchor",
+    icon: DEFAULT_MARKER_ICON_BY_CATEGORY.port,
     coordinates: [40.3572, 49.835],
     connectedCorridorIds: [],
   };
@@ -278,10 +285,6 @@ function CountrySelector({
 
   const selectedCodes = new Set(value);
   const results = COUNTRY_OPTIONS.filter((country) => {
-    if (selectedCodes.has(country.code)) {
-      return false;
-    }
-
     const searchable = [
       country.code,
       country.name.az,
@@ -347,9 +350,14 @@ function CountrySelector({
             key={country.code}
             type="button"
             onClick={() => {
+              if (selectedCodes.has(country.code)) {
+                return;
+              }
+
               onChange([...value, country.code]);
               setQuery("");
             }}
+            disabled={selectedCodes.has(country.code)}
             className="flex items-center justify-between rounded-2xl border border-slate-200 bg-white px-3 py-2 text-left transition hover:border-sky-300 hover:bg-sky-50"
           >
             <div className="min-w-0">
@@ -358,8 +366,14 @@ function CountrySelector({
               </p>
               <p className="text-xs text-slate-500">{country.code}</p>
             </div>
-            <span className="rounded-full bg-slate-950 px-2.5 py-1 text-xs font-medium text-white">
-              Add
+            <span
+              className={`rounded-full px-2.5 py-1 text-xs font-medium ${
+                selectedCodes.has(country.code)
+                  ? "bg-emerald-100 text-emerald-700"
+                  : "bg-slate-950 text-white"
+              }`}
+            >
+              {selectedCodes.has(country.code) ? "Selected" : "Add"}
             </span>
           </button>
         ))}
@@ -405,6 +419,203 @@ function LocalizedInputs({
   );
 }
 
+function MarkerIconSelector({
+  value,
+  category,
+  onChange,
+}: {
+  value: string;
+  category: AdminMarker["category"];
+  onChange: (nextValue: string) => void;
+}) {
+  const [query, setQuery] = useState("");
+  const normalizedQuery = query.trim().toLocaleLowerCase();
+  const results = normalizedQuery
+    ? MARKER_ICON_OPTIONS.filter((option) => option.searchText.includes(normalizedQuery)).slice(
+        0,
+        48,
+      )
+    : FEATURED_MARKER_ICON_IDS.map((iconId) =>
+        MARKER_ICON_OPTIONS.find((option) => option.id === iconId),
+      ).filter((option): option is NonNullable<typeof option> => Boolean(option));
+
+  return (
+    <div className="rounded-[1.25rem] border border-slate-200 bg-white p-4">
+      <div className="flex items-center justify-between gap-3">
+        <div>
+          <p className="text-xs font-semibold uppercase tracking-[0.22em] text-slate-500">
+            Icon
+          </p>
+          <p className="mt-1 text-sm text-slate-500">
+            Pick the marker icon visually.
+          </p>
+        </div>
+        <div
+          className="grid h-12 w-12 place-items-center rounded-full border border-slate-200 bg-slate-950 text-white shadow-sm [&_svg]:h-6 [&_svg]:w-6"
+          dangerouslySetInnerHTML={{
+            __html: getMarkerIconSvg(value, category),
+          }}
+        />
+      </div>
+
+      <label className="mt-4 block">
+        <span className="mb-2 block text-xs font-medium uppercase tracking-[0.2em] text-slate-500">
+          Search icons
+        </span>
+        <input
+          value={query}
+          onChange={(event) => setQuery(event.target.value)}
+          placeholder="Search Font Awesome Free icons"
+          className="w-full rounded-2xl border border-slate-200 bg-white px-3 py-2 text-sm text-slate-900 caret-slate-900 outline-none transition placeholder:text-slate-400 focus:border-sky-400"
+        />
+      </label>
+
+      <p className="mt-3 text-xs text-slate-500">
+        {normalizedQuery
+          ? `Showing ${results.length} matching Font Awesome Free icons for "${query}".`
+          : "Showing featured icons. Search to browse the full Font Awesome Free catalog."}
+      </p>
+
+      <div className="mt-4 grid gap-3 sm:grid-cols-2 xl:grid-cols-3">
+        {results.map((option) => {
+          const isSelected = option.id === value;
+
+          return (
+            <button
+              key={option.id}
+              type="button"
+              onClick={() => onChange(option.id)}
+              className={`rounded-2xl border px-3 py-3 text-left transition ${
+                isSelected
+                  ? "border-sky-300 bg-sky-50 shadow-sm"
+                  : "border-slate-200 bg-white hover:border-sky-200 hover:bg-sky-50/60"
+              }`}
+            >
+              <div className="flex items-center gap-3">
+                <span
+                  className={`grid h-11 w-11 place-items-center rounded-full [&_svg]:h-5 [&_svg]:w-5 ${
+                    isSelected ? "bg-slate-950 text-white" : "bg-slate-100 text-slate-700"
+                  }`}
+                  dangerouslySetInnerHTML={{ __html: option.svg }}
+                />
+                <div>
+                  <p className="text-sm font-semibold text-slate-900">{option.label}</p>
+                  <p className="text-xs text-slate-500">{option.style} · {option.id}</p>
+                </div>
+              </div>
+            </button>
+          );
+        })}
+      </div>
+    </div>
+  );
+}
+
+function ConnectedCorridorsSelector({
+  routes,
+  value,
+  onChange,
+}: {
+  routes: CorridorRoute[];
+  value: string[];
+  onChange: (nextValue: string[]) => void;
+}) {
+  const [query, setQuery] = useState("");
+  const selectedIds = new Set(value);
+  const results = routes.filter((route) => {
+    const searchable = [route.id, route.name.az, route.name.en, route.name.ru]
+      .join(" ")
+      .toLocaleLowerCase();
+
+    return searchable.includes(query.trim().toLocaleLowerCase());
+  });
+
+  return (
+    <div className="rounded-[1.25rem] border border-slate-200 bg-white p-4">
+      <div className="flex items-center justify-between gap-3">
+        <div>
+          <p className="text-xs font-semibold uppercase tracking-[0.22em] text-slate-500">
+            Connected corridors
+          </p>
+          <p className="mt-1 text-sm text-slate-500">
+            Select from the current route catalog.
+          </p>
+        </div>
+        <div className="rounded-full bg-slate-100 px-3 py-1 text-xs font-medium text-slate-600">
+          {value.length} selected
+        </div>
+      </div>
+
+      <div className="mt-4 flex flex-wrap gap-2">
+        {value.map((routeId) => {
+          const route = routes.find((item) => item.id === routeId);
+          const label = route?.name.en || routeId;
+
+          return (
+            <button
+              key={routeId}
+              type="button"
+              onClick={() => onChange(value.filter((id) => id !== routeId))}
+              className="inline-flex items-center gap-2 rounded-full border border-slate-200 bg-slate-50 px-3 py-2 text-sm text-slate-800"
+            >
+              <span>{label}</span>
+              <span className="text-slate-400">×</span>
+            </button>
+          );
+        })}
+      </div>
+
+      <label className="mt-4 block">
+        <span className="mb-2 block text-xs font-medium uppercase tracking-[0.2em] text-slate-500">
+          Add corridor
+        </span>
+        <input
+          value={query}
+          onChange={(event) => setQuery(event.target.value)}
+          placeholder="Search route name or ID"
+          className="w-full rounded-2xl border border-slate-200 bg-white px-3 py-2 text-sm text-slate-900 caret-slate-900 outline-none transition placeholder:text-slate-400 focus:border-sky-400"
+        />
+      </label>
+
+      <div className="mt-3 grid gap-2 md:grid-cols-2">
+        {results.map((route) => {
+          const isSelected = selectedIds.has(route.id);
+
+          return (
+            <button
+              key={route.id}
+              type="button"
+              onClick={() => {
+                if (isSelected) {
+                  onChange(value.filter((id) => id !== route.id));
+                  return;
+                }
+
+                onChange([...value, route.id]);
+              }}
+              className="flex items-center justify-between rounded-2xl border border-slate-200 bg-white px-3 py-2 text-left transition hover:border-sky-300 hover:bg-sky-50"
+            >
+              <div className="min-w-0">
+                <p className="truncate text-sm font-semibold text-slate-900">
+                  {route.name.en || route.id}
+                </p>
+                <p className="text-xs text-slate-500">{route.id}</p>
+              </div>
+              <span
+                className={`rounded-full px-2.5 py-1 text-xs font-medium ${
+                  isSelected ? "bg-emerald-100 text-emerald-700" : "bg-slate-950 text-white"
+                }`}
+              >
+                {isSelected ? "Selected" : "Add"}
+              </span>
+            </button>
+          );
+        })}
+      </div>
+    </div>
+  );
+}
+
 export function AdminConsole() {
   const router = useRouter();
   const [routes, setRoutes] = useState<CorridorRoute[]>([]);
@@ -417,6 +628,10 @@ export function AdminConsole() {
   const [saveError, setSaveError] = useState<string | null>(null);
   const [saveSuccess, setSaveSuccess] = useState<string | null>(null);
   const [expandedSegmentIds, setExpandedSegmentIds] = useState<string[]>([]);
+  const [isRoutesPanelOpen, setIsRoutesPanelOpen] = useState(false);
+  const [isMarkersPanelOpen, setIsMarkersPanelOpen] = useState(false);
+  const [isRouteEditorOpen, setIsRouteEditorOpen] = useState(false);
+  const [isMarkerEditorOpen, setIsMarkerEditorOpen] = useState(false);
 
   useEffect(() => {
     void Promise.all([
@@ -593,10 +808,20 @@ export function AdminConsole() {
           <aside className="space-y-6">
             <section className="rounded-[2rem] border border-slate-200 bg-white p-4 shadow-sm">
               <div className="mb-4 flex items-center justify-between">
-                <div className="flex items-center gap-2">
+                <button
+                  type="button"
+                  onClick={() => setIsRoutesPanelOpen((current) => !current)}
+                  className="inline-flex items-center gap-2 text-left"
+                >
                   <Route className="h-4 w-4 text-sky-600" aria-hidden="true" />
                   <h2 className="text-sm font-semibold text-slate-900">Routes</h2>
-                </div>
+                  <ChevronDown
+                    className={`h-4 w-4 text-slate-500 transition ${
+                      isRoutesPanelOpen ? "rotate-180" : ""
+                    }`}
+                    aria-hidden="true"
+                  />
+                </button>
                 <button
                   type="button"
                   onClick={() => {
@@ -604,6 +829,7 @@ export function AdminConsole() {
                     setRoutes((current) => [...current, route]);
                     setSelectedRouteId(route.id);
                     setExpandedSegmentIds([]);
+                    setIsRoutesPanelOpen(true);
                     setSaveError(null);
                   }}
                   className="inline-flex items-center gap-1 rounded-full bg-slate-950 px-3 py-1.5 text-xs font-medium text-white"
@@ -613,44 +839,61 @@ export function AdminConsole() {
                 </button>
               </div>
 
-              <div className="space-y-2">
-                {routes.map((route) => (
-                  <button
-                    key={route.id}
-                    type="button"
-                    onClick={() => {
-                      setSelectedRouteId(route.id);
-                      setExpandedSegmentIds(route.segments.slice(0, 1).map((segment) => segment.id));
-                    }}
-                    className={`block w-full rounded-2xl border px-4 py-3 text-left transition ${
-                      selectedRouteId === route.id
-                        ? "border-sky-300 bg-sky-50"
-                        : "border-slate-200 bg-white hover:bg-slate-50"
-                    }`}
-                  >
-                    <p className="text-sm font-semibold text-slate-900">
-                      {route.name?.en || route.id}
-                    </p>
-                    <p className="mt-1 text-xs uppercase tracking-[0.18em] text-slate-500">
-                      {route.status}
-                    </p>
-                  </button>
-                ))}
-              </div>
+              {isRoutesPanelOpen ? (
+                <div className="space-y-2">
+                  {routes.map((route) => (
+                    <button
+                      key={route.id}
+                      type="button"
+                      onClick={() => {
+                        setSelectedRouteId(route.id);
+                        setExpandedSegmentIds(route.segments.slice(0, 1).map((segment) => segment.id));
+                      }}
+                      className={`block w-full rounded-2xl border px-4 py-3 text-left transition ${
+                        selectedRouteId === route.id
+                          ? "border-sky-300 bg-sky-50"
+                          : "border-slate-200 bg-white hover:bg-slate-50"
+                      }`}
+                    >
+                      <p className="text-sm font-semibold text-slate-900">
+                        {route.name?.en || route.id}
+                      </p>
+                      <p className="mt-1 text-xs uppercase tracking-[0.18em] text-slate-500">
+                        {route.status}
+                      </p>
+                    </button>
+                  ))}
+                </div>
+              ) : (
+                <p className="text-sm text-slate-500">
+                  {routes.length} routes hidden. Expand to browse and select.
+                </p>
+              )}
             </section>
 
             <section className="rounded-[2rem] border border-slate-200 bg-white p-4 shadow-sm">
               <div className="mb-4 flex items-center justify-between">
-                <div className="flex items-center gap-2">
+                <button
+                  type="button"
+                  onClick={() => setIsMarkersPanelOpen((current) => !current)}
+                  className="inline-flex items-center gap-2 text-left"
+                >
                   <MapPinned className="h-4 w-4 text-sky-600" aria-hidden="true" />
                   <h2 className="text-sm font-semibold text-slate-900">Markers</h2>
-                </div>
+                  <ChevronDown
+                    className={`h-4 w-4 text-slate-500 transition ${
+                      isMarkersPanelOpen ? "rotate-180" : ""
+                    }`}
+                    aria-hidden="true"
+                  />
+                </button>
                 <button
                   type="button"
                   onClick={() => {
                     const marker = createEmptyMarker();
                     setMarkers((current) => [...current, marker]);
                     setSelectedMarkerId(marker.id);
+                    setIsMarkersPanelOpen(true);
                   }}
                   className="inline-flex items-center gap-1 rounded-full bg-slate-950 px-3 py-1.5 text-xs font-medium text-white"
                 >
@@ -659,27 +902,33 @@ export function AdminConsole() {
                 </button>
               </div>
 
-              <div className="space-y-2">
-                {markers.map((marker) => (
-                  <button
-                    key={marker.id}
-                    type="button"
-                    onClick={() => setSelectedMarkerId(marker.id)}
-                    className={`block w-full rounded-2xl border px-4 py-3 text-left transition ${
-                      selectedMarkerId === marker.id
-                        ? "border-sky-300 bg-sky-50"
-                        : "border-slate-200 bg-white hover:bg-slate-50"
-                    }`}
-                  >
-                    <p className="text-sm font-semibold text-slate-900">
-                      {marker.name?.en || marker.id}
-                    </p>
-                    <p className="mt-1 text-xs uppercase tracking-[0.18em] text-slate-500">
-                      {marker.category}
-                    </p>
-                  </button>
-                ))}
-              </div>
+              {isMarkersPanelOpen ? (
+                <div className="space-y-2">
+                  {markers.map((marker) => (
+                    <button
+                      key={marker.id}
+                      type="button"
+                      onClick={() => setSelectedMarkerId(marker.id)}
+                      className={`block w-full rounded-2xl border px-4 py-3 text-left transition ${
+                        selectedMarkerId === marker.id
+                          ? "border-sky-300 bg-sky-50"
+                          : "border-slate-200 bg-white hover:bg-slate-50"
+                      }`}
+                    >
+                      <p className="text-sm font-semibold text-slate-900">
+                        {marker.name?.en || marker.id}
+                      </p>
+                      <p className="mt-1 text-xs uppercase tracking-[0.18em] text-slate-500">
+                        {marker.category}
+                      </p>
+                    </button>
+                  ))}
+                </div>
+              ) : (
+                <p className="text-sm text-slate-500">
+                  {markers.length} markers hidden. Expand to browse and select.
+                </p>
+              )}
             </section>
           </aside>
 
@@ -698,37 +947,54 @@ export function AdminConsole() {
 
             {selectedRoute ? (
               <section className="rounded-[2rem] border border-slate-200 bg-white p-5 shadow-sm">
-                <div className="mb-5 flex flex-col gap-3 md:flex-row md:items-center md:justify-between">
+                <button
+                  type="button"
+                  onClick={() => setIsRouteEditorOpen((current) => !current)}
+                  className="flex w-full items-start justify-between gap-4 text-left"
+                >
                   <div>
                     <h2 className="text-xl font-semibold text-slate-950">
                       Route Editor
                     </h2>
                     <p className="text-sm text-slate-500">
-                      Manage multilingual route content and transport segments.
+                      {selectedRoute.name?.en || selectedRoute.id}
                     </p>
                   </div>
-                  <div className="flex gap-2">
-                    <button
-                      type="button"
-                      onClick={() => void saveRoute(selectedRoute)}
-                      disabled={saving}
-                      className="inline-flex items-center gap-2 rounded-full bg-slate-950 px-4 py-2 text-sm font-semibold text-white"
-                    >
-                      <Save className="h-4 w-4" aria-hidden="true" />
-                      Save route
-                    </button>
-                    <button
-                      type="button"
-                      onClick={() => void removeRoute(selectedRoute.id)}
-                      className="inline-flex items-center gap-2 rounded-full border border-rose-200 bg-rose-50 px-4 py-2 text-sm font-semibold text-rose-700"
-                    >
-                      <Trash2 className="h-4 w-4" aria-hidden="true" />
-                      Delete
-                    </button>
-                  </div>
-                </div>
+                  <ChevronDown
+                    className={`mt-1 h-5 w-5 shrink-0 text-slate-500 transition ${
+                      isRouteEditorOpen ? "rotate-180" : ""
+                    }`}
+                    aria-hidden="true"
+                  />
+                </button>
 
-                <div className="space-y-5">
+                {isRouteEditorOpen ? (
+                <div className="mt-5 space-y-5">
+                  <div className="flex flex-col gap-3 md:flex-row md:items-center md:justify-between">
+                    <p className="text-sm text-slate-500">
+                      Manage multilingual route content and transport segments.
+                    </p>
+                    <div className="flex gap-2">
+                      <button
+                        type="button"
+                        onClick={() => void saveRoute(selectedRoute)}
+                        disabled={saving}
+                        className="inline-flex items-center gap-2 rounded-full bg-slate-950 px-4 py-2 text-sm font-semibold text-white"
+                      >
+                        <Save className="h-4 w-4" aria-hidden="true" />
+                        Save route
+                      </button>
+                      <button
+                        type="button"
+                        onClick={() => void removeRoute(selectedRoute.id)}
+                        className="inline-flex items-center gap-2 rounded-full border border-rose-200 bg-rose-50 px-4 py-2 text-sm font-semibold text-rose-700"
+                      >
+                        <Trash2 className="h-4 w-4" aria-hidden="true" />
+                        Delete
+                      </button>
+                    </div>
+                  </div>
+
                   <div className="grid gap-4 md:grid-cols-3">
                     <label className="block">
                       <span className="mb-2 block text-xs font-medium uppercase tracking-[0.2em] text-slate-500">
@@ -1148,42 +1414,60 @@ export function AdminConsole() {
                     </div>
                   </div>
                 </div>
+                ) : null}
               </section>
             ) : null}
 
             {selectedMarker ? (
               <section className="rounded-[2rem] border border-slate-200 bg-white p-5 shadow-sm">
-                <div className="mb-5 flex flex-col gap-3 md:flex-row md:items-center md:justify-between">
+                <button
+                  type="button"
+                  onClick={() => setIsMarkerEditorOpen((current) => !current)}
+                  className="flex w-full items-start justify-between gap-4 text-left"
+                >
                   <div>
                     <h2 className="text-xl font-semibold text-slate-950">
                       Marker Editor
                     </h2>
                     <p className="text-sm text-slate-500">
-                      Manage map pins, categories, and popup content.
+                      {selectedMarker.name?.en || selectedMarker.id}
                     </p>
                   </div>
-                  <div className="flex gap-2">
-                    <button
-                      type="button"
-                      onClick={() => void saveMarker(selectedMarker)}
-                      disabled={saving}
-                      className="inline-flex items-center gap-2 rounded-full bg-slate-950 px-4 py-2 text-sm font-semibold text-white"
-                    >
-                      <Save className="h-4 w-4" aria-hidden="true" />
-                      Save marker
-                    </button>
-                    <button
-                      type="button"
-                      onClick={() => void removeMarker(selectedMarker.id)}
-                      className="inline-flex items-center gap-2 rounded-full border border-rose-200 bg-rose-50 px-4 py-2 text-sm font-semibold text-rose-700"
-                    >
-                      <Trash2 className="h-4 w-4" aria-hidden="true" />
-                      Delete
-                    </button>
-                  </div>
-                </div>
+                  <ChevronDown
+                    className={`mt-1 h-5 w-5 shrink-0 text-slate-500 transition ${
+                      isMarkerEditorOpen ? "rotate-180" : ""
+                    }`}
+                    aria-hidden="true"
+                  />
+                </button>
 
-                <div className="space-y-5">
+                {isMarkerEditorOpen ? (
+                <div className="mt-5 space-y-5">
+                  <div className="flex flex-col gap-3 md:flex-row md:items-center md:justify-between">
+                    <p className="text-sm text-slate-500">
+                      Manage map pins, categories, and popup content.
+                    </p>
+                    <div className="flex gap-2">
+                      <button
+                        type="button"
+                        onClick={() => void saveMarker(selectedMarker)}
+                        disabled={saving}
+                        className="inline-flex items-center gap-2 rounded-full bg-slate-950 px-4 py-2 text-sm font-semibold text-white"
+                      >
+                        <Save className="h-4 w-4" aria-hidden="true" />
+                        Save marker
+                      </button>
+                      <button
+                        type="button"
+                        onClick={() => void removeMarker(selectedMarker.id)}
+                        className="inline-flex items-center gap-2 rounded-full border border-rose-200 bg-rose-50 px-4 py-2 text-sm font-semibold text-rose-700"
+                      >
+                        <Trash2 className="h-4 w-4" aria-hidden="true" />
+                        Delete
+                      </button>
+                    </div>
+                  </div>
+
                   <div className="grid gap-4 md:grid-cols-4">
                     <label className="block">
                       <span className="mb-2 block text-xs font-medium uppercase tracking-[0.2em] text-slate-500">
@@ -1216,6 +1500,15 @@ export function AdminConsole() {
                                 ? {
                                     ...marker,
                                     category: event.target.value as AdminMarker["category"],
+                                    icon:
+                                      isDefaultMarkerIconForCategory(
+                                        marker.icon,
+                                        marker.category,
+                                      )
+                                        ? DEFAULT_MARKER_ICON_BY_CATEGORY[
+                                            event.target.value as AdminMarker["category"]
+                                          ]
+                                        : marker.icon,
                                   }
                                 : marker,
                             ),
@@ -1229,49 +1522,34 @@ export function AdminConsole() {
                         <option value="city">City</option>
                       </select>
                     </label>
-                    <label className="block">
-                      <span className="mb-2 block text-xs font-medium uppercase tracking-[0.2em] text-slate-500">
-                        Icon
-                      </span>
-                      <input
-                        value={selectedMarker.icon}
-                        onChange={(event) =>
-                          setMarkers((current) =>
-                            current.map((marker) =>
-                              marker.id === selectedMarker.id
-                                ? { ...marker, icon: event.target.value }
-                                : marker,
-                            ),
-                          )
-                        }
-                        className="w-full rounded-2xl border border-slate-200 bg-white px-3 py-2 text-sm text-slate-900 caret-slate-900 outline-none transition placeholder:text-slate-400 focus:border-sky-400"
-                      />
-                    </label>
-                    <label className="block">
-                      <span className="mb-2 block text-xs font-medium uppercase tracking-[0.2em] text-slate-500">
-                        Connected corridor IDs
-                      </span>
-                      <input
-                        value={selectedMarker.connectedCorridorIds.join(", ")}
-                        onChange={(event) =>
-                          setMarkers((current) =>
-                            current.map((marker) =>
-                              marker.id === selectedMarker.id
-                                ? {
-                                    ...marker,
-                                    connectedCorridorIds: event.target.value
-                                      .split(",")
-                                      .map((value) => value.trim())
-                                      .filter(Boolean),
-                                  }
-                                : marker,
-                            ),
-                          )
-                        }
-                        className="w-full rounded-2xl border border-slate-200 bg-white px-3 py-2 text-sm text-slate-900 caret-slate-900 outline-none transition placeholder:text-slate-400 focus:border-sky-400"
-                      />
-                    </label>
+                    <div className="md:col-span-2" />
                   </div>
+
+                  <MarkerIconSelector
+                    value={selectedMarker.icon}
+                    category={selectedMarker.category}
+                    onChange={(value) =>
+                      setMarkers((current) =>
+                        current.map((marker) =>
+                          marker.id === selectedMarker.id ? { ...marker, icon: value } : marker,
+                        ),
+                      )
+                    }
+                  />
+
+                  <ConnectedCorridorsSelector
+                    routes={routes}
+                    value={selectedMarker.connectedCorridorIds}
+                    onChange={(value) =>
+                      setMarkers((current) =>
+                        current.map((marker) =>
+                          marker.id === selectedMarker.id
+                            ? { ...marker, connectedCorridorIds: value }
+                            : marker,
+                        ),
+                      )
+                    }
+                  />
 
                   <LocalizedInputs
                     label="Marker name"
@@ -1355,6 +1633,7 @@ export function AdminConsole() {
                     </label>
                   </div>
                 </div>
+                ) : null}
               </section>
             ) : null}
           </div>

@@ -1,4 +1,5 @@
 import type {
+  Coordinate,
   CorridorRoute,
   LocalizedText,
   MapView,
@@ -6,6 +7,13 @@ import type {
   SupportedLocale,
   TransportMode,
 } from "@/types/map";
+export {
+  COUNTRY_NAMES,
+  getCountryFlagEmoji,
+  getCountryLocalizedText,
+  getCountryName,
+  ISO_COUNTRY_CODES,
+} from "@/data/countries";
 
 export const SUPPORTED_LOCALES: SupportedLocale[] = ["az", "en", "ru"];
 
@@ -32,55 +40,11 @@ export const TRANSPORT_MODE_META: Record<
   },
 };
 
-export const COUNTRY_NAMES: Record<string, LocalizedText> = {
-  AF: { az: "Əfqanıstan", en: "Afghanistan", ru: "Афганистан" },
-  AZ: { az: "Azərbaycan", en: "Azerbaijan", ru: "Азербайджан" },
-  BE: { az: "Belçika", en: "Belgium", ru: "Бельгия" },
-  CN: { az: "Çin", en: "China", ru: "Китай" },
-  DE: { az: "Almaniya", en: "Germany", ru: "Германия" },
-  ES: { az: "İspaniya", en: "Spain", ru: "Испания" },
-  FI: { az: "Finlandiya", en: "Finland", ru: "Финляндия" },
-  FR: { az: "Fransa", en: "France", ru: "Франция" },
-  GE: { az: "Gürcüstan", en: "Georgia", ru: "Грузия" },
-  HU: { az: "Macarıstan", en: "Hungary", ru: "Венгрия" },
-  IN: { az: "Hindistan", en: "India", ru: "Индия" },
-  IQ: { az: "İraq", en: "Iraq", ru: "Ирак" },
-  IR: { az: "İran", en: "Iran", ru: "Иран" },
-  IT: { az: "İtaliya", en: "Italy", ru: "Италия" },
-  JO: { az: "İordaniya", en: "Jordan", ru: "Иордания" },
-  KZ: { az: "Qazaxıstan", en: "Kazakhstan", ru: "Казахстан" },
-  NL: { az: "Niderland", en: "Netherlands", ru: "Нидерланды" },
-  PK: { az: "Pakistan", en: "Pakistan", ru: "Пакистан" },
-  RO: { az: "Rumıniya", en: "Romania", ru: "Румыния" },
-  RU: { az: "Rusiya", en: "Russia", ru: "Россия" },
-  SA: { az: "Səudiyyə Ərəbistanı", en: "Saudi Arabia", ru: "Саудовская Аравия" },
-  SY: { az: "Suriya", en: "Syria", ru: "Сирия" },
-  TM: { az: "Türkmənistan", en: "Turkmenistan", ru: "Туркменистан" },
-  TR: { az: "Türkiyə", en: "Turkey", ru: "Турция" },
-};
-
 export function getLocalizedText(
   value: LocalizedText,
   locale: SupportedLocale,
 ): string {
   return value[locale] ?? value.az;
-}
-
-export function getCountryName(code: string, locale: SupportedLocale): string {
-  return COUNTRY_NAMES[code]?.[locale] ?? code;
-}
-
-export function getCountryFlagEmoji(code: string): string {
-  if (!/^[A-Z]{2}$/i.test(code)) {
-    return "🏳";
-  }
-
-  return String.fromCodePoint(
-    ...code
-      .toUpperCase()
-      .split("")
-      .map((character) => 127397 + character.charCodeAt(0)),
-  );
 }
 
 export const BAKU_PORT: PortMarker = {
@@ -105,7 +69,166 @@ export const BAKU_PORT: PortMarker = {
   ],
 };
 
-export const CORRIDORS: CorridorRoute[] = [
+const PRESENTATION_SEGMENT_PATHS: Record<string, Coordinate[]> = {
+  "middle-1": [
+    [34.3416, 108.9398],
+    [36.0611, 103.8343],
+    [38.4872, 106.2309],
+    [43.8256, 87.6168],
+    [44.2, 80.4],
+    [43.2389, 76.8897],
+  ],
+  "middle-2": [
+    [43.2389, 76.8897],
+    [44.8, 73.1],
+    [46.5, 67.8],
+    [45.1, 59.2],
+    [43.6532, 51.1975],
+  ],
+  "middle-3": [
+    [43.6532, 51.1975],
+    [43.4, 50.7],
+    [42.7, 50.1],
+    [41.8, 49.7],
+    [40.3572, 49.835],
+  ],
+  "middle-4": [
+    [40.3572, 49.835],
+    [41.7151, 44.8271],
+    [40.6013, 43.0947],
+    [39.9334, 32.8597],
+    [41.0082, 28.9784],
+    [42.6977, 23.3219],
+    [44.7866, 20.4489],
+    [47.4979, 19.0402],
+  ],
+  "middle-5": [
+    [47.4979, 19.0402],
+    [48.2082, 16.3738],
+    [50.1109, 8.6821],
+    [51.9244, 4.4777],
+    [50.8503, 4.3517],
+    [48.8566, 2.3522],
+    [41.3851, 2.1734],
+    [40.4168, -3.7038],
+  ],
+  "eurasian-1": [
+    [40.3572, 49.835],
+    [42.6977, 47.5034],
+    [46.3497, 48.0408],
+    [48.708, 44.5133],
+    [52.286, 43.996],
+    [55.7558, 37.6173],
+  ],
+  "eurasian-2": [
+    [55.7558, 37.6173],
+    [56.8389, 60.6057],
+    [55.0084, 82.9357],
+    [52.2869, 104.305],
+    [52.0339, 113.4994],
+    [48.4802, 135.0719],
+    [43.1155, 131.8855],
+  ],
+  "eurasian-3": [
+    [40.3572, 49.835],
+    [41.7151, 44.8271],
+    [40.6013, 43.0947],
+  ],
+  "north-south-1": [
+    [60.1699, 24.9384],
+    [59.9343, 30.3351],
+    [55.7558, 37.6173],
+    [50.4501, 30.5234],
+    [46.3497, 48.0408],
+    [42.6977, 47.5034],
+    [40.3572, 49.835],
+  ],
+  "north-south-2": [
+    [40.3572, 49.835],
+    [38.4329, 48.8742],
+    [37.5536, 45.0761],
+    [35.6892, 51.389],
+    [31.8974, 54.3569],
+    [29.5918, 52.5837],
+    [27.1832, 56.2666],
+  ],
+  "north-south-3": [
+    [27.1832, 56.2666],
+    [24.8, 60.4],
+    [22.3, 65.2],
+    [20.2, 69.9],
+    [18.96, 72.82],
+  ],
+  "lapis-1": [
+    [40.3572, 49.835],
+    [41.7151, 44.8271],
+    [40.6013, 43.0947],
+    [39.9334, 32.8597],
+    [41.0082, 28.9784],
+  ],
+  "lapis-2": [
+    [41.0082, 28.9784],
+    [42.6977, 23.3219],
+    [44.7866, 20.4489],
+    [45.815, 15.9819],
+    [45.4642, 9.19],
+    [43.2965, 5.3698],
+    [41.3851, 2.1734],
+    [40.4168, -3.7038],
+  ],
+  "lapis-3": [
+    [40.3572, 49.835],
+    [38.4329, 48.8742],
+    [35.6892, 51.389],
+    [31.5497, 74.3436],
+    [24.8607, 67.0011],
+    [18.96, 72.82],
+  ],
+  "zangazur-1": [
+    [40.3572, 49.835],
+    [39.3989, 47.0289],
+    [39.2089, 45.4122],
+  ],
+  "zangazur-2": [
+    [39.2089, 45.4122],
+    [39.7191, 43.0503],
+    [40.6013, 43.0947],
+  ],
+  "iraq-1": [
+    [29.9744, 48.4728],
+    [30.5085, 47.7804],
+    [31.0428, 46.2619],
+    [33.3152, 44.3661],
+  ],
+  "iraq-2": [
+    [33.3152, 44.3661],
+    [36.3367, 43.1189],
+    [37.0662, 37.3833],
+  ],
+  "hejaz-1": [
+    [24.5247, 39.5692],
+    [28.3998, 36.5715],
+    [31.9539, 35.9106],
+  ],
+  "hejaz-2": [
+    [31.9539, 35.9106],
+    [32.5556, 36.0062],
+    [33.5138, 36.2765],
+  ],
+};
+
+function applyPresentationPaths(routes: CorridorRoute[]): CorridorRoute[] {
+  return routes.map((route) => ({
+    ...route,
+    segments: route.segments.map((segment) => ({
+      ...segment,
+      displayCoordinates:
+        PRESENTATION_SEGMENT_PATHS[segment.id] ?? segment.displayCoordinates,
+    })),
+  }));
+}
+
+export const CORRIDORS: CorridorRoute[] = applyPresentationPaths([
   {
     id: "middle-corridor",
     name: {
@@ -710,4 +833,4 @@ export const CORRIDORS: CorridorRoute[] = [
       },
     ],
   },
-];
+]);

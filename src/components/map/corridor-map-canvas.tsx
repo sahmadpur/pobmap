@@ -22,25 +22,47 @@ import {
   getLocalizedText,
   TRANSPORT_MODE_META,
 } from "@/data/corridors";
-import { flattenRouteCoordinates, interpolateAlongPath } from "@/lib/map-utils";
-import type { CorridorRoute, SupportedLocale, TransportMode } from "@/types/map";
+import { getMarkerIconSvg } from "@/data/marker-icons";
+import {
+  flattenRouteCoordinates,
+  getSegmentRenderCoordinates,
+  interpolateAlongPath,
+} from "@/lib/map-utils";
+import type { AdminMarker } from "@/types/admin";
+import type { Coordinate, CorridorRoute, SupportedLocale, TransportMode } from "@/types/map";
 
-const portIcon = L.divIcon({
-  className: "baku-port-icon-wrapper",
-  html: `
-    <div class="baku-port-icon">
-      <span class="baku-port-icon__ring"></span>
-      <span class="baku-port-icon__core">
-        <svg viewBox="0 0 24 24" aria-hidden="true">
-          <path d="M12 2v8.2a3.8 3.8 0 1 0 0 7.6a3.8 3.8 0 0 0 0-7.6V2Zm-6.7 8.2H2v2.2h3.3a6.7 6.7 0 0 0 5.6 5.2V21h2.2v-3.4a6.7 6.7 0 0 0 5.6-5.2H22v-2.2h-3.3a6.7 6.7 0 0 0-13.4 0Z" />
-        </svg>
-      </span>
-    </div>
-  `,
-  iconSize: [54, 54],
-  iconAnchor: [27, 27],
-  popupAnchor: [0, -24],
-});
+function createMarkerIcon(
+  marker: Pick<AdminMarker, "category" | "icon">,
+  options?: { size?: number; pulse?: boolean },
+) {
+  const markerMeta: Record<AdminMarker["category"], { color: string }> = {
+    port: { color: "#0ea5e9" },
+    station: { color: "#f59e0b" },
+    border: { color: "#ef4444" },
+    city: { color: "#10b981" },
+  };
+
+  const meta = markerMeta[marker.category];
+  const size = options?.size ?? 44;
+  const pulse = options?.pulse ?? false;
+  const coreSize = Math.max(size - 10, 30);
+  const svgMarkup = getMarkerIconSvg(marker.icon, marker.category);
+
+  return L.divIcon({
+    className: "baku-port-icon-wrapper",
+    html: `
+      <div class="baku-port-icon" style="width:${size}px;height:${size}px;">
+        <span class="baku-port-icon__ring" style="background: radial-gradient(circle, ${meta.color}33, transparent 68%); animation:${pulse ? "baku-pulse 2.6s ease-in-out infinite" : "none"};"></span>
+        <span class="baku-port-icon__core" style="inset:5px; background: linear-gradient(180deg, ${meta.color}, ${meta.color}cc); color: #f8fafc; width:${coreSize}px; height:${coreSize}px; margin:auto;">
+          ${svgMarkup}
+        </span>
+      </div>
+    `,
+    iconSize: [size, size],
+    iconAnchor: [size / 2, size / 2],
+    popupAnchor: [0, Math.round(-size * 0.42)],
+  });
+}
 
 function createFlowIcon(mode: TransportMode, color: string) {
   const iconMarkup =
@@ -60,6 +82,34 @@ function createFlowIcon(mode: TransportMode, color: string) {
     iconSize: [28, 28],
     iconAnchor: [14, 14],
   });
+}
+
+function areCoordinatesNear(first: Coordinate, second: Coordinate, tolerance = 0.02) {
+  return (
+    Math.abs(first[0] - second[0]) <= tolerance &&
+    Math.abs(first[1] - second[1]) <= tolerance
+  );
+}
+
+function getConnectedRouteIdsForMarker(marker: AdminMarker, routes: CorridorRoute[]) {
+  const connectedRouteIds = new Set(marker.connectedCorridorIds ?? []);
+
+  routes.forEach((route) => {
+    const touchesMarker = route.segments.some((segment) => {
+      const matchesStopId = (segment.stopIds ?? []).includes(marker.id);
+      const matchesCoordinate = segment.coordinates.some((coordinate) =>
+        areCoordinatesNear(coordinate, marker.coordinates),
+      );
+
+      return matchesStopId || matchesCoordinate;
+    });
+
+    if (touchesMarker) {
+      connectedRouteIds.add(route.id);
+    }
+  });
+
+  return Array.from(connectedRouteIds);
 }
 
 function MapClickHandler({ onClearSelection }: { onClearSelection: () => void }) {
@@ -132,7 +182,9 @@ function FlowMarkers({ routes }: { routes: CorridorRoute[] }) {
     <>
       {routes.flatMap((route) =>
         route.segments.flatMap((segment, segmentIndex) => {
-          if (segment.coordinates.length < 2) {
+          const renderCoordinates = getSegmentRenderCoordinates(segment);
+
+          if (renderCoordinates.length < 2) {
             return [];
           }
 
@@ -142,7 +194,7 @@ function FlowMarkers({ routes }: { routes: CorridorRoute[] }) {
           return (
             <Marker
               key={segment.id}
-              position={interpolateAlongPath(segment.coordinates, progress)}
+              position={interpolateAlongPath(renderCoordinates, progress)}
               icon={createFlowIcon(segment.mode, TRANSPORT_MODE_META[segment.mode].color)}
               interactive={false}
               keyboard={false}
@@ -156,6 +208,8 @@ function FlowMarkers({ routes }: { routes: CorridorRoute[] }) {
 
 interface CorridorMapCanvasProps {
   routes: CorridorRoute[];
+  allRoutes: CorridorRoute[];
+  markers: AdminMarker[];
   selectedRouteId: string | null;
   selectedSegmentId: string | null;
   hoveredRouteId: string | null;
@@ -172,6 +226,8 @@ interface CorridorMapCanvasProps {
 
 export default function CorridorMapCanvas({
   routes,
+  allRoutes,
+  markers,
   selectedRouteId,
   selectedSegmentId,
   hoveredRouteId,
@@ -185,8 +241,27 @@ export default function CorridorMapCanvas({
   onPortCorridorSelect,
   t,
 }: CorridorMapCanvasProps) {
+  const safeMarkers = markers ?? [];
   const selectedRoute =
     routes.find((route) => route.id === selectedRouteId) ?? null;
+  const savedPortMarker =
+    safeMarkers.find((marker) => marker.id === "baku-port") ??
+    safeMarkers.find((marker) => marker.category === "port") ??
+    null;
+  const primaryPortMarker: AdminMarker = {
+    id: savedPortMarker?.id ?? BAKU_PORT.id,
+    name: savedPortMarker?.name ?? BAKU_PORT.name,
+    description: savedPortMarker?.description ?? BAKU_PORT.role,
+    category: "port",
+    icon: savedPortMarker?.icon ?? "anchor",
+    coordinates: savedPortMarker?.coordinates ?? BAKU_PORT.coordinates,
+    connectedCorridorIds:
+      savedPortMarker?.connectedCorridorIds ?? BAKU_PORT.connectedCorridorIds,
+  };
+  const secondaryMarkers = safeMarkers.filter((marker) => marker.id !== primaryPortMarker.id);
+  const primaryPortConnectedRouteIds = Array.from(
+    new Set(allRoutes.map((route) => route.id)),
+  );
 
   return (
     <MapContainer
@@ -246,7 +321,7 @@ export default function CorridorMapCanvas({
               >
                 {selectedSegmentId === segment.id ? (
                   <Polyline
-                    positions={segment.coordinates}
+                    positions={getSegmentRenderCoordinates(segment)}
                     pathOptions={{
                       pane: "corridor-glow",
                       color: TRANSPORT_MODE_META[segment.mode].color,
@@ -259,7 +334,7 @@ export default function CorridorMapCanvas({
                 ) : null}
 
                 <Polyline
-                  positions={segment.coordinates}
+                  positions={getSegmentRenderCoordinates(segment)}
                   eventHandlers={{
                     click: () => onRouteSelect(route.id, segment.id),
                     mouseover: () => onRouteHover(route.id),
@@ -317,46 +392,105 @@ export default function CorridorMapCanvas({
         />
       ) : null}
 
-      <Marker position={BAKU_PORT.coordinates} icon={portIcon}>
+      <Marker
+        key={primaryPortMarker.id}
+        position={primaryPortMarker.coordinates}
+        icon={createMarkerIcon(primaryPortMarker, { size: 54, pulse: true })}
+      >
         <Popup className="baku-port-popup" offset={[0, -12]}>
           <div className="space-y-3">
             <div>
               <h3 className="text-lg font-semibold text-slate-950">
-                {getLocalizedText(BAKU_PORT.name, locale)}
+                {getLocalizedText(primaryPortMarker.name, locale)}
               </h3>
               <p className="mt-1 text-sm leading-6 text-slate-700">
-                {getLocalizedText(BAKU_PORT.role, locale)}
+                {getLocalizedText(primaryPortMarker.description, locale)}
               </p>
             </div>
 
-            <div>
-              <p className="text-xs font-semibold uppercase tracking-[0.18em] text-slate-500">
-                {t("port.quickLinks")}
-              </p>
-              <div className="mt-2 flex flex-wrap gap-2">
-                {BAKU_PORT.connectedCorridorIds.map((routeId) => {
-                  const route = routes.find((corridor) => corridor.id === routeId);
+            {primaryPortConnectedRouteIds.length > 0 ? (
+              <div>
+                <p className="text-xs font-semibold uppercase tracking-[0.18em] text-slate-500">
+                  {t("port.quickLinks")}
+                </p>
+                <div className="mt-2 flex flex-wrap gap-2">
+                  {primaryPortConnectedRouteIds.map((routeId) => {
+                    const route = allRoutes.find((corridor) => corridor.id === routeId);
 
-                  if (!route) {
-                    return null;
-                  }
+                    if (!route) {
+                      return null;
+                    }
 
-                  return (
-                    <button
-                      key={routeId}
-                      type="button"
-                      onClick={() => onPortCorridorSelect(routeId)}
-                      className="rounded-full bg-slate-900 px-3 py-1.5 text-xs font-medium text-white transition hover:bg-slate-700"
-                    >
-                      {getLocalizedText(route.name, locale)}
-                    </button>
-                  );
-                })}
+                    return (
+                      <button
+                        key={routeId}
+                        type="button"
+                        onClick={() => onPortCorridorSelect(routeId)}
+                        className="rounded-full bg-slate-900 px-3 py-1.5 text-xs font-medium text-white transition hover:bg-slate-700"
+                      >
+                        {getLocalizedText(route.name, locale)}
+                      </button>
+                    );
+                  })}
+                </div>
               </div>
-            </div>
+            ) : null}
           </div>
         </Popup>
       </Marker>
+
+      {secondaryMarkers.map((marker) => {
+        const connectedCorridorIds = getConnectedRouteIdsForMarker(marker, allRoutes);
+
+        return (
+            <Marker
+              key={marker.id}
+              position={marker.coordinates}
+              icon={createMarkerIcon(marker)}
+            >
+            <Popup className="baku-port-popup" offset={[0, -12]}>
+              <div className="space-y-3">
+                <div>
+                  <h3 className="text-lg font-semibold text-slate-950">
+                    {getLocalizedText(marker.name, locale)}
+                  </h3>
+                  <p className="mt-1 text-sm leading-6 text-slate-700">
+                    {getLocalizedText(marker.description, locale)}
+                  </p>
+                </div>
+
+                {connectedCorridorIds.length > 0 ? (
+                  <div>
+                    <p className="text-xs font-semibold uppercase tracking-[0.18em] text-slate-500">
+                      {t("port.quickLinks")}
+                    </p>
+                    <div className="mt-2 flex flex-wrap gap-2">
+                      {connectedCorridorIds.map((routeId) => {
+                        const route = allRoutes.find((corridor) => corridor.id === routeId);
+
+                        if (!route) {
+                          return null;
+                        }
+
+                        return (
+                          <button
+                            key={routeId}
+                            type="button"
+                            onClick={() => onPortCorridorSelect(routeId)}
+                            className="rounded-full bg-slate-900 px-3 py-1.5 text-xs font-medium text-white transition hover:bg-slate-700"
+                          >
+                            {getLocalizedText(route.name, locale)}
+                          </button>
+                        );
+                      })}
+                    </div>
+                  </div>
+                ) : null}
+              </div>
+            </Popup>
+          </Marker>
+        );
+      })}
     </MapContainer>
   );
 }

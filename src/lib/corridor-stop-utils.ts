@@ -38,6 +38,10 @@ export function applyStopIdsToSegment(segment: CorridorSegment): CorridorSegment
     ...segment,
     stopIds,
     coordinates,
+    displayCoordinates:
+      segment.displayCoordinates && segment.displayCoordinates.length > 0
+        ? segment.displayCoordinates
+        : undefined,
   };
 }
 
