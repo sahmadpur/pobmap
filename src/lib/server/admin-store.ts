@@ -4,10 +4,10 @@ import path from "node:path";
 import { Prisma } from "@prisma/client";
 
 import {
-  BAKU_PORT,
   CORRIDORS,
   DEFAULT_MAP_VIEW,
 } from "@/data/corridors";
+import { SEED_MARKERS } from "@/data/seed-markers";
 import { normalizeCorridorRoute, normalizeCorridorSegment } from "@/lib/corridor-stop-utils";
 import { getPrismaClient } from "@/lib/server/prisma";
 import type { AppSettings, AdminMarker, AdminStore } from "@/types/admin";
@@ -36,17 +36,7 @@ function isLocalizedText(value: unknown): value is LocalizedText {
 function createSeedStore(): AdminStore {
   return {
     routes: CORRIDORS.map(normalizeCorridorRoute),
-    markers: [
-      {
-        id: BAKU_PORT.id,
-        name: BAKU_PORT.name,
-        description: BAKU_PORT.role,
-        category: "port",
-        icon: "anchor",
-        coordinates: BAKU_PORT.coordinates,
-        connectedCorridorIds: BAKU_PORT.connectedCorridorIds,
-      },
-    ],
+    markers: SEED_MARKERS,
     settings: {
       defaultMapCenter: DEFAULT_MAP_VIEW.center,
       defaultZoom: DEFAULT_MAP_VIEW.zoom,
@@ -54,6 +44,20 @@ function createSeedStore(): AdminStore {
       animationEnabled: true,
     },
   };
+}
+
+function mergeSeedMarkers(markers: AdminMarker[]): AdminMarker[] {
+  const mergedMarkers = new Map<string, AdminMarker>();
+
+  SEED_MARKERS.forEach((marker) => {
+    mergedMarkers.set(marker.id, marker);
+  });
+
+  markers.forEach((marker) => {
+    mergedMarkers.set(marker.id, marker);
+  });
+
+  return Array.from(mergedMarkers.values());
 }
 
 function mergeSeedPresentationPath(route: CorridorRoute): CorridorRoute {
@@ -76,7 +80,22 @@ function mergeSeedPresentationPath(route: CorridorRoute): CorridorRoute {
 async function ensureFileStore(): Promise<AdminStore> {
   try {
     const raw = await fs.readFile(STORE_FILE_PATH, "utf8");
-    return JSON.parse(raw) as AdminStore;
+    const parsedStore = JSON.parse(raw) as AdminStore;
+    const mergedMarkers = mergeSeedMarkers(parsedStore.markers ?? []);
+
+    if (mergedMarkers.length !== (parsedStore.markers ?? []).length) {
+      const nextStore = {
+        ...parsedStore,
+        markers: mergedMarkers,
+      };
+      await saveFileStore(nextStore);
+      return nextStore;
+    }
+
+    return {
+      ...parsedStore,
+      markers: mergedMarkers,
+    };
   } catch {
     const seed = createSeedStore();
     await fs.writeFile(STORE_FILE_PATH, JSON.stringify(seed, null, 2), "utf8");
@@ -323,7 +342,7 @@ export async function listMarkers(): Promise<AdminMarker[]> {
   }
 
   const store = await ensureFileStore();
-  return store.markers ?? [];
+  return mergeSeedMarkers(store.markers ?? []);
 }
 
 export async function upsertMarker(marker: AdminMarker): Promise<AdminMarker> {
