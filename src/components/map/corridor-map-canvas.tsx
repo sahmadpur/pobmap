@@ -295,8 +295,70 @@ function MapResetController({ resetCount }: { resetCount: number }) {
   return null;
 }
 
-function SelectionController({ route }: { route: CorridorRoute | null }) {
+function getSelectionPadding(
+  viewportWidth: number,
+  viewportHeight: number,
+  options: { hasDetailsPanel: boolean; isMapOnlyMode: boolean },
+) {
+  if (options.isMapOnlyMode) {
+    return {
+      paddingTopLeft: L.point(64, 64),
+      paddingBottomRight: L.point(64, 64),
+    };
+  }
+
+  if (viewportWidth >= 1280) {
+    return {
+      paddingTopLeft: L.point(470, 96),
+      paddingBottomRight: L.point(options.hasDetailsPanel ? 460 : 80, 96),
+    };
+  }
+
+  if (viewportWidth >= 768) {
+    return {
+      paddingTopLeft: L.point(72, 72),
+      paddingBottomRight: L.point(72, options.hasDetailsPanel ? 320 : 96),
+    };
+  }
+
+  return {
+    paddingTopLeft: L.point(40, 40),
+    paddingBottomRight: L.point(40, options.hasDetailsPanel ? Math.round(viewportHeight * 0.62) : 72),
+  };
+}
+
+function SelectionController({
+  route,
+  hasDetailsPanel,
+  isMapOnlyMode,
+}: {
+  route: CorridorRoute | null;
+  hasDetailsPanel: boolean;
+  isMapOnlyMode: boolean;
+}) {
   const map = useMap();
+  const [viewport, setViewport] = useState(() => ({
+    width: typeof window === "undefined" ? 1440 : window.innerWidth,
+    height: typeof window === "undefined" ? 900 : window.innerHeight,
+  }));
+
+  useEffect(() => {
+    if (typeof window === "undefined") {
+      return;
+    }
+
+    function handleResize() {
+      setViewport({
+        width: window.innerWidth,
+        height: window.innerHeight,
+      });
+    }
+
+    window.addEventListener("resize", handleResize);
+    return () => {
+      window.removeEventListener("resize", handleResize);
+    };
+  }, []);
 
   useEffect(() => {
     if (!route) {
@@ -313,12 +375,18 @@ function SelectionController({ route }: { route: CorridorRoute | null }) {
       return;
     }
 
+    const padding = getSelectionPadding(viewport.width, viewport.height, {
+      hasDetailsPanel,
+      isMapOnlyMode,
+    });
+
     map.fitBounds(coordinates, {
       animate: true,
       duration: 1,
-      padding: [64, 64],
+      paddingTopLeft: padding.paddingTopLeft,
+      paddingBottomRight: padding.paddingBottomRight,
     });
-  }, [map, route]);
+  }, [hasDetailsPanel, isMapOnlyMode, map, route, viewport.height, viewport.width]);
 
   return null;
 }
@@ -376,6 +444,7 @@ interface CorridorMapCanvasProps {
   theme: "dark" | "light";
   showFlowAnimation: boolean;
   resetCount: number;
+  isMapOnlyMode: boolean;
   onRouteSelect: (routeId: string, segmentId?: string | null) => void;
   onRouteHover: (routeId: string | null) => void;
   onClearSelection: () => void;
@@ -394,6 +463,7 @@ export default function CorridorMapCanvas({
   theme,
   showFlowAnimation,
   resetCount,
+  isMapOnlyMode,
   onRouteSelect,
   onRouteHover,
   onClearSelection,
@@ -445,7 +515,11 @@ export default function CorridorMapCanvas({
       <ZoomControl position="bottomright" />
       <MapClickHandler onClearSelection={onClearSelection} />
       <MapResetController resetCount={resetCount} />
-      <SelectionController route={selectedRoute} />
+      <SelectionController
+        route={selectedRoute}
+        hasDetailsPanel={!isMapOnlyMode && Boolean(selectedRoute)}
+        isMapOnlyMode={isMapOnlyMode}
+      />
 
       <Pane name="corridor-glow" style={{ zIndex: 410 }} />
       <Pane name="corridor-lines" style={{ zIndex: 420 }} />

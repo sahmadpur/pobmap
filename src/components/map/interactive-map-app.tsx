@@ -527,6 +527,7 @@ export function InteractiveMapApp({
               theme={theme}
               showFlowAnimation={showFlowAnimation}
               resetCount={resetCount}
+              isMapOnlyMode={isMapOnlyMode}
               onRouteSelect={handleRouteSelect}
               onRouteHover={setHoveredRouteId}
               onClearSelection={() => {
