@@ -19,6 +19,8 @@
     "clearSelection": "Seçimi təmizlə",
     "showFlow": "Axın animasiyasını göstər",
     "hideFlow": "Axın animasiyasını gizlət",
+    "mapOnly": "Yalnız xəritə",
+    "showInterface": "İnterfeysi göstər",
     "switchToDark": "Qaranlıq rejim",
     "switchToLight": "İşıqlı rejim"
   },
@@ -29,6 +31,8 @@
     "countries": "Ölkələr",
     "transitTime": "Tranzit müddəti",
     "totalDistance": "Ümumi məsafə",
+    "selectedSegment": "Seçilmiş seqment",
+    "segmentHint": "Xəritədə seçilmiş marşruta yenidən klikləyin ki, konkret seqment açılsın.",
     "segments": "Nəqliyyat seqmentləri",
     "description": "Təsvir",
     "connectedCorridors": "Bağlı dəhlizlər"
@@ -55,6 +59,8 @@
     "quickLinks": "Sürətli keçidlər"
   },
   "map": {
+    "start": "Başlanğıc",
+    "end": "Son",
     "customAttribution": "Xəritə bazası CARTO və OpenStreetMap iştirakçıları tərəfindən təmin edilir"
   }
 }

@@ -183,8 +183,8 @@ body[data-theme="light"] .corridor-tooltip {
 }
 
 .baku-port-icon__core svg {
-  width: 24px;
-  height: 24px;
+  width: var(--marker-glyph-size, 24px);
+  height: var(--marker-glyph-size, 24px);
   display: block;
   color: #f8fafc;
 }
@@ -201,33 +201,93 @@ body[data-theme="light"] .corridor-tooltip {
 }
 
 .flow-icon {
-  display: grid;
-  place-items: center;
-  width: 28px;
-  height: 28px;
-  border: 1px solid color-mix(in srgb, var(--flow-color) 40%, white);
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: var(--flow-width, 40px);
+  height: var(--flow-height, 24px);
+  filter:
+    drop-shadow(0 3px 6px rgba(15, 23, 42, 0.18))
+    drop-shadow(0 1px 2px rgba(15, 23, 42, 0.12));
+}
+
+.flow-icon__shadow {
+  position: absolute;
+  left: 18%;
+  right: 18%;
+  bottom: 0;
+  height: 6px;
   border-radius: 999px;
-  background:
-    radial-gradient(circle at 30% 30%, rgba(255, 255, 255, 0.94), rgba(255, 255, 255, 0.45) 38%, transparent 39%),
-    color-mix(in srgb, var(--flow-color) 85%, #08111f);
-  box-shadow: 0 8px 22px color-mix(in srgb, var(--flow-color) 28%, transparent);
+  background: radial-gradient(
+    ellipse at center,
+    rgba(15, 23, 42, 0.22) 0%,
+    rgba(15, 23, 42, 0.08) 52%,
+    transparent 78%
+  );
+  transform: translateY(2px) scaleX(0.88);
+  filter: blur(2px);
+  opacity: 0.7;
 }
 
-.flow-icon__glyph {
-  font-size: 14px;
-  line-height: 1;
-  transform: translateY(-0.5px);
-}
-
-.flow-icon__glyph--svg {
-  display: grid;
-  place-items: center;
-}
-
-.flow-icon__glyph--svg svg {
-  width: 15px;
-  height: 15px;
+.flow-icon__dot {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: var(--flow-width, 40px);
+  height: var(--flow-height, 24px);
   display: block;
+  border-radius: 999px;
+  background: #ffffff;
+  border: 1.5px solid rgba(15, 23, 42, 0.65);
+  box-shadow:
+    0 0 0 1px rgba(255, 255, 255, 0.18),
+    0 2px 6px rgba(15, 23, 42, 0.28);
+}
+
+.flow-icon--road .flow-icon__dot {
+  animation: flow-arrow-road 1.8s ease-in-out infinite;
+}
+
+.flow-icon--rail .flow-icon__dot {
+  animation: flow-arrow-rail 2.1s linear infinite;
+}
+
+.flow-icon--ship .flow-icon__dot {
+  animation: flow-arrow-ship 3.1s ease-in-out infinite;
+}
+
+@keyframes flow-arrow-ship {
+  0%,
+  100% {
+    transform: translateY(0) scale(1) rotate(-1.5deg);
+  }
+  50% {
+    transform: translateY(-0.5px) scale(1.04) rotate(1.5deg);
+  }
+}
+
+@keyframes flow-arrow-road {
+  0%,
+  100% {
+    transform: translateY(0) scale(1);
+  }
+  40% {
+    transform: translateY(-0.35px) scale(1.05);
+  }
+  75% {
+    transform: translateY(0.25px) scale(0.98);
+  }
+}
+
+@keyframes flow-arrow-rail {
+  0%,
+  100% {
+    transform: translateY(0) scale(1);
+  }
+  50% {
+    transform: translateY(-0.2px) scale(1.02);
+  }
 }
 
 @keyframes baku-pulse {

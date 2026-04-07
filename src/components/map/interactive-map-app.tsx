@@ -5,6 +5,8 @@ import dynamic from "next/dynamic";
 import { useTranslation } from "react-i18next";
 import {
   Globe2,
+  Maximize2,
+  Minimize2,
   MoonStar,
   RotateCcw,
   Route,
@@ -87,6 +89,7 @@ export function InteractiveMapApp({
   const [enabledStatuses, setEnabledStatuses] = useState<CorridorStatus[]>(DEFAULT_STATUSES);
   const [showFlowAnimation, setShowFlowAnimation] = useState(true);
   const [resetCount, setResetCount] = useState(0);
+  const [isMapOnlyMode, setIsMapOnlyMode] = useState(false);
   const availableRouteIds = routes.map((route) => route.id);
 
   useEffect(() => {
@@ -164,6 +167,12 @@ export function InteractiveMapApp({
       : null;
 
   function handleRouteSelect(routeId: string, segmentId: string | null = null) {
+    if (selectedRouteId !== routeId) {
+      setSelectedRouteId(routeId);
+      setSelectedSegmentId(null);
+      return;
+    }
+
     setSelectedRouteId(routeId);
     setSelectedSegmentId(segmentId);
   }
@@ -231,54 +240,64 @@ export function InteractiveMapApp({
       />
 
       <section className="relative flex min-h-screen flex-col">
-        <div className="pointer-events-none absolute inset-x-0 top-0 z-[450] p-4 xl:p-6">
-          <div
-            className={`pointer-events-auto mb-4 flex flex-col gap-4 rounded-[1.75rem] border px-5 py-4 backdrop-blur lg:flex-row lg:items-center lg:justify-between ${cardClass}`}
-          >
-            <div className="min-w-0">
-              <p className="text-xs font-medium uppercase tracking-[0.3em] text-sky-500">
-                {t("app.eyebrow")}
-              </p>
-              <h1 className={`mt-2 text-xl font-semibold sm:text-2xl ${headingTextClass}`}>
-                {t("app.title")}
-              </h1>
-            </div>
+        {!isMapOnlyMode ? (
+          <div className="pointer-events-none absolute inset-x-0 top-0 z-[450] p-4 xl:p-6">
+            <div
+              className={`pointer-events-auto mb-4 flex flex-col gap-4 rounded-[1.75rem] border px-5 py-4 backdrop-blur lg:flex-row lg:items-center lg:justify-between ${cardClass}`}
+            >
+              <div className="min-w-0">
+                <p className="text-xs font-medium uppercase tracking-[0.3em] text-sky-500">
+                  {t("app.eyebrow")}
+                </p>
+                <h1 className={`mt-2 text-xl font-semibold sm:text-2xl ${headingTextClass}`}>
+                  {t("app.title")}
+                </h1>
+              </div>
 
-            <div className="flex flex-col gap-3 sm:flex-row sm:items-center">
-              <label
-                className={`flex items-center gap-3 rounded-full border px-4 py-2 text-sm ${buttonClass}`}
-              >
-                <Globe2 className="h-4 w-4 text-sky-500" aria-hidden="true" />
-                <select
-                  aria-label="Language"
-                  value={locale}
-                  onChange={(event) => setLocale(event.target.value as SupportedLocale)}
-                  className={`min-w-36 appearance-none rounded-full border-0 px-1 py-0 outline-none ${selectClass}`}
+              <div className="flex flex-col gap-3 sm:flex-row sm:items-center">
+                <label
+                  className={`flex items-center gap-3 rounded-full border px-4 py-2 text-sm ${buttonClass}`}
                 >
-                  {SUPPORTED_LOCALES.map((language) => (
-                    <option key={language} value={language}>
-                      {LOCALE_LABELS[language]}
-                    </option>
-                  ))}
-                </select>
-              </label>
+                  <Globe2 className="h-4 w-4 text-sky-500" aria-hidden="true" />
+                  <select
+                    aria-label="Language"
+                    value={locale}
+                    onChange={(event) => setLocale(event.target.value as SupportedLocale)}
+                    className={`min-w-36 appearance-none rounded-full border-0 px-1 py-0 outline-none ${selectClass}`}
+                  >
+                    {SUPPORTED_LOCALES.map((language) => (
+                      <option key={language} value={language}>
+                        {LOCALE_LABELS[language]}
+                      </option>
+                    ))}
+                  </select>
+                </label>
 
-              <button
-                type="button"
-                onClick={() => setTheme((current) => (current === "dark" ? "light" : "dark"))}
-                className={`inline-flex items-center justify-center gap-2 rounded-full border px-4 py-2 text-sm font-medium transition ${buttonClass}`}
-              >
-                {isDark ? (
-                  <SunMedium className="h-4 w-4" aria-hidden="true" />
-                ) : (
-                  <MoonStar className="h-4 w-4" aria-hidden="true" />
-                )}
-                {isDark ? t("controls.switchToLight") : t("controls.switchToDark")}
-              </button>
+                <button
+                  type="button"
+                  onClick={() => setTheme((current) => (current === "dark" ? "light" : "dark"))}
+                  className={`inline-flex items-center justify-center gap-2 rounded-full border px-4 py-2 text-sm font-medium transition ${buttonClass}`}
+                >
+                  {isDark ? (
+                    <SunMedium className="h-4 w-4" aria-hidden="true" />
+                  ) : (
+                    <MoonStar className="h-4 w-4" aria-hidden="true" />
+                  )}
+                  {isDark ? t("controls.switchToLight") : t("controls.switchToDark")}
+                </button>
+
+                <button
+                  type="button"
+                  onClick={() => setIsMapOnlyMode(true)}
+                  className={`inline-flex items-center justify-center gap-2 rounded-full border px-4 py-2 text-sm font-medium transition ${buttonClass}`}
+                >
+                  <Maximize2 className="h-4 w-4" aria-hidden="true" />
+                  {t("controls.mapOnly")}
+                </button>
+              </div>
             </div>
-          </div>
 
-          <div className="grid gap-4 xl:grid-cols-[minmax(0,26rem)_1fr] xl:items-start">
+            <div className="grid gap-4 xl:grid-cols-[minmax(0,26rem)_1fr] xl:items-start">
             <div className="flex flex-col gap-4">
               <div
                 className={`pointer-events-auto rounded-[2rem] border p-4 backdrop-blur ${cardClass}`}
@@ -478,15 +497,24 @@ export function InteractiveMapApp({
                     <Waves className="h-4 w-4" aria-hidden="true" />
                     {showFlowAnimation ? t("controls.hideFlow") : t("controls.showFlow")}
                   </button>
+                  <button
+                    type="button"
+                    onClick={() => setIsMapOnlyMode(true)}
+                    className={`inline-flex items-center gap-2 rounded-full border px-4 py-2 text-sm font-medium transition ${buttonClass}`}
+                  >
+                    <Maximize2 className="h-4 w-4" aria-hidden="true" />
+                    {t("controls.mapOnly")}
+                  </button>
                 </div>
               </div>
             </div>
 
             <div className="hidden xl:block" />
           </div>
-        </div>
+          </div>
+        ) : null}
 
-        <div className="relative flex-1 pt-[54rem] md:pt-[47rem] xl:pt-[14.5rem]">
+        <div className={`relative flex-1 ${isMapOnlyMode ? "pt-0" : "pt-[54rem] md:pt-[47rem] xl:pt-[14.5rem]"}`}>
           <div className="absolute inset-0">
             <CorridorMapCanvas
               routes={visibleRoutes}
@@ -511,6 +539,20 @@ export function InteractiveMapApp({
             />
           </div>
 
+          {isMapOnlyMode ? (
+            <div className="pointer-events-none absolute inset-x-4 top-4 z-[470] flex justify-end xl:inset-x-6">
+              <button
+                type="button"
+                onClick={() => setIsMapOnlyMode(false)}
+                className={`pointer-events-auto inline-flex items-center gap-2 rounded-full border px-4 py-2 text-sm font-medium backdrop-blur transition ${buttonClass}`}
+              >
+                <Minimize2 className="h-4 w-4" aria-hidden="true" />
+                {t("controls.showInterface")}
+              </button>
+            </div>
+          ) : null}
+
+          {!isMapOnlyMode ? (
           <div className="pointer-events-none absolute inset-x-4 bottom-4 z-[450] flex justify-between gap-4 xl:inset-x-6">
             <div
               className={`pointer-events-auto hidden rounded-full border px-4 py-2 text-xs backdrop-blur md:block ${cardClass} ${mutedTextClass}`}
@@ -518,6 +560,7 @@ export function InteractiveMapApp({
               {t("map.customAttribution")}
             </div>
           </div>
+          ) : null}
 
           <RouteDetailsPanel
             route={selectedRoute}
@@ -533,7 +576,7 @@ export function InteractiveMapApp({
             t={t}
           />
 
-          {!selectedRoute ? (
+          {!isMapOnlyMode && !selectedRoute ? (
             <div
               className={`pointer-events-none absolute bottom-6 right-6 z-[440] hidden max-w-sm rounded-[1.75rem] border p-4 text-sm leading-7 shadow-xl backdrop-blur xl:block ${cardClass} ${mutedTextClass}`}
             >

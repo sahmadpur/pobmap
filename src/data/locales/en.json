@@ -19,6 +19,8 @@
     "clearSelection": "Clear selection",
     "showFlow": "Show flow animation",
     "hideFlow": "Hide flow animation",
+    "mapOnly": "Map only",
+    "showInterface": "Show interface",
     "switchToDark": "Dark mode",
     "switchToLight": "Light mode"
   },
@@ -29,6 +31,8 @@
     "countries": "Countries",
     "transitTime": "Transit time",
     "totalDistance": "Total distance",
+    "selectedSegment": "Selected segment",
+    "segmentHint": "Click a selected route again on the map to focus a specific segment.",
     "segments": "Transport segments",
     "description": "Description",
     "connectedCorridors": "Connected corridors"
@@ -55,6 +59,8 @@
     "quickLinks": "Quick links"
   },
   "map": {
+    "start": "Start",
+    "end": "End",
     "customAttribution": "Basemap by CARTO and OpenStreetMap contributors"
   }
 }

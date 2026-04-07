@@ -19,6 +19,8 @@
     "clearSelection": "Снять выбор",
     "showFlow": "Показать анимацию потока",
     "hideFlow": "Скрыть анимацию потока",
+    "mapOnly": "Только карта",
+    "showInterface": "Показать интерфейс",
     "switchToDark": "Темный режим",
     "switchToLight": "Светлый режим"
   },
@@ -29,6 +31,8 @@
     "countries": "Страны",
     "transitTime": "Время транзита",
     "totalDistance": "Общая протяженность",
+    "selectedSegment": "Выбранный сегмент",
+    "segmentHint": "Нажмите по уже выбранному маршруту на карте еще раз, чтобы открыть конкретный сегмент.",
     "segments": "Транспортные сегменты",
     "description": "Описание",
     "connectedCorridors": "Связанные коридоры"
@@ -55,6 +59,8 @@
     "quickLinks": "Быстрые переходы"
   },
   "map": {
+    "start": "Начало",
+    "end": "Конец",
     "customAttribution": "Базовая карта предоставлена CARTO и участниками OpenStreetMap"
   }
 }

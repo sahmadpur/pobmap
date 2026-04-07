@@ -7,6 +7,7 @@ import {
   CORRIDORS,
   DEFAULT_MAP_VIEW,
 } from "@/data/corridors";
+import { REFERENCE_MAP_ROUTES } from "@/data/reference-map-routes";
 import { SEED_MARKERS } from "@/data/seed-markers";
 import { normalizeCorridorRoute, normalizeCorridorSegment } from "@/lib/corridor-stop-utils";
 import { getPrismaClient } from "@/lib/server/prisma";
@@ -60,6 +61,28 @@ function mergeSeedMarkers(markers: AdminMarker[]): AdminMarker[] {
   return Array.from(mergedMarkers.values());
 }
 
+function mergeReferenceRoutes(routes: CorridorRoute[]): CorridorRoute[] {
+  const mergedRoutes = new Map<string, CorridorRoute>();
+
+  REFERENCE_MAP_ROUTES.forEach((route) => {
+    mergedRoutes.set(route.id, normalizeCorridorRoute(route));
+  });
+
+  routes.forEach((route) => {
+    mergedRoutes.set(route.id, normalizeCorridorRoute(route));
+  });
+
+  return Array.from(mergedRoutes.values());
+}
+
+function shouldMigrateReferenceRoutes(routes: CorridorRoute[] | undefined): boolean {
+  if (!routes || routes.length === 0) {
+    return false;
+  }
+
+  return routes.length === 1 && routes[0]?.id === "north-south";
+}
+
 function mergeSeedPresentationPath(route: CorridorRoute): CorridorRoute {
   return {
     ...route,
@@ -82,10 +105,17 @@ async function ensureFileStore(): Promise<AdminStore> {
     const raw = await fs.readFile(STORE_FILE_PATH, "utf8");
     const parsedStore = JSON.parse(raw) as AdminStore;
     const mergedMarkers = mergeSeedMarkers(parsedStore.markers ?? []);
+    const mergedRoutes = shouldMigrateReferenceRoutes(parsedStore.routes)
+      ? mergeReferenceRoutes(parsedStore.routes ?? [])
+      : parsedStore.routes ?? [];
 
-    if (mergedMarkers.length !== (parsedStore.markers ?? []).length) {
+    if (
+      mergedMarkers.length !== (parsedStore.markers ?? []).length ||
+      mergedRoutes.length !== (parsedStore.routes ?? []).length
+    ) {
       const nextStore = {
         ...parsedStore,
+        routes: mergedRoutes,
         markers: mergedMarkers,
       };
       await saveFileStore(nextStore);
@@ -94,6 +124,7 @@ async function ensureFileStore(): Promise<AdminStore> {
 
     return {
       ...parsedStore,
+      routes: mergedRoutes,
       markers: mergedMarkers,
     };
   } catch {

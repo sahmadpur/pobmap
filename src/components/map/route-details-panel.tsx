@@ -57,6 +57,8 @@ export function RouteDetailsPanel({
   t,
 }: RouteDetailsPanelProps) {
   const isDark = theme === "dark";
+  const selectedSegment =
+    route?.segments.find((segment) => segment.id === selectedSegmentId) ?? null;
 
   return (
     <aside
@@ -171,6 +173,43 @@ export function RouteDetailsPanel({
             </section>
 
             <section className={`rounded-2xl border p-4 ${isDark ? "border-white/8 bg-white/4" : "border-slate-200 bg-slate-50/85"}`}>
+              {selectedSegment ? (
+                <div className={`mb-4 rounded-2xl border p-4 ${isDark ? "border-white/10 bg-slate-900/70" : "border-slate-200 bg-white/90"}`}>
+                  <div className={`flex items-center gap-2 text-xs uppercase tracking-[0.18em] ${isDark ? "text-slate-400" : "text-slate-500"}`}>
+                    <RouteIcon className="h-4 w-4" aria-hidden="true" />
+                    {t("panel.selectedSegment")}
+                  </div>
+                  <div className="mt-3 flex items-start justify-between gap-4">
+                    <div>
+                      <div className={`flex items-center gap-2 text-sm font-medium ${isDark ? "text-white" : "text-slate-900"}`}>
+                        <span
+                          className="inline-flex h-8 w-8 items-center justify-center rounded-full"
+                          style={{
+                            backgroundColor: `${TRANSPORT_MODE_META[selectedSegment.mode].color}22`,
+                            color: TRANSPORT_MODE_META[selectedSegment.mode].color,
+                          }}
+                        >
+                          <ModeIcon mode={selectedSegment.mode} />
+                        </span>
+                        {t(TRANSPORT_MODE_META[selectedSegment.mode].labelKey)}
+                      </div>
+                      <p className={`mt-2 text-sm leading-6 ${isDark ? "text-slate-300" : "text-slate-600"}`}>
+                        {getLocalizedText(selectedSegment.from, locale)} →{" "}
+                        {getLocalizedText(selectedSegment.to, locale)}
+                      </p>
+                    </div>
+                    <span className={`rounded-full px-2.5 py-1 text-xs font-medium ${
+                      isDark ? "bg-white/6 text-slate-200" : "bg-slate-100 text-slate-700"
+                    }`}>
+                      {selectedSegment.distanceKm} km
+                    </span>
+                  </div>
+                </div>
+              ) : (
+                <p className={`mb-4 text-sm leading-6 ${isDark ? "text-slate-300" : "text-slate-600"}`}>
+                  {t("panel.segmentHint")}
+                </p>
+              )}
               <h3 className={`text-xs uppercase tracking-[0.18em] ${isDark ? "text-slate-400" : "text-slate-500"}`}>
                 {t("panel.segments")}
               </h3>
