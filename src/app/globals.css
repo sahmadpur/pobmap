@@ -122,6 +122,13 @@ body[data-theme="light"] .leaflet-control-zoom a:hover {
     stroke-width 0.2s ease;
 }
 
+.leaflet-container .leaflet-interactive:focus,
+.leaflet-container .leaflet-interactive:focus-visible,
+.leaflet-container svg:focus,
+.leaflet-container svg:focus-visible {
+  outline: none !important;
+}
+
 .corridor-line--selected {
   filter: drop-shadow(0 0 10px rgba(224, 242, 254, 0.5));
 }
