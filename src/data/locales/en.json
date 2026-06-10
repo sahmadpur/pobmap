@@ -12,7 +12,12 @@
     "modes": "Transport mode",
     "statuses": "Status",
     "enableAll": "Enable all",
-    "clearAll": "Disable all"
+    "clearAll": "Disable all",
+    "expand": "Open filters",
+    "collapse": "Close filters",
+    "inspect": "Inspect",
+    "showCorridor": "Show corridor",
+    "hideCorridor": "Hide corridor"
   },
   "controls": {
     "resetView": "Reset view",
@@ -42,7 +47,9 @@
     "primary": "Primary corridors",
     "secondary": "Secondary corridors",
     "bakuPort": "Baku Port hub",
-    "transportModes": "Transport colors"
+    "transportModes": "Transport colors",
+    "corridorColors": "Corridor colors",
+    "markers": "Map markers"
   },
   "status": {
     "active": "Active",

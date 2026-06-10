@@ -12,7 +12,12 @@
     "modes": "Вид транспорта",
     "statuses": "Статус",
     "enableAll": "Включить все",
-    "clearAll": "Отключить все"
+    "clearAll": "Отключить все",
+    "expand": "Открыть фильтры",
+    "collapse": "Закрыть фильтры",
+    "inspect": "Открыть",
+    "showCorridor": "Показать коридор",
+    "hideCorridor": "Скрыть коридор"
   },
   "controls": {
     "resetView": "Сбросить вид",
@@ -42,7 +47,9 @@
     "primary": "Основные коридоры",
     "secondary": "Вторичные коридоры",
     "bakuPort": "Хаб Бакинского порта",
-    "transportModes": "Цвета транспорта"
+    "transportModes": "Цвета транспорта",
+    "corridorColors": "Цвета коридоров",
+    "markers": "Маркеры карты"
   },
   "status": {
     "active": "Активный",

@@ -1,20 +1,29 @@
 @import "tailwindcss";
 
 :root {
-  --background: #020617;
-  --foreground: #e2e8f0;
+  --background: #0d1d2f;
+  --foreground: #eaf2f8;
+  --accent: #f6b53d;
+  --accent-strong: #ffc857;
+  --accent-contrast: #1a1206;
 }
 
 body[data-theme="light"] {
   --background: #eef4fa;
   --foreground: #0f172a;
+  --accent: #c97a12;
+  --accent-strong: #b86a08;
+  --accent-contrast: #fffaf0;
 }
 
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
+  --color-accent: var(--accent);
+  --color-accent-strong: var(--accent-strong);
   --font-sans: var(--font-body);
   --font-display: var(--font-body);
+  --font-mono: var(--font-mono);
 }
 
 * {
@@ -37,32 +46,95 @@ button {
 }
 
 button:focus-visible,
-a:focus-visible {
-  outline: 2px solid #7dd3fc;
-  outline-offset: 3px;
+a:focus-visible,
+select:focus-visible,
+[tabindex]:focus-visible {
+  outline: 2px solid var(--accent-strong);
+  outline-offset: 2px;
 }
 
 ::selection {
-  background: rgba(125, 211, 252, 0.28);
-  color: #f8fafc;
+  background: color-mix(in srgb, var(--accent) 38%, transparent);
+  color: var(--foreground);
+}
+
+.font-display {
+  font-family: var(--font-display), sans-serif;
+  letter-spacing: -0.015em;
+}
+
+.font-label {
+  font-family: var(--font-mono), ui-monospace, monospace;
+  letter-spacing: 0.04em;
+  font-feature-settings: "tnum" 1;
+}
+
+/* Atmospheric grain — adds tactile depth over the gradient backdrop */
+.grain-overlay {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  opacity: 0.5;
+  mix-blend-mode: overlay;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+
+body[data-theme="light"] .grain-overlay {
+  opacity: 0.28;
+  mix-blend-mode: multiply;
+}
+
+/* Live status indicator dot */
+.accent-pulse {
+  position: relative;
+  display: inline-block;
+  width: 0.5rem;
+  height: 0.5rem;
+  border-radius: 999px;
+  background: var(--accent-strong);
+  box-shadow: 0 0 0 0 color-mix(in srgb, var(--accent-strong) 70%, transparent);
+  animation: accent-ping 2.4s cubic-bezier(0, 0, 0.2, 1) infinite;
+}
+
+@keyframes accent-ping {
+  0% {
+    box-shadow: 0 0 0 0 color-mix(in srgb, var(--accent-strong) 65%, transparent);
+  }
+  70%,
+  100% {
+    box-shadow: 0 0 0 7px transparent;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .accent-pulse {
+    animation: none;
+  }
 }
 
 ::-webkit-scrollbar {
-  width: 10px;
-  height: 10px;
+  width: 9px;
+  height: 9px;
 }
 
 ::-webkit-scrollbar-thumb {
   border-radius: 999px;
-  background: rgba(148, 163, 184, 0.3);
+  background: rgba(148, 163, 184, 0.32);
+  border: 2px solid transparent;
+  background-clip: padding-box;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: color-mix(in srgb, var(--accent) 55%, rgba(148, 163, 184, 0.4));
+  background-clip: padding-box;
 }
 
 ::-webkit-scrollbar-track {
-  background: rgba(15, 23, 42, 0.28);
+  background: transparent;
 }
 
 .leaflet-container {
-  background: #030712;
+  background: #14243a;
   font-family: var(--font-body), sans-serif;
 }
 
@@ -72,14 +144,16 @@ body[data-theme="light"] .leaflet-container {
 
 .leaflet-control-zoom {
   overflow: hidden;
-  border: 1px solid rgba(255, 255, 255, 0.12) !important;
+  border: 1px solid rgba(255, 255, 255, 0.16) !important;
   border-radius: 1.25rem !important;
-  box-shadow: 0 18px 48px rgba(2, 6, 23, 0.32) !important;
+  margin-bottom: 22px !important;
+  margin-left: 18px !important;
+  box-shadow: 0 18px 48px rgba(2, 6, 23, 0.28) !important;
 }
 
 .leaflet-control-zoom a {
   border: 0 !important;
-  background: rgba(2, 6, 23, 0.8) !important;
+  background: rgba(15, 35, 55, 0.88) !important;
   color: #f8fafc !important;
   width: 42px !important;
   height: 42px !important;
@@ -88,11 +162,13 @@ body[data-theme="light"] .leaflet-container {
 }
 
 .leaflet-control-zoom a:hover {
-  background: rgba(15, 23, 42, 0.98) !important;
+  background: rgba(30, 64, 95, 0.98) !important;
 }
 
 body[data-theme="light"] .leaflet-control-zoom {
   border-color: rgba(148, 163, 184, 0.3) !important;
+  margin-bottom: 22px !important;
+  margin-left: 18px !important;
   box-shadow: 0 18px 48px rgba(148, 163, 184, 0.22) !important;
 }
 
@@ -103,6 +179,19 @@ body[data-theme="light"] .leaflet-control-zoom a {
 
 body[data-theme="light"] .leaflet-control-zoom a:hover {
   background: rgba(241, 245, 249, 1) !important;
+}
+
+.leaflet-control-zoom a:hover {
+  color: var(--accent-strong) !important;
+}
+
+/* On desktop the floating filters panel (w-22rem at left-3) occupies the
+   bottom-left corner, so shift the zoom control clear of it. */
+@media (min-width: 1024px) {
+  .leaflet-control-zoom {
+    margin-left: calc(22rem + 1.5rem) !important;
+    margin-bottom: 16px !important;
+  }
 }
 
 .leaflet-popup-content-wrapper,
@@ -117,9 +206,16 @@ body[data-theme="light"] .leaflet-control-zoom a:hover {
 }
 
 .corridor-line {
+  cursor: pointer;
   transition:
     opacity 0.2s ease,
     stroke-width 0.2s ease;
+}
+
+.corridor-hit-line {
+  cursor: pointer;
+  stroke-linecap: round;
+  stroke-linejoin: round;
 }
 
 .leaflet-container .leaflet-interactive:focus,
@@ -153,6 +249,35 @@ body[data-theme="light"] .corridor-tooltip {
   background: rgba(255, 255, 255, 0.96) !important;
   color: #0f172a !important;
   box-shadow: 0 10px 30px rgba(148, 163, 184, 0.24);
+}
+
+.port-marker-tooltip {
+  border: 0 !important;
+  border-radius: 999px !important;
+  background: rgba(15, 35, 55, 0.9) !important;
+  color: #f8fafc !important;
+  font-weight: 700;
+  box-shadow: 0 10px 28px rgba(2, 6, 23, 0.26);
+}
+
+.port-marker-tooltip::before {
+  display: none;
+}
+
+body[data-theme="light"] .port-marker-tooltip {
+  background: rgba(255, 255, 255, 0.96) !important;
+  color: #0f172a !important;
+}
+
+.corridor-map-canvas--dark .leaflet-tile-pane,
+body[data-theme="dark"] .leaflet-tile-pane {
+  filter: brightness(1.55) contrast(0.9) saturate(0.88) !important;
+}
+
+.marker-legend-icon svg,
+.marker-legend-icon .fa-marker-icon-svg {
+  width: 1em;
+  height: 1em;
 }
 
 .baku-port-icon-wrapper {

@@ -2,6 +2,7 @@
 
 import {
   Globe2,
+  RotateCcw,
   Route as RouteIcon,
   ShipWheel,
   TimerReset,
@@ -40,8 +41,10 @@ interface RouteDetailsPanelProps {
   locale: SupportedLocale;
   theme: "dark" | "light";
   isOpen: boolean;
+  isMapOnlyMode?: boolean;
   selectedSegmentId: string | null;
   onClose: () => void;
+  onResetView: () => void;
   onSegmentSelect: (segmentId: string | null) => void;
   t: TFunction;
 }
@@ -51,8 +54,10 @@ export function RouteDetailsPanel({
   locale,
   theme,
   isOpen,
+  isMapOnlyMode = false,
   selectedSegmentId,
   onClose,
+  onResetView,
   onSegmentSelect,
   t,
 }: RouteDetailsPanelProps) {
@@ -60,39 +65,62 @@ export function RouteDetailsPanel({
   const selectedSegment =
     route?.segments.find((segment) => segment.id === selectedSegmentId) ?? null;
 
+  // Hidden by default; appears only when a route is selected.
+  // Mobile: slides up as a bottom sheet. Desktop (lg+): slides in from the right,
+  // symmetric with the left filters panel.
+  const shown = !isMapOnlyMode && isOpen;
+  const visibilityClass = shown
+    ? "translate-y-0 opacity-100 lg:translate-x-0 lg:translate-y-0"
+    : "translate-y-full opacity-0 lg:translate-y-0 lg:translate-x-[120%]";
+
   return (
     <aside
-      className={`pointer-events-auto absolute inset-x-0 bottom-0 z-[500] h-[76vh] rounded-t-[2rem] border backdrop-blur xl:inset-y-4 xl:right-4 xl:left-auto xl:h-auto xl:w-[380px] xl:rounded-[2rem] ${
+      className={`absolute z-[500] flex flex-col border backdrop-blur transition duration-300 ${
+        shown ? "pointer-events-auto" : "pointer-events-none"
+      } inset-x-0 bottom-0 h-[80vh] rounded-t-[1.75rem] lg:inset-x-auto lg:right-3 lg:top-[5.5rem] lg:bottom-3 lg:h-auto lg:w-[min(22rem,calc(100vw-1.5rem))] lg:rounded-2xl ${
         isDark
-          ? "border-white/14 bg-slate-950/92 shadow-2xl shadow-slate-950/40"
-          : "border-slate-200 bg-white/92 shadow-xl shadow-slate-300/35"
-      } ${
-        isOpen ? "translate-y-0 opacity-100" : "translate-y-full opacity-0 xl:translate-y-0 xl:translate-x-[120%]"
-      } transition duration-300`}
-      aria-hidden={!isOpen}
+          ? "border-white/12 bg-slate-950/92 shadow-[0_28px_70px_-30px_rgba(2,6,23,0.85)]"
+          : "border-slate-200/70 bg-white/92 shadow-[0_28px_70px_-34px_rgba(30,58,95,0.4)]"
+      } ${visibilityClass}`}
+      aria-hidden={!shown}
     >
-      <div className="flex h-full flex-col">
-        <div className={`flex items-start justify-between border-b px-5 py-5 ${isDark ? "border-white/10" : "border-slate-200"}`}>
+      <div className="flex h-full min-h-0 flex-col">
+        <div className={`flex items-start justify-between border-b px-5 py-4 ${isDark ? "border-white/10" : "border-slate-200"}`}>
           <div>
-            <p className={`text-xs uppercase tracking-[0.28em] ${isDark ? "text-sky-200/70" : "text-sky-600"}`}>
+            <p className="font-label text-[0.7rem] uppercase text-[var(--accent)]">
               {t("panel.routeOverview")}
             </p>
-            <h2 className={`mt-2 text-2xl font-semibold ${isDark ? "text-white" : "text-slate-950"}`}>
+            <h2 className={`font-display mt-2 text-2xl font-semibold leading-tight ${isDark ? "text-white" : "text-slate-950"}`}>
               {route ? getLocalizedText(route.name, locale) : t("panel.emptyTitle")}
             </h2>
           </div>
-          <button
-            type="button"
-            onClick={onClose}
-            className={`inline-flex h-10 w-10 items-center justify-center rounded-full border transition ${
-              isDark
-                ? "border-white/12 bg-white/6 text-slate-200 hover:bg-white/10"
-                : "border-slate-200 bg-slate-100 text-slate-700 hover:bg-slate-200"
-            }`}
-            aria-label={t("controls.clearSelection")}
-          >
-            <X className="h-5 w-5" aria-hidden="true" />
-          </button>
+          <div className="flex shrink-0 items-center gap-2">
+            <button
+              type="button"
+              onClick={onResetView}
+              className={`inline-flex h-10 w-10 items-center justify-center rounded-full border transition ${
+                isDark
+                  ? "border-white/12 bg-white/8 text-slate-100 hover:bg-white/14"
+                  : "border-slate-200 bg-slate-100 text-slate-700 hover:bg-slate-200"
+              }`}
+              aria-label={t("controls.resetView")}
+              title={t("controls.resetView")}
+            >
+              <RotateCcw className="h-5 w-5" aria-hidden="true" />
+            </button>
+            <button
+              type="button"
+              onClick={onClose}
+              className={`inline-flex h-10 w-10 items-center justify-center rounded-full border transition ${
+                isDark
+                  ? "border-white/12 bg-white/8 text-slate-100 hover:bg-white/14"
+                  : "border-slate-200 bg-slate-100 text-slate-700 hover:bg-slate-200"
+              }`}
+              aria-label={t("controls.clearSelection")}
+            >
+              <X className="h-5 w-5" aria-hidden="true" />
+            </button>
+          </div>
         </div>
 
         {!route ? (

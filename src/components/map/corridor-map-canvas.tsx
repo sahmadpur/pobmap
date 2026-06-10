@@ -501,9 +501,10 @@ export default function CorridorMapCanvas({
       maxZoom={7}
       zoomControl={false}
       attributionControl={false}
-      className="h-full w-full"
+      className={`corridor-map-canvas corridor-map-canvas--${theme} h-full w-full`}
     >
       <TileLayer
+        key={theme}
         url={
           theme === "dark"
             ? "https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png"
@@ -512,7 +513,7 @@ export default function CorridorMapCanvas({
         subdomains={["a", "b", "c", "d"]}
       />
 
-      <ZoomControl position="bottomright" />
+      <ZoomControl position="bottomleft" />
       <MapClickHandler onClearSelection={onClearSelection} />
       <MapResetController resetCount={resetCount} />
       <SelectionController
@@ -553,6 +554,24 @@ export default function CorridorMapCanvas({
                     }}
                   />
                 ) : null}
+
+                <Polyline
+                  positions={getSegmentRenderCoordinates(segment)}
+                  eventHandlers={{
+                    click: () => onRouteSelect(route.id, segment.id),
+                    mouseover: () => onRouteHover(route.id),
+                    mouseout: () => onRouteHover(null),
+                  }}
+                  pathOptions={{
+                    pane: "corridor-lines",
+                    color: "#000000",
+                    weight: 22,
+                    opacity: 0,
+                    lineCap: "round",
+                    lineJoin: "round",
+                    className: "corridor-hit-line",
+                  }}
+                />
 
                 <Polyline
                   positions={getSegmentRenderCoordinates(segment)}
@@ -611,11 +630,7 @@ export default function CorridorMapCanvas({
 
       {showFlowAnimation ? (
         <FlowMarkers
-          routes={
-            selectedRoute && selectedRoute.status === "active"
-              ? [selectedRoute]
-              : []
-          }
+          routes={routes.filter((route) => route.status === "active")}
         />
       ) : null}
 
@@ -624,6 +639,14 @@ export default function CorridorMapCanvas({
         position={primaryPortMarker.coordinates}
         icon={createMarkerIcon(primaryPortMarker, theme, { size: 43, pulse: true })}
       >
+        <Tooltip
+          permanent
+          direction="top"
+          offset={[0, -24]}
+          className="port-marker-tooltip"
+        >
+          {getLocalizedText(primaryPortMarker.name, locale)}
+        </Tooltip>
         <Popup className="baku-port-popup" offset={[0, -12]}>
           <div className="space-y-3">
             <div>

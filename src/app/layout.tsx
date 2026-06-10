@@ -1,12 +1,20 @@
 import type { Metadata } from "next";
-import { Roboto } from "next/font/google";
+import { IBM_Plex_Mono, IBM_Plex_Sans } from "next/font/google";
 import "leaflet/dist/leaflet.css";
 import "./globals.css";
 
-const roboto = Roboto({
-  weight: ["300", "400", "500", "700"],
+const plexSans = IBM_Plex_Sans({
+  weight: ["400", "500", "600", "700"],
   variable: "--font-body",
-  subsets: ["latin"],
+  subsets: ["latin", "latin-ext", "cyrillic"],
+  display: "swap",
+});
+
+const plexMono = IBM_Plex_Mono({
+  weight: ["400", "500", "600"],
+  variable: "--font-mono",
+  subsets: ["latin", "latin-ext", "cyrillic"],
+  display: "swap",
 });
 
 export const metadata: Metadata = {
@@ -24,7 +32,7 @@ export default function RootLayout({
     <html
       lang="az"
       suppressHydrationWarning
-      className={`${roboto.variable} h-full antialiased`}
+      className={`${plexSans.variable} ${plexMono.variable} h-full antialiased`}
     >
       <body
         data-theme="light"

@@ -12,7 +12,12 @@
     "modes": "Nəqliyyat növü",
     "statuses": "Status",
     "enableAll": "Hamısını aktiv et",
-    "clearAll": "Hamısını söndür"
+    "clearAll": "Hamısını söndür",
+    "expand": "Filtrləri aç",
+    "collapse": "Filtrləri bağla",
+    "inspect": "Bax",
+    "showCorridor": "Dəhlizi göstər",
+    "hideCorridor": "Dəhlizi gizlət"
   },
   "controls": {
     "resetView": "Görünüşü sıfırla",
@@ -42,7 +47,9 @@
     "primary": "Əsas dəhlizlər",
     "secondary": "İkinci dərəcəli dəhlizlər",
     "bakuPort": "Bakı Limanı qovşağı",
-    "transportModes": "Nəqliyyat rəngləri"
+    "transportModes": "Nəqliyyat rəngləri",
+    "corridorColors": "Dəhliz rəngləri",
+    "markers": "Xəritə işarələri"
   },
   "status": {
     "active": "Aktiv",
