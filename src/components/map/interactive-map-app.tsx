@@ -23,12 +23,12 @@ import {
 
 import "@/lib/i18n";
 import {
-  getCountryFlagEmoji,
   getLocalizedText,
   SUPPORTED_LOCALES,
   TRANSPORT_MODE_META,
 } from "@/data/corridors";
 import { getMarkerIconSvg } from "@/data/marker-icons";
+import { CountryFlag } from "@/components/ui/country-flag";
 import { RouteDetailsPanel } from "@/components/map/route-details-panel";
 import type { AdminMarker, MarkerCategory } from "@/types/admin";
 import type {
@@ -297,6 +297,10 @@ export function InteractiveMapApp({
   const selectClass = isDark
     ? "bg-slate-900 text-slate-100"
     : "bg-white text-slate-800";
+  // Native <option> popups on Windows render with the OS default background
+  // and don't inherit Tailwind classes, so set explicit colors inline.
+  const optionBgColor = isDark ? "#0f172a" : "#ffffff";
+  const optionTextColor = isDark ? "#f1f5f9" : "#1e293b";
   const sectionHeadingClass = `mb-2 flex items-center justify-between gap-3 border-b pb-2 text-[0.7rem] font-semibold uppercase tracking-[0.18em] ${
     isDark ? "border-white/10 text-slate-100" : "border-slate-200 text-slate-700"
   }`;
@@ -394,9 +398,14 @@ export function InteractiveMapApp({
                   value={locale}
                   onChange={(event) => setLocale(event.target.value as SupportedLocale)}
                   className={`appearance-none rounded-full border-0 bg-transparent py-0 pr-1 outline-none ${selectClass}`}
+                  style={{ color: optionTextColor }}
                 >
                   {SUPPORTED_LOCALES.map((language) => (
-                    <option key={language} value={language}>
+                    <option
+                      key={language}
+                      value={language}
+                      style={{ backgroundColor: optionBgColor, color: optionTextColor }}
+                    >
                       {LOCALE_LABELS[language]}
                     </option>
                   ))}
@@ -524,10 +533,7 @@ export function InteractiveMapApp({
                 {routes.map((route) => {
                   const enabled = effectiveEnabledRouteIds.includes(route.id);
                   const routeModes = getUniqueRouteModes(route);
-                  const routeFlags = route.countries
-                    .slice(0, 7)
-                    .map((countryCode) => getCountryFlagEmoji(countryCode))
-                    .join(" ");
+                  const routeFlags = route.countries.slice(0, 7);
 
                   return (
                     <div
@@ -557,8 +563,10 @@ export function InteractiveMapApp({
                         <span
                           className={`mt-1 flex min-w-0 items-center gap-2 text-xs ${mutedTextClass}`}
                         >
-                          <span className="truncate" aria-hidden="true">
-                            {routeFlags}
+                          <span className="flex shrink-0 items-center gap-1" aria-hidden="true">
+                            {routeFlags.map((countryCode) => (
+                              <CountryFlag key={countryCode} code={countryCode} size={20} />
+                            ))}
                           </span>
                           <span className="flex shrink-0 items-center gap-1">
                             {routeModes.map((mode) => (

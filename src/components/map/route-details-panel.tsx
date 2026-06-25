@@ -13,11 +13,11 @@ import {
 import type { TFunction } from "i18next";
 
 import {
-  getCountryFlagEmoji,
   getCountryName,
   getLocalizedText,
   TRANSPORT_MODE_META,
 } from "@/data/corridors";
+import { CountryFlag } from "@/components/ui/country-flag";
 import type {
   CorridorRoute,
   SupportedLocale,
@@ -193,7 +193,7 @@ export function RouteDetailsPanel({
                         : "border-slate-200 bg-white text-slate-800"
                     }`}
                   >
-                    <span aria-hidden="true">{getCountryFlagEmoji(countryCode)}</span>
+                    <CountryFlag code={countryCode} size={20} />
                     {getCountryName(countryCode, locale)}
                   </span>
                 ))}
