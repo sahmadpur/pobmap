@@ -15,7 +15,7 @@ console.log(
 
 if (provider === "prisma" && hasDatabaseUrl) {
   console.log("[db-push] Prisma mode — syncing schema with `prisma db push`…");
-  execSync("npx prisma db push --skip-generate", { stdio: "inherit" });
+  execSync("npx prisma db push", { stdio: "inherit" });
 } else {
   console.log("[db-push] File-store mode — skipping `prisma db push`.");
 }
