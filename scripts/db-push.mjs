@@ -19,3 +19,5 @@ if (provider === "prisma" && hasDatabaseUrl) {
 } else {
   console.log("[db-push] File-store mode — skipping `prisma db push`.");
 }
+
+// touch: force production deploy after enabling Prisma storage
