@@ -18,7 +18,8 @@ export async function POST(request: Request) {
 
     const marker = await upsertMarker(parsed.data);
     return NextResponse.json(marker);
-  } catch {
+  } catch (error) {
+    console.error("POST /api/admin/markers failed", error);
     return NextResponse.json({ error: "Failed to save marker." }, { status: 500 });
   }
 }

@@ -42,7 +42,8 @@ export async function PATCH(
     }
 
     return NextResponse.json(route);
-  } catch {
+  } catch (error) {
+    console.error("PATCH /api/admin/routes/[id] failed", error);
     return NextResponse.json({ error: "Failed to update route." }, { status: 500 });
   }
 }
@@ -55,7 +56,8 @@ export async function DELETE(
     const { id } = await context.params;
     await deleteRoute(id);
     return NextResponse.json({ ok: true });
-  } catch {
+  } catch (error) {
+    console.error("DELETE /api/admin/routes/[id] failed", error);
     return NextResponse.json({ error: "Failed to delete route." }, { status: 500 });
   }
 }
