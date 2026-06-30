@@ -31,7 +31,8 @@ export async function PATCH(
 
     const marker = await upsertMarker(parsed.data);
     return NextResponse.json(marker);
-  } catch {
+  } catch (error) {
+    console.error("PATCH /api/admin/markers/[id] failed", error);
     return NextResponse.json({ error: "Failed to update marker." }, { status: 500 });
   }
 }
@@ -44,7 +45,8 @@ export async function DELETE(
     const { id } = await context.params;
     await deleteMarker(id);
     return NextResponse.json({ ok: true });
-  } catch {
+  } catch (error) {
+    console.error("DELETE /api/admin/markers/[id] failed", error);
     return NextResponse.json({ error: "Failed to delete marker." }, { status: 500 });
   }
 }

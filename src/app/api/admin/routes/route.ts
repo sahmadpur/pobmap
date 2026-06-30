@@ -24,7 +24,8 @@ export async function POST(request: Request) {
 
     const route = await upsertRoute(parsed.data);
     return NextResponse.json(route);
-  } catch {
+  } catch (error) {
+    console.error("POST /api/admin/routes failed", error);
     return NextResponse.json({ error: "Failed to save route." }, { status: 500 });
   }
 }
