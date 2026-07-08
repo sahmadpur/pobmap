@@ -98,10 +98,14 @@ The file-backed store merges seed markers with any existing saved markers instea
 
 ## Current Content State
 
-At the time this memory file was written:
+At the time this memory file was last updated (July 2026):
 
-- 8 routes in the working file store
-- 18 markers in the working file store
+- 4 corridor routes in the working file store, each rebuilt segment-by-segment against the official ADY reference maps in `img/` (East-West / North-South / North-West PDFs; Image.jpeg is the combined all-corridor overview, red = rail, thin blue = sea)
+- 41 markers in the working file store
+- East-West (66 segments): full China feeder mesh (Dalian, Beijing, Qingdao, Lianyungang, Shanghai, Ningbo, Chaozhou, Shenzhen/Guangzhou, Kunming with Hanoi + Fangcheng stubs), Kashgar-Andijan-Tashkent branch, Almaty-Bishkek-Tashkent through-line, Termez junction (Mazar-i-Sharif + Dushanbe) with Aqina and Towrgondi spurs, both Caspian ferries (Aktau, Turkmenbashi), BTK plus Zangezur (Alat-Zangilan-Nakhchivan-Igdir-Kars), Georgia ports, Black Sea ferry fan via Samsun to Constanta/Varna/Burgas/Chernomorsk, Turkey spurs (Samsun, Mersin, Izmir), Balkan trunk Istanbul-Sofia-Belgrade-Budapest, Krakow fan (Warsaw/Wroclaw/Lviv), Budapest-Lviv, Chisinau-Odessa, German/Benelux/France/Iberia network, Med ship route (Mersin-Izmir-Trieste and Izmir-Lisbon-Rotterdam Atlantic loop)
+- North-West (20 segments): Trans-Siberian with Vanino and Vladivostok/Nakhodka split, ship legs Vladivostok-Busan, Nakhodka-Aomori (dead-end hook), Busan-Osaka-Yokohama southern loop, Caspian ferries, Poti-Samsun Black Sea ferry, Kars-Nakhchivan, Anatolia trunk with Samsun/Mersin/Izmir spurs
+- North-South (21 segments): Baltic branches (Muuga/Paldiski, Riga/Ventspils), Europe branch Moscow-Minsk-Warsaw-Wroclaw-Duisburg with Berlin spur and Rotterdam/Amsterdam legs (Hamburg is NOT connected on the official NS map), Astara-Rasht-Tehran, Nakhchivan-Tabriz-Qazvin, Kerman-Zahedan-Quetta-Karachi rail, Bandar Khomeini + Al Kuwait, Gulf coastal ship chain (Kuwait-Doha-Abu Dhabi-Dubai-Bandar Abbas), Chabahar/Muscat/Karachi/Mumbai ships
+- South-West (9 segments): per ADY's official definition this is the Persian Gulf-Black Sea corridor — Mumbai-Bandar Abbas sea leg (Chabahar feeder), Bandar Abbas-Kerman-Yazd-Qazvin-Rasht-Astara-Baku rail spine (bypasses Tehran), Alat-Tbilisi-Poti/Batumi, Black Sea ships to Chernomorsk/Constanta/Burgas, Tbilisi-Kars Turkey alternative; source: freight.ady.az south-west corridor page
 
 Notable seeded marker coverage includes:
 

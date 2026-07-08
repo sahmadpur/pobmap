@@ -9,7 +9,7 @@
       },
       "routeColor": "#E11D48",
       "type": "primary",
-      "totalDistanceKm": 14050,
+      "totalDistanceKm": 11000,
       "transitTime": {
         "az": "12-16 gün",
         "en": "12-16 days",
@@ -17,18 +17,33 @@
       },
       "countries": [
         "CN",
+        "VN",
         "KZ",
+        "KG",
+        "UZ",
+        "TJ",
+        "TM",
+        "AF",
         "AZ",
         "GE",
         "TR",
+        "UA",
+        "MD",
         "RO",
+        "BG",
+        "RS",
         "HU",
         "AT",
+        "PL",
         "DE",
         "NL",
         "BE",
+        "LU",
+        "CH",
         "FR",
-        "ES"
+        "IT",
+        "ES",
+        "PT"
       ],
       "description": {
         "az": "Yüklənmiş Şərq-Qərb xəritəsi üzrə yenidən qurulan bu marşrut Çin sahil terminallarını Mərkəzi Asiya, Xəzər keçidi, Bakı-Tbilisi-Qars oxu və Qərbi Avropa paylama qovşaqları ilə birləşdirir.",
@@ -39,12 +54,106 @@
       "animationSpeed": 0.11,
       "segments": [
         {
-          "id": "east-west-main-1",
+          "id": "east-west-cn-dalian",
           "mode": "rail",
           "from": {
-            "az": "Qingdao",
+            "az": "Dalyan",
+            "en": "Dalian",
+            "ru": "Далянь"
+          },
+          "to": {
+            "az": "Pekin",
+            "en": "Beijing",
+            "ru": "Пекин"
+          },
+          "distanceKm": 920,
+          "coordinates": [
+            [
+              38.914,
+              121.6147
+            ],
+            [
+              39.9042,
+              116.4074
+            ]
+          ],
+          "displayCoordinates": [
+            [
+              38.914,
+              121.6147
+            ],
+            [
+              40.1,
+              121.7
+            ],
+            [
+              39.7,
+              119.0
+            ],
+            [
+              39.4,
+              117.4
+            ],
+            [
+              39.9042,
+              116.4074
+            ]
+          ],
+          "stopIds": [
+            "dalian",
+            "beijing"
+          ]
+        },
+        {
+          "id": "east-west-cn-beijing",
+          "mode": "rail",
+          "from": {
+            "az": "Pekin",
+            "en": "Beijing",
+            "ru": "Пекин"
+          },
+          "to": {
+            "az": "Cjençjou",
+            "en": "Zhengzhou",
+            "ru": "Чжэнчжоу"
+          },
+          "distanceKm": 700,
+          "coordinates": [
+            [
+              39.9042,
+              116.4074
+            ],
+            [
+              34.7473,
+              113.6249
+            ]
+          ],
+          "displayCoordinates": [
+            [
+              39.9042,
+              116.4074
+            ],
+            [
+              37.3,
+              114.8
+            ],
+            [
+              34.7473,
+              113.6249
+            ]
+          ],
+          "stopIds": [
+            "beijing",
+            "zhengzhou"
+          ]
+        },
+        {
+          "id": "east-west-cn-qingdao",
+          "mode": "rail",
+          "from": {
+            "az": "Sindao",
             "en": "Qingdao",
-            "ru": "Qingdao"
+            "ru": "Циндао"
           },
           "to": {
             "az": "Sian",
@@ -91,7 +200,411 @@
           ]
         },
         {
-          "id": "east-west-main-2",
+          "id": "east-west-cn-lianyungang",
+          "mode": "rail",
+          "from": {
+            "az": "Lyanyunqan",
+            "en": "Lianyungang",
+            "ru": "Ляньюньган"
+          },
+          "to": {
+            "az": "Cjençjou",
+            "en": "Zhengzhou",
+            "ru": "Чжэнчжоу"
+          },
+          "distanceKm": 570,
+          "coordinates": [
+            [
+              34.5969,
+              119.2216
+            ],
+            [
+              34.7473,
+              113.6249
+            ]
+          ],
+          "displayCoordinates": [
+            [
+              34.5969,
+              119.2216
+            ],
+            [
+              34.3,
+              116.4
+            ],
+            [
+              34.7473,
+              113.6249
+            ]
+          ],
+          "stopIds": [
+            "lianyungang",
+            "zhengzhou"
+          ]
+        },
+        {
+          "id": "east-west-cn-shanghai",
+          "mode": "rail",
+          "from": {
+            "az": "Şanxay",
+            "en": "Shanghai",
+            "ru": "Шанхай"
+          },
+          "to": {
+            "az": "Sian",
+            "en": "Xi'an",
+            "ru": "Сиань"
+          },
+          "distanceKm": 1500,
+          "coordinates": [
+            [
+              31.2304,
+              121.4737
+            ],
+            [
+              30.5928,
+              114.3055
+            ],
+            [
+              34.3416,
+              108.9398
+            ]
+          ],
+          "displayCoordinates": [
+            [
+              31.2304,
+              121.4737
+            ],
+            [
+              31.4,
+              118.4
+            ],
+            [
+              30.5928,
+              114.3055
+            ],
+            [
+              32.2,
+              111.5
+            ],
+            [
+              34.3416,
+              108.9398
+            ]
+          ],
+          "stopIds": [
+            "shanghai",
+            "wuhan",
+            "xian"
+          ]
+        },
+        {
+          "id": "east-west-cn-ningbo",
+          "mode": "rail",
+          "from": {
+            "az": "Ninbo",
+            "en": "Ningbo",
+            "ru": "Нинбо"
+          },
+          "to": {
+            "az": "Şanxay",
+            "en": "Shanghai",
+            "ru": "Шанхай"
+          },
+          "distanceKm": 220,
+          "coordinates": [
+            [
+              29.8683,
+              121.544
+            ],
+            [
+              31.2304,
+              121.4737
+            ]
+          ],
+          "displayCoordinates": [
+            [
+              29.8683,
+              121.544
+            ],
+            [
+              30.6,
+              121.1
+            ],
+            [
+              31.2304,
+              121.4737
+            ]
+          ],
+          "stopIds": [
+            "ningbo",
+            "shanghai"
+          ]
+        },
+        {
+          "id": "east-west-cn-chaozhou",
+          "mode": "rail",
+          "from": {
+            "az": "Çaoçjou",
+            "en": "Chaozhou",
+            "ru": "Чаочжоу"
+          },
+          "to": {
+            "az": "Ninbo",
+            "en": "Ningbo",
+            "ru": "Нинбо"
+          },
+          "distanceKm": 900,
+          "coordinates": [
+            [
+              23.6567,
+              116.6226
+            ],
+            [
+              29.8683,
+              121.544
+            ]
+          ],
+          "displayCoordinates": [
+            [
+              23.6567,
+              116.6226
+            ],
+            [
+              26.1,
+              119.3
+            ],
+            [
+              28.0,
+              120.7
+            ],
+            [
+              29.8683,
+              121.544
+            ]
+          ],
+          "stopIds": [
+            "chaozhou",
+            "ningbo"
+          ]
+        },
+        {
+          "id": "east-west-cn-south",
+          "mode": "rail",
+          "from": {
+            "az": "Şençjen",
+            "en": "Shenzhen",
+            "ru": "Шэньчжэнь"
+          },
+          "to": {
+            "az": "Lançjou",
+            "en": "Lanzhou",
+            "ru": "Ланьчжоу"
+          },
+          "distanceKm": 2600,
+          "coordinates": [
+            [
+              22.5431,
+              114.0579
+            ],
+            [
+              23.1291,
+              113.2644
+            ],
+            [
+              29.4316,
+              106.9123
+            ],
+            [
+              36.0611,
+              103.8343
+            ]
+          ],
+          "displayCoordinates": [
+            [
+              22.5431,
+              114.0579
+            ],
+            [
+              23.1291,
+              113.2644
+            ],
+            [
+              26.6,
+              109.0
+            ],
+            [
+              29.4316,
+              106.9123
+            ],
+            [
+              32.9,
+              105.3
+            ],
+            [
+              36.0611,
+              103.8343
+            ]
+          ],
+          "stopIds": [
+            "shenzhen",
+            "guangzhou",
+            "chongqing",
+            "lanzhou"
+          ]
+        },
+        {
+          "id": "east-west-cn-southwest",
+          "mode": "rail",
+          "from": {
+            "az": "Lançjou",
+            "en": "Lanzhou",
+            "ru": "Ланьчжоу"
+          },
+          "to": {
+            "az": "Kunmin",
+            "en": "Kunming",
+            "ru": "Куньмин"
+          },
+          "distanceKm": 1600,
+          "coordinates": [
+            [
+              36.0611,
+              103.8343
+            ],
+            [
+              30.5728,
+              104.0668
+            ],
+            [
+              25.0389,
+              102.7183
+            ]
+          ],
+          "displayCoordinates": [
+            [
+              36.0611,
+              103.8343
+            ],
+            [
+              33.5,
+              104.5
+            ],
+            [
+              30.5728,
+              104.0668
+            ],
+            [
+              27.9,
+              102.9
+            ],
+            [
+              25.0389,
+              102.7183
+            ]
+          ],
+          "stopIds": [
+            "lanzhou",
+            "chengdu",
+            "kunming"
+          ]
+        },
+        {
+          "id": "east-west-cn-vietnam",
+          "mode": "rail",
+          "from": {
+            "az": "Kunmin",
+            "en": "Kunming",
+            "ru": "Куньмин"
+          },
+          "to": {
+            "az": "Hanoy",
+            "en": "Hanoi",
+            "ru": "Ханой"
+          },
+          "distanceKm": 760,
+          "coordinates": [
+            [
+              25.0389,
+              102.7183
+            ],
+            [
+              21.0278,
+              105.8342
+            ]
+          ],
+          "displayCoordinates": [
+            [
+              25.0389,
+              102.7183
+            ],
+            [
+              23.4,
+              103.9
+            ],
+            [
+              22.4,
+              104.4
+            ],
+            [
+              21.0278,
+              105.8342
+            ]
+          ],
+          "stopIds": [
+            "kunming",
+            "hanoi"
+          ]
+        },
+        {
+          "id": "east-west-cn-fangcheng",
+          "mode": "rail",
+          "from": {
+            "az": "Kunmin",
+            "en": "Kunming",
+            "ru": "Куньмин"
+          },
+          "to": {
+            "az": "Fançen",
+            "en": "Fangcheng",
+            "ru": "Фанчэн"
+          },
+          "distanceKm": 900,
+          "coordinates": [
+            [
+              25.0389,
+              102.7183
+            ],
+            [
+              21.6867,
+              108.3547
+            ]
+          ],
+          "displayCoordinates": [
+            [
+              25.0389,
+              102.7183
+            ],
+            [
+              23.9,
+              106.0
+            ],
+            [
+              22.8,
+              108.3
+            ],
+            [
+              21.6867,
+              108.3547
+            ]
+          ],
+          "stopIds": [
+            "kunming",
+            "fangcheng"
+          ]
+        },
+        {
+          "id": "east-west-cn-main",
           "mode": "rail",
           "from": {
             "az": "Sian",
@@ -103,11 +616,15 @@
             "en": "Almaty",
             "ru": "Алматы"
           },
-          "distanceKm": 2850,
+          "distanceKm": 3400,
           "coordinates": [
             [
               34.3416,
               108.9398
+            ],
+            [
+              36.0611,
+              103.8343
             ],
             [
               43.8256,
@@ -128,8 +645,8 @@
               103.8343
             ],
             [
-              38.4872,
-              106.2309
+              40.5,
+              95.8
             ],
             [
               43.8256,
@@ -146,12 +663,142 @@
           ],
           "stopIds": [
             "xian",
+            "lanzhou",
             "urumqi",
             "almaty"
           ]
         },
         {
-          "id": "east-west-main-3",
+          "id": "east-west-kashgar",
+          "mode": "rail",
+          "from": {
+            "az": "Urumçi",
+            "en": "Urumqi",
+            "ru": "Урумчи"
+          },
+          "to": {
+            "az": "Daşkənd",
+            "en": "Tashkent",
+            "ru": "Ташкент"
+          },
+          "distanceKm": 1900,
+          "coordinates": [
+            [
+              43.8256,
+              87.6168
+            ],
+            [
+              39.4704,
+              75.9898
+            ],
+            [
+              40.7821,
+              72.3442
+            ],
+            [
+              41.2995,
+              69.2401
+            ]
+          ],
+          "displayCoordinates": [
+            [
+              43.8256,
+              87.6168
+            ],
+            [
+              41.7,
+              82.9
+            ],
+            [
+              39.4704,
+              75.9898
+            ],
+            [
+              40.0,
+              74.0
+            ],
+            [
+              40.7821,
+              72.3442
+            ],
+            [
+              40.9,
+              71.2
+            ],
+            [
+              41.2995,
+              69.2401
+            ]
+          ],
+          "stopIds": [
+            "urumqi",
+            "kashgar",
+            "andijan",
+            "tashkent"
+          ]
+        },
+        {
+          "id": "east-west-bishkek",
+          "mode": "rail",
+          "from": {
+            "az": "Almatı",
+            "en": "Almaty",
+            "ru": "Алматы"
+          },
+          "to": {
+            "az": "Daşkənd",
+            "en": "Tashkent",
+            "ru": "Ташкент"
+          },
+          "distanceKm": 940,
+          "coordinates": [
+            [
+              43.2389,
+              76.8897
+            ],
+            [
+              42.8746,
+              74.5698
+            ],
+            [
+              41.2995,
+              69.2401
+            ]
+          ],
+          "displayCoordinates": [
+            [
+              43.2389,
+              76.8897
+            ],
+            [
+              43.0,
+              75.6
+            ],
+            [
+              42.8746,
+              74.5698
+            ],
+            [
+              42.6,
+              72.0
+            ],
+            [
+              42.3,
+              69.6
+            ],
+            [
+              41.2995,
+              69.2401
+            ]
+          ],
+          "stopIds": [
+            "almaty",
+            "bishkek",
+            "tashkent"
+          ]
+        },
+        {
+          "id": "east-west-kz-main",
           "mode": "rail",
           "from": {
             "az": "Almatı",
@@ -163,15 +810,15 @@
             "en": "Aktau",
             "ru": "Актау"
           },
-          "distanceKm": 2650,
+          "distanceKm": 2900,
           "coordinates": [
             [
               43.2389,
               76.8897
             ],
             [
-              47.1068,
-              51.9166
+              45.3167,
+              55.2
             ],
             [
               43.6532,
@@ -188,16 +835,20 @@
               73.1
             ],
             [
-              46.4,
-              67.9
+              46.2,
+              67.5
             ],
             [
-              47.1068,
-              51.9166
+              45.9,
+              61.2
             ],
             [
-              45.6,
-              51.5
+              45.3167,
+              55.2
+            ],
+            [
+              44.6,
+              53.4
             ],
             [
               43.6532,
@@ -206,12 +857,331 @@
           ],
           "stopIds": [
             "almaty",
-            "atyrau",
+            "beyneu",
             "aktau"
           ]
         },
         {
-          "id": "east-west-main-4",
+          "id": "east-west-uz-tm",
+          "mode": "rail",
+          "from": {
+            "az": "Daşkənd",
+            "en": "Tashkent",
+            "ru": "Ташкент"
+          },
+          "to": {
+            "az": "Türkmənbaşı",
+            "en": "Turkmenbashi",
+            "ru": "Туркменбаши"
+          },
+          "distanceKm": 1700,
+          "coordinates": [
+            [
+              41.2995,
+              69.2401
+            ],
+            [
+              39.6542,
+              66.9597
+            ],
+            [
+              39.7681,
+              64.4556
+            ],
+            [
+              39.0733,
+              63.5786
+            ],
+            [
+              37.6,
+              61.8303
+            ],
+            [
+              37.9601,
+              58.3261
+            ],
+            [
+              40.0224,
+              52.9697
+            ]
+          ],
+          "displayCoordinates": [
+            [
+              41.2995,
+              69.2401
+            ],
+            [
+              40.4,
+              68.2
+            ],
+            [
+              39.6542,
+              66.9597
+            ],
+            [
+              39.7681,
+              64.4556
+            ],
+            [
+              39.0733,
+              63.5786
+            ],
+            [
+              38.3,
+              62.6
+            ],
+            [
+              37.6,
+              61.8303
+            ],
+            [
+              37.5,
+              60.5
+            ],
+            [
+              37.9601,
+              58.3261
+            ],
+            [
+              38.9,
+              56.3
+            ],
+            [
+              39.6,
+              54.6
+            ],
+            [
+              40.0224,
+              52.9697
+            ]
+          ],
+          "stopIds": [
+            "tashkent",
+            "samarkand",
+            "bukhara",
+            "turkmenabat",
+            "mary",
+            "ashgabat",
+            "turkmenbashi"
+          ]
+        },
+        {
+          "id": "east-west-termez",
+          "mode": "rail",
+          "from": {
+            "az": "Səmərqənd",
+            "en": "Samarkand",
+            "ru": "Самарканд"
+          },
+          "to": {
+            "az": "Termez",
+            "en": "Termez",
+            "ru": "Термез"
+          },
+          "distanceKm": 380,
+          "coordinates": [
+            [
+              39.6542,
+              66.9597
+            ],
+            [
+              37.2242,
+              67.2783
+            ]
+          ],
+          "displayCoordinates": [
+            [
+              39.6542,
+              66.9597
+            ],
+            [
+              38.86,
+              65.79
+            ],
+            [
+              38.0,
+              66.6
+            ],
+            [
+              37.2242,
+              67.2783
+            ]
+          ],
+          "stopIds": [
+            "samarkand",
+            "termez"
+          ]
+        },
+        {
+          "id": "east-west-mazar",
+          "mode": "rail",
+          "from": {
+            "az": "Termez",
+            "en": "Termez",
+            "ru": "Термез"
+          },
+          "to": {
+            "az": "Məzari-Şərif",
+            "en": "Mazar-i-Sharif",
+            "ru": "Мазари-Шариф"
+          },
+          "distanceKm": 100,
+          "coordinates": [
+            [
+              37.2242,
+              67.2783
+            ],
+            [
+              36.7069,
+              67.1109
+            ]
+          ],
+          "displayCoordinates": [
+            [
+              37.2242,
+              67.2783
+            ],
+            [
+              36.7069,
+              67.1109
+            ]
+          ],
+          "stopIds": [
+            "termez",
+            "mazar-i-sharif"
+          ]
+        },
+        {
+          "id": "east-west-dushanbe",
+          "mode": "rail",
+          "from": {
+            "az": "Termez",
+            "en": "Termez",
+            "ru": "Термез"
+          },
+          "to": {
+            "az": "Düşənbə",
+            "en": "Dushanbe",
+            "ru": "Душанбе"
+          },
+          "distanceKm": 260,
+          "coordinates": [
+            [
+              37.2242,
+              67.2783
+            ],
+            [
+              38.5598,
+              68.787
+            ]
+          ],
+          "displayCoordinates": [
+            [
+              37.2242,
+              67.2783
+            ],
+            [
+              38.0,
+              68.0
+            ],
+            [
+              38.5598,
+              68.787
+            ]
+          ],
+          "stopIds": [
+            "termez",
+            "dushanbe"
+          ]
+        },
+        {
+          "id": "east-west-aqina",
+          "mode": "rail",
+          "from": {
+            "az": "Türkmənabad",
+            "en": "Turkmenabat",
+            "ru": "Туркменабад"
+          },
+          "to": {
+            "az": "Akina",
+            "en": "Aqina",
+            "ru": "Акина"
+          },
+          "distanceKm": 250,
+          "coordinates": [
+            [
+              39.0733,
+              63.5786
+            ],
+            [
+              37.0891,
+              65.6572
+            ]
+          ],
+          "displayCoordinates": [
+            [
+              39.0733,
+              63.5786
+            ],
+            [
+              38.0,
+              64.9
+            ],
+            [
+              37.0891,
+              65.6572
+            ]
+          ],
+          "stopIds": [
+            "turkmenabat",
+            "aqina"
+          ]
+        },
+        {
+          "id": "east-west-towrgondi",
+          "mode": "rail",
+          "from": {
+            "az": "Marı",
+            "en": "Mary",
+            "ru": "Мары"
+          },
+          "to": {
+            "az": "Turqundi",
+            "en": "Towrgondi",
+            "ru": "Тургунди"
+          },
+          "distanceKm": 300,
+          "coordinates": [
+            [
+              37.6,
+              61.8303
+            ],
+            [
+              35.2183,
+              62.2591
+            ]
+          ],
+          "displayCoordinates": [
+            [
+              37.6,
+              61.8303
+            ],
+            [
+              36.3,
+              62.1
+            ],
+            [
+              35.2183,
+              62.2591
+            ]
+          ],
+          "stopIds": [
+            "mary",
+            "towrgondi"
+          ]
+        },
+        {
+          "id": "east-west-caspian-kz",
           "mode": "ship",
           "from": {
             "az": "Aktau",
@@ -223,7 +1193,7 @@
             "en": "Baku",
             "ru": "Баку"
           },
-          "distanceKm": 430,
+          "distanceKm": 470,
           "coordinates": [
             [
               43.6532,
@@ -262,7 +1232,54 @@
           ]
         },
         {
-          "id": "east-west-main-5",
+          "id": "east-west-caspian-tm",
+          "mode": "ship",
+          "from": {
+            "az": "Türkmənbaşı",
+            "en": "Turkmenbashi",
+            "ru": "Туркменбаши"
+          },
+          "to": {
+            "az": "Ələt",
+            "en": "Alat",
+            "ru": "Алят"
+          },
+          "distanceKm": 300,
+          "coordinates": [
+            [
+              40.0224,
+              52.9697
+            ],
+            [
+              40.3572,
+              49.835
+            ]
+          ],
+          "displayCoordinates": [
+            [
+              40.0224,
+              52.9697
+            ],
+            [
+              40.3,
+              51.9
+            ],
+            [
+              40.4,
+              50.8
+            ],
+            [
+              40.3572,
+              49.835
+            ]
+          ],
+          "stopIds": [
+            "turkmenbashi",
+            "baku-port"
+          ]
+        },
+        {
+          "id": "east-west-btk",
           "mode": "rail",
           "from": {
             "az": "Bakı",
@@ -270,11 +1287,11 @@
             "ru": "Баку"
           },
           "to": {
-            "az": "İstanbul",
-            "en": "Istanbul",
-            "ru": "Стамбул"
+            "az": "Qars",
+            "en": "Kars",
+            "ru": "Карс"
           },
-          "distanceKm": 1950,
+          "distanceKm": 850,
           "coordinates": [
             [
               40.3572,
@@ -287,6 +1304,481 @@
             [
               40.6013,
               43.0947
+            ]
+          ],
+          "displayCoordinates": [
+            [
+              40.3572,
+              49.835
+            ],
+            [
+              40.9,
+              47.8
+            ],
+            [
+              41.7151,
+              44.8271
+            ],
+            [
+              41.1,
+              43.9
+            ],
+            [
+              40.6013,
+              43.0947
+            ]
+          ],
+          "stopIds": [
+            "baku-port",
+            "tbilisi",
+            "kars"
+          ]
+        },
+        {
+          "id": "east-west-zangezur",
+          "mode": "rail",
+          "from": {
+            "az": "Ələt",
+            "en": "Alat",
+            "ru": "Алят"
+          },
+          "to": {
+            "az": "Naxçıvan",
+            "en": "Nakhchivan",
+            "ru": "Нахчыван"
+          },
+          "distanceKm": 420,
+          "coordinates": [
+            [
+              40.3572,
+              49.835
+            ],
+            [
+              39.3989,
+              47.0289
+            ],
+            [
+              39.2089,
+              45.4122
+            ]
+          ],
+          "displayCoordinates": [
+            [
+              40.3572,
+              49.835
+            ],
+            [
+              39.8,
+              48.9
+            ],
+            [
+              39.4,
+              48.2
+            ],
+            [
+              39.3989,
+              47.0289
+            ],
+            [
+              38.9,
+              46.2
+            ],
+            [
+              39.0,
+              45.8
+            ],
+            [
+              39.2089,
+              45.4122
+            ]
+          ],
+          "stopIds": [
+            "baku-port",
+            "zangilan",
+            "nakhchivan"
+          ]
+        },
+        {
+          "id": "east-west-nakhchivan-kars",
+          "mode": "rail",
+          "from": {
+            "az": "Naxçıvan",
+            "en": "Nakhchivan",
+            "ru": "Нахчыван"
+          },
+          "to": {
+            "az": "Qars",
+            "en": "Kars",
+            "ru": "Карс"
+          },
+          "distanceKm": 220,
+          "coordinates": [
+            [
+              39.2089,
+              45.4122
+            ],
+            [
+              39.7191,
+              43.0503
+            ],
+            [
+              40.6013,
+              43.0947
+            ]
+          ],
+          "displayCoordinates": [
+            [
+              39.2089,
+              45.4122
+            ],
+            [
+              39.5,
+              44.8
+            ],
+            [
+              39.7191,
+              43.0503
+            ],
+            [
+              40.6013,
+              43.0947
+            ]
+          ],
+          "stopIds": [
+            "nakhchivan",
+            "igdir",
+            "kars"
+          ]
+        },
+        {
+          "id": "east-west-georgia",
+          "mode": "rail",
+          "from": {
+            "az": "Tbilisi",
+            "en": "Tbilisi",
+            "ru": "Тбилиси"
+          },
+          "to": {
+            "az": "Batumi",
+            "en": "Batumi",
+            "ru": "Батуми"
+          },
+          "distanceKm": 350,
+          "coordinates": [
+            [
+              41.7151,
+              44.8271
+            ],
+            [
+              42.1462,
+              41.6719
+            ],
+            [
+              41.6459,
+              41.6404
+            ]
+          ],
+          "displayCoordinates": [
+            [
+              41.7151,
+              44.8271
+            ],
+            [
+              42.1,
+              43.5
+            ],
+            [
+              42.27,
+              42.7
+            ],
+            [
+              42.1462,
+              41.6719
+            ],
+            [
+              41.6459,
+              41.6404
+            ]
+          ],
+          "stopIds": [
+            "tbilisi",
+            "poti",
+            "batumi"
+          ]
+        },
+        {
+          "id": "east-west-bs-samsun",
+          "mode": "ship",
+          "from": {
+            "az": "Poti",
+            "en": "Poti",
+            "ru": "Поти"
+          },
+          "to": {
+            "az": "Samsun",
+            "en": "Samsun",
+            "ru": "Самсун"
+          },
+          "distanceKm": 550,
+          "coordinates": [
+            [
+              42.1462,
+              41.6719
+            ],
+            [
+              41.2867,
+              36.33
+            ]
+          ],
+          "displayCoordinates": [
+            [
+              42.1462,
+              41.6719
+            ],
+            [
+              42.5,
+              39.5
+            ],
+            [
+              42.0,
+              37.5
+            ],
+            [
+              41.2867,
+              36.33
+            ]
+          ],
+          "stopIds": [
+            "poti",
+            "samsun"
+          ]
+        },
+        {
+          "id": "east-west-bs-constanta",
+          "mode": "ship",
+          "from": {
+            "az": "Samsun",
+            "en": "Samsun",
+            "ru": "Самсун"
+          },
+          "to": {
+            "az": "Konstansa",
+            "en": "Constanta",
+            "ru": "Констанца"
+          },
+          "distanceKm": 900,
+          "coordinates": [
+            [
+              41.2867,
+              36.33
+            ],
+            [
+              44.1598,
+              28.6348
+            ]
+          ],
+          "displayCoordinates": [
+            [
+              41.2867,
+              36.33
+            ],
+            [
+              42.8,
+              34.0
+            ],
+            [
+              43.7,
+              31.5
+            ],
+            [
+              44.0,
+              29.8
+            ],
+            [
+              44.1598,
+              28.6348
+            ]
+          ],
+          "stopIds": [
+            "samsun",
+            "constanta"
+          ]
+        },
+        {
+          "id": "east-west-bs-varna",
+          "mode": "ship",
+          "from": {
+            "az": "Samsun",
+            "en": "Samsun",
+            "ru": "Самсун"
+          },
+          "to": {
+            "az": "Varna",
+            "en": "Varna",
+            "ru": "Варна"
+          },
+          "distanceKm": 900,
+          "coordinates": [
+            [
+              41.2867,
+              36.33
+            ],
+            [
+              43.2141,
+              27.9147
+            ]
+          ],
+          "displayCoordinates": [
+            [
+              41.2867,
+              36.33
+            ],
+            [
+              42.8,
+              34.0
+            ],
+            [
+              43.7,
+              31.5
+            ],
+            [
+              43.5,
+              29.5
+            ],
+            [
+              43.2141,
+              27.9147
+            ]
+          ],
+          "stopIds": [
+            "samsun",
+            "varna"
+          ]
+        },
+        {
+          "id": "east-west-bs-burgas",
+          "mode": "ship",
+          "from": {
+            "az": "Samsun",
+            "en": "Samsun",
+            "ru": "Самсун"
+          },
+          "to": {
+            "az": "Burqas",
+            "en": "Burgas",
+            "ru": "Бургас"
+          },
+          "distanceKm": 900,
+          "coordinates": [
+            [
+              41.2867,
+              36.33
+            ],
+            [
+              42.5048,
+              27.4626
+            ]
+          ],
+          "displayCoordinates": [
+            [
+              41.2867,
+              36.33
+            ],
+            [
+              42.8,
+              34.0
+            ],
+            [
+              43.7,
+              31.5
+            ],
+            [
+              42.9,
+              29.2
+            ],
+            [
+              42.5048,
+              27.4626
+            ]
+          ],
+          "stopIds": [
+            "samsun",
+            "burgas"
+          ]
+        },
+        {
+          "id": "east-west-bs-chernomorsk",
+          "mode": "ship",
+          "from": {
+            "az": "Samsun",
+            "en": "Samsun",
+            "ru": "Самсун"
+          },
+          "to": {
+            "az": "Çernomorsk",
+            "en": "Chernomorsk",
+            "ru": "Черноморск"
+          },
+          "distanceKm": 950,
+          "coordinates": [
+            [
+              41.2867,
+              36.33
+            ],
+            [
+              46.3017,
+              30.6569
+            ]
+          ],
+          "displayCoordinates": [
+            [
+              41.2867,
+              36.33
+            ],
+            [
+              42.8,
+              34.0
+            ],
+            [
+              43.7,
+              31.5
+            ],
+            [
+              45.2,
+              30.9
+            ],
+            [
+              46.3017,
+              30.6569
+            ]
+          ],
+          "stopIds": [
+            "samsun",
+            "chernomorsk"
+          ]
+        },
+        {
+          "id": "east-west-turkey",
+          "mode": "rail",
+          "from": {
+            "az": "Qars",
+            "en": "Kars",
+            "ru": "Карс"
+          },
+          "to": {
+            "az": "İstanbul",
+            "en": "Istanbul",
+            "ru": "Стамбул"
+          },
+          "distanceKm": 1450,
+          "coordinates": [
+            [
+              40.6013,
+              43.0947
+            ],
+            [
+              39.7477,
+              37.0179
             ],
             [
               39.9334,
@@ -299,20 +1791,24 @@
           ],
           "displayCoordinates": [
             [
-              40.3572,
-              49.835
-            ],
-            [
-              41.7151,
-              44.8271
-            ],
-            [
               40.6013,
               43.0947
             ],
             [
+              40.0,
+              40.2
+            ],
+            [
+              39.7477,
+              37.0179
+            ],
+            [
               39.9334,
               32.8597
+            ],
+            [
+              40.7,
+              30.9
             ],
             [
               41.0082,
@@ -320,15 +1816,100 @@
             ]
           ],
           "stopIds": [
-            "baku-port",
-            "tbilisi",
             "kars",
+            "sivas",
             "ankara",
             "istanbul"
           ]
         },
         {
-          "id": "east-west-main-6",
+          "id": "east-west-samsun-rail",
+          "mode": "rail",
+          "from": {
+            "az": "Samsun",
+            "en": "Samsun",
+            "ru": "Самсун"
+          },
+          "to": {
+            "az": "Ankara",
+            "en": "Ankara",
+            "ru": "Анкара"
+          },
+          "distanceKm": 420,
+          "coordinates": [
+            [
+              41.2867,
+              36.33
+            ],
+            [
+              39.9334,
+              32.8597
+            ]
+          ],
+          "displayCoordinates": [
+            [
+              41.2867,
+              36.33
+            ],
+            [
+              40.6,
+              34.5
+            ],
+            [
+              39.9334,
+              32.8597
+            ]
+          ],
+          "stopIds": [
+            "samsun",
+            "ankara"
+          ]
+        },
+        {
+          "id": "east-west-mersin",
+          "mode": "rail",
+          "from": {
+            "az": "Ankara",
+            "en": "Ankara",
+            "ru": "Анкара"
+          },
+          "to": {
+            "az": "Mersin",
+            "en": "Mersin",
+            "ru": "Мерсин"
+          },
+          "distanceKm": 480,
+          "coordinates": [
+            [
+              39.9334,
+              32.8597
+            ],
+            [
+              36.8,
+              34.6333
+            ]
+          ],
+          "displayCoordinates": [
+            [
+              39.9334,
+              32.8597
+            ],
+            [
+              38.4,
+              33.5
+            ],
+            [
+              36.8,
+              34.6333
+            ]
+          ],
+          "stopIds": [
+            "ankara",
+            "mersin"
+          ]
+        },
+        {
+          "id": "east-west-izmir",
           "mode": "rail",
           "from": {
             "az": "İstanbul",
@@ -336,24 +1917,741 @@
             "ru": "Стамбул"
           },
           "to": {
-            "az": "Duisburg",
-            "en": "Duisburg",
-            "ru": "Duisburg"
+            "az": "İzmir",
+            "en": "Izmir",
+            "ru": "Измир"
           },
-          "distanceKm": 2300,
+          "distanceKm": 480,
           "coordinates": [
             [
               41.0082,
               28.9784
             ],
             [
-              44.4268,
-              26.1025
+              38.4237,
+              27.1428
+            ]
+          ],
+          "displayCoordinates": [
+            [
+              41.0082,
+              28.9784
+            ],
+            [
+              40.2,
+              28.0
+            ],
+            [
+              39.1,
+              27.3
+            ],
+            [
+              38.4237,
+              27.1428
+            ]
+          ],
+          "stopIds": [
+            "istanbul",
+            "izmir"
+          ]
+        },
+        {
+          "id": "east-west-med-coast",
+          "mode": "ship",
+          "from": {
+            "az": "Mersin",
+            "en": "Mersin",
+            "ru": "Мерсин"
+          },
+          "to": {
+            "az": "İzmir",
+            "en": "Izmir",
+            "ru": "Измир"
+          },
+          "distanceKm": 700,
+          "coordinates": [
+            [
+              36.8,
+              34.6333
+            ],
+            [
+              38.4237,
+              27.1428
+            ]
+          ],
+          "displayCoordinates": [
+            [
+              36.8,
+              34.6333
+            ],
+            [
+              36.2,
+              32.0
+            ],
+            [
+              36.4,
+              29.0
+            ],
+            [
+              36.9,
+              27.4
+            ],
+            [
+              38.4237,
+              27.1428
+            ]
+          ],
+          "stopIds": [
+            "mersin",
+            "izmir"
+          ]
+        },
+        {
+          "id": "east-west-med-adriatic",
+          "mode": "ship",
+          "from": {
+            "az": "İzmir",
+            "en": "Izmir",
+            "ru": "Измир"
+          },
+          "to": {
+            "az": "Triest",
+            "en": "Trieste",
+            "ru": "Триест"
+          },
+          "distanceKm": 1650,
+          "coordinates": [
+            [
+              38.4237,
+              27.1428
+            ],
+            [
+              45.6495,
+              13.7768
+            ]
+          ],
+          "displayCoordinates": [
+            [
+              38.4237,
+              27.1428
+            ],
+            [
+              37.6,
+              25.4
+            ],
+            [
+              36.4,
+              21.8
+            ],
+            [
+              38.2,
+              18.9
+            ],
+            [
+              40.5,
+              18.3
+            ],
+            [
+              43.0,
+              14.8
+            ],
+            [
+              45.6495,
+              13.7768
+            ]
+          ],
+          "stopIds": [
+            "izmir",
+            "trieste"
+          ]
+        },
+        {
+          "id": "east-west-med-west",
+          "mode": "ship",
+          "from": {
+            "az": "İzmir",
+            "en": "Izmir",
+            "ru": "Измир"
+          },
+          "to": {
+            "az": "Lissabon",
+            "en": "Lisbon",
+            "ru": "Лиссабон"
+          },
+          "distanceKm": 3300,
+          "coordinates": [
+            [
+              38.4237,
+              27.1428
+            ],
+            [
+              38.7223,
+              -9.1393
+            ]
+          ],
+          "displayCoordinates": [
+            [
+              38.4237,
+              27.1428
+            ],
+            [
+              37.0,
+              24.5
+            ],
+            [
+              36.0,
+              19.0
+            ],
+            [
+              36.6,
+              13.8
+            ],
+            [
+              37.6,
+              9.7
+            ],
+            [
+              37.9,
+              2.8
+            ],
+            [
+              36.6,
+              -2.8
+            ],
+            [
+              36.0,
+              -5.6
+            ],
+            [
+              37.0,
+              -9.2
+            ],
+            [
+              38.7223,
+              -9.1393
+            ]
+          ],
+          "stopIds": [
+            "izmir",
+            "lisbon"
+          ]
+        },
+        {
+          "id": "east-west-atlantic",
+          "mode": "ship",
+          "from": {
+            "az": "Lissabon",
+            "en": "Lisbon",
+            "ru": "Лиссабон"
+          },
+          "to": {
+            "az": "Rotterdam",
+            "en": "Rotterdam",
+            "ru": "Роттердам"
+          },
+          "distanceKm": 2100,
+          "coordinates": [
+            [
+              38.7223,
+              -9.1393
+            ],
+            [
+              51.9244,
+              4.4777
+            ]
+          ],
+          "displayCoordinates": [
+            [
+              38.7223,
+              -9.1393
+            ],
+            [
+              39.8,
+              -10.0
+            ],
+            [
+              43.9,
+              -9.3
+            ],
+            [
+              48.4,
+              -5.6
+            ],
+            [
+              49.8,
+              -1.8
+            ],
+            [
+              50.3,
+              0.8
+            ],
+            [
+              51.4,
+              2.5
+            ],
+            [
+              51.9244,
+              4.4777
+            ]
+          ],
+          "stopIds": [
+            "lisbon",
+            "rotterdam"
+          ]
+        },
+        {
+          "id": "east-west-thrace",
+          "mode": "rail",
+          "from": {
+            "az": "İstanbul",
+            "en": "Istanbul",
+            "ru": "Стамбул"
+          },
+          "to": {
+            "az": "Burqas",
+            "en": "Burgas",
+            "ru": "Бургас"
+          },
+          "distanceKm": 290,
+          "coordinates": [
+            [
+              41.0082,
+              28.9784
+            ],
+            [
+              42.5048,
+              27.4626
+            ]
+          ],
+          "displayCoordinates": [
+            [
+              41.0082,
+              28.9784
+            ],
+            [
+              41.6,
+              28.1
+            ],
+            [
+              42.5048,
+              27.4626
+            ]
+          ],
+          "stopIds": [
+            "istanbul",
+            "burgas"
+          ]
+        },
+        {
+          "id": "east-west-balkans",
+          "mode": "rail",
+          "from": {
+            "az": "İstanbul",
+            "en": "Istanbul",
+            "ru": "Стамбул"
+          },
+          "to": {
+            "az": "Budapeşt",
+            "en": "Budapest",
+            "ru": "Будапешт"
+          },
+          "distanceKm": 1350,
+          "coordinates": [
+            [
+              41.0082,
+              28.9784
+            ],
+            [
+              42.6977,
+              23.3219
+            ],
+            [
+              44.7866,
+              20.4489
             ],
             [
               47.4979,
               19.0402
+            ]
+          ],
+          "displayCoordinates": [
+            [
+              41.0082,
+              28.9784
             ],
+            [
+              41.7,
+              26.6
+            ],
+            [
+              42.15,
+              24.75
+            ],
+            [
+              42.6977,
+              23.3219
+            ],
+            [
+              43.3,
+              21.9
+            ],
+            [
+              44.7866,
+              20.4489
+            ],
+            [
+              45.3,
+              19.8
+            ],
+            [
+              47.4979,
+              19.0402
+            ]
+          ],
+          "stopIds": [
+            "istanbul",
+            "sofia",
+            "belgrade",
+            "budapest"
+          ]
+        },
+        {
+          "id": "east-west-burgas-rail",
+          "mode": "rail",
+          "from": {
+            "az": "Burqas",
+            "en": "Burgas",
+            "ru": "Бургас"
+          },
+          "to": {
+            "az": "Sofiya",
+            "en": "Sofia",
+            "ru": "София"
+          },
+          "distanceKm": 380,
+          "coordinates": [
+            [
+              42.5048,
+              27.4626
+            ],
+            [
+              42.6977,
+              23.3219
+            ]
+          ],
+          "displayCoordinates": [
+            [
+              42.5048,
+              27.4626
+            ],
+            [
+              42.4,
+              25.6
+            ],
+            [
+              42.6977,
+              23.3219
+            ]
+          ],
+          "stopIds": [
+            "burgas",
+            "sofia"
+          ]
+        },
+        {
+          "id": "east-west-varna-rail",
+          "mode": "rail",
+          "from": {
+            "az": "Varna",
+            "en": "Varna",
+            "ru": "Варна"
+          },
+          "to": {
+            "az": "Buxarest",
+            "en": "Bucharest",
+            "ru": "Бухарест"
+          },
+          "distanceKm": 320,
+          "coordinates": [
+            [
+              43.2141,
+              27.9147
+            ],
+            [
+              44.4268,
+              26.1025
+            ]
+          ],
+          "displayCoordinates": [
+            [
+              43.2141,
+              27.9147
+            ],
+            [
+              43.8,
+              26.6
+            ],
+            [
+              44.4268,
+              26.1025
+            ]
+          ],
+          "stopIds": [
+            "varna",
+            "bucharest"
+          ]
+        },
+        {
+          "id": "east-west-constanta-rail",
+          "mode": "rail",
+          "from": {
+            "az": "Konstansa",
+            "en": "Constanta",
+            "ru": "Констанца"
+          },
+          "to": {
+            "az": "Buxarest",
+            "en": "Bucharest",
+            "ru": "Бухарест"
+          },
+          "distanceKm": 230,
+          "coordinates": [
+            [
+              44.1598,
+              28.6348
+            ],
+            [
+              44.4268,
+              26.1025
+            ]
+          ],
+          "displayCoordinates": [
+            [
+              44.1598,
+              28.6348
+            ],
+            [
+              44.3,
+              27.4
+            ],
+            [
+              44.4268,
+              26.1025
+            ]
+          ],
+          "stopIds": [
+            "constanta",
+            "bucharest"
+          ]
+        },
+        {
+          "id": "east-west-bucharest",
+          "mode": "rail",
+          "from": {
+            "az": "Budapeşt",
+            "en": "Budapest",
+            "ru": "Будапешт"
+          },
+          "to": {
+            "az": "Buxarest",
+            "en": "Bucharest",
+            "ru": "Бухарест"
+          },
+          "distanceKm": 870,
+          "coordinates": [
+            [
+              47.4979,
+              19.0402
+            ],
+            [
+              44.4268,
+              26.1025
+            ]
+          ],
+          "displayCoordinates": [
+            [
+              47.4979,
+              19.0402
+            ],
+            [
+              46.8,
+              23.6
+            ],
+            [
+              45.9,
+              24.9
+            ],
+            [
+              45.65,
+              25.6
+            ],
+            [
+              44.4268,
+              26.1025
+            ]
+          ],
+          "stopIds": [
+            "budapest",
+            "bucharest"
+          ]
+        },
+        {
+          "id": "east-west-chisinau-rail",
+          "mode": "rail",
+          "from": {
+            "az": "Lvov",
+            "en": "Lviv",
+            "ru": "Львов"
+          },
+          "to": {
+            "az": "Kişinyov",
+            "en": "Chisinau",
+            "ru": "Кишинёв"
+          },
+          "distanceKm": 470,
+          "coordinates": [
+            [
+              49.8397,
+              24.0297
+            ],
+            [
+              47.0105,
+              28.8638
+            ]
+          ],
+          "displayCoordinates": [
+            [
+              49.8397,
+              24.0297
+            ],
+            [
+              49.0,
+              26.0
+            ],
+            [
+              47.8,
+              27.5
+            ],
+            [
+              47.0105,
+              28.8638
+            ]
+          ],
+          "stopIds": [
+            "lviv",
+            "chisinau"
+          ]
+        },
+        {
+          "id": "east-west-odessa",
+          "mode": "rail",
+          "from": {
+            "az": "Kişinyov",
+            "en": "Chisinau",
+            "ru": "Кишинёв"
+          },
+          "to": {
+            "az": "Çernomorsk",
+            "en": "Chernomorsk",
+            "ru": "Черноморск"
+          },
+          "distanceKm": 180,
+          "coordinates": [
+            [
+              47.0105,
+              28.8638
+            ],
+            [
+              46.4825,
+              30.7233
+            ],
+            [
+              46.3017,
+              30.6569
+            ]
+          ],
+          "displayCoordinates": [
+            [
+              47.0105,
+              28.8638
+            ],
+            [
+              46.6,
+              30.0
+            ],
+            [
+              46.4825,
+              30.7233
+            ],
+            [
+              46.3017,
+              30.6569
+            ]
+          ],
+          "stopIds": [
+            "chisinau",
+            "odessa",
+            "chernomorsk"
+          ]
+        },
+        {
+          "id": "east-west-danube",
+          "mode": "rail",
+          "from": {
+            "az": "Budapeşt",
+            "en": "Budapest",
+            "ru": "Будапешт"
+          },
+          "to": {
+            "az": "Vyana",
+            "en": "Vienna",
+            "ru": "Вена"
+          },
+          "distanceKm": 250,
+          "coordinates": [
+            [
+              47.4979,
+              19.0402
+            ],
+            [
+              48.2082,
+              16.3738
+            ]
+          ],
+          "displayCoordinates": [
+            [
+              47.4979,
+              19.0402
+            ],
+            [
+              47.8,
+              17.7
+            ],
+            [
+              48.2082,
+              16.3738
+            ]
+          ],
+          "stopIds": [
+            "budapest",
+            "vienna"
+          ]
+        },
+        {
+          "id": "east-west-germany",
+          "mode": "rail",
+          "from": {
+            "az": "Vyana",
+            "en": "Vienna",
+            "ru": "Вена"
+          },
+          "to": {
+            "az": "Duisburq",
+            "en": "Duisburg",
+            "ru": "Дуйсбург"
+          },
+          "distanceKm": 950,
+          "coordinates": [
             [
               48.2082,
               16.3738
@@ -369,32 +2667,24 @@
           ],
           "displayCoordinates": [
             [
-              41.0082,
-              28.9784
-            ],
-            [
-              42.1,
-              27.3
-            ],
-            [
-              44.4268,
-              26.1025
-            ],
-            [
-              45.8,
-              23
-            ],
-            [
-              47.4979,
-              19.0402
-            ],
-            [
               48.2082,
               16.3738
             ],
             [
+              48.3,
+              14.3
+            ],
+            [
+              49.45,
+              11.1
+            ],
+            [
               50.1109,
               8.6821
+            ],
+            [
+              50.9,
+              7.2
             ],
             [
               51.4344,
@@ -402,28 +2692,334 @@
             ]
           ],
           "stopIds": [
-            "istanbul",
-            "bucharest",
-            "budapest",
             "vienna",
             "frankfurt",
             "duisburg"
           ]
         },
         {
-          "id": "east-west-main-7",
+          "id": "east-west-krakow",
           "mode": "rail",
           "from": {
-            "az": "Duisburg",
+            "az": "Vyana",
+            "en": "Vienna",
+            "ru": "Вена"
+          },
+          "to": {
+            "az": "Krakov",
+            "en": "Krakow",
+            "ru": "Краков"
+          },
+          "distanceKm": 430,
+          "coordinates": [
+            [
+              48.2082,
+              16.3738
+            ],
+            [
+              50.0647,
+              19.945
+            ]
+          ],
+          "displayCoordinates": [
+            [
+              48.2082,
+              16.3738
+            ],
+            [
+              49.2,
+              16.6
+            ],
+            [
+              49.8,
+              18.3
+            ],
+            [
+              50.0647,
+              19.945
+            ]
+          ],
+          "stopIds": [
+            "vienna",
+            "krakow"
+          ]
+        },
+        {
+          "id": "east-west-warsaw",
+          "mode": "rail",
+          "from": {
+            "az": "Krakov",
+            "en": "Krakow",
+            "ru": "Краков"
+          },
+          "to": {
+            "az": "Varşava",
+            "en": "Warsaw",
+            "ru": "Варшава"
+          },
+          "distanceKm": 300,
+          "coordinates": [
+            [
+              50.0647,
+              19.945
+            ],
+            [
+              52.2297,
+              21.0122
+            ]
+          ],
+          "displayCoordinates": [
+            [
+              50.0647,
+              19.945
+            ],
+            [
+              51.2,
+              20.6
+            ],
+            [
+              52.2297,
+              21.0122
+            ]
+          ],
+          "stopIds": [
+            "krakow",
+            "warsaw"
+          ]
+        },
+        {
+          "id": "east-west-wroclaw",
+          "mode": "rail",
+          "from": {
+            "az": "Krakov",
+            "en": "Krakow",
+            "ru": "Краков"
+          },
+          "to": {
+            "az": "Vrotslav",
+            "en": "Wroclaw",
+            "ru": "Вроцлав"
+          },
+          "distanceKm": 270,
+          "coordinates": [
+            [
+              50.0647,
+              19.945
+            ],
+            [
+              51.1079,
+              17.0385
+            ]
+          ],
+          "displayCoordinates": [
+            [
+              50.0647,
+              19.945
+            ],
+            [
+              50.6,
+              18.6
+            ],
+            [
+              51.1079,
+              17.0385
+            ]
+          ],
+          "stopIds": [
+            "krakow",
+            "wroclaw"
+          ]
+        },
+        {
+          "id": "east-west-lviv",
+          "mode": "rail",
+          "from": {
+            "az": "Krakov",
+            "en": "Krakow",
+            "ru": "Краков"
+          },
+          "to": {
+            "az": "Lvov",
+            "en": "Lviv",
+            "ru": "Львов"
+          },
+          "distanceKm": 330,
+          "coordinates": [
+            [
+              50.0647,
+              19.945
+            ],
+            [
+              49.8397,
+              24.0297
+            ]
+          ],
+          "displayCoordinates": [
+            [
+              50.0647,
+              19.945
+            ],
+            [
+              49.8,
+              22.8
+            ],
+            [
+              49.8397,
+              24.0297
+            ]
+          ],
+          "stopIds": [
+            "krakow",
+            "lviv"
+          ]
+        },
+        {
+          "id": "east-west-budapest-lviv",
+          "mode": "rail",
+          "from": {
+            "az": "Budapeşt",
+            "en": "Budapest",
+            "ru": "Будапешт"
+          },
+          "to": {
+            "az": "Lvov",
+            "en": "Lviv",
+            "ru": "Львов"
+          },
+          "distanceKm": 550,
+          "coordinates": [
+            [
+              47.4979,
+              19.0402
+            ],
+            [
+              49.8397,
+              24.0297
+            ]
+          ],
+          "displayCoordinates": [
+            [
+              47.4979,
+              19.0402
+            ],
+            [
+              48.3,
+              21.0
+            ],
+            [
+              48.7,
+              22.3
+            ],
+            [
+              49.8397,
+              24.0297
+            ]
+          ],
+          "stopIds": [
+            "budapest",
+            "lviv"
+          ]
+        },
+        {
+          "id": "east-west-hamburg",
+          "mode": "rail",
+          "from": {
+            "az": "Hamburq",
+            "en": "Hamburg",
+            "ru": "Гамбург"
+          },
+          "to": {
+            "az": "Duisburq",
             "en": "Duisburg",
-            "ru": "Duisburg"
+            "ru": "Дуйсбург"
+          },
+          "distanceKm": 340,
+          "coordinates": [
+            [
+              53.5511,
+              9.9937
+            ],
+            [
+              51.4344,
+              6.7623
+            ]
+          ],
+          "displayCoordinates": [
+            [
+              53.5511,
+              9.9937
+            ],
+            [
+              52.9,
+              9.2
+            ],
+            [
+              51.4344,
+              6.7623
+            ]
+          ],
+          "stopIds": [
+            "hamburg",
+            "duisburg"
+          ]
+        },
+        {
+          "id": "east-west-berlin",
+          "mode": "rail",
+          "from": {
+            "az": "Berlin",
+            "en": "Berlin",
+            "ru": "Берлин"
+          },
+          "to": {
+            "az": "Duisburq",
+            "en": "Duisburg",
+            "ru": "Дуйсбург"
+          },
+          "distanceKm": 480,
+          "coordinates": [
+            [
+              52.52,
+              13.405
+            ],
+            [
+              51.4344,
+              6.7623
+            ]
+          ],
+          "displayCoordinates": [
+            [
+              52.52,
+              13.405
+            ],
+            [
+              52.4,
+              9.7
+            ],
+            [
+              51.4344,
+              6.7623
+            ]
+          ],
+          "stopIds": [
+            "berlin",
+            "duisburg"
+          ]
+        },
+        {
+          "id": "east-west-rotterdam",
+          "mode": "rail",
+          "from": {
+            "az": "Duisburq",
+            "en": "Duisburg",
+            "ru": "Дуйсбург"
           },
           "to": {
             "az": "Rotterdam",
             "en": "Rotterdam",
-            "ru": "Rotterdam"
+            "ru": "Роттердам"
           },
-          "distanceKm": 220,
+          "distanceKm": 230,
           "coordinates": [
             [
               51.4344,
@@ -454,19 +3050,19 @@
           ]
         },
         {
-          "id": "east-west-main-8",
+          "id": "east-west-benelux",
           "mode": "rail",
           "from": {
-            "az": "Duisburg",
+            "az": "Duisburq",
             "en": "Duisburg",
-            "ru": "Duisburg"
+            "ru": "Дуйсбург"
           },
           "to": {
-            "az": "Madrid",
-            "en": "Madrid",
-            "ru": "Мадрид"
+            "az": "Paris",
+            "en": "Paris",
+            "ru": "Париж"
           },
-          "distanceKm": 4300,
+          "distanceKm": 480,
           "coordinates": [
             [
               51.4344,
@@ -479,7 +3075,394 @@
             [
               48.8566,
               2.3522
+            ]
+          ],
+          "displayCoordinates": [
+            [
+              51.4344,
+              6.7623
             ],
+            [
+              51.0,
+              5.6
+            ],
+            [
+              50.8503,
+              4.3517
+            ],
+            [
+              49.9,
+              3.1
+            ],
+            [
+              48.8566,
+              2.3522
+            ]
+          ],
+          "stopIds": [
+            "duisburg",
+            "brussels",
+            "paris"
+          ]
+        },
+        {
+          "id": "east-west-havre",
+          "mode": "rail",
+          "from": {
+            "az": "Paris",
+            "en": "Paris",
+            "ru": "Париж"
+          },
+          "to": {
+            "az": "Havr",
+            "en": "Le Havre",
+            "ru": "Гавр"
+          },
+          "distanceKm": 200,
+          "coordinates": [
+            [
+              48.8566,
+              2.3522
+            ],
+            [
+              49.4944,
+              0.1079
+            ]
+          ],
+          "displayCoordinates": [
+            [
+              48.8566,
+              2.3522
+            ],
+            [
+              49.44,
+              1.1
+            ],
+            [
+              49.4944,
+              0.1079
+            ]
+          ],
+          "stopIds": [
+            "paris",
+            "le-havre"
+          ]
+        },
+        {
+          "id": "east-west-france",
+          "mode": "rail",
+          "from": {
+            "az": "Paris",
+            "en": "Paris",
+            "ru": "Париж"
+          },
+          "to": {
+            "az": "Madrid",
+            "en": "Madrid",
+            "ru": "Мадрид"
+          },
+          "distanceKm": 1270,
+          "coordinates": [
+            [
+              48.8566,
+              2.3522
+            ],
+            [
+              40.4168,
+              -3.7038
+            ]
+          ],
+          "displayCoordinates": [
+            [
+              48.8566,
+              2.3522
+            ],
+            [
+              46.6,
+              0.4
+            ],
+            [
+              44.84,
+              -0.58
+            ],
+            [
+              43.3,
+              -1.9
+            ],
+            [
+              42.85,
+              -2.67
+            ],
+            [
+              40.4168,
+              -3.7038
+            ]
+          ],
+          "stopIds": [
+            "paris",
+            "madrid"
+          ]
+        },
+        {
+          "id": "east-west-iberia",
+          "mode": "rail",
+          "from": {
+            "az": "Madrid",
+            "en": "Madrid",
+            "ru": "Мадрид"
+          },
+          "to": {
+            "az": "Lissabon",
+            "en": "Lisbon",
+            "ru": "Лиссабон"
+          },
+          "distanceKm": 640,
+          "coordinates": [
+            [
+              40.4168,
+              -3.7038
+            ],
+            [
+              38.7223,
+              -9.1393
+            ]
+          ],
+          "displayCoordinates": [
+            [
+              40.4168,
+              -3.7038
+            ],
+            [
+              39.5,
+              -6.4
+            ],
+            [
+              38.7223,
+              -9.1393
+            ]
+          ],
+          "stopIds": [
+            "madrid",
+            "lisbon"
+          ]
+        },
+        {
+          "id": "east-west-alpine",
+          "mode": "rail",
+          "from": {
+            "az": "Duisburq",
+            "en": "Duisburg",
+            "ru": "Дуйсбург"
+          },
+          "to": {
+            "az": "Milan",
+            "en": "Milan",
+            "ru": "Милан"
+          },
+          "distanceKm": 850,
+          "coordinates": [
+            [
+              51.4344,
+              6.7623
+            ],
+            [
+              49.6116,
+              6.1319
+            ],
+            [
+              46.948,
+              7.4474
+            ],
+            [
+              45.4642,
+              9.19
+            ]
+          ],
+          "displayCoordinates": [
+            [
+              51.4344,
+              6.7623
+            ],
+            [
+              50.4,
+              6.5
+            ],
+            [
+              49.6116,
+              6.1319
+            ],
+            [
+              48.6,
+              7.0
+            ],
+            [
+              47.56,
+              7.59
+            ],
+            [
+              46.948,
+              7.4474
+            ],
+            [
+              46.3,
+              8.6
+            ],
+            [
+              45.4642,
+              9.19
+            ]
+          ],
+          "stopIds": [
+            "duisburg",
+            "luxembourg",
+            "bern",
+            "milan"
+          ]
+        },
+        {
+          "id": "east-west-adriatic-rail",
+          "mode": "rail",
+          "from": {
+            "az": "Vyana",
+            "en": "Vienna",
+            "ru": "Вена"
+          },
+          "to": {
+            "az": "Genuya",
+            "en": "Genoa",
+            "ru": "Генуя"
+          },
+          "distanceKm": 900,
+          "coordinates": [
+            [
+              48.2082,
+              16.3738
+            ],
+            [
+              45.6495,
+              13.7768
+            ],
+            [
+              45.4642,
+              9.19
+            ],
+            [
+              44.4056,
+              8.9463
+            ]
+          ],
+          "displayCoordinates": [
+            [
+              48.2082,
+              16.3738
+            ],
+            [
+              47.1,
+              15.4
+            ],
+            [
+              46.6,
+              14.3
+            ],
+            [
+              45.6495,
+              13.7768
+            ],
+            [
+              45.5,
+              11.9
+            ],
+            [
+              45.4642,
+              9.19
+            ],
+            [
+              44.4056,
+              8.9463
+            ]
+          ],
+          "stopIds": [
+            "vienna",
+            "trieste",
+            "milan",
+            "genoa"
+          ]
+        },
+        {
+          "id": "east-west-riviera",
+          "mode": "rail",
+          "from": {
+            "az": "Genuya",
+            "en": "Genoa",
+            "ru": "Генуя"
+          },
+          "to": {
+            "az": "Barselona",
+            "en": "Barcelona",
+            "ru": "Барселона"
+          },
+          "distanceKm": 700,
+          "coordinates": [
+            [
+              44.4056,
+              8.9463
+            ],
+            [
+              43.2965,
+              5.3698
+            ],
+            [
+              41.3851,
+              2.1734
+            ]
+          ],
+          "displayCoordinates": [
+            [
+              44.4056,
+              8.9463
+            ],
+            [
+              43.7,
+              7.3
+            ],
+            [
+              43.2965,
+              5.3698
+            ],
+            [
+              43.0,
+              3.1
+            ],
+            [
+              42.4,
+              3.1
+            ],
+            [
+              41.3851,
+              2.1734
+            ]
+          ],
+          "stopIds": [
+            "genoa",
+            "marseille",
+            "barcelona"
+          ]
+        },
+        {
+          "id": "east-west-spain",
+          "mode": "rail",
+          "from": {
+            "az": "Barselona",
+            "en": "Barcelona",
+            "ru": "Барселона"
+          },
+          "to": {
+            "az": "Madrid",
+            "en": "Madrid",
+            "ru": "Мадрид"
+          },
+          "distanceKm": 620,
+          "coordinates": [
             [
               41.3851,
               2.1734
@@ -491,24 +3474,12 @@
           ],
           "displayCoordinates": [
             [
-              51.4344,
-              6.7623
-            ],
-            [
-              50.8503,
-              4.3517
-            ],
-            [
-              48.8566,
-              2.3522
-            ],
-            [
-              45.7,
-              2.2
-            ],
-            [
               41.3851,
               2.1734
+            ],
+            [
+              41.7,
+              -0.9
             ],
             [
               40.4168,
@@ -516,9 +3487,6 @@
             ]
           ],
           "stopIds": [
-            "duisburg",
-            "brussels",
-            "paris",
             "barcelona",
             "madrid"
           ]
@@ -534,7 +3502,7 @@
       },
       "routeColor": "#4F46E5",
       "type": "primary",
-      "totalDistanceKm": 15550,
+      "totalDistanceKm": 12700,
       "transitTime": {
         "az": "16-22 gün",
         "en": "16-22 days",
@@ -542,9 +3510,13 @@
       },
       "countries": [
         "AZ",
+        "GE",
+        "TR",
         "RU",
         "FI",
-        "TR",
+        "KZ",
+        "TM",
+        "KR",
         "JP"
       ],
       "description": {
@@ -568,7 +3540,7 @@
             "en": "Moscow",
             "ru": "Москва"
           },
-          "distanceKm": 2200,
+          "distanceKm": 2500,
           "coordinates": [
             [
               40.3572,
@@ -641,7 +3613,7 @@
             "en": "St. Petersburg",
             "ru": "Санкт-Петербург"
           },
-          "distanceKm": 650,
+          "distanceKm": 700,
           "coordinates": [
             [
               55.7558,
@@ -701,8 +3673,8 @@
               30.3351
             ],
             [
-              60.1,
-              28
+              60.4,
+              28.2
             ],
             [
               60.1699,
@@ -715,7 +3687,7 @@
           ]
         },
         {
-          "id": "north-west-main-4",
+          "id": "north-west-transsib",
           "mode": "rail",
           "from": {
             "az": "Moskva",
@@ -723,15 +3695,19 @@
             "ru": "Москва"
           },
           "to": {
-            "az": "Vladivostok",
-            "en": "Vladivostok",
-            "ru": "Владивосток"
+            "az": "Xabarovsk",
+            "en": "Khabarovsk",
+            "ru": "Хабаровск"
           },
-          "distanceKm": 9300,
+          "distanceKm": 8500,
           "coordinates": [
             [
               55.7558,
               37.6173
+            ],
+            [
+              56.8389,
+              60.6057
             ],
             [
               55.0084,
@@ -742,12 +3718,12 @@
               104.305
             ],
             [
-              48.4802,
-              135.0719
+              52.0339,
+              113.4994
             ],
             [
-              43.1155,
-              131.8855
+              48.4802,
+              135.0719
             ]
           ],
           "displayCoordinates": [
@@ -756,33 +3732,126 @@
               37.6173
             ],
             [
-              55.8,
-              48.6
+              55.9,
+              49.1
             ],
             [
-              55.6,
-              60
+              56.8389,
+              60.6057
+            ],
+            [
+              55.4,
+              73.4
             ],
             [
               55.0084,
               82.9357
             ],
             [
-              54,
-              95
+              55.3,
+              92.0
             ],
             [
               52.2869,
               104.305
             ],
             [
-              53.4,
-              118
+              51.9,
+              107.6
             ],
             [
-              49.7,
-              127
+              52.0339,
+              113.4994
             ],
+            [
+              53.9,
+              123.9
+            ],
+            [
+              50.6,
+              129.0
+            ],
+            [
+              48.4802,
+              135.0719
+            ]
+          ],
+          "stopIds": [
+            "moscow",
+            "yekaterinburg",
+            "novosibirsk",
+            "irkutsk",
+            "chita",
+            "khabarovsk"
+          ]
+        },
+        {
+          "id": "north-west-vanino",
+          "mode": "rail",
+          "from": {
+            "az": "Xabarovsk",
+            "en": "Khabarovsk",
+            "ru": "Хабаровск"
+          },
+          "to": {
+            "az": "Vanino",
+            "en": "Vanino",
+            "ru": "Ванино"
+          },
+          "distanceKm": 750,
+          "coordinates": [
+            [
+              48.4802,
+              135.0719
+            ],
+            [
+              50.5496,
+              137.0079
+            ],
+            [
+              49.0869,
+              140.2543
+            ]
+          ],
+          "displayCoordinates": [
+            [
+              48.4802,
+              135.0719
+            ],
+            [
+              50.5496,
+              137.0079
+            ],
+            [
+              50.0,
+              139.4
+            ],
+            [
+              49.0869,
+              140.2543
+            ]
+          ],
+          "stopIds": [
+            "khabarovsk",
+            "komsomolsk",
+            "vanino"
+          ]
+        },
+        {
+          "id": "north-west-primorye",
+          "mode": "rail",
+          "from": {
+            "az": "Xabarovsk",
+            "en": "Khabarovsk",
+            "ru": "Хабаровск"
+          },
+          "to": {
+            "az": "Naxodka",
+            "en": "Nakhodka",
+            "ru": "Находка"
+          },
+          "distanceKm": 900,
+          "coordinates": [
             [
               48.4802,
               135.0719
@@ -790,18 +3859,42 @@
             [
               43.1155,
               131.8855
+            ],
+            [
+              42.8236,
+              132.8928
+            ]
+          ],
+          "displayCoordinates": [
+            [
+              48.4802,
+              135.0719
+            ],
+            [
+              45.5,
+              133.5
+            ],
+            [
+              43.8,
+              132.0
+            ],
+            [
+              43.1155,
+              131.8855
+            ],
+            [
+              42.8236,
+              132.8928
             ]
           ],
           "stopIds": [
-            "moscow",
-            "novosibirsk",
-            "irkutsk",
             "khabarovsk",
-            "vladivostok"
+            "vladivostok",
+            "nakhodka"
           ]
         },
         {
-          "id": "north-west-main-5",
+          "id": "north-west-pusan",
           "mode": "ship",
           "from": {
             "az": "Vladivostok",
@@ -809,19 +3902,19 @@
             "ru": "Владивосток"
           },
           "to": {
-            "az": "Yokohama",
-            "en": "Yokohama",
-            "ru": "Yokohama"
+            "az": "Pusan",
+            "en": "Busan",
+            "ru": "Пусан"
           },
-          "distanceKm": 1150,
+          "distanceKm": 900,
           "coordinates": [
             [
               43.1155,
               131.8855
             ],
             [
-              35.4437,
-              139.638
+              35.1796,
+              129.0756
             ]
           ],
           "displayCoordinates": [
@@ -830,16 +3923,185 @@
               131.8855
             ],
             [
-              42.1,
-              135
+              41.0,
+              131.4
             ],
             [
-              40.4,
-              138
+              38.6,
+              130.4
             ],
             [
-              37.8,
-              140.2
+              36.5,
+              129.9
+            ],
+            [
+              35.1796,
+              129.0756
+            ]
+          ],
+          "stopIds": [
+            "vladivostok",
+            "busan"
+          ]
+        },
+        {
+          "id": "north-west-aomori",
+          "mode": "ship",
+          "from": {
+            "az": "Naxodka",
+            "en": "Nakhodka",
+            "ru": "Находка"
+          },
+          "to": {
+            "az": "Aomori",
+            "en": "Aomori",
+            "ru": "Аомори"
+          },
+          "distanceKm": 800,
+          "coordinates": [
+            [
+              42.8236,
+              132.8928
+            ],
+            [
+              40.8221,
+              140.7474
+            ]
+          ],
+          "displayCoordinates": [
+            [
+              42.8236,
+              132.8928
+            ],
+            [
+              41.6,
+              135.2
+            ],
+            [
+              39.8,
+              138.2
+            ],
+            [
+              40.6,
+              139.8
+            ],
+            [
+              41.4,
+              140.3
+            ],
+            [
+              40.8221,
+              140.7474
+            ]
+          ],
+          "stopIds": [
+            "nakhodka",
+            "aomori"
+          ]
+        },
+        {
+          "id": "north-west-osaka",
+          "mode": "ship",
+          "from": {
+            "az": "Pusan",
+            "en": "Busan",
+            "ru": "Пусан"
+          },
+          "to": {
+            "az": "Osaka",
+            "en": "Osaka",
+            "ru": "Осака"
+          },
+          "distanceKm": 900,
+          "coordinates": [
+            [
+              35.1796,
+              129.0756
+            ],
+            [
+              34.6937,
+              135.5023
+            ]
+          ],
+          "displayCoordinates": [
+            [
+              35.1796,
+              129.0756
+            ],
+            [
+              33.8,
+              128.3
+            ],
+            [
+              31.7,
+              128.9
+            ],
+            [
+              30.3,
+              130.7
+            ],
+            [
+              30.9,
+              132.8
+            ],
+            [
+              32.8,
+              134.7
+            ],
+            [
+              34.0,
+              135.3
+            ],
+            [
+              34.6937,
+              135.5023
+            ]
+          ],
+          "stopIds": [
+            "busan",
+            "osaka"
+          ]
+        },
+        {
+          "id": "north-west-yokohama",
+          "mode": "ship",
+          "from": {
+            "az": "Osaka",
+            "en": "Osaka",
+            "ru": "Осака"
+          },
+          "to": {
+            "az": "Yokohama",
+            "en": "Yokohama",
+            "ru": "Иокогама"
+          },
+          "distanceKm": 700,
+          "coordinates": [
+            [
+              34.6937,
+              135.5023
+            ],
+            [
+              35.4437,
+              139.638
+            ]
+          ],
+          "displayCoordinates": [
+            [
+              34.6937,
+              135.5023
+            ],
+            [
+              33.6,
+              135.9
+            ],
+            [
+              33.5,
+              137.6
+            ],
+            [
+              34.3,
+              139.1
             ],
             [
               35.4437,
@@ -847,12 +4109,110 @@
             ]
           ],
           "stopIds": [
-            "vladivostok",
+            "osaka",
             "yokohama"
           ]
         },
         {
-          "id": "north-west-main-6",
+          "id": "north-west-caspian-aktau",
+          "mode": "ship",
+          "from": {
+            "az": "Aktau",
+            "en": "Aktau",
+            "ru": "Актау"
+          },
+          "to": {
+            "az": "Bakı",
+            "en": "Baku",
+            "ru": "Баку"
+          },
+          "distanceKm": 470,
+          "coordinates": [
+            [
+              43.6532,
+              51.1975
+            ],
+            [
+              40.3572,
+              49.835
+            ]
+          ],
+          "displayCoordinates": [
+            [
+              43.6532,
+              51.1975
+            ],
+            [
+              43.3,
+              50.8
+            ],
+            [
+              42.7,
+              50.2
+            ],
+            [
+              41.7,
+              49.9
+            ],
+            [
+              40.3572,
+              49.835
+            ]
+          ],
+          "stopIds": [
+            "aktau",
+            "baku-port"
+          ]
+        },
+        {
+          "id": "north-west-caspian-tm",
+          "mode": "ship",
+          "from": {
+            "az": "Ələt",
+            "en": "Alat",
+            "ru": "Алят"
+          },
+          "to": {
+            "az": "Türkmənbaşı",
+            "en": "Turkmenbashi",
+            "ru": "Туркменбаши"
+          },
+          "distanceKm": 300,
+          "coordinates": [
+            [
+              40.3572,
+              49.835
+            ],
+            [
+              40.0224,
+              52.9697
+            ]
+          ],
+          "displayCoordinates": [
+            [
+              40.3572,
+              49.835
+            ],
+            [
+              40.5,
+              50.8
+            ],
+            [
+              40.4,
+              51.9
+            ],
+            [
+              40.0224,
+              52.9697
+            ]
+          ],
+          "stopIds": [
+            "baku-port",
+            "turkmenbashi"
+          ]
+        },
+        {
+          "id": "north-west-btk",
           "mode": "rail",
           "from": {
             "az": "Bakı",
@@ -860,11 +4220,11 @@
             "ru": "Баку"
           },
           "to": {
-            "az": "İstanbul",
-            "en": "Istanbul",
-            "ru": "Стамбул"
+            "az": "Qars",
+            "en": "Kars",
+            "ru": "Карс"
           },
-          "distanceKm": 1850,
+          "distanceKm": 850,
           "coordinates": [
             [
               40.3572,
@@ -877,6 +4237,213 @@
             [
               40.6013,
               43.0947
+            ]
+          ],
+          "displayCoordinates": [
+            [
+              40.3572,
+              49.835
+            ],
+            [
+              40.9,
+              47.8
+            ],
+            [
+              41.7151,
+              44.8271
+            ],
+            [
+              41.1,
+              43.9
+            ],
+            [
+              40.6013,
+              43.0947
+            ]
+          ],
+          "stopIds": [
+            "baku-port",
+            "tbilisi",
+            "kars"
+          ]
+        },
+        {
+          "id": "north-west-georgia",
+          "mode": "rail",
+          "from": {
+            "az": "Tbilisi",
+            "en": "Tbilisi",
+            "ru": "Тбилиси"
+          },
+          "to": {
+            "az": "Batumi",
+            "en": "Batumi",
+            "ru": "Батуми"
+          },
+          "distanceKm": 350,
+          "coordinates": [
+            [
+              41.7151,
+              44.8271
+            ],
+            [
+              42.1462,
+              41.6719
+            ],
+            [
+              41.6459,
+              41.6404
+            ]
+          ],
+          "displayCoordinates": [
+            [
+              41.7151,
+              44.8271
+            ],
+            [
+              42.1,
+              43.5
+            ],
+            [
+              42.27,
+              42.7
+            ],
+            [
+              42.1462,
+              41.6719
+            ],
+            [
+              41.6459,
+              41.6404
+            ]
+          ],
+          "stopIds": [
+            "tbilisi",
+            "poti",
+            "batumi"
+          ]
+        },
+        {
+          "id": "north-west-blacksea-ferry",
+          "mode": "ship",
+          "from": {
+            "az": "Poti",
+            "en": "Poti",
+            "ru": "Поти"
+          },
+          "to": {
+            "az": "Samsun",
+            "en": "Samsun",
+            "ru": "Самсун"
+          },
+          "distanceKm": 550,
+          "coordinates": [
+            [
+              42.1462,
+              41.6719
+            ],
+            [
+              41.2867,
+              36.33
+            ]
+          ],
+          "displayCoordinates": [
+            [
+              42.1462,
+              41.6719
+            ],
+            [
+              42.7,
+              40.0
+            ],
+            [
+              42.6,
+              38.0
+            ],
+            [
+              41.2867,
+              36.33
+            ]
+          ],
+          "stopIds": [
+            "poti",
+            "samsun"
+          ]
+        },
+        {
+          "id": "north-west-nakhchivan",
+          "mode": "rail",
+          "from": {
+            "az": "Qars",
+            "en": "Kars",
+            "ru": "Карс"
+          },
+          "to": {
+            "az": "Naxçıvan",
+            "en": "Nakhchivan",
+            "ru": "Нахчыван"
+          },
+          "distanceKm": 220,
+          "coordinates": [
+            [
+              40.6013,
+              43.0947
+            ],
+            [
+              39.7191,
+              43.0503
+            ],
+            [
+              39.2089,
+              45.4122
+            ]
+          ],
+          "displayCoordinates": [
+            [
+              40.6013,
+              43.0947
+            ],
+            [
+              39.7191,
+              43.0503
+            ],
+            [
+              39.5,
+              44.8
+            ],
+            [
+              39.2089,
+              45.4122
+            ]
+          ],
+          "stopIds": [
+            "kars",
+            "igdir",
+            "nakhchivan"
+          ]
+        },
+        {
+          "id": "north-west-anatolia",
+          "mode": "rail",
+          "from": {
+            "az": "Qars",
+            "en": "Kars",
+            "ru": "Карс"
+          },
+          "to": {
+            "az": "İstanbul",
+            "en": "Istanbul",
+            "ru": "Стамбул"
+          },
+          "distanceKm": 1450,
+          "coordinates": [
+            [
+              40.6013,
+              43.0947
+            ],
+            [
+              39.7477,
+              37.0179
             ],
             [
               39.9334,
@@ -889,20 +4456,24 @@
           ],
           "displayCoordinates": [
             [
-              40.3572,
-              49.835
-            ],
-            [
-              41.7151,
-              44.8271
-            ],
-            [
               40.6013,
               43.0947
             ],
             [
+              40.0,
+              40.2
+            ],
+            [
+              39.7477,
+              37.0179
+            ],
+            [
               39.9334,
               32.8597
+            ],
+            [
+              40.7,
+              30.9
             ],
             [
               41.0082,
@@ -910,11 +4481,143 @@
             ]
           ],
           "stopIds": [
-            "baku-port",
-            "tbilisi",
             "kars",
+            "sivas",
             "ankara",
             "istanbul"
+          ]
+        },
+        {
+          "id": "north-west-samsun",
+          "mode": "rail",
+          "from": {
+            "az": "Samsun",
+            "en": "Samsun",
+            "ru": "Самсун"
+          },
+          "to": {
+            "az": "Ankara",
+            "en": "Ankara",
+            "ru": "Анкара"
+          },
+          "distanceKm": 420,
+          "coordinates": [
+            [
+              41.2867,
+              36.33
+            ],
+            [
+              39.9334,
+              32.8597
+            ]
+          ],
+          "displayCoordinates": [
+            [
+              41.2867,
+              36.33
+            ],
+            [
+              40.6,
+              34.5
+            ],
+            [
+              39.9334,
+              32.8597
+            ]
+          ],
+          "stopIds": [
+            "samsun",
+            "ankara"
+          ]
+        },
+        {
+          "id": "north-west-mersin",
+          "mode": "rail",
+          "from": {
+            "az": "Ankara",
+            "en": "Ankara",
+            "ru": "Анкара"
+          },
+          "to": {
+            "az": "Mersin",
+            "en": "Mersin",
+            "ru": "Мерсин"
+          },
+          "distanceKm": 480,
+          "coordinates": [
+            [
+              39.9334,
+              32.8597
+            ],
+            [
+              36.8,
+              34.6333
+            ]
+          ],
+          "displayCoordinates": [
+            [
+              39.9334,
+              32.8597
+            ],
+            [
+              38.4,
+              33.5
+            ],
+            [
+              36.8,
+              34.6333
+            ]
+          ],
+          "stopIds": [
+            "ankara",
+            "mersin"
+          ]
+        },
+        {
+          "id": "north-west-izmir",
+          "mode": "rail",
+          "from": {
+            "az": "İstanbul",
+            "en": "Istanbul",
+            "ru": "Стамбул"
+          },
+          "to": {
+            "az": "İzmir",
+            "en": "Izmir",
+            "ru": "Измир"
+          },
+          "distanceKm": 480,
+          "coordinates": [
+            [
+              41.0082,
+              28.9784
+            ],
+            [
+              38.4237,
+              27.1428
+            ]
+          ],
+          "displayCoordinates": [
+            [
+              41.0082,
+              28.9784
+            ],
+            [
+              40.2,
+              28.0
+            ],
+            [
+              39.1,
+              27.3
+            ],
+            [
+              38.4237,
+              27.1428
+            ]
+          ],
+          "stopIds": [
+            "istanbul",
+            "izmir"
           ]
         }
       ]
@@ -928,38 +4631,276 @@
       },
       "routeColor": "#0F766E",
       "type": "primary",
-      "totalDistanceKm": 12150,
+      "totalDistanceKm": 5600,
       "transitTime": {
-        "az": "14-19 gün",
-        "en": "14-19 days",
-        "ru": "14-19 дней"
+        "az": "10-12 gün",
+        "en": "10-12 days",
+        "ru": "10-12 дней"
       },
       "countries": [
+        "IN",
+        "IR",
         "AZ",
         "GE",
         "TR",
+        "UA",
         "RO",
-        "HU",
-        "AT",
-        "DE",
-        "BE",
-        "FR",
-        "ES",
-        "GR",
-        "IR",
-        "PK",
-        "IN"
+        "BG"
       ],
       "description": {
-        "az": "Cənub-Qərb xəritəsi üzrə yenidən qurulan dəhliz Bakı-Tbilisi-Qars xəttini Avropa qovşaqları, Aralıq dənizi dəniz qolu və İran üzərindən Pakistan-Hindistan çıxışları ilə birləşdirir.",
-        "en": "Rebuilt from the uploaded South-West reference map, this corridor combines the Baku-Tbilisi-Kars line with European inland gateways, a Mediterranean maritime branch, and the Iran-to-Pakistan-India southern leg.",
-        "ru": "Пересобранный по загруженной карте South-West, этот коридор объединяет линию Баку-Тбилиси-Карс с европейскими внутренними узлами, средиземноморской морской веткой и южным плечом через Иран в Пакистан и Индию."
+        "az": "Cənub-Qərb dəhlizi (Fars körfəzi - Qara dəniz) Hindistan və İran limanlarını Astara keçidi, Bakı qovşağı və Gürcüstan limanları vasitəsilə Ukrayna, Rumıniya və Bolqarıstan limanlarına, oradan Avropaya bağlayır.",
+        "en": "The South-West corridor (Persian Gulf - Black Sea) links Indian and Iranian ports through the Astara crossing, the Baku hub, and Georgian ports to Ukraine, Romania, and Bulgaria, with an overland alternative via Turkey.",
+        "ru": "Коридор Юго-Запад (Персидский залив - Чёрное море) связывает порты Индии и Ирана через переход Астара, бакинский узел и порты Грузии с портами Украины, Румынии и Болгарии, с сухопутной альтернативой через Турцию."
       },
       "status": "active",
       "animationSpeed": 0.105,
       "segments": [
         {
-          "id": "south-west-main-1",
+          "id": "south-west-arabian-sea",
+          "mode": "ship",
+          "from": {
+            "az": "Mumbay",
+            "en": "Mumbai",
+            "ru": "Мумбаи"
+          },
+          "to": {
+            "az": "Bəndər-Abbas",
+            "en": "Bandar Abbas",
+            "ru": "Бендер-Аббас"
+          },
+          "distanceKm": 1600,
+          "coordinates": [
+            [
+              18.96,
+              72.82
+            ],
+            [
+              27.1832,
+              56.2666
+            ]
+          ],
+          "displayCoordinates": [
+            [
+              18.96,
+              72.82
+            ],
+            [
+              20.3,
+              69.5
+            ],
+            [
+              23.0,
+              63.5
+            ],
+            [
+              25.2,
+              58.9
+            ],
+            [
+              26.3,
+              57.1
+            ],
+            [
+              27.1832,
+              56.2666
+            ]
+          ],
+          "stopIds": [
+            "mumbai",
+            "bandar-abbas"
+          ]
+        },
+        {
+          "id": "south-west-chabahar-feeder",
+          "mode": "ship",
+          "from": {
+            "az": "Çabahar",
+            "en": "Chabahar",
+            "ru": "Чабахар"
+          },
+          "to": {
+            "az": "Bəndər-Abbas",
+            "en": "Bandar Abbas",
+            "ru": "Бендер-Аббас"
+          },
+          "distanceKm": 550,
+          "coordinates": [
+            [
+              25.2919,
+              60.643
+            ],
+            [
+              27.1832,
+              56.2666
+            ]
+          ],
+          "displayCoordinates": [
+            [
+              25.2919,
+              60.643
+            ],
+            [
+              25.3,
+              59.3
+            ],
+            [
+              26.1,
+              57.9
+            ],
+            [
+              27.1832,
+              56.2666
+            ]
+          ],
+          "stopIds": [
+            "chabahar",
+            "bandar-abbas"
+          ]
+        },
+        {
+          "id": "south-west-iran-spine",
+          "mode": "rail",
+          "from": {
+            "az": "Bəndər-Abbas",
+            "en": "Bandar Abbas",
+            "ru": "Бендер-Аббас"
+          },
+          "to": {
+            "az": "Qəzvin",
+            "en": "Qazvin",
+            "ru": "Казвин"
+          },
+          "distanceKm": 1600,
+          "coordinates": [
+            [
+              27.1832,
+              56.2666
+            ],
+            [
+              30.2839,
+              57.0834
+            ],
+            [
+              31.8974,
+              54.3569
+            ],
+            [
+              36.2688,
+              50.0041
+            ]
+          ],
+          "displayCoordinates": [
+            [
+              27.1832,
+              56.2666
+            ],
+            [
+              28.9,
+              56.6
+            ],
+            [
+              30.2839,
+              57.0834
+            ],
+            [
+              31.8974,
+              54.3569
+            ],
+            [
+              33.9,
+              52.2
+            ],
+            [
+              34.6,
+              50.9
+            ],
+            [
+              35.6,
+              50.3
+            ],
+            [
+              36.2688,
+              50.0041
+            ]
+          ],
+          "stopIds": [
+            "bandar-abbas",
+            "kerman",
+            "yazd",
+            "qazvin"
+          ]
+        },
+        {
+          "id": "south-west-astara",
+          "mode": "rail",
+          "from": {
+            "az": "Qəzvin",
+            "en": "Qazvin",
+            "ru": "Казвин"
+          },
+          "to": {
+            "az": "Bakı",
+            "en": "Baku",
+            "ru": "Баку"
+          },
+          "distanceKm": 500,
+          "coordinates": [
+            [
+              36.2688,
+              50.0041
+            ],
+            [
+              37.2808,
+              49.5832
+            ],
+            [
+              38.4437,
+              48.8756
+            ],
+            [
+              40.3572,
+              49.835
+            ]
+          ],
+          "displayCoordinates": [
+            [
+              36.2688,
+              50.0041
+            ],
+            [
+              36.7,
+              49.5
+            ],
+            [
+              37.2808,
+              49.5832
+            ],
+            [
+              37.9,
+              49.1
+            ],
+            [
+              38.4437,
+              48.8756
+            ],
+            [
+              39.4,
+              49.2
+            ],
+            [
+              40.3572,
+              49.835
+            ]
+          ],
+          "stopIds": [
+            "qazvin",
+            "rasht",
+            "astara",
+            "baku-port"
+          ]
+        },
+        {
+          "id": "south-west-georgia",
           "mode": "rail",
           "from": {
             "az": "Bakı",
@@ -967,11 +4908,11 @@
             "ru": "Баку"
           },
           "to": {
-            "az": "İstanbul",
-            "en": "Istanbul",
-            "ru": "Стамбул"
+            "az": "Batumi",
+            "en": "Batumi",
+            "ru": "Батуми"
           },
-          "distanceKm": 1950,
+          "distanceKm": 900,
           "coordinates": [
             [
               40.3572,
@@ -982,16 +4923,12 @@
               44.8271
             ],
             [
-              40.6013,
-              43.0947
+              42.1462,
+              41.6719
             ],
             [
-              39.9334,
-              32.8597
-            ],
-            [
-              41.0082,
-              28.9784
+              41.6459,
+              41.6404
             ]
           ],
           "displayCoordinates": [
@@ -1000,413 +4937,231 @@
               49.835
             ],
             [
+              40.9,
+              47.8
+            ],
+            [
               41.7151,
               44.8271
             ],
             [
-              40.6013,
-              43.0947
+              42.1,
+              43.5
             ],
             [
-              39.9334,
-              32.8597
+              42.27,
+              42.7
             ],
             [
-              41.0082,
-              28.9784
+              42.1462,
+              41.6719
+            ],
+            [
+              41.6459,
+              41.6404
             ]
           ],
           "stopIds": [
             "baku-port",
             "tbilisi",
-            "kars",
-            "ankara",
-            "istanbul"
+            "poti",
+            "batumi"
           ]
         },
         {
-          "id": "south-west-main-2",
+          "id": "south-west-turkey-alt",
           "mode": "rail",
           "from": {
-            "az": "İstanbul",
-            "en": "Istanbul",
-            "ru": "Стамбул"
+            "az": "Tbilisi",
+            "en": "Tbilisi",
+            "ru": "Тбилиси"
           },
           "to": {
-            "az": "Duisburg",
-            "en": "Duisburg",
-            "ru": "Duisburg"
+            "az": "Qars",
+            "en": "Kars",
+            "ru": "Карс"
           },
-          "distanceKm": 2300,
+          "distanceKm": 450,
           "coordinates": [
             [
-              41.0082,
-              28.9784
+              41.7151,
+              44.8271
             ],
             [
-              44.4268,
-              26.1025
-            ],
-            [
-              47.4979,
-              19.0402
-            ],
-            [
-              48.2082,
-              16.3738
-            ],
-            [
-              50.1109,
-              8.6821
-            ],
-            [
-              51.4344,
-              6.7623
+              40.6013,
+              43.0947
             ]
           ],
           "displayCoordinates": [
             [
-              41.0082,
-              28.9784
+              41.7151,
+              44.8271
             ],
             [
-              42.1,
-              27.3
+              41.1,
+              43.9
             ],
             [
-              44.4268,
-              26.1025
-            ],
-            [
-              45.8,
-              23
-            ],
-            [
-              47.4979,
-              19.0402
-            ],
-            [
-              48.2082,
-              16.3738
-            ],
-            [
-              50.1109,
-              8.6821
-            ],
-            [
-              51.4344,
-              6.7623
+              40.6013,
+              43.0947
             ]
           ],
           "stopIds": [
-            "istanbul",
-            "bucharest",
-            "budapest",
-            "vienna",
-            "frankfurt",
-            "duisburg"
+            "tbilisi",
+            "kars"
           ]
         },
         {
-          "id": "south-west-main-3",
-          "mode": "rail",
-          "from": {
-            "az": "Duisburg",
-            "en": "Duisburg",
-            "ru": "Duisburg"
-          },
-          "to": {
-            "az": "Madrid",
-            "en": "Madrid",
-            "ru": "Мадрид"
-          },
-          "distanceKm": 2900,
-          "coordinates": [
-            [
-              51.4344,
-              6.7623
-            ],
-            [
-              50.8503,
-              4.3517
-            ],
-            [
-              48.8566,
-              2.3522
-            ],
-            [
-              41.3851,
-              2.1734
-            ],
-            [
-              40.4168,
-              -3.7038
-            ]
-          ],
-          "displayCoordinates": [
-            [
-              51.4344,
-              6.7623
-            ],
-            [
-              50.8503,
-              4.3517
-            ],
-            [
-              48.8566,
-              2.3522
-            ],
-            [
-              45.7,
-              2.2
-            ],
-            [
-              41.3851,
-              2.1734
-            ],
-            [
-              40.4168,
-              -3.7038
-            ]
-          ],
-          "stopIds": [
-            "duisburg",
-            "brussels",
-            "paris",
-            "barcelona",
-            "madrid"
-          ]
-        },
-        {
-          "id": "south-west-main-4",
+          "id": "south-west-bs-chernomorsk",
           "mode": "ship",
           "from": {
-            "az": "İstanbul",
-            "en": "Istanbul",
-            "ru": "Стамбул"
+            "az": "Poti",
+            "en": "Poti",
+            "ru": "Поти"
           },
           "to": {
-            "az": "Marsel",
-            "en": "Marseille",
-            "ru": "Марсель"
+            "az": "Çernomorsk",
+            "en": "Chernomorsk",
+            "ru": "Черноморск"
           },
-          "distanceKm": 1750,
+          "distanceKm": 1100,
           "coordinates": [
             [
-              41.0082,
-              28.9784
+              42.1462,
+              41.6719
             ],
             [
-              37.942,
-              23.6465
-            ],
-            [
-              43.2965,
-              5.3698
+              46.3017,
+              30.6569
             ]
           ],
           "displayCoordinates": [
             [
-              41.0082,
-              28.9784
+              42.1462,
+              41.6719
             ],
             [
-              39.7,
-              26
+              43.4,
+              37.5
             ],
             [
-              37.942,
-              23.6465
+              44.6,
+              33.0
             ],
             [
-              38.6,
-              18
+              45.4,
+              31.0
             ],
             [
-              40.3,
-              12
-            ],
-            [
-              43.2965,
-              5.3698
+              46.3017,
+              30.6569
             ]
           ],
           "stopIds": [
-            "istanbul",
-            "piraeus",
-            "marseille"
+            "poti",
+            "chernomorsk"
           ]
         },
         {
-          "id": "south-west-main-5",
-          "mode": "rail",
-          "from": {
-            "az": "Bakı",
-            "en": "Baku",
-            "ru": "Баку"
-          },
-          "to": {
-            "az": "Tehran",
-            "en": "Tehran",
-            "ru": "Тегеран"
-          },
-          "distanceKm": 900,
-          "coordinates": [
-            [
-              40.3572,
-              49.835
-            ],
-            [
-              38.4329,
-              48.8742
-            ],
-            [
-              37.5536,
-              45.0761
-            ],
-            [
-              35.6892,
-              51.389
-            ]
-          ],
-          "displayCoordinates": [
-            [
-              40.3572,
-              49.835
-            ],
-            [
-              39.2,
-              49.2
-            ],
-            [
-              38.4329,
-              48.8742
-            ],
-            [
-              37.9,
-              47.2
-            ],
-            [
-              37.5536,
-              45.0761
-            ],
-            [
-              36.4,
-              48.1
-            ],
-            [
-              35.6892,
-              51.389
-            ]
-          ],
-          "stopIds": [
-            "baku-port",
-            "lankaran",
-            "tabriz",
-            "tehran"
-          ]
-        },
-        {
-          "id": "south-west-main-6",
-          "mode": "rail",
-          "from": {
-            "az": "Tehran",
-            "en": "Tehran",
-            "ru": "Тегеран"
-          },
-          "to": {
-            "az": "Kəraçi",
-            "en": "Karachi",
-            "ru": "Карачи"
-          },
-          "distanceKm": 2350,
-          "coordinates": [
-            [
-              35.6892,
-              51.389
-            ],
-            [
-              30.3753,
-              69.3451
-            ],
-            [
-              24.8607,
-              67.0011
-            ]
-          ],
-          "displayCoordinates": [
-            [
-              35.6892,
-              51.389
-            ],
-            [
-              34.2,
-              55.5
-            ],
-            [
-              32.2,
-              60.8
-            ],
-            [
-              30.3753,
-              69.3451
-            ],
-            [
-              24.8607,
-              67.0011
-            ]
-          ],
-          "stopIds": [
-            "tehran",
-            "pakistan-corridor-junction",
-            "karachi"
-          ]
-        },
-        {
-          "id": "south-west-main-7",
+          "id": "south-west-bs-constanta",
           "mode": "ship",
           "from": {
-            "az": "Kəraçi",
-            "en": "Karachi",
-            "ru": "Карачи"
+            "az": "Poti",
+            "en": "Poti",
+            "ru": "Поти"
           },
           "to": {
-            "az": "Mumbay",
-            "en": "Mumbai",
-            "ru": "Мумбаи"
+            "az": "Konstansa",
+            "en": "Constanta",
+            "ru": "Констанца"
           },
-          "distanceKm": 900,
+          "distanceKm": 1050,
           "coordinates": [
             [
-              24.8607,
-              67.0011
+              42.1462,
+              41.6719
             ],
             [
-              18.96,
-              72.82
+              44.1598,
+              28.6348
             ]
           ],
           "displayCoordinates": [
             [
-              24.8607,
-              67.0011
+              42.1462,
+              41.6719
             ],
             [
-              22.9,
-              68.9
+              43.3,
+              37.0
             ],
             [
-              20.9,
-              71.1
+              43.9,
+              32.0
             ],
             [
-              18.96,
-              72.82
+              44.0,
+              29.8
+            ],
+            [
+              44.1598,
+              28.6348
             ]
           ],
           "stopIds": [
-            "karachi",
-            "mumbai"
+            "poti",
+            "constanta"
+          ]
+        },
+        {
+          "id": "south-west-bs-burgas",
+          "mode": "ship",
+          "from": {
+            "az": "Batumi",
+            "en": "Batumi",
+            "ru": "Батуми"
+          },
+          "to": {
+            "az": "Burqas",
+            "en": "Burgas",
+            "ru": "Бургас"
+          },
+          "distanceKm": 1050,
+          "coordinates": [
+            [
+              41.6459,
+              41.6404
+            ],
+            [
+              42.5048,
+              27.4626
+            ]
+          ],
+          "displayCoordinates": [
+            [
+              41.6459,
+              41.6404
+            ],
+            [
+              42.6,
+              37.0
+            ],
+            [
+              42.9,
+              32.0
+            ],
+            [
+              42.6,
+              29.0
+            ],
+            [
+              42.5048,
+              27.4626
+            ]
+          ],
+          "stopIds": [
+            "batumi",
+            "burgas"
           ]
         }
       ]
@@ -1420,7 +5175,7 @@
       },
       "routeColor": "#077000",
       "type": "primary",
-      "totalDistanceKm": 10540,
+      "totalDistanceKm": 12200,
       "transitTime": {
         "az": "18-25 gün",
         "en": "18-25 days",
@@ -1429,13 +5184,18 @@
       "countries": [
         "FI",
         "RU",
-        "AZ",
-        "IR",
+        "EE",
+        "LV",
+        "BY",
         "PL",
         "DE",
         "NL",
-        "AE",
+        "AZ",
+        "IR",
+        "KW",
         "QA",
+        "AE",
+        "OM",
         "PK",
         "IN"
       ],
@@ -1451,20 +5211,24 @@
           "id": "north-south-main-1",
           "mode": "rail",
           "from": {
-            "az": "Bakı Limanı",
-            "en": "Baku Port",
-            "ru": "Бакинский порт"
+            "az": "Bakı",
+            "en": "Baku",
+            "ru": "Баку"
           },
           "to": {
             "az": "Moskva",
             "en": "Moscow",
             "ru": "Москва"
           },
-          "distanceKm": 2200,
+          "distanceKm": 2500,
           "coordinates": [
             [
               40.3572,
               49.835
+            ],
+            [
+              42.6977,
+              47.5034
             ],
             [
               46.3497,
@@ -1511,6 +5275,7 @@
           ],
           "stopIds": [
             "baku-port",
+            "makhachkala",
             "astrakhan",
             "moscow"
           ]
@@ -1557,6 +5322,10 @@
               30.3351
             ],
             [
+              60.4,
+              28.2
+            ],
+            [
               60.1699,
               24.9384
             ]
@@ -1568,7 +5337,59 @@
           ]
         },
         {
-          "id": "north-south-main-3",
+          "id": "north-south-estonia",
+          "mode": "rail",
+          "from": {
+            "az": "Sankt-Peterburq",
+            "en": "St. Petersburg",
+            "ru": "Санкт-Петербург"
+          },
+          "to": {
+            "az": "Paldiski",
+            "en": "Paldiski",
+            "ru": "Палдиски"
+          },
+          "distanceKm": 400,
+          "coordinates": [
+            [
+              59.9343,
+              30.3351
+            ],
+            [
+              59.4968,
+              24.9573
+            ],
+            [
+              59.3567,
+              24.0531
+            ]
+          ],
+          "displayCoordinates": [
+            [
+              59.9343,
+              30.3351
+            ],
+            [
+              59.4,
+              28.2
+            ],
+            [
+              59.4968,
+              24.9573
+            ],
+            [
+              59.3567,
+              24.0531
+            ]
+          ],
+          "stopIds": [
+            "st-petersburg",
+            "muuga",
+            "paldiski"
+          ]
+        },
+        {
+          "id": "north-south-latvia",
           "mode": "rail",
           "from": {
             "az": "Moskva",
@@ -1576,20 +5397,197 @@
             "ru": "Москва"
           },
           "to": {
-            "az": "Rotterdam",
-            "en": "Rotterdam",
-            "ru": "Роттердам"
+            "az": "Ventspils",
+            "en": "Ventspils",
+            "ru": "Вентспилс"
           },
-          "distanceKm": 2600,
+          "distanceKm": 1050,
           "coordinates": [
             [
               55.7558,
               37.6173
             ],
             [
+              56.9496,
+              24.1052
+            ],
+            [
+              57.3894,
+              21.5606
+            ]
+          ],
+          "displayCoordinates": [
+            [
+              55.7558,
+              37.6173
+            ],
+            [
+              56.3,
+              34.3
+            ],
+            [
+              56.6,
+              28.9
+            ],
+            [
+              56.9496,
+              24.1052
+            ],
+            [
+              57.3894,
+              21.5606
+            ]
+          ],
+          "stopIds": [
+            "moscow",
+            "riga",
+            "ventspils"
+          ]
+        },
+        {
+          "id": "north-south-europe",
+          "mode": "rail",
+          "from": {
+            "az": "Moskva",
+            "en": "Moscow",
+            "ru": "Москва"
+          },
+          "to": {
+            "az": "Duisburq",
+            "en": "Duisburg",
+            "ru": "Дуйсбург"
+          },
+          "distanceKm": 2200,
+          "coordinates": [
+            [
+              55.7558,
+              37.6173
+            ],
+            [
+              53.9006,
+              27.559
+            ],
+            [
               52.2297,
               21.0122
             ],
+            [
+              51.1079,
+              17.0385
+            ],
+            [
+              51.4344,
+              6.7623
+            ]
+          ],
+          "displayCoordinates": [
+            [
+              55.7558,
+              37.6173
+            ],
+            [
+              54.8,
+              32.0
+            ],
+            [
+              53.9006,
+              27.559
+            ],
+            [
+              52.9,
+              23.9
+            ],
+            [
+              52.2297,
+              21.0122
+            ],
+            [
+              51.8,
+              18.6
+            ],
+            [
+              51.1079,
+              17.0385
+            ],
+            [
+              51.2,
+              12.5
+            ],
+            [
+              51.4,
+              9.0
+            ],
+            [
+              51.4344,
+              6.7623
+            ]
+          ],
+          "stopIds": [
+            "moscow",
+            "minsk",
+            "warsaw",
+            "wroclaw",
+            "duisburg"
+          ]
+        },
+        {
+          "id": "north-south-berlin",
+          "mode": "rail",
+          "from": {
+            "az": "Berlin",
+            "en": "Berlin",
+            "ru": "Берлин"
+          },
+          "to": {
+            "az": "Vrotslav",
+            "en": "Wroclaw",
+            "ru": "Вроцлав"
+          },
+          "distanceKm": 350,
+          "coordinates": [
+            [
+              52.52,
+              13.405
+            ],
+            [
+              51.1079,
+              17.0385
+            ]
+          ],
+          "displayCoordinates": [
+            [
+              52.52,
+              13.405
+            ],
+            [
+              51.8,
+              14.4
+            ],
+            [
+              51.1079,
+              17.0385
+            ]
+          ],
+          "stopIds": [
+            "berlin",
+            "wroclaw"
+          ]
+        },
+        {
+          "id": "north-south-rotterdam",
+          "mode": "rail",
+          "from": {
+            "az": "Duisburq",
+            "en": "Duisburg",
+            "ru": "Дуйсбург"
+          },
+          "to": {
+            "az": "Rotterdam",
+            "en": "Rotterdam",
+            "ru": "Роттердам"
+          },
+          "distanceKm": 230,
+          "coordinates": [
             [
               51.4344,
               6.7623
@@ -1601,24 +5599,12 @@
           ],
           "displayCoordinates": [
             [
-              55.7558,
-              37.6173
-            ],
-            [
-              54.3,
-              31.2
-            ],
-            [
-              52.2297,
-              21.0122
-            ],
-            [
-              52.52,
-              13.405
-            ],
-            [
               51.4344,
               6.7623
+            ],
+            [
+              51.8,
+              5.8
             ],
             [
               51.9244,
@@ -1626,19 +5612,60 @@
             ]
           ],
           "stopIds": [
-            "moscow",
-            "warsaw",
             "duisburg",
             "rotterdam"
+          ]
+        },
+        {
+          "id": "north-south-amsterdam",
+          "mode": "rail",
+          "from": {
+            "az": "Duisburq",
+            "en": "Duisburg",
+            "ru": "Дуйсбург"
+          },
+          "to": {
+            "az": "Amsterdam",
+            "en": "Amsterdam",
+            "ru": "Амстердам"
+          },
+          "distanceKm": 220,
+          "coordinates": [
+            [
+              51.4344,
+              6.7623
+            ],
+            [
+              52.3676,
+              4.9041
+            ]
+          ],
+          "displayCoordinates": [
+            [
+              51.4344,
+              6.7623
+            ],
+            [
+              52.0,
+              6.0
+            ],
+            [
+              52.3676,
+              4.9041
+            ]
+          ],
+          "stopIds": [
+            "duisburg",
+            "amsterdam"
           ]
         },
         {
           "id": "north-south-main-4",
           "mode": "rail",
           "from": {
-            "az": "Bakı Limanı",
-            "en": "Baku Port",
-            "ru": "Бакинский порт"
+            "az": "Bakı",
+            "en": "Baku",
+            "ru": "Баку"
           },
           "to": {
             "az": "Tehran",
@@ -1652,12 +5679,16 @@
               49.835
             ],
             [
-              38.4329,
-              48.8742
+              38.4437,
+              48.8756
             ],
             [
-              37.5536,
-              45.0761
+              37.2808,
+              49.5832
+            ],
+            [
+              36.2688,
+              50.0041
             ],
             [
               35.6892,
@@ -1670,24 +5701,28 @@
               49.835
             ],
             [
-              39.2,
+              39.4,
               49.2
             ],
             [
-              38.4329,
-              48.8742
+              38.4437,
+              48.8756
             ],
             [
               37.9,
-              47.2
+              49.1
             ],
             [
-              37.5536,
-              45.0761
+              37.2808,
+              49.5832
             ],
             [
-              36.4,
-              48.1
+              36.7,
+              49.5
+            ],
+            [
+              36.2688,
+              50.0041
             ],
             [
               35.6892,
@@ -1696,9 +5731,70 @@
           ],
           "stopIds": [
             "baku-port",
-            "lankaran",
-            "tabriz",
+            "astara",
+            "rasht",
+            "qazvin",
             "tehran"
+          ]
+        },
+        {
+          "id": "north-south-tabriz",
+          "mode": "rail",
+          "from": {
+            "az": "Naxçıvan",
+            "en": "Nakhchivan",
+            "ru": "Нахчыван"
+          },
+          "to": {
+            "az": "Qəzvin",
+            "en": "Qazvin",
+            "ru": "Казвин"
+          },
+          "distanceKm": 650,
+          "coordinates": [
+            [
+              39.2089,
+              45.4122
+            ],
+            [
+              37.5536,
+              45.0761
+            ],
+            [
+              36.2688,
+              50.0041
+            ]
+          ],
+          "displayCoordinates": [
+            [
+              39.2089,
+              45.4122
+            ],
+            [
+              38.9,
+              45.6
+            ],
+            [
+              37.5536,
+              45.0761
+            ],
+            [
+              37.5,
+              47.6
+            ],
+            [
+              36.7,
+              48.5
+            ],
+            [
+              36.2688,
+              50.0041
+            ]
+          ],
+          "stopIds": [
+            "nakhchivan",
+            "tabriz",
+            "qazvin"
           ]
         },
         {
@@ -1714,11 +5810,19 @@
             "en": "Bandar Abbas",
             "ru": "Бендер-Аббас"
           },
-          "distanceKm": 1250,
+          "distanceKm": 1350,
           "coordinates": [
             [
               35.6892,
               51.389
+            ],
+            [
+              31.8974,
+              54.3569
+            ],
+            [
+              30.2839,
+              57.0834
             ],
             [
               27.1832,
@@ -1731,16 +5835,24 @@
               51.389
             ],
             [
-              33.9,
-              52.7
+              34.1,
+              51.6
+            ],
+            [
+              32.9,
+              53.1
             ],
             [
               31.8974,
               54.3569
             ],
             [
-              29.5918,
-              52.5837
+              30.2839,
+              57.0834
+            ],
+            [
+              28.9,
+              56.6
             ],
             [
               27.1832,
@@ -1749,74 +5861,201 @@
           ],
           "stopIds": [
             "tehran",
+            "yazd",
+            "kerman",
             "bandar-abbas"
           ]
         },
         {
-          "id": "north-south-main-6",
-          "mode": "ship",
+          "id": "north-south-karachi-rail",
+          "mode": "rail",
           "from": {
-            "az": "Bəndər-Abbas",
-            "en": "Bandar Abbas",
-            "ru": "Бендер-Аббас"
+            "az": "Kirman",
+            "en": "Kerman",
+            "ru": "Керман"
           },
           "to": {
-            "az": "Cəbəl-Əli",
-            "en": "Jebel Ali",
-            "ru": "Джебель-Али"
+            "az": "Karaçi",
+            "en": "Karachi",
+            "ru": "Карачи"
           },
-          "distanceKm": 220,
+          "distanceKm": 1750,
           "coordinates": [
             [
-              27.1832,
-              56.2666
+              30.2839,
+              57.0834
             ],
             [
-              25.0657,
-              55.1713
+              29.4963,
+              60.8629
+            ],
+            [
+              30.1798,
+              66.975
+            ],
+            [
+              24.8607,
+              67.0011
             ]
           ],
           "displayCoordinates": [
             [
-              27.1832,
-              56.2666
+              30.2839,
+              57.0834
             ],
             [
-              26.7,
-              55.9
+              29.9,
+              59.0
+            ],
+            [
+              29.4963,
+              60.8629
+            ],
+            [
+              29.9,
+              63.9
+            ],
+            [
+              30.1798,
+              66.975
+            ],
+            [
+              28.0,
+              67.4
             ],
             [
               25.9,
-              55.5
+              67.3
             ],
             [
-              25.0657,
-              55.1713
+              24.8607,
+              67.0011
             ]
           ],
           "stopIds": [
-            "bandar-abbas",
-            "dubai-jebel-ali"
+            "kerman",
+            "zahedan",
+            "quetta",
+            "karachi"
           ]
         },
         {
-          "id": "north-south-main-7",
+          "id": "north-south-khomeini",
+          "mode": "rail",
+          "from": {
+            "az": "Tehran",
+            "en": "Tehran",
+            "ru": "Тегеран"
+          },
+          "to": {
+            "az": "Bəndər İmam Xomeyni",
+            "en": "Bandar Khomeini",
+            "ru": "Бендер-Хомейни"
+          },
+          "distanceKm": 930,
+          "coordinates": [
+            [
+              35.6892,
+              51.389
+            ],
+            [
+              31.3183,
+              48.6706
+            ],
+            [
+              30.4333,
+              49.0864
+            ]
+          ],
+          "displayCoordinates": [
+            [
+              35.6892,
+              51.389
+            ],
+            [
+              34.1,
+              49.7
+            ],
+            [
+              32.7,
+              48.4
+            ],
+            [
+              31.3183,
+              48.6706
+            ],
+            [
+              30.4333,
+              49.0864
+            ]
+          ],
+          "stopIds": [
+            "tehran",
+            "ahvaz",
+            "bandar-khomeini"
+          ]
+        },
+        {
+          "id": "north-south-kuwait",
           "mode": "ship",
           "from": {
-            "az": "Cəbəl-Əli",
-            "en": "Jebel Ali",
-            "ru": "Джебель-Али"
+            "az": "Bəndər İmam Xomeyni",
+            "en": "Bandar Khomeini",
+            "ru": "Бендер-Хомейни"
+          },
+          "to": {
+            "az": "Əl-Küveyt",
+            "en": "Al Kuwait",
+            "ru": "Эль-Кувейт"
+          },
+          "distanceKm": 250,
+          "coordinates": [
+            [
+              30.4333,
+              49.0864
+            ],
+            [
+              29.3759,
+              47.9774
+            ]
+          ],
+          "displayCoordinates": [
+            [
+              30.4333,
+              49.0864
+            ],
+            [
+              29.8,
+              48.7
+            ],
+            [
+              29.3759,
+              47.9774
+            ]
+          ],
+          "stopIds": [
+            "bandar-khomeini",
+            "kuwait-city"
+          ]
+        },
+        {
+          "id": "north-south-gulf-doha",
+          "mode": "ship",
+          "from": {
+            "az": "Əl-Küveyt",
+            "en": "Al Kuwait",
+            "ru": "Эль-Кувейт"
           },
           "to": {
             "az": "Doha",
             "en": "Doha",
             "ru": "Доха"
           },
-          "distanceKm": 420,
+          "distanceKm": 570,
           "coordinates": [
             [
-              25.0657,
-              55.1713
+              29.3759,
+              47.9774
             ],
             [
               25.2854,
@@ -1825,16 +6064,20 @@
           ],
           "displayCoordinates": [
             [
-              25.0657,
-              55.1713
+              29.3759,
+              47.9774
             ],
             [
-              25,
-              54.4
+              28.4,
+              49.4
             ],
             [
-              25.1,
-              53.2
+              27.0,
+              50.6
+            ],
+            [
+              25.8,
+              51.2
             ],
             [
               25.2854,
@@ -1842,12 +6085,158 @@
             ]
           ],
           "stopIds": [
-            "dubai-jebel-ali",
+            "kuwait-city",
             "doha"
           ]
         },
         {
-          "id": "north-south-main-8",
+          "id": "north-south-gulf-uae",
+          "mode": "ship",
+          "from": {
+            "az": "Doha",
+            "en": "Doha",
+            "ru": "Доха"
+          },
+          "to": {
+            "az": "Dubay",
+            "en": "Dubai",
+            "ru": "Дубай"
+          },
+          "distanceKm": 400,
+          "coordinates": [
+            [
+              25.2854,
+              51.531
+            ],
+            [
+              24.4539,
+              54.3773
+            ],
+            [
+              25.0657,
+              55.1713
+            ]
+          ],
+          "displayCoordinates": [
+            [
+              25.2854,
+              51.531
+            ],
+            [
+              24.9,
+              52.9
+            ],
+            [
+              24.4539,
+              54.3773
+            ],
+            [
+              25.0657,
+              55.1713
+            ]
+          ],
+          "stopIds": [
+            "doha",
+            "abu-dhabi",
+            "dubai-jebel-ali"
+          ]
+        },
+        {
+          "id": "north-south-gulf-hormuz",
+          "mode": "ship",
+          "from": {
+            "az": "Dubay",
+            "en": "Dubai",
+            "ru": "Дубай"
+          },
+          "to": {
+            "az": "Bəndər-Abbas",
+            "en": "Bandar Abbas",
+            "ru": "Бендер-Аббас"
+          },
+          "distanceKm": 250,
+          "coordinates": [
+            [
+              25.0657,
+              55.1713
+            ],
+            [
+              27.1832,
+              56.2666
+            ]
+          ],
+          "displayCoordinates": [
+            [
+              25.0657,
+              55.1713
+            ],
+            [
+              25.9,
+              55.5
+            ],
+            [
+              26.7,
+              55.9
+            ],
+            [
+              27.1832,
+              56.2666
+            ]
+          ],
+          "stopIds": [
+            "dubai-jebel-ali",
+            "bandar-abbas"
+          ]
+        },
+        {
+          "id": "north-south-muscat",
+          "mode": "ship",
+          "from": {
+            "az": "Dubay",
+            "en": "Dubai",
+            "ru": "Дубай"
+          },
+          "to": {
+            "az": "Maskat",
+            "en": "Muscat",
+            "ru": "Маскат"
+          },
+          "distanceKm": 500,
+          "coordinates": [
+            [
+              25.0657,
+              55.1713
+            ],
+            [
+              23.588,
+              58.3829
+            ]
+          ],
+          "displayCoordinates": [
+            [
+              25.0657,
+              55.1713
+            ],
+            [
+              26.3,
+              56.5
+            ],
+            [
+              24.9,
+              57.6
+            ],
+            [
+              23.588,
+              58.3829
+            ]
+          ],
+          "stopIds": [
+            "dubai-jebel-ali",
+            "muscat"
+          ]
+        },
+        {
+          "id": "north-south-chabahar",
           "mode": "ship",
           "from": {
             "az": "Bəndər-Abbas",
@@ -1855,19 +6244,19 @@
             "ru": "Бендер-Аббас"
           },
           "to": {
-            "az": "Kəraçi",
-            "en": "Karachi",
-            "ru": "Карачи"
+            "az": "Çabahar",
+            "en": "Chabahar",
+            "ru": "Чабахар"
           },
-          "distanceKm": 950,
+          "distanceKm": 550,
           "coordinates": [
             [
               27.1832,
               56.2666
             ],
             [
-              24.8607,
-              67.0011
+              25.2919,
+              60.643
             ]
           ],
           "displayCoordinates": [
@@ -1876,12 +6265,55 @@
               56.2666
             ],
             [
-              26.2,
-              59.4
+              26.1,
+              57.9
             ],
             [
-              25.6,
-              62.8
+              25.3,
+              59.3
+            ],
+            [
+              25.2919,
+              60.643
+            ]
+          ],
+          "stopIds": [
+            "bandar-abbas",
+            "chabahar"
+          ]
+        },
+        {
+          "id": "north-south-karachi",
+          "mode": "ship",
+          "from": {
+            "az": "Çabahar",
+            "en": "Chabahar",
+            "ru": "Чабахар"
+          },
+          "to": {
+            "az": "Karaçi",
+            "en": "Karachi",
+            "ru": "Карачи"
+          },
+          "distanceKm": 750,
+          "coordinates": [
+            [
+              25.2919,
+              60.643
+            ],
+            [
+              24.8607,
+              67.0011
+            ]
+          ],
+          "displayCoordinates": [
+            [
+              25.2919,
+              60.643
+            ],
+            [
+              24.7,
+              63.3
             ],
             [
               24.8607,
@@ -1889,7 +6321,7 @@
             ]
           ],
           "stopIds": [
-            "bandar-abbas",
+            "chabahar",
             "karachi"
           ]
         },
@@ -1897,7 +6329,7 @@
           "id": "north-south-main-9",
           "mode": "ship",
           "from": {
-            "az": "Kəraçi",
+            "az": "Karaçi",
             "en": "Karachi",
             "ru": "Карачи"
           },
@@ -1963,7 +6395,10 @@
         49.835
       ],
       "connectedCorridorIds": [
-        "north-south"
+        "east-west",
+        "north-west",
+        "north-south",
+        "south-west"
       ]
     },
     {
@@ -1985,7 +6420,7 @@
         108.9398
       ],
       "connectedCorridorIds": [
-        "middle-corridor"
+        "east-west"
       ]
     },
     {
@@ -2007,7 +6442,7 @@
         76.8897
       ],
       "connectedCorridorIds": [
-        "middle-corridor"
+        "east-west"
       ]
     },
     {
@@ -2029,7 +6464,8 @@
         51.1975
       ],
       "connectedCorridorIds": [
-        "middle-corridor"
+        "east-west",
+        "north-west"
       ]
     },
     {
@@ -2051,8 +6487,9 @@
         44.8271
       ],
       "connectedCorridorIds": [
-        "middle-corridor",
-        "lapis-lazuli"
+        "east-west",
+        "north-west",
+        "south-west"
       ]
     },
     {
@@ -2074,9 +6511,9 @@
         43.0947
       ],
       "connectedCorridorIds": [
-        "middle-corridor",
-        "lapis-lazuli",
-        "zangazur"
+        "east-west",
+        "north-west",
+        "south-west"
       ]
     },
     {
@@ -2098,8 +6535,8 @@
         28.9784
       ],
       "connectedCorridorIds": [
-        "middle-corridor",
-        "lapis-lazuli"
+        "east-west",
+        "north-west"
       ]
     },
     {
@@ -2121,7 +6558,7 @@
         37.6173
       ],
       "connectedCorridorIds": [
-        "eurasian-corridor",
+        "north-west",
         "north-south"
       ]
     },
@@ -2144,6 +6581,7 @@
         24.9384
       ],
       "connectedCorridorIds": [
+        "north-west",
         "north-south"
       ]
     },
@@ -2166,6 +6604,7 @@
         4.4777
       ],
       "connectedCorridorIds": [
+        "east-west",
         "north-south"
       ]
     },
@@ -2188,7 +6627,7 @@
         131.8855
       ],
       "connectedCorridorIds": [
-        "eurasian-corridor"
+        "north-west"
       ]
     },
     {
@@ -2210,7 +6649,8 @@
         56.2666
       ],
       "connectedCorridorIds": [
-        "north-south"
+        "north-south",
+        "south-west"
       ]
     },
     {
@@ -2276,8 +6716,7 @@
         51.389
       ],
       "connectedCorridorIds": [
-        "north-south",
-        "lapis-lazuli"
+        "north-south"
       ]
     },
     {
@@ -2299,8 +6738,7 @@
         67.0011
       ],
       "connectedCorridorIds": [
-        "north-south",
-        "lapis-lazuli"
+        "north-south"
       ]
     },
     {
@@ -2322,116 +6760,438 @@
         45.4122
       ],
       "connectedCorridorIds": [
-        "zangazur"
+        "east-west",
+        "north-west",
+        "north-south"
       ]
     },
     {
-      "id": "faw-grand-port",
+      "id": "poti-port",
       "name": {
-        "az": "Faw Böyük Limanı",
-        "en": "Faw Grand Port",
-        "ru": "Большой порт Фао"
+        "az": "Poti Limanı",
+        "en": "Poti Port",
+        "ru": "Порт Поти"
       },
       "description": {
-        "az": "İraq dəmir yolu inkişaf oxunun cənub dəniz dayağı.",
-        "en": "The southern maritime anchor of the Iraq railway development axis.",
-        "ru": "Южный морской якорь оси развития иракской железной дороги."
+        "az": "Gürcüstanın Qara dəniz limanı, Şərq-Qərb dəhlizini Konstansa və Avropa gəmi xətlərinə bağlayır.",
+        "en": "Georgia's Black Sea port linking the East-West corridor to Constanta and European feeder services.",
+        "ru": "Черноморский порт Грузии, связывающий коридор Восток-Запад с Констанцей и европейскими фидерными линиями."
       },
       "category": "port",
       "icon": "fas:anchor",
       "coordinates": [
-        29.9744,
-        48.4728
+        42.1462,
+        41.6719
       ],
       "connectedCorridorIds": [
-        "iraq-railway"
+        "east-west",
+        "north-west",
+        "south-west"
       ]
     },
     {
-      "id": "baghdad-cargo-terminal",
+      "id": "batumi-port",
       "name": {
-        "az": "Bağdad Yük Terminalı",
-        "en": "Baghdad Cargo Terminal",
-        "ru": "Грузовой терминал Багдад"
+        "az": "Batumi Limanı",
+        "en": "Batumi Port",
+        "ru": "Порт Батуми"
       },
       "description": {
-        "az": "Körfəz yanaşmasını şimal dəmir yolu inkişafı ilə birləşdirən mərkəzi İraq daxili terminalı.",
-        "en": "A central Iraqi inland terminal linking the Gulf approach with northern rail development.",
-        "ru": "Центральный иракский внутренний терминал, связывающий подход из Персидского залива с северным железнодорожным развитием."
+        "az": "Qara dəniz sahilində Gürcüstanın cənub yük qapısı.",
+        "en": "Georgia's southern cargo gateway on the Black Sea coast.",
+        "ru": "Южные грузовые ворота Грузии на черноморском побережье."
       },
-      "category": "station",
-      "icon": "fas:boxes-stacked",
+      "category": "port",
+      "icon": "fas:ship",
       "coordinates": [
-        33.3152,
-        44.3661
+        41.6459,
+        41.6404
       ],
       "connectedCorridorIds": [
-        "iraq-railway"
+        "east-west",
+        "north-west",
+        "south-west"
       ]
     },
     {
-      "id": "amman-freight-hub",
+      "id": "constanta-port",
       "name": {
-        "az": "Amman Yük Qovşağı",
-        "en": "Amman Freight Hub",
-        "ru": "Грузовой хаб Амман"
+        "az": "Konstansa Limanı",
+        "en": "Constanta Port",
+        "ru": "Порт Констанца"
       },
       "description": {
-        "az": "Yenidən canlandırılan Hicaz dəhlizi oxu üzərində yerləşən Levant transfer qovşağı.",
-        "en": "A Levantine transfer node positioned on the revived Hejaz corridor spine.",
-        "ru": "Левантийский перевалочный узел на оси возрождаемого Хиджазского коридора."
+        "az": "Rumıniyanın Qara dəniz qapısı — Xəzər-Qara dəniz gəmi xəttinin Avropa terminalı.",
+        "en": "Romania's Black Sea gateway — the European terminal of the trans-Black Sea shipping leg.",
+        "ru": "Черноморские ворота Румынии — европейский терминал морского плеча через Чёрное море."
       },
-      "category": "station",
-      "icon": "fas:warehouse",
+      "category": "port",
+      "icon": "fas:anchor",
       "coordinates": [
-        31.9539,
-        35.9106
+        44.1598,
+        28.6348
       ],
       "connectedCorridorIds": [
-        "hejaz-railway"
+        "east-west",
+        "south-west"
       ]
     },
     {
-      "id": "damascus-terminal",
+      "id": "turkmenbashi-port",
       "name": {
-        "az": "Dəməşq Terminalı",
-        "en": "Damascus Terminal",
-        "ru": "Терминал Дамаск"
+        "az": "Türkmənbaşı Limanı",
+        "en": "Turkmenbashi Port",
+        "ru": "Порт Туркменбаши"
       },
       "description": {
-        "az": "Regional dəmir yolu bərpasını və sərhədlərarası transferi dəstəkləyən şimal Hicaz son dayanacağı.",
-        "en": "A northern Hejaz endpoint supporting regional rail recovery and cross-border transfer.",
-        "ru": "Северная конечная точка Хиджазского направления, поддерживающая восстановление региональной железной дороги и трансграничную перевалку."
+        "az": "Xəzərin şərq sahilində Bakı ilə bərə əlaqəsi olan Türkmənistan limanı.",
+        "en": "Turkmenistan's Caspian port with ferry links to Baku on the corridor's southern branch.",
+        "ru": "Каспийский порт Туркменистана с паромным сообщением с Баку на южной ветви коридора."
+      },
+      "category": "port",
+      "icon": "fas:ship",
+      "coordinates": [
+        40.0224,
+        52.9697
+      ],
+      "connectedCorridorIds": [
+        "east-west",
+        "north-west"
+      ]
+    },
+    {
+      "id": "ashgabat-hub",
+      "name": {
+        "az": "Aşqabad Qovşağı",
+        "en": "Ashgabat Hub",
+        "ru": "Узел Ашхабад"
+      },
+      "description": {
+        "az": "Şərq-Qərb dəhlizinin cənub qolu üzərində Türkmənistanın paytaxt qovşağı.",
+        "en": "Turkmenistan's capital node on the corridor's southern rail branch.",
+        "ru": "Столичный узел Туркменистана на южной железнодорожной ветви коридора."
       },
       "category": "station",
       "icon": "fas:train",
       "coordinates": [
-        33.5138,
-        36.2765
+        37.9601,
+        58.3261
       ],
       "connectedCorridorIds": [
-        "hejaz-railway"
+        "east-west"
       ]
     },
     {
-      "id": "marker-47a5ea94-3f77-471b-8d2e-45299d840994",
+      "id": "tashkent-hub",
       "name": {
-        "az": "Tokio",
-        "en": "Tokio",
-        "ru": "Tokio"
+        "az": "Daşkənd Logistika Mərkəzi",
+        "en": "Tashkent Logistics Hub",
+        "ru": "Логистический узел Ташкент"
       },
       "description": {
-        "az": "Tokio",
-        "en": "Tokio",
-        "ru": "Tokio"
+        "az": "Mərkəzi Asiyanın Kaşqar və Türkmənbaşı qollarını birləşdirən əsas qovşağı.",
+        "en": "Central Asia's key junction linking the Kashgar and Turkmenbashi branches.",
+        "ru": "Ключевой узел Центральной Азии, связывающий ветви на Кашгар и Туркменбаши."
+      },
+      "category": "station",
+      "icon": "fas:boxes-stacked",
+      "coordinates": [
+        41.2995,
+        69.2401
+      ],
+      "connectedCorridorIds": [
+        "east-west"
+      ]
+    },
+    {
+      "id": "kashgar-gateway",
+      "name": {
+        "az": "Kaşqar Qapısı",
+        "en": "Kashgar Gateway",
+        "ru": "Кашгарские ворота"
+      },
+      "description": {
+        "az": "Çindən Fərqanə vadisinə keçidin dəmir yolu qapısı.",
+        "en": "The rail gateway from China into the Fergana Valley branch.",
+        "ru": "Железнодорожные ворота из Китая в направлении Ферганской долины."
+      },
+      "category": "station",
+      "icon": "fas:warehouse",
+      "coordinates": [
+        39.4704,
+        75.9898
+      ],
+      "connectedCorridorIds": [
+        "east-west"
+      ]
+    },
+    {
+      "id": "st-petersburg-hub",
+      "name": {
+        "az": "Sankt-Peterburq Qovşağı",
+        "en": "St. Petersburg Hub",
+        "ru": "Узел Санкт-Петербург"
+      },
+      "description": {
+        "az": "Şimal-Qərb və Şimal-Cənub dəhlizlərinin Baltik qapısı.",
+        "en": "The Baltic gateway shared by the North-West and North-South corridors.",
+        "ru": "Балтийские ворота, общие для коридоров Северо-Запад и Север-Юг."
+      },
+      "category": "station",
+      "icon": "fas:train",
+      "coordinates": [
+        59.9343,
+        30.3351
+      ],
+      "connectedCorridorIds": [
+        "north-west",
+        "north-south"
+      ]
+    },
+    {
+      "id": "riga-port",
+      "name": {
+        "az": "Riqa Limanı",
+        "en": "Riga Port",
+        "ru": "Порт Рига"
+      },
+      "description": {
+        "az": "Şimal-Cənub dəhlizinin Latviya istiqamətindəki Baltik limanı.",
+        "en": "The Latvian Baltic port branch of the North-South corridor.",
+        "ru": "Латвийская балтийская ветвь коридора Север-Юг."
       },
       "category": "port",
-      "icon": "fas:city",
+      "icon": "fas:anchor",
       "coordinates": [
-        35.6764,
-        139.65
+        56.9496,
+        24.1052
       ],
-      "connectedCorridorIds": []
+      "connectedCorridorIds": [
+        "north-south"
+      ]
+    },
+    {
+      "id": "minsk-hub",
+      "name": {
+        "az": "Minsk Qovşağı",
+        "en": "Minsk Hub",
+        "ru": "Узел Минск"
+      },
+      "description": {
+        "az": "Moskva ilə Mərkəzi Avropa arasında quru yol qovşağı.",
+        "en": "The overland junction between Moscow and Central Europe.",
+        "ru": "Сухопутный узел между Москвой и Центральной Европой."
+      },
+      "category": "station",
+      "icon": "fas:warehouse",
+      "coordinates": [
+        53.9006,
+        27.559
+      ],
+      "connectedCorridorIds": [
+        "north-south"
+      ]
+    },
+    {
+      "id": "vanino-port",
+      "name": {
+        "az": "Vanino Limanı",
+        "en": "Vanino Port",
+        "ru": "Порт Ванино"
+      },
+      "description": {
+        "az": "Trans-Sibir magistralının Sakit okean terminallarından biri.",
+        "en": "One of the Trans-Siberian mainline's Pacific terminals.",
+        "ru": "Один из тихоокеанских терминалов Транссибирской магистрали."
+      },
+      "category": "port",
+      "icon": "fas:ship",
+      "coordinates": [
+        49.0869,
+        140.2543
+      ],
+      "connectedCorridorIds": [
+        "north-west"
+      ]
+    },
+    {
+      "id": "nakhodka-port",
+      "name": {
+        "az": "Naxodka Limanı",
+        "en": "Nakhodka Port",
+        "ru": "Порт Находка"
+      },
+      "description": {
+        "az": "Yaponiya gəmi xətlərinə açılan Uzaq Şərq konteyner limanı.",
+        "en": "The Far East container port opening onto Japan shipping lanes.",
+        "ru": "Дальневосточный контейнерный порт с выходом на японские морские линии."
+      },
+      "category": "port",
+      "icon": "fas:anchor",
+      "coordinates": [
+        42.8236,
+        132.8928
+      ],
+      "connectedCorridorIds": [
+        "north-west"
+      ]
+    },
+    {
+      "id": "busan-port",
+      "name": {
+        "az": "Pusan Limanı",
+        "en": "Busan Port",
+        "ru": "Порт Пусан"
+      },
+      "description": {
+        "az": "Şimal-Qərb dəhlizinin Koreya gəmi xətti ilə çatdığı okean qapısı.",
+        "en": "The Korean ocean gateway reached by the corridor's shipping leg.",
+        "ru": "Корейские океанские ворота, достигаемые морским плечом коридора."
+      },
+      "category": "port",
+      "icon": "fas:ship",
+      "coordinates": [
+        35.1796,
+        129.0756
+      ],
+      "connectedCorridorIds": [
+        "north-west"
+      ]
+    },
+    {
+      "id": "yokohama-port",
+      "name": {
+        "az": "Yokohama Limanı",
+        "en": "Yokohama Port",
+        "ru": "Порт Иокогама"
+      },
+      "description": {
+        "az": "Naxodkadan gəmi xətti ilə birləşən Yaponiya limanı.",
+        "en": "The Japanese port linked by the shipping leg from Nakhodka.",
+        "ru": "Японский порт, связанный морской линией из Находки."
+      },
+      "category": "port",
+      "icon": "fas:anchor",
+      "coordinates": [
+        35.4437,
+        139.638
+      ],
+      "connectedCorridorIds": [
+        "north-west"
+      ]
+    },
+    {
+      "id": "astara-terminal",
+      "name": {
+        "az": "Astara Terminalı",
+        "en": "Astara Terminal",
+        "ru": "Терминал Астара"
+      },
+      "description": {
+        "az": "Azərbaycan-İran sərhədində Şimal-Cənub dəhlizinin keçid məntəqəsi.",
+        "en": "The North-South corridor's border crossing between Azerbaijan and Iran.",
+        "ru": "Пограничный переход коридора Север-Юг между Азербайджаном и Ираном."
+      },
+      "category": "station",
+      "icon": "fas:train",
+      "coordinates": [
+        38.4437,
+        48.8756
+      ],
+      "connectedCorridorIds": [
+        "north-south",
+        "south-west"
+      ]
+    },
+    {
+      "id": "bandar-khomeini-port",
+      "name": {
+        "az": "Bəndər İmam Xomeyni Limanı",
+        "en": "Bandar Khomeini Port",
+        "ru": "Порт Бендер-Хомейни"
+      },
+      "description": {
+        "az": "Fars körfəzinin şimal-qərbində İranın dərin su limanı.",
+        "en": "Iran's deep-water port at the northwestern head of the Persian Gulf.",
+        "ru": "Глубоководный порт Ирана в северо-западной части Персидского залива."
+      },
+      "category": "port",
+      "icon": "fas:anchor",
+      "coordinates": [
+        30.4333,
+        49.0864
+      ],
+      "connectedCorridorIds": [
+        "north-south"
+      ]
+    },
+    {
+      "id": "chabahar-port",
+      "name": {
+        "az": "Çabahar Limanı",
+        "en": "Chabahar Port",
+        "ru": "Порт Чабахар"
+      },
+      "description": {
+        "az": "Hind okeanına birbaşa çıxışı olan İran okean limanı.",
+        "en": "Iran's ocean port with direct Indian Ocean access.",
+        "ru": "Океанский порт Ирана с прямым выходом в Индийский океан."
+      },
+      "category": "port",
+      "icon": "fas:ship",
+      "coordinates": [
+        25.2919,
+        60.643
+      ],
+      "connectedCorridorIds": [
+        "north-south",
+        "south-west"
+      ]
+    },
+    {
+      "id": "muscat-port",
+      "name": {
+        "az": "Maskat Limanı",
+        "en": "Muscat Port",
+        "ru": "Порт Маскат"
+      },
+      "description": {
+        "az": "Şimal-Cənub dəhlizinin körfəz gəmi xətlərindəki Oman dayanacağı.",
+        "en": "The Omani call on the corridor's Gulf shipping legs.",
+        "ru": "Оманский порт захода на морских плечах коридора в Заливе."
+      },
+      "category": "port",
+      "icon": "fas:anchor",
+      "coordinates": [
+        23.588,
+        58.3829
+      ],
+      "connectedCorridorIds": [
+        "north-south"
+      ]
+    },
+    {
+      "id": "mumbai-gateway",
+      "name": {
+        "az": "Mumbay Qapısı",
+        "en": "Mumbai Gateway",
+        "ru": "Ворота Мумбаи"
+      },
+      "description": {
+        "az": "Şimal-Cənub dəhlizinin Hind okeanındakı son təyinat limanı.",
+        "en": "The corridor's final Indian Ocean destination port.",
+        "ru": "Конечный порт назначения коридора в Индийском океане."
+      },
+      "category": "port",
+      "icon": "fas:anchor",
+      "coordinates": [
+        18.96,
+        72.82
+      ],
+      "connectedCorridorIds": [
+        "north-south",
+        "south-west"
+      ]
     }
   ],
   "settings": {

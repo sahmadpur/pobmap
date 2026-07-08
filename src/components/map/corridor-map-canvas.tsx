@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import L from "leaflet";
 import {
   MapContainer,
@@ -391,13 +391,50 @@ function SelectionController({
   return null;
 }
 
+const MAX_ANIMATED_SEGMENTS_PER_ROUTE = 6;
+
+function getPathLength(coordinates: Coordinate[]): number {
+  let length = 0;
+
+  for (let index = 1; index < coordinates.length; index += 1) {
+    const [previousLat, previousLng] = coordinates[index - 1];
+    const [lat, lng] = coordinates[index];
+    length += Math.hypot(lat - previousLat, lng - previousLng);
+  }
+
+  return length;
+}
+
 function FlowMarkers({ routes }: { routes: CorridorRoute[] }) {
   const [frame, setFrame] = useState(0);
+
+  // Animating every segment gets expensive on dense corridor networks, so only
+  // the longest trunk segments of each route carry a moving dot.
+  const animatedSegments = useMemo(
+    () =>
+      routes.flatMap((route) =>
+        route.segments
+          .map((segment) => ({
+            route,
+            segment,
+            renderCoordinates: getSegmentRenderCoordinates(segment),
+          }))
+          .filter(({ renderCoordinates }) => renderCoordinates.length >= 2)
+          .sort(
+            (a, b) =>
+              getPathLength(b.renderCoordinates) -
+              getPathLength(a.renderCoordinates),
+          )
+          .slice(0, MAX_ANIMATED_SEGMENTS_PER_ROUTE)
+          .map((entry, animationIndex) => ({ ...entry, animationIndex })),
+      ),
+    [routes],
+  );
 
   useEffect(() => {
     const intervalId = window.setInterval(() => {
       setFrame(performance.now());
-    }, 90);
+    }, 120);
 
     return () => {
       window.clearInterval(intervalId);
@@ -406,29 +443,21 @@ function FlowMarkers({ routes }: { routes: CorridorRoute[] }) {
 
   return (
     <>
-      {routes.flatMap((route) =>
-        route.segments.flatMap((segment, segmentIndex) => {
-          const renderCoordinates = getSegmentRenderCoordinates(segment);
+      {animatedSegments.map(({ route, segment, renderCoordinates, animationIndex }) => {
+        const progress =
+          ((frame / 1000) * route.animationSpeed + animationIndex * 0.33) % 1;
+        const coordinate = interpolateAlongPath(renderCoordinates, progress);
 
-          if (renderCoordinates.length < 2) {
-            return [];
-          }
-
-          const progress =
-            ((frame / 1000) * route.animationSpeed + segmentIndex * 0.33) % 1;
-          const coordinate = interpolateAlongPath(renderCoordinates, progress);
-
-          return (
-            <Marker
-              key={segment.id}
-              position={coordinate}
-              icon={createFlowIcon(segment.mode)}
-              interactive={false}
-              keyboard={false}
-            />
-          );
-        }),
-      )}
+        return (
+          <Marker
+            key={segment.id}
+            position={coordinate}
+            icon={createFlowIcon(segment.mode)}
+            interactive={false}
+            keyboard={false}
+          />
+        );
+      })}
     </>
   );
 }
