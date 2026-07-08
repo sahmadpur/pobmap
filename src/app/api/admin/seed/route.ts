@@ -2,6 +2,8 @@ import { NextResponse } from "next/server";
 
 import adminStoreSeed from "@/data/admin-store.json";
 import {
+  deleteMarker,
+  deleteRoute,
   listMarkers,
   listRoutes,
   upsertMarker,
@@ -33,8 +35,11 @@ export async function GET() {
  * the bundled store into Postgres via the same upsert path the admin uses, so a
  * fresh Prisma deployment starts with the content the file store served. Upserts
  * are idempotent, so re-running only refreshes existing records.
+ *
+ * Pass ?prune=true to also delete routes and markers that are no longer part of
+ * the bundled store. Prune removes admin-created records too, so it is opt-in.
  */
-export async function POST() {
+export async function POST(request: Request) {
   if (!isPrismaMode()) {
     return NextResponse.json(
       {
@@ -44,6 +49,9 @@ export async function POST() {
       { status: 400 },
     );
   }
+
+  const prune =
+    new URL(request.url).searchParams.get("prune") === "true";
 
   try {
     const routes: CorridorRoute[] = seed.routes ?? [];
@@ -57,10 +65,33 @@ export async function POST() {
       await upsertMarker(marker);
     }
 
+    let prunedRoutes = 0;
+    let prunedMarkers = 0;
+
+    if (prune) {
+      const seedRouteIds = new Set(routes.map((route) => route.id));
+      const seedMarkerIds = new Set(markers.map((marker) => marker.id));
+
+      for (const route of await listRoutes()) {
+        if (!seedRouteIds.has(route.id)) {
+          await deleteRoute(route.id);
+          prunedRoutes += 1;
+        }
+      }
+
+      for (const marker of await listMarkers()) {
+        if (!seedMarkerIds.has(marker.id)) {
+          await deleteMarker(marker.id);
+          prunedMarkers += 1;
+        }
+      }
+    }
+
     return NextResponse.json({
       ok: true,
       seededRoutes: routes.length,
       seededMarkers: markers.length,
+      ...(prune ? { prunedRoutes, prunedMarkers } : {}),
     });
   } catch (error) {
     console.error("POST /api/admin/seed failed", error);
