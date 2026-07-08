@@ -24,11 +24,8 @@ import {
 } from "@/data/corridors";
 import { getMarkerIconSvg } from "@/data/marker-icons";
 import { getTransportStop } from "@/data/transport-stops";
-import {
-  flattenRouteCoordinates,
-  getSegmentRenderCoordinates,
-  interpolateAlongPath,
-} from "@/lib/map-utils";
+import { flattenRouteCoordinates, getSegmentRenderCoordinates } from "@/lib/map-utils";
+import { VehicleLayer } from "@/components/map/vehicle-layer";
 import type { AdminMarker, MarkerCategory } from "@/types/admin";
 import type { Coordinate, CorridorRoute, LocalizedText, SupportedLocale, TransportMode } from "@/types/map";
 
@@ -76,34 +73,6 @@ function createMarkerIcon(
     iconSize: [size, size],
     iconAnchor: [size / 2, size / 2],
     popupAnchor: [0, Math.round(-size * 0.42)],
-  });
-}
-
-const FLOW_ARROW_DIMENSIONS: Record<
-  TransportMode,
-  { width: number; height: number; anchorX: number; anchorY: number }
-> = {
-  rail: { width: 16, height: 16, anchorX: 8, anchorY: 8 },
-  ship: { width: 18, height: 18, anchorX: 9, anchorY: 9 },
-  road: { width: 14, height: 14, anchorX: 7, anchorY: 7 },
-};
-
-function createFlowIcon(mode: TransportMode) {
-  const dimensions = FLOW_ARROW_DIMENSIONS[mode];
-
-  return L.divIcon({
-    className: "flow-icon-wrapper",
-    html: `
-      <div
-        class="flow-icon flow-icon--${mode}"
-        style="--flow-width:${dimensions.width}px; --flow-height:${dimensions.height}px;"
-      >
-        <span class="flow-icon__shadow" aria-hidden="true"></span>
-        <span class="flow-icon__dot" aria-hidden="true"></span>
-      </div>
-    `,
-    iconSize: [dimensions.width, dimensions.height],
-    iconAnchor: [dimensions.anchorX, dimensions.anchorY],
   });
 }
 
@@ -391,77 +360,6 @@ function SelectionController({
   return null;
 }
 
-const MAX_ANIMATED_SEGMENTS_PER_ROUTE = 6;
-
-function getPathLength(coordinates: Coordinate[]): number {
-  let length = 0;
-
-  for (let index = 1; index < coordinates.length; index += 1) {
-    const [previousLat, previousLng] = coordinates[index - 1];
-    const [lat, lng] = coordinates[index];
-    length += Math.hypot(lat - previousLat, lng - previousLng);
-  }
-
-  return length;
-}
-
-function FlowMarkers({ routes }: { routes: CorridorRoute[] }) {
-  const [frame, setFrame] = useState(0);
-
-  // Animating every segment gets expensive on dense corridor networks, so only
-  // the longest trunk segments of each route carry a moving dot.
-  const animatedSegments = useMemo(
-    () =>
-      routes.flatMap((route) =>
-        route.segments
-          .map((segment) => ({
-            route,
-            segment,
-            renderCoordinates: getSegmentRenderCoordinates(segment),
-          }))
-          .filter(({ renderCoordinates }) => renderCoordinates.length >= 2)
-          .sort(
-            (a, b) =>
-              getPathLength(b.renderCoordinates) -
-              getPathLength(a.renderCoordinates),
-          )
-          .slice(0, MAX_ANIMATED_SEGMENTS_PER_ROUTE)
-          .map((entry, animationIndex) => ({ ...entry, animationIndex })),
-      ),
-    [routes],
-  );
-
-  useEffect(() => {
-    const intervalId = window.setInterval(() => {
-      setFrame(performance.now());
-    }, 120);
-
-    return () => {
-      window.clearInterval(intervalId);
-    };
-  }, []);
-
-  return (
-    <>
-      {animatedSegments.map(({ route, segment, renderCoordinates, animationIndex }) => {
-        const progress =
-          ((frame / 1000) * route.animationSpeed + animationIndex * 0.33) % 1;
-        const coordinate = interpolateAlongPath(renderCoordinates, progress);
-
-        return (
-          <Marker
-            key={segment.id}
-            position={coordinate}
-            icon={createFlowIcon(segment.mode)}
-            interactive={false}
-            keyboard={false}
-          />
-        );
-      })}
-    </>
-  );
-}
-
 interface CorridorMapCanvasProps {
   routes: CorridorRoute[];
   allRoutes: CorridorRoute[];
@@ -499,6 +397,10 @@ export default function CorridorMapCanvas({
   onPortCorridorSelect,
   t,
 }: CorridorMapCanvasProps) {
+  const activeRoutes = useMemo(
+    () => routes.filter((route) => route.status === "active"),
+    [routes],
+  );
   const safeMarkers = mergeRouteEndpointMarkers(markers ?? [], allRoutes);
   const selectedRoute =
     routes.find((route) => route.id === selectedRouteId) ?? null;
@@ -657,11 +559,7 @@ export default function CorridorMapCanvas({
         );
       })}
 
-      {showFlowAnimation ? (
-        <FlowMarkers
-          routes={routes.filter((route) => route.status === "active")}
-        />
-      ) : null}
+      {showFlowAnimation ? <VehicleLayer routes={activeRoutes} /> : null}
 
       <Marker
         key={primaryPortMarker.id}
