@@ -11,7 +11,7 @@ import {
   isLeftward,
   type PathSampler,
 } from "@/lib/vehicle-path";
-import type { CorridorRoute, TransportMode } from "@/types/map";
+import type { Coordinate, CorridorRoute, TransportMode } from "@/types/map";
 
 const SVG_NS = "http://www.w3.org/2000/svg";
 const VEHICLE_PANE = "corridor-vehicles";
@@ -169,6 +169,13 @@ const VEHICLE_BUILDERS: Record<
   road: buildTruck,
 };
 
+// map.latLngToLayerPoint rounds to whole pixels, which makes slow vehicles
+// step visibly and lets the closely-spaced heading samples oscillate by
+// several degrees per frame; project without rounding instead.
+function toLayerPoint(map: L.Map, coordinate: Coordinate): L.Point {
+  return map.project(coordinate).subtract(map.getPixelOrigin());
+}
+
 // Measures how many path-length units correspond to one screen pixel by
 // sampling the path and summing projected distances. Cheap enough to run on
 // every zoomend.
@@ -178,10 +185,11 @@ function measurePathUnitsPerPx(
 ): number {
   const SAMPLES = 16;
   let pixelLength = 0;
-  let previous = map.latLngToLayerPoint(sampler.pointAt(0));
+  let previous = toLayerPoint(map, sampler.pointAt(0));
 
   for (let index = 1; index <= SAMPLES; index += 1) {
-    const point = map.latLngToLayerPoint(
+    const point = toLayerPoint(
+      map,
       sampler.pointAt((sampler.totalLength * index) / SAMPLES),
     );
     pixelLength += previous.distanceTo(point);
@@ -270,11 +278,13 @@ export function VehicleLayer({ routes }: { routes: CorridorRoute[] }) {
           const opacity =
             fadeUnits > 0 ? Math.min(1, edgeDistance / fadeUnits) : 1;
 
-          const point = map.latLngToLayerPoint(sampler.pointAt(distance));
-          const before = map.latLngToLayerPoint(
+          const point = toLayerPoint(map, sampler.pointAt(distance));
+          const before = toLayerPoint(
+            map,
             sampler.pointAt(distance - headingEps),
           );
-          const after = map.latLngToLayerPoint(
+          const after = toLayerPoint(
+            map,
             sampler.pointAt(distance + headingEps),
           );
           const heading = headingDegrees(before, after);
