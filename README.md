@@ -216,3 +216,8 @@ The app already includes a strong Phase 1 plus a practical admin foundation, but
 ## License
 
 Private project for ongoing product development.
+
+
+Admin seed after login:
+
+fetch("/api/admin/seed", { method: "POST" }).then(r => r.json()).then(console.log)
