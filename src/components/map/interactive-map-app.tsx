@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import dynamic from "next/dynamic";
 import { useTranslation } from "react-i18next";
 import {
@@ -140,9 +140,9 @@ export function InteractiveMapApp({
   const [resetCount, setResetCount] = useState(0);
   const [isMapOnlyMode, setIsMapOnlyMode] = useState(false);
   const [isFiltersOpen, setIsFiltersOpen] = useState(false);
-  const availableRouteIds = routes.map((route) => route.id);
-  const availableModes = getAvailableModes(routes);
-  const availableStatuses = getAvailableStatuses(routes);
+  const availableRouteIds = useMemo(() => routes.map((route) => route.id), [routes]);
+  const availableModes = useMemo(() => getAvailableModes(routes), [routes]);
+  const availableStatuses = useMemo(() => getAvailableStatuses(routes), [routes]);
 
   useEffect(() => {
     const frameId = window.requestAnimationFrame(() => {
@@ -179,37 +179,40 @@ export function InteractiveMapApp({
     window.localStorage.setItem("baku-port-theme", theme);
   }, [theme]);
 
-  const effectiveEnabledRouteIds = (() => {
-    const nextRouteIds = enabledRouteIds.filter((routeId) =>
-      availableRouteIds.includes(routeId),
-    );
-
+  const effectiveEnabledRouteIds = useMemo(() => {
     if (enabledRouteIds.length === 0) {
       return [];
     }
 
-    return nextRouteIds;
-  })();
-  const effectiveEnabledModes = enabledModes.filter((mode) =>
-    availableModes.includes(mode),
+    return enabledRouteIds.filter((routeId) => availableRouteIds.includes(routeId));
+  }, [availableRouteIds, enabledRouteIds]);
+  const effectiveEnabledModes = useMemo(
+    () => enabledModes.filter((mode) => availableModes.includes(mode)),
+    [availableModes, enabledModes],
   );
-  const effectiveEnabledStatuses = enabledStatuses.filter((status) =>
-    availableStatuses.includes(status),
+  const effectiveEnabledStatuses = useMemo(
+    () => enabledStatuses.filter((status) => availableStatuses.includes(status)),
+    [availableStatuses, enabledStatuses],
   );
 
-  const visibleRoutes: CorridorRoute[] = routes.filter((route) => {
-    if (
-      !effectiveEnabledRouteIds.includes(route.id) ||
-      !effectiveEnabledStatuses.includes(route.status)
-    ) {
-      return false;
-    }
+  // Memoized so the route objects keep a stable identity across unrelated
+  // re-renders (hover, theme, locale) — downstream effects (map fitBounds,
+  // vehicle spawning) depend on it and must not re-run spuriously.
+  const visibleRoutes: CorridorRoute[] = useMemo(() =>
+    routes.filter((route) => {
+      if (
+        !effectiveEnabledRouteIds.includes(route.id) ||
+        !effectiveEnabledStatuses.includes(route.status)
+      ) {
+        return false;
+      }
 
-    return route.segments.some((segment) => effectiveEnabledModes.includes(segment.mode));
-  }).map((route) => ({
-    ...route,
-    segments: route.segments.filter((segment) => effectiveEnabledModes.includes(segment.mode)),
-  }));
+      return route.segments.some((segment) => effectiveEnabledModes.includes(segment.mode));
+    }).map((route) => ({
+      ...route,
+      segments: route.segments.filter((segment) => effectiveEnabledModes.includes(segment.mode)),
+    })),
+  [routes, effectiveEnabledRouteIds, effectiveEnabledModes, effectiveEnabledStatuses]);
 
   const activeSelectedRouteId = visibleRoutes.some(
     (route) => route.id === selectedRouteId,

@@ -232,6 +232,36 @@ export const TRANSPORT_STOPS: TransportStop[] = [
     en: "Zangilan",
     ru: "Зангилан",
   }),
+  createStop("ganja", "AZ", [40.6828, 46.3606], {
+    az: "Gəncə",
+    en: "Ganja",
+    ru: "Гянджа",
+  }),
+  createStop("boyuk-kasik", "AZ", [41.3086, 45.0919], {
+    az: "Böyük Kəsik",
+    en: "Boyuk Kasik",
+    ru: "Беюк-Кясик",
+  }),
+  createStop("horadiz", "AZ", [39.4511, 47.3868], {
+    az: "Horadiz",
+    en: "Horadiz",
+    ru: "Горадиз",
+  }),
+  createStop("aghband", "AZ", [38.86, 46.76], {
+    az: "Ağbənd",
+    en: "Aghband",
+    ru: "Агбенд",
+  }),
+  createStop("ordubad", "AZ", [38.906, 46.023], {
+    az: "Ordubad",
+    en: "Ordubad",
+    ru: "Ордубад",
+  }),
+  createStop("julfa", "AZ", [38.9559, 45.6308], {
+    az: "Culfa",
+    en: "Julfa",
+    ru: "Джульфа",
+  }),
   createStop("nakhchivan", "AZ", [39.2089, 45.4122], {
     az: "Naxçıvan",
     en: "Nakhchivan",
@@ -294,7 +324,11 @@ export const TRANSPORT_STOPS: TransportStop[] = [
   }),
   createStop("rotterdam", "NL", [51.9244, 4.4777], localizedStopName("Rotterdam")),
   createStop("antwerp", "BE", [51.2194, 4.4025], localizedStopName("Antwerp")),
-  createStop("hamburg", "DE", [53.5511, 9.9937], localizedStopName("Hamburg")),
+  createStop("hamburg", "DE", [53.5511, 9.9937], {
+    az: "Hamburq",
+    en: "Hamburg",
+    ru: "Гамбург",
+  }),
   createStop("bremerhaven", "DE", [53.5396, 8.5809], localizedStopName("Bremerhaven")),
   createStop("duisburg", "DE", [51.4344, 6.7623], localizedStopName("Duisburg")),
   createStop("frankfurt", "DE", [50.1109, 8.6821], localizedStopName("Frankfurt")),

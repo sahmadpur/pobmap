@@ -35,6 +35,8 @@ interface AnimatedVehicle extends VehicleNodes {
   sampler: PathSampler;
   speed: number;
   offset: number;
+  // Travels end-of-path to start-of-path, so both freight directions are visible.
+  reversed: boolean;
   // Path-length units per screen pixel at the current zoom; refreshed on zoomend.
   pathUnitsPerPx: number;
 }
@@ -235,6 +237,7 @@ export function VehicleLayer({ routes }: { routes: CorridorRoute[] }) {
           sampler,
           speed: route.animationSpeed,
           offset: animationIndex * 0.33,
+          reversed: animationIndex % 2 === 1,
           pathUnitsPerPx: measurePathUnitsPerPx(map, sampler),
         })),
     );
@@ -278,14 +281,18 @@ export function VehicleLayer({ routes }: { routes: CorridorRoute[] }) {
           const opacity =
             fadeUnits > 0 ? Math.min(1, edgeDistance / fadeUnits) : 1;
 
-          const point = toLayerPoint(map, sampler.pointAt(distance));
+          const pathDistance = vehicle.reversed
+            ? sampler.totalLength - distance
+            : distance;
+          const aheadSign = vehicle.reversed ? -1 : 1;
+          const point = toLayerPoint(map, sampler.pointAt(pathDistance));
           const before = toLayerPoint(
             map,
-            sampler.pointAt(distance - headingEps),
+            sampler.pointAt(pathDistance - aheadSign * headingEps),
           );
           const after = toLayerPoint(
             map,
-            sampler.pointAt(distance + headingEps),
+            sampler.pointAt(pathDistance + aheadSign * headingEps),
           );
           const heading = headingDegrees(before, after);
           const flip = isLeftward(heading) ? " scale(1,-1)" : "";

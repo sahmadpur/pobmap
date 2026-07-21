@@ -1298,6 +1298,14 @@
               49.835
             ],
             [
+              40.6828,
+              46.3606
+            ],
+            [
+              41.3086,
+              45.0919
+            ],
+            [
               41.7151,
               44.8271
             ],
@@ -1312,8 +1320,36 @@
               49.835
             ],
             [
-              40.9,
-              47.8
+              40.05,
+              48.93
+            ],
+            [
+              40.34,
+              48.16
+            ],
+            [
+              40.62,
+              47.15
+            ],
+            [
+              40.6828,
+              46.3606
+            ],
+            [
+              40.83,
+              46.01
+            ],
+            [
+              41.12,
+              45.44
+            ],
+            [
+              41.3086,
+              45.0919
+            ],
+            [
+              41.457,
+              45.09
             ],
             [
               41.7151,
@@ -1330,6 +1366,8 @@
           ],
           "stopIds": [
             "baku-port",
+            "ganja",
+            "boyuk-kasik",
             "tbilisi",
             "kars"
           ]
@@ -1354,8 +1392,16 @@
               49.835
             ],
             [
-              39.3989,
-              47.0289
+              39.4511,
+              47.3868
+            ],
+            [
+              38.86,
+              46.76
+            ],
+            [
+              38.906,
+              46.023
             ],
             [
               39.2089,
@@ -1372,20 +1418,64 @@
               48.9
             ],
             [
-              39.4,
-              48.2
+              39.6,
+              48.1
             ],
             [
-              39.3989,
-              47.0289
+              39.4511,
+              47.3868
+            ],
+            [
+              39.3,
+              47.2
+            ],
+            [
+              39.15,
+              46.95
+            ],
+            [
+              38.95,
+              46.8
+            ],
+            [
+              38.86,
+              46.76
+            ],
+            [
+              38.84,
+              46.66
+            ],
+            [
+              38.86,
+              46.55
+            ],
+            [
+              38.88,
+              46.45
+            ],
+            [
+              38.89,
+              46.35
             ],
             [
               38.9,
-              46.2
+              46.24
             ],
             [
-              39.0,
-              45.8
+              38.92,
+              46.14
+            ],
+            [
+              38.906,
+              46.023
+            ],
+            [
+              38.9559,
+              45.6308
+            ],
+            [
+              39.05,
+              45.52
             ],
             [
               39.2089,
@@ -1394,7 +1484,9 @@
           ],
           "stopIds": [
             "baku-port",
-            "zangilan",
+            "horadiz",
+            "aghband",
+            "ordubad",
             "nakhchivan"
           ]
         },
@@ -4231,6 +4323,14 @@
               49.835
             ],
             [
+              40.6828,
+              46.3606
+            ],
+            [
+              41.3086,
+              45.0919
+            ],
+            [
               41.7151,
               44.8271
             ],
@@ -4245,8 +4345,36 @@
               49.835
             ],
             [
-              40.9,
-              47.8
+              40.05,
+              48.93
+            ],
+            [
+              40.34,
+              48.16
+            ],
+            [
+              40.62,
+              47.15
+            ],
+            [
+              40.6828,
+              46.3606
+            ],
+            [
+              40.83,
+              46.01
+            ],
+            [
+              41.12,
+              45.44
+            ],
+            [
+              41.3086,
+              45.0919
+            ],
+            [
+              41.457,
+              45.09
             ],
             [
               41.7151,
@@ -4263,6 +4391,8 @@
           ],
           "stopIds": [
             "baku-port",
+            "ganja",
+            "boyuk-kasik",
             "tbilisi",
             "kars"
           ]
@@ -5433,8 +5563,16 @@
               49.835
             ],
             [
-              39.3989,
-              47.0289
+              39.4511,
+              47.3868
+            ],
+            [
+              38.86,
+              46.76
+            ],
+            [
+              38.906,
+              46.023
             ],
             [
               39.2089,
@@ -5451,20 +5589,64 @@
               48.9
             ],
             [
-              39.4,
-              48.2
+              39.6,
+              48.1
             ],
             [
-              39.3989,
-              47.0289
+              39.4511,
+              47.3868
+            ],
+            [
+              39.3,
+              47.2
+            ],
+            [
+              39.15,
+              46.95
+            ],
+            [
+              38.95,
+              46.8
+            ],
+            [
+              38.86,
+              46.76
+            ],
+            [
+              38.84,
+              46.66
+            ],
+            [
+              38.86,
+              46.55
+            ],
+            [
+              38.88,
+              46.45
+            ],
+            [
+              38.89,
+              46.35
             ],
             [
               38.9,
-              46.2
+              46.24
             ],
             [
-              39.0,
-              45.8
+              38.92,
+              46.14
+            ],
+            [
+              38.906,
+              46.023
+            ],
+            [
+              38.9559,
+              45.6308
+            ],
+            [
+              39.05,
+              45.52
             ],
             [
               39.2089,
@@ -5473,7 +5655,9 @@
           ],
           "stopIds": [
             "baku-port",
-            "zangilan",
+            "horadiz",
+            "aghband",
+            "ordubad",
             "nakhchivan"
           ]
         },
@@ -5497,6 +5681,14 @@
               49.835
             ],
             [
+              40.6828,
+              46.3606
+            ],
+            [
+              41.3086,
+              45.0919
+            ],
+            [
               41.7151,
               44.8271
             ],
@@ -5515,8 +5707,36 @@
               49.835
             ],
             [
-              40.9,
-              47.8
+              40.05,
+              48.93
+            ],
+            [
+              40.34,
+              48.16
+            ],
+            [
+              40.62,
+              47.15
+            ],
+            [
+              40.6828,
+              46.3606
+            ],
+            [
+              40.83,
+              46.01
+            ],
+            [
+              41.12,
+              45.44
+            ],
+            [
+              41.3086,
+              45.0919
+            ],
+            [
+              41.457,
+              45.09
             ],
             [
               41.7151,
@@ -5541,6 +5761,8 @@
           ],
           "stopIds": [
             "baku-port",
+            "ganja",
+            "boyuk-kasik",
             "tbilisi",
             "poti",
             "batumi"
@@ -8807,6 +9029,148 @@
           ]
         }
       ]
+    },
+    {
+      "id": "zangezur-corridor",
+      "name": {
+        "az": "Zəngəzur Dəhlizi",
+        "en": "Zangezur Corridor",
+        "ru": "Зангезурский коридор"
+      },
+      "routeColor": "#F97316",
+      "type": "primary",
+      "totalDistanceKm": 200,
+      "transitTime": {
+        "az": "1 gün",
+        "en": "1 day",
+        "ru": "1 день"
+      },
+      "countries": [
+        "AZ"
+      ],
+      "description": {
+        "az": "Horadiz–Ağbənd xəttindən başlayaraq dövlət sərhədi boyunca Ordubada uzanan Zəngəzur dəhlizi Naxçıvanı Azərbaycanın əsas dəmir yolu şəbəkəsinə birləşdirir.",
+        "en": "Starting from the Horadiz–Aghband line, the Zangezur corridor runs along the state border to Ordubad, linking Nakhchivan to Azerbaijan's core rail network.",
+        "ru": "Начинаясь от линии Горадиз–Агбенд, Зангезурский коридор проходит вдоль государственной границы до Ордубада, связывая Нахчыван с основной железнодорожной сетью Азербайджана."
+      },
+      "status": "active",
+      "animationSpeed": 0.1,
+      "segments": [
+        {
+          "id": "zangezur-horadiz-aghband",
+          "mode": "rail",
+          "from": {
+            "az": "Horadiz",
+            "en": "Horadiz",
+            "ru": "Горадиз"
+          },
+          "to": {
+            "az": "Ağbənd",
+            "en": "Aghband",
+            "ru": "Агбенд"
+          },
+          "distanceKm": 110,
+          "coordinates": [
+            [
+              39.4511,
+              47.3868
+            ],
+            [
+              38.86,
+              46.76
+            ]
+          ],
+          "displayCoordinates": [
+            [
+              39.4511,
+              47.3868
+            ],
+            [
+              39.3,
+              47.2
+            ],
+            [
+              39.15,
+              46.95
+            ],
+            [
+              38.95,
+              46.8
+            ],
+            [
+              38.86,
+              46.76
+            ]
+          ],
+          "stopIds": [
+            "horadiz",
+            "aghband"
+          ]
+        },
+        {
+          "id": "zangezur-aghband-ordubad",
+          "mode": "rail",
+          "from": {
+            "az": "Ağbənd",
+            "en": "Aghband",
+            "ru": "Агбенд"
+          },
+          "to": {
+            "az": "Ordubad",
+            "en": "Ordubad",
+            "ru": "Ордубад"
+          },
+          "distanceKm": 85,
+          "coordinates": [
+            [
+              38.86,
+              46.76
+            ],
+            [
+              38.906,
+              46.023
+            ]
+          ],
+          "displayCoordinates": [
+            [
+              38.86,
+              46.76
+            ],
+            [
+              38.84,
+              46.66
+            ],
+            [
+              38.86,
+              46.55
+            ],
+            [
+              38.88,
+              46.45
+            ],
+            [
+              38.89,
+              46.35
+            ],
+            [
+              38.9,
+              46.24
+            ],
+            [
+              38.92,
+              46.14
+            ],
+            [
+              38.906,
+              46.023
+            ]
+          ],
+          "stopIds": [
+            "aghband",
+            "ordubad"
+          ]
+        }
+      ]
     }
   ],
   "markers": [
@@ -9633,6 +9997,248 @@
       "connectedCorridorIds": [
         "north-south",
         "south-west"
+      ]
+    },
+    {
+      "id": "shanghai-port",
+      "name": {
+        "az": "Şanxay",
+        "en": "Shanghai",
+        "ru": "Шанхай"
+      },
+      "description": {
+        "az": "Şərq-Qərb dəhlizinin Çin sahilindəki konteyner qapısı.",
+        "en": "A Chinese coastal container gateway of the East-West corridor.",
+        "ru": "Китайские прибрежные контейнерные ворота коридора Восток-Запад."
+      },
+      "category": "port",
+      "icon": "fas:anchor",
+      "coordinates": [
+        31.2304,
+        121.4737
+      ],
+      "connectedCorridorIds": [
+        "east-west"
+      ]
+    },
+    {
+      "id": "ningbo-port",
+      "name": {
+        "az": "Ninbo",
+        "en": "Ningbo",
+        "ru": "Нинбо"
+      },
+      "description": {
+        "az": "Şərq-Qərb dəhlizinin Çin sahilindəki konteyner qapısı.",
+        "en": "A Chinese coastal container gateway of the East-West corridor.",
+        "ru": "Китайские прибрежные контейнерные ворота коридора Восток-Запад."
+      },
+      "category": "port",
+      "icon": "fas:anchor",
+      "coordinates": [
+        29.8683,
+        121.544
+      ],
+      "connectedCorridorIds": [
+        "east-west"
+      ]
+    },
+    {
+      "id": "chaozhou-port",
+      "name": {
+        "az": "Çaoçjou",
+        "en": "Chaozhou",
+        "ru": "Чаочжоу"
+      },
+      "description": {
+        "az": "Şərq-Qərb dəhlizinin Çin sahilindəki konteyner qapısı.",
+        "en": "A Chinese coastal container gateway of the East-West corridor.",
+        "ru": "Китайские прибрежные контейнерные ворота коридора Восток-Запад."
+      },
+      "category": "port",
+      "icon": "fas:anchor",
+      "coordinates": [
+        23.6567,
+        116.6226
+      ],
+      "connectedCorridorIds": [
+        "east-west"
+      ]
+    },
+    {
+      "id": "guangzhou-port",
+      "name": {
+        "az": "Quançjou",
+        "en": "Guangzhou",
+        "ru": "Гуанчжоу"
+      },
+      "description": {
+        "az": "Şərq-Qərb dəhlizinin Çin sahilindəki konteyner qapısı.",
+        "en": "A Chinese coastal container gateway of the East-West corridor.",
+        "ru": "Китайские прибрежные контейнерные ворота коридора Восток-Запад."
+      },
+      "category": "port",
+      "icon": "fas:anchor",
+      "coordinates": [
+        23.1291,
+        113.2644
+      ],
+      "connectedCorridorIds": [
+        "east-west"
+      ]
+    },
+    {
+      "id": "shenzhen-port",
+      "name": {
+        "az": "Şençjen",
+        "en": "Shenzhen",
+        "ru": "Шэньчжэнь"
+      },
+      "description": {
+        "az": "Şərq-Qərb dəhlizinin Çin sahilindəki konteyner qapısı.",
+        "en": "A Chinese coastal container gateway of the East-West corridor.",
+        "ru": "Китайские прибрежные контейнерные ворота коридора Восток-Запад."
+      },
+      "category": "port",
+      "icon": "fas:anchor",
+      "coordinates": [
+        22.5431,
+        114.0579
+      ],
+      "connectedCorridorIds": [
+        "east-west"
+      ]
+    },
+    {
+      "id": "fangcheng-port",
+      "name": {
+        "az": "Fançen",
+        "en": "Fangcheng",
+        "ru": "Фанчэн"
+      },
+      "description": {
+        "az": "Şərq-Qərb dəhlizinin Çin sahilindəki konteyner qapısı.",
+        "en": "A Chinese coastal container gateway of the East-West corridor.",
+        "ru": "Китайские прибрежные контейнерные ворота коридора Восток-Запад."
+      },
+      "category": "port",
+      "icon": "fas:anchor",
+      "coordinates": [
+        21.6867,
+        108.3547
+      ],
+      "connectedCorridorIds": [
+        "east-west"
+      ]
+    },
+    {
+      "id": "hanoi-terminal",
+      "name": {
+        "az": "Hanoy",
+        "en": "Hanoi",
+        "ru": "Ханой"
+      },
+      "description": {
+        "az": "Şərq-Qərb dəhlizinin Cənub-Şərqi Asiya dəmir yolu terminalı.",
+        "en": "A Southeast Asian rail terminal of the East-West corridor.",
+        "ru": "Железнодорожный терминал Юго-Восточной Азии коридора Восток-Запад."
+      },
+      "category": "station",
+      "icon": "fas:train",
+      "coordinates": [
+        21.0278,
+        105.8342
+      ],
+      "connectedCorridorIds": [
+        "east-west"
+      ]
+    },
+    {
+      "id": "hamburg-port",
+      "name": {
+        "az": "Hamburq",
+        "en": "Hamburg",
+        "ru": "Гамбург"
+      },
+      "description": {
+        "az": "Şərq-Qərb dəhlizinin Avropa paylama qovşağı.",
+        "en": "A European distribution hub of the East-West corridor.",
+        "ru": "Европейский распределительный узел коридора Восток-Запад."
+      },
+      "category": "port",
+      "icon": "fas:anchor",
+      "coordinates": [
+        53.5511,
+        9.9937
+      ],
+      "connectedCorridorIds": [
+        "east-west"
+      ]
+    },
+    {
+      "id": "berlin-hub",
+      "name": {
+        "az": "Berlin",
+        "en": "Berlin",
+        "ru": "Берлин"
+      },
+      "description": {
+        "az": "Şərq-Qərb dəhlizinin Avropa paylama qovşağı.",
+        "en": "A European distribution hub of the East-West corridor.",
+        "ru": "Европейский распределительный узел коридора Восток-Запад."
+      },
+      "category": "station",
+      "icon": "fas:train",
+      "coordinates": [
+        52.52,
+        13.405
+      ],
+      "connectedCorridorIds": [
+        "east-west"
+      ]
+    },
+    {
+      "id": "warsaw-hub",
+      "name": {
+        "az": "Varşava",
+        "en": "Warsaw",
+        "ru": "Варшава"
+      },
+      "description": {
+        "az": "Şərq-Qərb dəhlizinin Avropa paylama qovşağı.",
+        "en": "A European distribution hub of the East-West corridor.",
+        "ru": "Европейский распределительный узел коридора Восток-Запад."
+      },
+      "category": "station",
+      "icon": "fas:train",
+      "coordinates": [
+        52.2297,
+        21.0122
+      ],
+      "connectedCorridorIds": [
+        "east-west"
+      ]
+    },
+    {
+      "id": "wroclaw-hub",
+      "name": {
+        "az": "Vrotslav",
+        "en": "Wroclaw",
+        "ru": "Вроцлав"
+      },
+      "description": {
+        "az": "Şərq-Qərb dəhlizinin Avropa paylama qovşağı.",
+        "en": "A European distribution hub of the East-West corridor.",
+        "ru": "Европейский распределительный узел коридора Восток-Запад."
+      },
+      "category": "station",
+      "icon": "fas:train",
+      "coordinates": [
+        51.1079,
+        17.0385
+      ],
+      "connectedCorridorIds": [
+        "east-west"
       ]
     }
   ],

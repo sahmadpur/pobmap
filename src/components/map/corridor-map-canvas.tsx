@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo, useRef } from "react";
 import L from "leaflet";
 import {
   MapContainer,
@@ -306,33 +306,24 @@ function SelectionController({
   isMapOnlyMode: boolean;
 }) {
   const map = useMap();
-  const [viewport, setViewport] = useState(() => ({
-    width: typeof window === "undefined" ? 1440 : window.innerWidth,
-    height: typeof window === "undefined" ? 900 : window.innerHeight,
-  }));
-
-  useEffect(() => {
-    if (typeof window === "undefined") {
-      return;
-    }
-
-    function handleResize() {
-      setViewport({
-        width: window.innerWidth,
-        height: window.innerHeight,
-      });
-    }
-
-    window.addEventListener("resize", handleResize);
-    return () => {
-      window.removeEventListener("resize", handleResize);
-    };
-  }, []);
+  // Tracks what was last fitted so re-renders that produce a new route object
+  // for the same selection (hover, filters) and window resizes never re-fit
+  // the view and undo the user's manual zoom.
+  const lastFitKeyRef = useRef<string | null>(null);
 
   useEffect(() => {
     if (!route) {
+      lastFitKeyRef.current = null;
       return;
     }
+
+    const fitKey = `${route.id}|${hasDetailsPanel}|${isMapOnlyMode}`;
+
+    if (lastFitKeyRef.current === fitKey) {
+      return;
+    }
+
+    lastFitKeyRef.current = fitKey;
 
     const coordinates = flattenRouteCoordinates(route);
 
@@ -344,7 +335,7 @@ function SelectionController({
       return;
     }
 
-    const padding = getSelectionPadding(viewport.width, viewport.height, {
+    const padding = getSelectionPadding(window.innerWidth, window.innerHeight, {
       hasDetailsPanel,
       isMapOnlyMode,
     });
@@ -355,7 +346,7 @@ function SelectionController({
       paddingTopLeft: padding.paddingTopLeft,
       paddingBottomRight: padding.paddingBottomRight,
     });
-  }, [hasDetailsPanel, isMapOnlyMode, map, route, viewport.height, viewport.width]);
+  }, [hasDetailsPanel, isMapOnlyMode, map, route]);
 
   return null;
 }
