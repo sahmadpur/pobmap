@@ -76,6 +76,75 @@ function createMarkerIcon(
   });
 }
 
+function createStopMarkerIcon(color: string) {
+  return L.divIcon({
+    className: "route-stop-icon-wrapper",
+    html: `<span class="route-stop-icon" style="--stop-ring-color:${color};"></span>`,
+    iconSize: [11, 11],
+    iconAnchor: [5.5, 5.5],
+  });
+}
+
+interface RouteStopMarkerEntry {
+  stopId: string;
+  coordinate: Coordinate;
+  name: LocalizedText;
+  routeIds: string[];
+  colorByRoute: Map<string, string>;
+  defaultColor: string;
+}
+
+function collectRouteStopMarkers(
+  routes: CorridorRoute[],
+  existingMarkers: AdminMarker[],
+): RouteStopMarkerEntry[] {
+  const stopEntries = new Map<
+    string,
+    { coordinate: Coordinate; name: LocalizedText; routeIds: Set<string>; colorByRoute: Map<string, string> }
+  >();
+
+  routes.forEach((route) => {
+    route.segments.forEach((segment) => {
+      (segment.stopIds ?? []).forEach((stopId) => {
+        const stop = getTransportStop(stopId);
+
+        if (!stop || stop.editorVisible === false) {
+          return;
+        }
+
+        const entry =
+          stopEntries.get(stopId) ??
+          {
+            coordinate: stop.coordinates,
+            name: stop.name,
+            routeIds: new Set<string>(),
+            colorByRoute: new Map<string, string>(),
+          };
+
+        entry.routeIds.add(route.id);
+        entry.colorByRoute.set(route.id, route.routeColor);
+        stopEntries.set(stopId, entry);
+      });
+    });
+  });
+
+  return Array.from(stopEntries.entries())
+    .filter(
+      ([, entry]) =>
+        !existingMarkers.some((marker) =>
+          areCoordinatesNear(marker.coordinates, entry.coordinate, 0.001),
+        ),
+    )
+    .map(([stopId, entry]) => ({
+      stopId,
+      coordinate: entry.coordinate,
+      name: entry.name,
+      routeIds: Array.from(entry.routeIds),
+      colorByRoute: entry.colorByRoute,
+      defaultColor: entry.colorByRoute.values().next().value as string,
+    }));
+}
+
 function inferEndpointCategory(mode: TransportMode): MarkerCategory {
   if (mode === "ship") {
     return "port";
@@ -414,6 +483,18 @@ export default function CorridorMapCanvas({
     new Set(allRoutes.map((route) => route.id)),
   );
   const visibleSecondaryMarkers = secondaryMarkers;
+  const highlightedRouteIds = useMemo(
+    () => Array.from(new Set([selectedRouteId, hoveredRouteId].filter((id): id is string => Boolean(id)))),
+    [selectedRouteId, hoveredRouteId],
+  );
+  const highlightedRoutes = useMemo(
+    () => routes.filter((route) => highlightedRouteIds.includes(route.id)),
+    [routes, highlightedRouteIds],
+  );
+  const routeStopMarkers = useMemo(
+    () => collectRouteStopMarkers(highlightedRoutes, safeMarkers),
+    [highlightedRoutes, safeMarkers],
+  );
 
   return (
     <MapContainer
@@ -609,6 +690,9 @@ export default function CorridorMapCanvas({
 
       {visibleSecondaryMarkers.map((marker) => {
         const connectedCorridorIds = getAvailableConnectedRouteIdsForMarker(marker, allRoutes);
+        const isOnHighlightedRoute = connectedCorridorIds.some((routeId) =>
+          highlightedRouteIds.includes(routeId),
+        );
 
         return (
             <Marker
@@ -616,6 +700,16 @@ export default function CorridorMapCanvas({
               position={marker.coordinates}
               icon={createMarkerIcon(marker, theme)}
             >
+            {isOnHighlightedRoute ? (
+              <Tooltip
+                permanent
+                direction="right"
+                offset={[16, 0]}
+                className="route-stop-tooltip"
+              >
+                {getLocalizedText(marker.name, locale)}
+              </Tooltip>
+            ) : null}
             <Popup className="baku-port-popup" offset={[0, -12]}>
               <div className="space-y-3">
                 <div>
@@ -656,6 +750,31 @@ export default function CorridorMapCanvas({
                 ) : null}
               </div>
             </Popup>
+          </Marker>
+        );
+      })}
+
+      {routeStopMarkers.map((stop) => {
+        const isDimmed = Boolean(selectedRouteId) && !stop.routeIds.includes(selectedRouteId as string);
+        const color = (selectedRouteId && stop.colorByRoute.get(selectedRouteId)) ?? stop.defaultColor;
+
+        return (
+          <Marker
+            key={stop.stopId}
+            position={stop.coordinate}
+            icon={createStopMarkerIcon(color)}
+            pane="corridor-markers"
+            interactive={false}
+            opacity={isDimmed ? 0.35 : 1}
+          >
+            <Tooltip
+              permanent
+              direction="right"
+              offset={[8, 0]}
+              className="route-stop-tooltip"
+            >
+              {getLocalizedText(stop.name, locale)}
+            </Tooltip>
           </Marker>
         );
       })}
