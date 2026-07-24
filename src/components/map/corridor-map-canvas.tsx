@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useMemo, useRef } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import L from "leaflet";
 import {
   MapContainer,
@@ -320,6 +320,22 @@ function MapClickHandler({ onClearSelection }: { onClearSelection: () => void })
   return null;
 }
 
+const STOP_LABEL_MIN_ZOOM = 5;
+
+function ZoomWatcher({ onZoomChange }: { onZoomChange: (zoom: number) => void }) {
+  const map = useMap();
+
+  useEffect(() => {
+    onZoomChange(map.getZoom());
+  }, [map, onZoomChange]);
+
+  useMapEvent("zoomend", (event) => {
+    onZoomChange(event.target.getZoom());
+  });
+
+  return null;
+}
+
 function MapResetController({ resetCount }: { resetCount: number }) {
   const map = useMap();
 
@@ -495,6 +511,8 @@ export default function CorridorMapCanvas({
     () => collectRouteStopMarkers(highlightedRoutes, safeMarkers),
     [highlightedRoutes, safeMarkers],
   );
+  const [zoom, setZoom] = useState(DEFAULT_MAP_VIEW.zoom);
+  const showStopLabels = zoom >= STOP_LABEL_MIN_ZOOM;
 
   return (
     <MapContainer
@@ -517,6 +535,7 @@ export default function CorridorMapCanvas({
       />
 
       <ZoomControl position="bottomleft" />
+      <ZoomWatcher onZoomChange={setZoom} />
       <MapClickHandler onClearSelection={onClearSelection} />
       <MapResetController resetCount={resetCount} />
       <SelectionController
@@ -700,7 +719,7 @@ export default function CorridorMapCanvas({
               position={marker.coordinates}
               icon={createMarkerIcon(marker, theme)}
             >
-            {isOnHighlightedRoute ? (
+            {isOnHighlightedRoute && showStopLabels ? (
               <Tooltip
                 permanent
                 direction="right"
@@ -767,14 +786,16 @@ export default function CorridorMapCanvas({
             interactive={false}
             opacity={isDimmed ? 0.35 : 1}
           >
-            <Tooltip
-              permanent
-              direction="right"
-              offset={[8, 0]}
-              className="route-stop-tooltip"
-            >
-              {getLocalizedText(stop.name, locale)}
-            </Tooltip>
+            {showStopLabels ? (
+              <Tooltip
+                permanent
+                direction="right"
+                offset={[8, 0]}
+                className="route-stop-tooltip"
+              >
+                {getLocalizedText(stop.name, locale)}
+              </Tooltip>
+            ) : null}
           </Marker>
         );
       })}
