@@ -247,7 +247,7 @@ export const TRANSPORT_STOPS: TransportStop[] = [
     en: "Horadiz",
     ru: "Горадиз",
   }),
-  createStop("aghband", "AZ", [38.86, 46.76], {
+  createStop("aghband", "AZ", [39.06, 46.75], {
     az: "Ağbənd",
     en: "Aghband",
     ru: "Агбенд",

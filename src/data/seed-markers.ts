@@ -223,9 +223,9 @@ export const SEED_MARKERS: AdminMarker[] = [
   },
   {
     id: "nakhchivan-terminal",
-    name: localizedText("Nakhchivan Corridor Terminal", {
-      az: "Naxçıvan Dəhliz Terminalı",
-      ru: "Коридорный терминал Нахчыван",
+    name: localizedText("Nakhchivan", {
+      az: "Naxçıvan",
+      ru: "Нахчыван",
     }),
     description: localizedText(
       "A western Azerbaijan transfer point supporting the Zangazur corridor connection.",
@@ -238,5 +238,113 @@ export const SEED_MARKERS: AdminMarker[] = [
     icon: "fas:warehouse",
     coordinates: [39.2089, 45.4122],
     connectedCorridorIds: ["zangazur"],
+  },
+  {
+    id: "turgundi-border-terminal",
+    name: localizedText("Turgundi Border Terminal", {
+      az: "Turqundi Sərhəd Terminalı",
+      ru: "Пограничный терминал Тургунди",
+    }),
+    description: localizedText(
+      "An Afghanistan-Turkmenistan border rail crossing feeding Central Asian corridor traffic.",
+      {
+        az: "Mərkəzi Asiya dəhlizi trafikini qidalandıran Əfqanıstan-Türkmənistan sərhəd dəmir yolu keçidi.",
+        ru: "Афгано-туркменский пограничный железнодорожный переход, питающий трафик центральноазиатского коридора.",
+      },
+    ),
+    category: "station",
+    icon: "fas:train",
+    coordinates: [35.2183, 62.2591],
+    connectedCorridorIds: ["east-west"],
+  },
+  {
+    id: "mazar-i-sharif-rail-hub",
+    name: localizedText("Mazar-i-Sharif Rail Hub", {
+      az: "Məzari-Şərif Dəmiryol Qovşağı",
+      ru: "Железнодорожный узел Мазари-Шариф",
+    }),
+    description: localizedText(
+      "A northern Afghanistan rail hub linking Central Asian corridor traffic toward South Asia.",
+      {
+        az: "Mərkəzi Asiya dəhlizi trafikini Cənubi Asiyaya bağlayan şimali Əfqanıstan dəmir yolu qovşağı.",
+        ru: "Железнодорожный узел на севере Афганистана, связывающий трафик центральноазиатского коридора с Южной Азией.",
+      },
+    ),
+    category: "station",
+    icon: "fas:train",
+    coordinates: [36.7069, 67.1109],
+    connectedCorridorIds: ["east-west"],
+  },
+  {
+    id: "dushanbe-rail-hub",
+    name: localizedText("Dushanbe Rail Hub", {
+      az: "Düşənbə Dəmiryol Qovşağı",
+      ru: "Железнодорожный узел Душанбе",
+    }),
+    description: localizedText(
+      "A Tajikistan rail hub consolidating Central Asian corridor traffic toward Afghanistan.",
+      {
+        az: "Mərkəzi Asiya dəhlizi trafikini Əfqanıstana yönəldən Tacikistan dəmir yolu qovşağı.",
+        ru: "Таджикский железнодорожный узел, консолидирующий трафик центральноазиатского коридора в сторону Афганистана.",
+      },
+    ),
+    category: "station",
+    icon: "fas:train",
+    coordinates: [38.5598, 68.787],
+    connectedCorridorIds: ["east-west"],
+  },
+  {
+    id: "qingdao-port",
+    name: localizedText("Qingdao Port", {
+      az: "Qingdao Limanı",
+      ru: "Порт Циндао",
+    }),
+    description: localizedText(
+      "An eastern Chinese seaport feeding East-West corridor cargo from the Yellow Sea coast.",
+      {
+        az: "Sarı Dəniz sahilindən Şərq-Qərb dəhlizi yükünü qidalandıran şərqi Çin dəniz limanı.",
+        ru: "Восточно-китайский морской порт на побережье Жёлтого моря, питающий грузопоток коридора Восток-Запад.",
+      },
+    ),
+    category: "port",
+    icon: "fas:anchor",
+    coordinates: [36.0671, 120.3826],
+    connectedCorridorIds: ["east-west"],
+  },
+  {
+    id: "lianyungang-port",
+    name: localizedText("Lianyungang Port", {
+      az: "Lianyungang Limanı",
+      ru: "Порт Ляньюньган",
+    }),
+    description: localizedText(
+      "A Yellow Sea gateway port and eastern terminus for East-West corridor rail traffic.",
+      {
+        az: "Şərq-Qərb dəhlizi dəmir yolu trafiki üçün şərq son nöqtəsi olan Sarı Dəniz qapı limanı.",
+        ru: "Портовые ворота на Жёлтом море, восточная конечная точка железнодорожного трафика коридора Восток-Запад.",
+      },
+    ),
+    category: "port",
+    icon: "fas:anchor",
+    coordinates: [34.5969, 119.2216],
+    connectedCorridorIds: ["east-west"],
+  },
+  {
+    id: "mersin-port",
+    name: localizedText("Mersin Port", {
+      az: "Mersin Limanı",
+      ru: "Порт Мерсин",
+    }),
+    description: localizedText(
+      "A Mediterranean gateway port linking East-West and South-West corridor traffic to Europe.",
+      {
+        az: "Şərq-Qərb və Cənub-Qərb dəhlizi trafikini Avropa ilə birləşdirən Aralıq dənizi qapı limanı.",
+        ru: "Средиземноморский порт-ворота, связывающий трафик коридоров Восток-Запад и Юго-Запад с Европой.",
+      },
+    ),
+    category: "port",
+    icon: "fas:anchor",
+    coordinates: [36.8, 34.6333],
+    connectedCorridorIds: ["east-west", "south-west"],
   },
 ];
