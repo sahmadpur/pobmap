@@ -35,6 +35,9 @@ export const ISO_COUNTRY_CODES = [
 
 const COUNTRY_NAME_OVERRIDES: Partial<Record<string, LocalizedText>> = {
   AZ: { az: "Azərbaycan", en: "Azerbaijan", ru: "Азербайджан" },
+  // Not an ISO country code, so it stays out of ISO_COUNTRY_CODES and the admin
+  // country picker; corridors reference it as a single "European Union" flag.
+  EU: { az: "Avropa İttifaqı", en: "European Union", ru: "Европейский союз" },
   DE: { az: "Almaniya", en: "Germany", ru: "Германия" },
   ES: { az: "İspaniya", en: "Spain", ru: "Испания" },
   FI: { az: "Finlandiya", en: "Finland", ru: "Финляндия" },

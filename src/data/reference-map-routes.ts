@@ -130,6 +130,12 @@ export const REFERENCE_MAP_ROUTES: CorridorRoute[] = [
         displayCoordinates: [
           [40.3572, 49.835],
           [41.7151, 44.8271],
+          // The BTK line runs north and west of Armenia, via Marabda,
+          // Akhalkalaki and the Kartsakhi/Türkgözü border crossing.
+          [41.51, 44.76],
+          [41.4, 43.48],
+          [41.19, 43.13],
+          [41.02, 43.02],
           [40.6013, 43.0947],
           [39.9334, 32.8597],
           [41.0082, 28.9784],
@@ -275,6 +281,12 @@ export const REFERENCE_MAP_ROUTES: CorridorRoute[] = [
         displayCoordinates: [
           [40.3572, 49.835],
           [41.7151, 44.8271],
+          // The BTK line runs north and west of Armenia, via Marabda,
+          // Akhalkalaki and the Kartsakhi/Türkgözü border crossing.
+          [41.51, 44.76],
+          [41.4, 43.48],
+          [41.19, 43.13],
+          [41.02, 43.02],
           [40.6013, 43.0947],
           [39.9334, 32.8597],
           [41.0082, 28.9784],
@@ -310,6 +322,12 @@ export const REFERENCE_MAP_ROUTES: CorridorRoute[] = [
         displayCoordinates: [
           [40.3572, 49.835],
           [41.7151, 44.8271],
+          // The BTK line runs north and west of Armenia, via Marabda,
+          // Akhalkalaki and the Kartsakhi/Türkgözü border crossing.
+          [41.51, 44.76],
+          [41.4, 43.48],
+          [41.19, 43.13],
+          [41.02, 43.02],
           [40.6013, 43.0947],
           [39.9334, 32.8597],
           [41.0082, 28.9784],
@@ -366,11 +384,15 @@ export const REFERENCE_MAP_ROUTES: CorridorRoute[] = [
         distanceKm: 900,
         displayCoordinates: [
           [40.3572, 49.835],
-          [39.2, 49.2],
-          [38.4329, 48.8742],
-          [37.9, 47.2],
+          // Inland along the Baku-Astara alignment, not across the Caspian.
+          [39.93, 49.4],
+          [39.6, 48.98],
+          [39.03, 48.66],
+          [38.7529, 48.8475],
+          [38.0, 47.5],
           [37.5536, 45.0761],
-          [36.4, 48.1],
+          [36.9, 47.6],
+          [36.4, 49.6],
           [35.6892, 51.389],
         ],
       }),

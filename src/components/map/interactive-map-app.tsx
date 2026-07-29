@@ -23,6 +23,8 @@ import {
 
 import "@/lib/i18n";
 import {
+  getCorridorKeyCountries,
+  getCountryName,
   getLocalizedText,
   SUPPORTED_LOCALES,
   TRANSPORT_MODE_META,
@@ -127,9 +129,11 @@ export function InteractiveMapApp({
   const [selectedRouteId, setSelectedRouteId] = useState<string | null>(null);
   const [selectedSegmentId, setSelectedSegmentId] = useState<string | null>(null);
   const [hoveredRouteId, setHoveredRouteId] = useState<string | null>(null);
-  const [enabledRouteIds, setEnabledRouteIds] = useState<string[]>(
-    () => routes.map((route) => route.id),
-  );
+  // Corridors start hidden: the map opens on the Baku Port hub alone, and a
+  // corridor's line, markers and stops appear only once it is picked here or via
+  // the hub popup. Modes and statuses stay fully enabled — they refine a chosen
+  // corridor rather than acting as the primary selector.
+  const [enabledRouteIds, setEnabledRouteIds] = useState<string[]>([]);
   const [enabledModes, setEnabledModes] = useState<TransportMode[]>(
     () => getAvailableModes(routes),
   );
@@ -536,7 +540,7 @@ export function InteractiveMapApp({
                 {routes.map((route) => {
                   const enabled = effectiveEnabledRouteIds.includes(route.id);
                   const routeModes = getUniqueRouteModes(route);
-                  const routeFlags = route.countries.slice(0, 7);
+                  const routeFlags = getCorridorKeyCountries(route);
 
                   return (
                     <div
@@ -566,9 +570,14 @@ export function InteractiveMapApp({
                         <span
                           className={`mt-1 flex min-w-0 items-center gap-2 text-xs ${mutedTextClass}`}
                         >
-                          <span className="flex shrink-0 items-center gap-1" aria-hidden="true">
+                          <span className="flex shrink-0 items-center gap-1">
                             {routeFlags.map((countryCode) => (
-                              <CountryFlag key={countryCode} code={countryCode} size={20} />
+                              <CountryFlag
+                                key={countryCode}
+                                code={countryCode}
+                                size={20}
+                                title={getCountryName(countryCode, locale)}
+                              />
                             ))}
                           </span>
                           <span className="flex shrink-0 items-center gap-1">

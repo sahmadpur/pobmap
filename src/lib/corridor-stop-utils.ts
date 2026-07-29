@@ -62,6 +62,50 @@ export function normalizeCorridorSegment(segment: CorridorSegment): CorridorSegm
   };
 }
 
+/**
+ * Stops where a corridor terminates — the outer end of each of its branches.
+ *
+ * A corridor is a branching network, not a single path, so start and end cannot
+ * be read off the segment array: `segments[0]` and the last segment reflect
+ * authoring order (East-West would report Dalian and Madrid). Instead this walks
+ * the corridor graph and returns every stop with exactly one neighbour, which
+ * picks out the real gateways — the Chinese ports, the European terminals, and
+ * so on — while excluding junctions such as Tbilisi that only look like an
+ * endpoint because one segment happens to stop there.
+ */
+export function collectRouteTerminalStopIds(route: CorridorRoute): string[] {
+  const neighbours = new Map<string, Set<string>>();
+
+  const link = (from: string, to: string) => {
+    const adjacent = neighbours.get(from);
+
+    if (adjacent) {
+      adjacent.add(to);
+    } else {
+      neighbours.set(from, new Set([to]));
+    }
+  };
+
+  route.segments.forEach((segment) => {
+    const stopIds = segment.stopIds ?? [];
+
+    stopIds.forEach((stopId, index) => {
+      const next = stopIds[index + 1];
+
+      if (!next || next === stopId) {
+        return;
+      }
+
+      link(stopId, next);
+      link(next, stopId);
+    });
+  });
+
+  return Array.from(neighbours.entries())
+    .filter(([, adjacent]) => adjacent.size === 1)
+    .map(([stopId]) => stopId);
+}
+
 export function normalizeCorridorRoute(route: CorridorRoute): CorridorRoute {
   return {
     ...route,

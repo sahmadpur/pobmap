@@ -24,7 +24,13 @@ import {
 } from "@/data/corridors";
 import { getMarkerIconSvg } from "@/data/marker-icons";
 import { getTransportStop } from "@/data/transport-stops";
+import { collectRouteTerminalStopIds } from "@/lib/corridor-stop-utils";
 import { flattenRouteCoordinates, getSegmentRenderCoordinates } from "@/lib/map-utils";
+import {
+  isMarkerVisibleAtZoom,
+  LABEL_MIN_ZOOM,
+  MARKER_MIN_ZOOM,
+} from "@/lib/marker-visibility";
 import { VehicleLayer } from "@/components/map/vehicle-layer";
 import type { AdminMarker, MarkerCategory } from "@/types/admin";
 import type { Coordinate, CorridorRoute, LocalizedText, SupportedLocale, TransportMode } from "@/types/map";
@@ -320,8 +326,6 @@ function MapClickHandler({ onClearSelection }: { onClearSelection: () => void })
   return null;
 }
 
-const STOP_LABEL_MIN_ZOOM = 5;
-
 function ZoomWatcher({ onZoomChange }: { onZoomChange: (zoom: number) => void }) {
   const map = useMap();
 
@@ -498,21 +502,60 @@ export default function CorridorMapCanvas({
   const primaryPortConnectedRouteIds = Array.from(
     new Set(allRoutes.map((route) => route.id)),
   );
-  const visibleSecondaryMarkers = secondaryMarkers;
   const highlightedRouteIds = useMemo(
     () => Array.from(new Set([selectedRouteId, hoveredRouteId].filter((id): id is string => Boolean(id)))),
     [selectedRouteId, hoveredRouteId],
   );
-  const highlightedRoutes = useMemo(
-    () => routes.filter((route) => highlightedRouteIds.includes(route.id)),
-    [routes, highlightedRouteIds],
-  );
-  const routeStopMarkers = useMemo(
-    () => collectRouteStopMarkers(highlightedRoutes, safeMarkers),
-    [highlightedRoutes, safeMarkers],
-  );
   const [zoom, setZoom] = useState(DEFAULT_MAP_VIEW.zoom);
-  const showStopLabels = zoom >= STOP_LABEL_MIN_ZOOM;
+  const showStopLabels = zoom >= LABEL_MIN_ZOOM;
+
+  // Where each visible corridor begins and ends. These are shown as soon as the
+  // corridor is, so selecting one immediately reveals the gateways it reaches.
+  const visibleRouteTerminalCoordinates = routes.flatMap((route) =>
+    collectRouteTerminalStopIds(route)
+      .map((stopId) => getTransportStop(stopId)?.coordinates)
+      .filter((coordinate): coordinate is Coordinate => Boolean(coordinate)),
+  );
+
+  const isRouteTerminalMarker = (marker: AdminMarker) =>
+    visibleRouteTerminalCoordinates.some((coordinate) =>
+      areCoordinatesNear(marker.coordinates, coordinate),
+    );
+
+  // Markers pass two independent gates. Whether a marker is relevant at all comes
+  // from the corridor filter, so it appears only once a corridor it serves is
+  // enabled. How early it appears comes from its tier, which is ranked against
+  // every corridor rather than the enabled subset — otherwise viewing one corridor
+  // would flatten all of its markers to a single connection and demote strategic
+  // ports like Aktau or Poti to the same tier as a minor inland stop.
+  const visibleSecondaryMarkers = secondaryMarkers.filter((marker) => {
+    const isOnVisibleRoute =
+      getAvailableConnectedRouteIdsForMarker(marker, routes).length > 0;
+
+    if (!isOnVisibleRoute) {
+      return false;
+    }
+
+    // A corridor's own endpoints skip the zoom tiers entirely.
+    if (isRouteTerminalMarker(marker)) {
+      return true;
+    }
+
+    const totalRouteCount = getAvailableConnectedRouteIdsForMarker(
+      marker,
+      allRoutes,
+    ).length;
+
+    return isMarkerVisibleAtZoom(marker, totalRouteCount, zoom);
+  });
+
+  // Intermediate stop dots are the finest level of detail, so they are keyed to
+  // every visible corridor (not just the hovered one) but held back until the
+  // deepest zoom tier.
+  const routeStopMarkers =
+    zoom >= MARKER_MIN_ZOOM.stop
+      ? collectRouteStopMarkers(routes, safeMarkers)
+      : [];
 
   return (
     <MapContainer

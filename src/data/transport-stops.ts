@@ -177,7 +177,7 @@ export const TRANSPORT_STOPS: TransportStop[] = [
     en: "Helsinki",
     ru: "Хельсинки",
   }),
-  createStop("lankaran", "AZ", [38.4329, 48.8742], {
+  createStop("lankaran", "AZ", [38.7529, 48.8475], {
     az: "Lənkəran",
     en: "Lankaran",
     ru: "Ленкорань",

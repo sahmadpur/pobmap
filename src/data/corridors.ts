@@ -47,6 +47,26 @@ export function getLocalizedText(
   return value[locale] ?? value.az;
 }
 
+/**
+ * Stakeholder-defined key countries per corridor, in presentation order.
+ *
+ * This is deliberately separate from `route.countries`: that list is the full
+ * transit set shown in the details panel and is editable in the admin console,
+ * while these are the handful of flags the filter panel leads with. "EU" is not
+ * an ISO country code but flagcdn serves `eu.svg`, so it renders like the rest.
+ */
+export const CORRIDOR_KEY_COUNTRIES: Record<string, string[]> = {
+  "east-west": ["CN", "KZ", "AZ", "GE", "TR", "EU"],
+  "north-south": ["EU", "RU", "AZ", "IR", "IN"],
+  "north-west": ["RU", "AZ", "GE", "TR"],
+  "south-west": ["IN", "IR", "AZ", "GE", "TR", "EU"],
+  "zangezur-corridor": ["AZ", "AM"],
+};
+
+export function getCorridorKeyCountries(route: CorridorRoute): string[] {
+  return CORRIDOR_KEY_COUNTRIES[route.id] ?? route.countries.slice(0, 7);
+}
+
 export const BAKU_PORT: PortMarker = {
   id: "baku-port",
   coordinates: [40.3572, 49.835],

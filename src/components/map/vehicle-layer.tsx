@@ -11,11 +11,27 @@ import {
   isLeftward,
   type PathSampler,
 } from "@/lib/vehicle-path";
-import type { Coordinate, CorridorRoute, TransportMode } from "@/types/map";
+import type {
+  Coordinate,
+  CorridorRoute,
+  CorridorSegment,
+  TransportMode,
+} from "@/types/map";
 
 const SVG_NS = "http://www.w3.org/2000/svg";
 const VEHICLE_PANE = "corridor-vehicles";
-const MAX_ANIMATED_SEGMENTS_PER_ROUTE = 6;
+// Quotas are per mode rather than per route so short sea crossings still get a
+// ship. Picking the longest N segments of a route regardless of mode used to
+// starve the Caspian legs: East-West has 66 segments, and Aktau-Baku (~430 km)
+// never placed against the trans-Eurasian rail hauls. `ship: 12` covers every
+// sea segment on the busiest corridor.
+const MAX_ANIMATED_SEGMENTS_PER_MODE: Record<TransportMode, number> = {
+  rail: 6,
+  ship: 12,
+  road: 4,
+};
+// Backstop for the case where every corridor is enabled at once.
+const MAX_ANIMATED_VEHICLES = 60;
 const TRAIN_CAR_SPACING_PX = 19;
 const EDGE_FADE_PX = 12;
 const HEADING_SAMPLE_PX = 2;
@@ -29,6 +45,11 @@ interface VehicleNodes {
   cars: SVGGElement[];
   carSpacingPx: number;
   bob: boolean;
+}
+
+interface AnimatedSegment {
+  segment: CorridorSegment;
+  sampler: PathSampler;
 }
 
 interface AnimatedVehicle extends VehicleNodes {
@@ -223,24 +244,42 @@ export function VehicleLayer({ routes }: { routes: CorridorRoute[] }) {
     svg.style.left = "0";
     map.getPane(VEHICLE_PANE)!.appendChild(svg);
 
-    const vehicles: AnimatedVehicle[] = routes.flatMap((route) =>
-      route.segments
-        .map((segment) => ({
-          segment,
-          sampler: createPathSampler(getSegmentRenderCoordinates(segment)),
-        }))
-        .filter(({ sampler }) => sampler.totalLength > 0)
-        .sort((a, b) => b.sampler.totalLength - a.sampler.totalLength)
-        .slice(0, MAX_ANIMATED_SEGMENTS_PER_ROUTE)
-        .map(({ segment, sampler }, animationIndex) => ({
-          ...VEHICLE_BUILDERS[segment.mode](svg),
-          sampler,
-          speed: route.animationSpeed,
-          offset: animationIndex * 0.33,
-          reversed: animationIndex % 2 === 1,
-          pathUnitsPerPx: measurePathUnitsPerPx(map, sampler),
-        })),
-    );
+    const vehicles: AnimatedVehicle[] = routes
+      .flatMap((route) => {
+        const byMode = new Map<TransportMode, AnimatedSegment[]>();
+
+        route.segments.forEach((segment) => {
+          const sampler = createPathSampler(getSegmentRenderCoordinates(segment));
+
+          if (sampler.totalLength <= 0) {
+            return;
+          }
+
+          const group = byMode.get(segment.mode);
+
+          if (group) {
+            group.push({ segment, sampler });
+          } else {
+            byMode.set(segment.mode, [{ segment, sampler }]);
+          }
+        });
+
+        return Array.from(byMode.entries()).flatMap(([mode, group]) =>
+          group
+            .sort((a, b) => b.sampler.totalLength - a.sampler.totalLength)
+            .slice(0, MAX_ANIMATED_SEGMENTS_PER_MODE[mode])
+            .map((entry) => ({ ...entry, route })),
+        );
+      })
+      .slice(0, MAX_ANIMATED_VEHICLES)
+      .map(({ segment, sampler, route }, animationIndex) => ({
+        ...VEHICLE_BUILDERS[segment.mode](svg),
+        sampler,
+        speed: route.animationSpeed,
+        offset: animationIndex * 0.33,
+        reversed: animationIndex % 2 === 1,
+        pathUnitsPerPx: measurePathUnitsPerPx(map, sampler),
+      }));
 
     const refreshScales = () => {
       vehicles.forEach((vehicle) => {
