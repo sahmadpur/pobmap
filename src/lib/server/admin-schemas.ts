@@ -41,6 +41,7 @@ export const adminMarkerSchema = z.object({
   icon: z.string().min(1),
   coordinates: coordinateSchema,
   connectedCorridorIds: z.array(z.string()),
+  corridorTiers: z.record(z.string(), z.enum(["major", "standard"])).optional(),
 });
 
 export const loginSchema = z.object({

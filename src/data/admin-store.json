@@ -9280,7 +9280,10 @@
       ],
       "connectedCorridorIds": [
         "east-west"
-      ]
+      ],
+      "corridorTiers": {
+        "east-west": "major"
+      }
     },
     {
       "id": "almaty-logistics-hub",
@@ -9302,7 +9305,10 @@
       ],
       "connectedCorridorIds": [
         "east-west"
-      ]
+      ],
+      "corridorTiers": {
+        "east-west": "major"
+      }
     },
     {
       "id": "aktau-seaport",
@@ -9325,7 +9331,11 @@
       "connectedCorridorIds": [
         "east-west",
         "north-west"
-      ]
+      ],
+      "corridorTiers": {
+        "east-west": "major",
+        "north-west": "standard"
+      }
     },
     {
       "id": "tbilisi-intermodal-hub",
@@ -9349,7 +9359,12 @@
         "east-west",
         "north-west",
         "south-west"
-      ]
+      ],
+      "corridorTiers": {
+        "east-west": "major",
+        "north-west": "major",
+        "south-west": "major"
+      }
     },
     {
       "id": "kars-logistics-terminal",
@@ -9373,7 +9388,12 @@
         "east-west",
         "north-west",
         "south-west"
-      ]
+      ],
+      "corridorTiers": {
+        "east-west": "major",
+        "north-west": "major",
+        "south-west": "major"
+      }
     },
     {
       "id": "istanbul-gateway",
@@ -9397,7 +9417,12 @@
         "east-west",
         "north-west",
         "south-west"
-      ]
+      ],
+      "corridorTiers": {
+        "east-west": "major",
+        "north-west": "major",
+        "south-west": "major"
+      }
     },
     {
       "id": "moscow-freight-hub",
@@ -9420,7 +9445,11 @@
       "connectedCorridorIds": [
         "north-west",
         "north-south"
-      ]
+      ],
+      "corridorTiers": {
+        "north-west": "major",
+        "north-south": "major"
+      }
     },
     {
       "id": "vladivostok-port",
@@ -9465,7 +9494,11 @@
       "connectedCorridorIds": [
         "north-south",
         "south-west"
-      ]
+      ],
+      "corridorTiers": {
+        "north-south": "major",
+        "south-west": "major"
+      }
     },
     {
       "id": "tehran-logistics-hub",
@@ -9488,7 +9521,11 @@
       "connectedCorridorIds": [
         "north-south",
         "south-west"
-      ]
+      ],
+      "corridorTiers": {
+        "north-south": "major",
+        "south-west": "major"
+      }
     },
     {
       "id": "karachi-gateway",
@@ -9511,7 +9548,11 @@
       "connectedCorridorIds": [
         "north-south",
         "south-west"
-      ]
+      ],
+      "corridorTiers": {
+        "north-south": "major",
+        "south-west": "major"
+      }
     },
     {
       "id": "nakhchivan-terminal",
@@ -9536,7 +9577,11 @@
         "north-west",
         "north-south",
         "south-west"
-      ]
+      ],
+      "corridorTiers": {
+        "north-west": "major",
+        "south-west": "major"
+      }
     },
     {
       "id": "turgundi-border-terminal",
@@ -9646,7 +9691,10 @@
       ],
       "connectedCorridorIds": [
         "east-west"
-      ]
+      ],
+      "corridorTiers": {
+        "east-west": "major"
+      }
     },
     {
       "id": "mersin-port",
@@ -9668,8 +9716,14 @@
       ],
       "connectedCorridorIds": [
         "east-west",
-        "south-west"
-      ]
+        "south-west",
+        "north-west"
+      ],
+      "corridorTiers": {
+        "east-west": "major",
+        "north-west": "major",
+        "south-west": "major"
+      }
     },
     {
       "id": "helsinki-northern-terminal",
@@ -9692,7 +9746,11 @@
       "connectedCorridorIds": [
         "north-west",
         "north-south"
-      ]
+      ],
+      "corridorTiers": {
+        "north-west": "major",
+        "north-south": "standard"
+      }
     },
     {
       "id": "rotterdam-european-gateway",
@@ -9714,9 +9772,14 @@
       ],
       "connectedCorridorIds": [
         "east-west",
-        "north-south",
-        "south-west"
-      ]
+        "south-west",
+        "north-south"
+      ],
+      "corridorTiers": {
+        "east-west": "standard",
+        "south-west": "standard",
+        "north-south": "standard"
+      }
     },
     {
       "id": "jebel-ali-maritime-gateway",
@@ -9786,7 +9849,12 @@
         "east-west",
         "north-west",
         "south-west"
-      ]
+      ],
+      "corridorTiers": {
+        "east-west": "major",
+        "north-west": "major",
+        "south-west": "major"
+      }
     },
     {
       "id": "batumi-port",
@@ -9810,7 +9878,12 @@
         "east-west",
         "north-west",
         "south-west"
-      ]
+      ],
+      "corridorTiers": {
+        "east-west": "major",
+        "north-west": "major",
+        "south-west": "major"
+      }
     },
     {
       "id": "constanta-port",
@@ -9833,7 +9906,11 @@
       "connectedCorridorIds": [
         "east-west",
         "south-west"
-      ]
+      ],
+      "corridorTiers": {
+        "east-west": "standard",
+        "south-west": "standard"
+      }
     },
     {
       "id": "turkmenbashi-port",
@@ -9856,7 +9933,11 @@
       "connectedCorridorIds": [
         "east-west",
         "north-west"
-      ]
+      ],
+      "corridorTiers": {
+        "east-west": "major",
+        "north-west": "standard"
+      }
     },
     {
       "id": "ashgabat-hub",
@@ -9922,7 +10003,10 @@
       ],
       "connectedCorridorIds": [
         "east-west"
-      ]
+      ],
+      "corridorTiers": {
+        "east-west": "major"
+      }
     },
     {
       "id": "st-petersburg-hub",
@@ -9945,7 +10029,11 @@
       "connectedCorridorIds": [
         "north-west",
         "north-south"
-      ]
+      ],
+      "corridorTiers": {
+        "north-west": "major",
+        "north-south": "major"
+      }
     },
     {
       "id": "riga-port",
@@ -9967,7 +10055,10 @@
       ],
       "connectedCorridorIds": [
         "north-south"
-      ]
+      ],
+      "corridorTiers": {
+        "north-south": "major"
+      }
     },
     {
       "id": "minsk-hub",
@@ -9989,7 +10080,10 @@
       ],
       "connectedCorridorIds": [
         "north-south"
-      ]
+      ],
+      "corridorTiers": {
+        "north-south": "major"
+      }
     },
     {
       "id": "vanino-port",
@@ -10122,7 +10216,11 @@
       "connectedCorridorIds": [
         "north-south",
         "south-west"
-      ]
+      ],
+      "corridorTiers": {
+        "north-south": "major",
+        "south-west": "major"
+      }
     },
     {
       "id": "chabahar-port",
@@ -10191,7 +10289,10 @@
       "connectedCorridorIds": [
         "north-south",
         "south-west"
-      ]
+      ],
+      "corridorTiers": {
+        "north-south": "major"
+      }
     },
     {
       "id": "shanghai-port",
@@ -10366,8 +10467,13 @@
         9.9937
       ],
       "connectedCorridorIds": [
-        "east-west"
-      ]
+        "east-west",
+        "south-west"
+      ],
+      "corridorTiers": {
+        "east-west": "standard",
+        "south-west": "standard"
+      }
     },
     {
       "id": "berlin-hub",
@@ -10388,8 +10494,15 @@
         13.405
       ],
       "connectedCorridorIds": [
-        "east-west"
-      ]
+        "east-west",
+        "south-west",
+        "north-south"
+      ],
+      "corridorTiers": {
+        "east-west": "standard",
+        "south-west": "standard",
+        "north-south": "standard"
+      }
     },
     {
       "id": "warsaw-hub",
@@ -10410,8 +10523,13 @@
         21.0122
       ],
       "connectedCorridorIds": [
-        "east-west"
-      ]
+        "east-west",
+        "north-south"
+      ],
+      "corridorTiers": {
+        "east-west": "standard",
+        "north-south": "standard"
+      }
     },
     {
       "id": "wroclaw-hub",
@@ -10432,8 +10550,865 @@
         17.0385
       ],
       "connectedCorridorIds": [
+        "east-west",
+        "south-west",
+        "north-south"
+      ],
+      "corridorTiers": {
+        "east-west": "standard",
+        "south-west": "standard",
+        "north-south": "standard"
+      }
+    },
+    {
+      "id": "ankara",
+      "name": {
+        "az": "Ankara",
+        "en": "Ankara",
+        "ru": "Анкара"
+      },
+      "description": {
+        "az": "Anadolu daxilində Şərq-Qərb, Şimal-Qərb və Cənub-Qərb dəhlizi marşrutlarının kəsişdiyi mərkəzi Türkiyə qovşağı.",
+        "en": "A central Turkish hub where the East-West, North-West, and South-West corridor routes cross.",
+        "ru": "Центральный турецкий узел, где пересекаются маршруты коридоров Восток-Запад, Северо-Запад и Юго-Запад."
+      },
+      "category": "city",
+      "icon": "fas:city",
+      "coordinates": [
+        39.9334,
+        32.8597
+      ],
+      "connectedCorridorIds": [
+        "east-west",
+        "north-west",
+        "south-west"
+      ],
+      "corridorTiers": {
+        "east-west": "major",
+        "north-west": "major",
+        "south-west": "major"
+      }
+    },
+    {
+      "id": "izmir",
+      "name": {
+        "az": "İzmir",
+        "en": "Izmir",
+        "ru": "Измир"
+      },
+      "description": {
+        "az": "Şərq-Qərb, Şimal-Qərb və Cənub-Qərb dəhlizi trafikini Egey dənizi ilə birləşdirən qərbi Anadolu limanı.",
+        "en": "A western Anatolian port linking East-West, North-West, and South-West corridor traffic with the Aegean.",
+        "ru": "Западноанатолийский порт, связывающий трафик коридоров Восток-Запад, Северо-Запад и Юго-Запад с Эгейским морем."
+      },
+      "category": "port",
+      "icon": "fas:anchor",
+      "coordinates": [
+        38.50741105808165,
+        27.16057937780109
+      ],
+      "connectedCorridorIds": [
+        "east-west",
+        "north-west",
+        "south-west"
+      ],
+      "corridorTiers": {
+        "east-west": "major",
+        "north-west": "major",
+        "south-west": "major"
+      }
+    },
+    {
+      "id": "samsun",
+      "name": {
+        "az": "Samsun",
+        "en": "Samsun",
+        "ru": "Самсун"
+      },
+      "description": {
+        "az": "Cənub-Qərb dəhlizi marşrutunda Qara dəniz sahilindəki Türkiyə limanı.",
+        "en": "A Black Sea coast port on the South-West corridor route.",
+        "ru": "Черноморский порт Турции на маршруте коридора Юго-Запад."
+      },
+      "category": "port",
+      "icon": "fas:anchor",
+      "coordinates": [
+        41.2867,
+        36.33
+      ],
+      "connectedCorridorIds": [
+        "south-west"
+      ],
+      "corridorTiers": {
+        "south-west": "major"
+      }
+    },
+    {
+      "id": "lanzhou",
+      "name": {
+        "az": "Lançjou",
+        "en": "Lanzhou",
+        "ru": "Ланьчжоу"
+      },
+      "description": {
+        "az": "Şərq-Qərb dəhlizinin Çin daxilindəki dəmir yolu marşrutu üzərində yerləşən qovşaq.",
+        "en": "A rail waypoint on the East-West corridor's route through inland China.",
+        "ru": "Железнодорожный узел на маршруте коридора Восток-Запад во внутреннем Китае."
+      },
+      "category": "station",
+      "icon": "fas:train",
+      "coordinates": [
+        36.0611,
+        103.8343
+      ],
+      "connectedCorridorIds": [
         "east-west"
-      ]
+      ],
+      "corridorTiers": {
+        "east-west": "major"
+      }
+    },
+    {
+      "id": "astrakhan",
+      "name": {
+        "az": "Həştərxan",
+        "en": "Astrakhan",
+        "ru": "Астрахань"
+      },
+      "description": {
+        "az": "Şimal-Cənub və Şimal-Qərb dəhlizi marşrutlarının Volqa hövzəsindəki keçid nöqtəsi.",
+        "en": "A Volga-basin waypoint on the North-South and North-West corridor routes.",
+        "ru": "Волжский транзитный пункт на маршрутах коридоров Север-Юг и Северо-Запад."
+      },
+      "category": "city",
+      "icon": "fas:city",
+      "coordinates": [
+        46.36181378554353,
+        48.04775306886071
+      ],
+      "connectedCorridorIds": [
+        "north-south",
+        "north-west"
+      ],
+      "corridorTiers": {
+        "north-south": "major",
+        "north-west": "major"
+      }
+    },
+    {
+      "id": "makhachkala",
+      "name": {
+        "az": "Maxaçqala",
+        "en": "Makhachkala",
+        "ru": "Махачкала"
+      },
+      "description": {
+        "az": "Şimal-Cənub dəhlizi marşrutunda Xəzər sahilindəki Rusiya limanı.",
+        "en": "A Caspian coast Russian port on the North-South corridor route.",
+        "ru": "Российский порт на каспийском побережье на маршруте коридора Север-Юг."
+      },
+      "category": "port",
+      "icon": "fas:anchor",
+      "coordinates": [
+        42.98868773101421,
+        47.49974364170113
+      ],
+      "connectedCorridorIds": [
+        "north-south"
+      ],
+      "corridorTiers": {
+        "north-south": "major"
+      }
+    },
+    {
+      "id": "amsterdam",
+      "name": {
+        "az": "Amsterdam",
+        "en": "Amsterdam",
+        "ru": "Амстердам"
+      },
+      "description": {
+        "az": "Amsterdam - Cənub-Qərb, Şimal-Cənub dəhlizi marşrutu üzərində Avropa Birliyi şəhəri.",
+        "en": "An EU city on the South-West, North-South corridor route.",
+        "ru": "Город ЕС на маршруте коридора Юго-Запад, Север-Юг."
+      },
+      "category": "city",
+      "icon": "fas:city",
+      "coordinates": [
+        52.3676,
+        4.9041
+      ],
+      "connectedCorridorIds": [
+        "south-west",
+        "north-south"
+      ],
+      "corridorTiers": {
+        "south-west": "standard",
+        "north-south": "standard"
+      }
+    },
+    {
+      "id": "barcelona",
+      "name": {
+        "az": "Barcelona",
+        "en": "Barcelona",
+        "ru": "Barcelona"
+      },
+      "description": {
+        "az": "Barcelona - Şərq-Qərb, Cənub-Qərb dəhlizi marşrutu üzərində Avropa Birliyi şəhəri.",
+        "en": "An EU city on the East-West, South-West corridor route.",
+        "ru": "Город ЕС на маршруте коридора Восток-Запад, Юго-Запад."
+      },
+      "category": "city",
+      "icon": "fas:city",
+      "coordinates": [
+        41.35789331399737,
+        2.2567791725067354
+      ],
+      "connectedCorridorIds": [
+        "east-west",
+        "south-west"
+      ],
+      "corridorTiers": {
+        "east-west": "standard",
+        "south-west": "standard"
+      }
+    },
+    {
+      "id": "brussels",
+      "name": {
+        "az": "Brüssel",
+        "en": "Brussels",
+        "ru": "Брюссель"
+      },
+      "description": {
+        "az": "Brüssel - Şərq-Qərb, Cənub-Qərb dəhlizi marşrutu üzərində Avropa Birliyi şəhəri.",
+        "en": "An EU city on the East-West, South-West corridor route.",
+        "ru": "Город ЕС на маршруте коридора Восток-Запад, Юго-Запад."
+      },
+      "category": "city",
+      "icon": "fas:city",
+      "coordinates": [
+        50.8503,
+        4.3517
+      ],
+      "connectedCorridorIds": [
+        "east-west",
+        "south-west"
+      ],
+      "corridorTiers": {
+        "east-west": "standard",
+        "south-west": "standard"
+      }
+    },
+    {
+      "id": "bucharest",
+      "name": {
+        "az": "Buxarest",
+        "en": "Bucharest",
+        "ru": "Бухарест"
+      },
+      "description": {
+        "az": "Buxarest - Şərq-Qərb, Cənub-Qərb dəhlizi marşrutu üzərində Avropa Birliyi şəhəri.",
+        "en": "An EU city on the East-West, South-West corridor route.",
+        "ru": "Город ЕС на маршруте коридора Восток-Запад, Юго-Запад."
+      },
+      "category": "city",
+      "icon": "fas:city",
+      "coordinates": [
+        44.4268,
+        26.1025
+      ],
+      "connectedCorridorIds": [
+        "east-west",
+        "south-west"
+      ],
+      "corridorTiers": {
+        "east-west": "standard",
+        "south-west": "standard"
+      }
+    },
+    {
+      "id": "budapest",
+      "name": {
+        "az": "Budapeşt",
+        "en": "Budapest",
+        "ru": "Будапешт"
+      },
+      "description": {
+        "az": "Budapeşt - Şərq-Qərb, Cənub-Qərb dəhlizi marşrutu üzərində Avropa Birliyi şəhəri.",
+        "en": "An EU city on the East-West, South-West corridor route.",
+        "ru": "Город ЕС на маршруте коридора Восток-Запад, Юго-Запад."
+      },
+      "category": "city",
+      "icon": "fas:city",
+      "coordinates": [
+        47.4979,
+        19.0402
+      ],
+      "connectedCorridorIds": [
+        "east-west",
+        "south-west"
+      ],
+      "corridorTiers": {
+        "east-west": "standard",
+        "south-west": "standard"
+      }
+    },
+    {
+      "id": "burgas",
+      "name": {
+        "az": "Burqas",
+        "en": "Burgas",
+        "ru": "Бургас"
+      },
+      "description": {
+        "az": "Burqas - Şərq-Qərb, Cənub-Qərb dəhlizi marşrutu üzərində Avropa Birliyi şəhəri.",
+        "en": "An EU city on the East-West, South-West corridor route.",
+        "ru": "Город ЕС на маршруте коридора Восток-Запад, Юго-Запад."
+      },
+      "category": "city",
+      "icon": "fas:city",
+      "coordinates": [
+        42.5048,
+        27.4626
+      ],
+      "connectedCorridorIds": [
+        "east-west",
+        "south-west"
+      ],
+      "corridorTiers": {
+        "east-west": "standard",
+        "south-west": "standard"
+      }
+    },
+    {
+      "id": "duisburg",
+      "name": {
+        "az": "Duisburg",
+        "en": "Duisburg",
+        "ru": "Duisburg"
+      },
+      "description": {
+        "az": "Duisburg - Şərq-Qərb, Cənub-Qərb, Şimal-Cənub dəhlizi marşrutu üzərində Avropa Birliyi şəhəri.",
+        "en": "An EU city on the East-West, South-West, North-South corridor route.",
+        "ru": "Город ЕС на маршруте коридора Восток-Запад, Юго-Запад, Север-Юг."
+      },
+      "category": "city",
+      "icon": "fas:city",
+      "coordinates": [
+        51.4344,
+        6.7623
+      ],
+      "connectedCorridorIds": [
+        "east-west",
+        "south-west",
+        "north-south"
+      ],
+      "corridorTiers": {
+        "east-west": "standard",
+        "south-west": "standard",
+        "north-south": "standard"
+      }
+    },
+    {
+      "id": "frankfurt",
+      "name": {
+        "az": "Frankfurt",
+        "en": "Frankfurt",
+        "ru": "Frankfurt"
+      },
+      "description": {
+        "az": "Frankfurt - Şərq-Qərb, Cənub-Qərb dəhlizi marşrutu üzərində Avropa Birliyi şəhəri.",
+        "en": "An EU city on the East-West, South-West corridor route.",
+        "ru": "Город ЕС на маршруте коридора Восток-Запад, Юго-Запад."
+      },
+      "category": "city",
+      "icon": "fas:city",
+      "coordinates": [
+        50.1109,
+        8.6821
+      ],
+      "connectedCorridorIds": [
+        "east-west",
+        "south-west"
+      ],
+      "corridorTiers": {
+        "east-west": "standard",
+        "south-west": "standard"
+      }
+    },
+    {
+      "id": "genoa",
+      "name": {
+        "az": "Genoa",
+        "en": "Genoa",
+        "ru": "Genoa"
+      },
+      "description": {
+        "az": "Genoa - Şərq-Qərb, Cənub-Qərb dəhlizi marşrutu üzərində Avropa Birliyi şəhəri.",
+        "en": "An EU city on the East-West, South-West corridor route.",
+        "ru": "Город ЕС на маршруте коридора Восток-Запад, Юго-Запад."
+      },
+      "category": "city",
+      "icon": "fas:city",
+      "coordinates": [
+        44.4056,
+        8.9463
+      ],
+      "connectedCorridorIds": [
+        "east-west",
+        "south-west"
+      ],
+      "corridorTiers": {
+        "east-west": "standard",
+        "south-west": "standard"
+      }
+    },
+    {
+      "id": "krakow",
+      "name": {
+        "az": "Krakov",
+        "en": "Krakow",
+        "ru": "Краков"
+      },
+      "description": {
+        "az": "Krakov - Şərq-Qərb dəhlizi marşrutu üzərində Avropa Birliyi şəhəri.",
+        "en": "An EU city on the East-West corridor route.",
+        "ru": "Город ЕС на маршруте коридора Восток-Запад."
+      },
+      "category": "city",
+      "icon": "fas:city",
+      "coordinates": [
+        50.0647,
+        19.945
+      ],
+      "connectedCorridorIds": [
+        "east-west"
+      ],
+      "corridorTiers": {
+        "east-west": "standard"
+      }
+    },
+    {
+      "id": "le-havre",
+      "name": {
+        "az": "Le Havre",
+        "en": "Le Havre",
+        "ru": "Le Havre"
+      },
+      "description": {
+        "az": "Le Havre - Şərq-Qərb, Cənub-Qərb dəhlizi marşrutu üzərində Avropa Birliyi şəhəri.",
+        "en": "An EU city on the East-West, South-West corridor route.",
+        "ru": "Город ЕС на маршруте коридора Восток-Запад, Юго-Запад."
+      },
+      "category": "city",
+      "icon": "fas:city",
+      "coordinates": [
+        49.4944,
+        0.1079
+      ],
+      "connectedCorridorIds": [
+        "east-west",
+        "south-west"
+      ],
+      "corridorTiers": {
+        "east-west": "standard",
+        "south-west": "standard"
+      }
+    },
+    {
+      "id": "lisbon",
+      "name": {
+        "az": "Lisbon",
+        "en": "Lisbon",
+        "ru": "Lisbon"
+      },
+      "description": {
+        "az": "Lisbon - Şərq-Qərb, Cənub-Qərb dəhlizi marşrutu üzərində Avropa Birliyi şəhəri.",
+        "en": "An EU city on the East-West, South-West corridor route.",
+        "ru": "Город ЕС на маршруте коридора Восток-Запад, Юго-Запад."
+      },
+      "category": "city",
+      "icon": "fas:city",
+      "coordinates": [
+        38.7223,
+        -9.1393
+      ],
+      "connectedCorridorIds": [
+        "east-west",
+        "south-west"
+      ],
+      "corridorTiers": {
+        "east-west": "standard",
+        "south-west": "standard"
+      }
+    },
+    {
+      "id": "luxembourg",
+      "name": {
+        "az": "Lüksemburq",
+        "en": "Luxembourg",
+        "ru": "Люксембург"
+      },
+      "description": {
+        "az": "Lüksemburq - Şərq-Qərb, Cənub-Qərb dəhlizi marşrutu üzərində Avropa Birliyi şəhəri.",
+        "en": "An EU city on the East-West, South-West corridor route.",
+        "ru": "Город ЕС на маршруте коридора Восток-Запад, Юго-Запад."
+      },
+      "category": "city",
+      "icon": "fas:city",
+      "coordinates": [
+        49.6116,
+        6.1319
+      ],
+      "connectedCorridorIds": [
+        "east-west",
+        "south-west"
+      ],
+      "corridorTiers": {
+        "east-west": "standard",
+        "south-west": "standard"
+      }
+    },
+    {
+      "id": "lyon",
+      "name": {
+        "az": "Lyon",
+        "en": "Lyon",
+        "ru": "Lyon"
+      },
+      "description": {
+        "az": "Lyon - Cənub-Qərb dəhlizi marşrutu üzərində Avropa Birliyi şəhəri.",
+        "en": "An EU city on the South-West corridor route.",
+        "ru": "Город ЕС на маршруте коридора Юго-Запад."
+      },
+      "category": "city",
+      "icon": "fas:city",
+      "coordinates": [
+        45.764,
+        4.8357
+      ],
+      "connectedCorridorIds": [
+        "south-west"
+      ],
+      "corridorTiers": {
+        "south-west": "standard"
+      }
+    },
+    {
+      "id": "madrid",
+      "name": {
+        "az": "Madrid",
+        "en": "Madrid",
+        "ru": "Мадрид"
+      },
+      "description": {
+        "az": "Madrid - Şərq-Qərb, Cənub-Qərb dəhlizi marşrutu üzərində Avropa Birliyi şəhəri.",
+        "en": "An EU city on the East-West, South-West corridor route.",
+        "ru": "Город ЕС на маршруте коридора Восток-Запад, Юго-Запад."
+      },
+      "category": "city",
+      "icon": "fas:city",
+      "coordinates": [
+        40.4168,
+        -3.7038
+      ],
+      "connectedCorridorIds": [
+        "east-west",
+        "south-west"
+      ],
+      "corridorTiers": {
+        "east-west": "standard",
+        "south-west": "standard"
+      }
+    },
+    {
+      "id": "marseille",
+      "name": {
+        "az": "Marsel",
+        "en": "Marseille",
+        "ru": "Марсель"
+      },
+      "description": {
+        "az": "Marsel - Cənub-Qərb dəhlizi marşrutu üzərində Avropa Birliyi şəhəri.",
+        "en": "An EU city on the South-West corridor route.",
+        "ru": "Город ЕС на маршруте коридора Юго-Запад."
+      },
+      "category": "city",
+      "icon": "fas:city",
+      "coordinates": [
+        43.30483000061793,
+        5.376721134822359
+      ],
+      "connectedCorridorIds": [
+        "south-west"
+      ],
+      "corridorTiers": {
+        "south-west": "standard"
+      }
+    },
+    {
+      "id": "milan",
+      "name": {
+        "az": "Milan",
+        "en": "Milan",
+        "ru": "Milan"
+      },
+      "description": {
+        "az": "Milan - Şərq-Qərb, Cənub-Qərb dəhlizi marşrutu üzərində Avropa Birliyi şəhəri.",
+        "en": "An EU city on the East-West, South-West corridor route.",
+        "ru": "Город ЕС на маршруте коридора Восток-Запад, Юго-Запад."
+      },
+      "category": "city",
+      "icon": "fas:city",
+      "coordinates": [
+        45.50433699583818,
+        9.167047936478804
+      ],
+      "connectedCorridorIds": [
+        "east-west",
+        "south-west"
+      ],
+      "corridorTiers": {
+        "east-west": "standard",
+        "south-west": "standard"
+      }
+    },
+    {
+      "id": "muuga",
+      "name": {
+        "az": "Muuqa",
+        "en": "Muuga",
+        "ru": "Мууга"
+      },
+      "description": {
+        "az": "Muuqa - Şimal-Cənub dəhlizi marşrutu üzərində Avropa Birliyi şəhəri.",
+        "en": "An EU city on the North-South corridor route.",
+        "ru": "Город ЕС на маршруте коридора Север-Юг."
+      },
+      "category": "city",
+      "icon": "fas:city",
+      "coordinates": [
+        59.4968,
+        24.9573
+      ],
+      "connectedCorridorIds": [
+        "north-south"
+      ],
+      "corridorTiers": {
+        "north-south": "standard"
+      }
+    },
+    {
+      "id": "paldiski",
+      "name": {
+        "az": "Paldiski",
+        "en": "Paldiski",
+        "ru": "Палдиски"
+      },
+      "description": {
+        "az": "Paldiski - Şimal-Cənub dəhlizi marşrutu üzərində Avropa Birliyi şəhəri.",
+        "en": "An EU city on the North-South corridor route.",
+        "ru": "Город ЕС на маршруте коридора Север-Юг."
+      },
+      "category": "city",
+      "icon": "fas:city",
+      "coordinates": [
+        59.3567,
+        24.0531
+      ],
+      "connectedCorridorIds": [
+        "north-south"
+      ],
+      "corridorTiers": {
+        "north-south": "standard"
+      }
+    },
+    {
+      "id": "paris",
+      "name": {
+        "az": "Paris",
+        "en": "Paris",
+        "ru": "Париж"
+      },
+      "description": {
+        "az": "Paris - Şərq-Qərb, Cənub-Qərb dəhlizi marşrutu üzərində Avropa Birliyi şəhəri.",
+        "en": "An EU city on the East-West, South-West corridor route.",
+        "ru": "Город ЕС на маршруте коридора Восток-Запад, Юго-Запад."
+      },
+      "category": "city",
+      "icon": "fas:city",
+      "coordinates": [
+        48.8566,
+        2.3522
+      ],
+      "connectedCorridorIds": [
+        "east-west",
+        "south-west"
+      ],
+      "corridorTiers": {
+        "east-west": "standard",
+        "south-west": "standard"
+      }
+    },
+    {
+      "id": "prague",
+      "name": {
+        "az": "Prague",
+        "en": "Prague",
+        "ru": "Prague"
+      },
+      "description": {
+        "az": "Prague - Cənub-Qərb dəhlizi marşrutu üzərində Avropa Birliyi şəhəri.",
+        "en": "An EU city on the South-West corridor route.",
+        "ru": "Город ЕС на маршруте коридора Юго-Запад."
+      },
+      "category": "city",
+      "icon": "fas:city",
+      "coordinates": [
+        50.0755,
+        14.4378
+      ],
+      "connectedCorridorIds": [
+        "south-west"
+      ],
+      "corridorTiers": {
+        "south-west": "standard"
+      }
+    },
+    {
+      "id": "sofia",
+      "name": {
+        "az": "Sofia",
+        "en": "Sofia",
+        "ru": "Sofia"
+      },
+      "description": {
+        "az": "Sofia - Şərq-Qərb, Cənub-Qərb dəhlizi marşrutu üzərində Avropa Birliyi şəhəri.",
+        "en": "An EU city on the East-West, South-West corridor route.",
+        "ru": "Город ЕС на маршруте коридора Восток-Запад, Юго-Запад."
+      },
+      "category": "city",
+      "icon": "fas:city",
+      "coordinates": [
+        42.6977,
+        23.3219
+      ],
+      "connectedCorridorIds": [
+        "east-west",
+        "south-west"
+      ],
+      "corridorTiers": {
+        "east-west": "standard",
+        "south-west": "standard"
+      }
+    },
+    {
+      "id": "trieste",
+      "name": {
+        "az": "Trieste",
+        "en": "Trieste",
+        "ru": "Trieste"
+      },
+      "description": {
+        "az": "Trieste - Şərq-Qərb, Cənub-Qərb dəhlizi marşrutu üzərində Avropa Birliyi şəhəri.",
+        "en": "An EU city on the East-West, South-West corridor route.",
+        "ru": "Город ЕС на маршруте коридора Восток-Запад, Юго-Запад."
+      },
+      "category": "city",
+      "icon": "fas:city",
+      "coordinates": [
+        45.659785485030035,
+        13.778999799715153
+      ],
+      "connectedCorridorIds": [
+        "east-west",
+        "south-west"
+      ],
+      "corridorTiers": {
+        "east-west": "standard",
+        "south-west": "standard"
+      }
+    },
+    {
+      "id": "varna",
+      "name": {
+        "az": "Varna",
+        "en": "Varna",
+        "ru": "Варна"
+      },
+      "description": {
+        "az": "Varna - Şərq-Qərb, Cənub-Qərb dəhlizi marşrutu üzərində Avropa Birliyi şəhəri.",
+        "en": "An EU city on the East-West, South-West corridor route.",
+        "ru": "Город ЕС на маршруте коридора Восток-Запад, Юго-Запад."
+      },
+      "category": "city",
+      "icon": "fas:city",
+      "coordinates": [
+        43.2141,
+        27.9147
+      ],
+      "connectedCorridorIds": [
+        "east-west",
+        "south-west"
+      ],
+      "corridorTiers": {
+        "east-west": "standard",
+        "south-west": "standard"
+      }
+    },
+    {
+      "id": "ventspils",
+      "name": {
+        "az": "Ventspils",
+        "en": "Ventspils",
+        "ru": "Вентспилс"
+      },
+      "description": {
+        "az": "Ventspils - Şimal-Cənub dəhlizi marşrutu üzərində Avropa Birliyi şəhəri.",
+        "en": "An EU city on the North-South corridor route.",
+        "ru": "Город ЕС на маршруте коридора Север-Юг."
+      },
+      "category": "city",
+      "icon": "fas:city",
+      "coordinates": [
+        57.39342571728238,
+        21.606527806309877
+      ],
+      "connectedCorridorIds": [
+        "north-south"
+      ],
+      "corridorTiers": {
+        "north-south": "standard"
+      }
+    },
+    {
+      "id": "vienna",
+      "name": {
+        "az": "Vienna",
+        "en": "Vienna",
+        "ru": "Vienna"
+      },
+      "description": {
+        "az": "Vienna - Şərq-Qərb, Cənub-Qərb dəhlizi marşrutu üzərində Avropa Birliyi şəhəri.",
+        "en": "An EU city on the East-West, South-West corridor route.",
+        "ru": "Город ЕС на маршруте коридора Восток-Запад, Юго-Запад."
+      },
+      "category": "city",
+      "icon": "fas:city",
+      "coordinates": [
+        48.2082,
+        16.3738
+      ],
+      "connectedCorridorIds": [
+        "east-west",
+        "south-west"
+      ],
+      "corridorTiers": {
+        "east-west": "standard",
+        "south-west": "standard"
+      }
     }
   ],
   "settings": {

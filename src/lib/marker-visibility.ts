@@ -1,6 +1,6 @@
-import type { AdminMarker } from "@/types/admin";
+import type { AdminMarker, MarkerTier } from "@/types/admin";
 
-export type MarkerTier = "major" | "standard";
+export type { MarkerTier };
 
 /**
  * Lowest zoom at which each class of map feature is drawn.
@@ -28,26 +28,34 @@ export const LABEL_MIN_ZOOM = MARKER_MIN_ZOOM.standard;
 const ALWAYS_MAJOR_MARKER_ID = "baku-port";
 
 /**
- * Ranks a marker from data already on it, rather than a hand-tuned field, so
- * newly added markers get a sensible tier without extra admin work.
+ * A marker is major only where `marker.corridorTiers` explicitly says so for
+ * one of the currently-active corridors — there is no heuristic promotion.
+ * Too many markers ranking themselves "major" is exactly what buries the map
+ * in overlapping pins, so only the stakeholder-specified headline cities are
+ * always visible; every other marker defaults to `standard` (zoom-gated)
+ * until an admin deliberately marks it major.
+ *
+ * `activeCorridorIds` is usually the corridors currently enabled/visible on
+ * the map. A marker can be major on one corridor and standard on another
+ * (e.g. Aktau is a headline stop on East-West but a minor waypoint on
+ * North-West); when several active corridors disagree, major wins.
  */
 export function getMarkerTier(
   marker: AdminMarker,
-  connectedRouteCount: number,
+  activeCorridorIds?: string[],
 ): MarkerTier {
   if (marker.id === ALWAYS_MAJOR_MARKER_ID) {
     return "major";
   }
 
-  // A junction serving three or more corridors is strategic whatever it is.
-  if (connectedRouteCount >= 3) {
-    return "major";
-  }
+  if (marker.corridorTiers && activeCorridorIds?.length) {
+    const overrides = activeCorridorIds
+      .map((corridorId) => marker.corridorTiers?.[corridorId])
+      .filter((tier): tier is MarkerTier => Boolean(tier));
 
-  // Seaports carry the corridor handoffs, so they surface earlier than the
-  // inland stations and cities that sit between them.
-  if (marker.category === "port" && connectedRouteCount >= 2) {
-    return "major";
+    if (overrides.includes("major")) {
+      return "major";
+    }
   }
 
   return "standard";
@@ -55,8 +63,8 @@ export function getMarkerTier(
 
 export function isMarkerVisibleAtZoom(
   marker: AdminMarker,
-  connectedRouteCount: number,
   zoom: number,
+  activeCorridorIds?: string[],
 ): boolean {
-  return zoom >= MARKER_MIN_ZOOM[getMarkerTier(marker, connectedRouteCount)];
+  return zoom >= MARKER_MIN_ZOOM[getMarkerTier(marker, activeCorridorIds)];
 }

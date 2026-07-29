@@ -27,6 +27,7 @@ import { getTransportStop } from "@/data/transport-stops";
 import { collectRouteTerminalStopIds } from "@/lib/corridor-stop-utils";
 import { flattenRouteCoordinates, getSegmentRenderCoordinates } from "@/lib/map-utils";
 import {
+  getMarkerTier,
   isMarkerVisibleAtZoom,
   LABEL_MIN_ZOOM,
   MARKER_MIN_ZOOM,
@@ -522,12 +523,21 @@ export default function CorridorMapCanvas({
       areCoordinatesNear(marker.coordinates, coordinate),
     );
 
+  // Resolves a marker's tier against the currently-enabled corridors, so an
+  // explicit `corridorTiers` override (e.g. Aktau: major on East-West,
+  // standard on North-West) reflects whichever corridor the viewer actually
+  // has toggled on. Only an explicit override (or the Baku hub) ever grants
+  // "major" — there is no heuristic promotion, since that's what buried the
+  // map in overlapping always-on pins. Everything else stays zoom-gated.
+  const resolveMarkerTier = (marker: AdminMarker) => {
+    const activeCorridorIds = getAvailableConnectedRouteIdsForMarker(marker, routes);
+
+    return getMarkerTier(marker, activeCorridorIds);
+  };
+
   // Markers pass two independent gates. Whether a marker is relevant at all comes
   // from the corridor filter, so it appears only once a corridor it serves is
-  // enabled. How early it appears comes from its tier, which is ranked against
-  // every corridor rather than the enabled subset — otherwise viewing one corridor
-  // would flatten all of its markers to a single connection and demote strategic
-  // ports like Aktau or Poti to the same tier as a minor inland stop.
+  // enabled. How early it appears comes from its tier (see `resolveMarkerTier`).
   const visibleSecondaryMarkers = secondaryMarkers.filter((marker) => {
     const isOnVisibleRoute =
       getAvailableConnectedRouteIdsForMarker(marker, routes).length > 0;
@@ -541,12 +551,9 @@ export default function CorridorMapCanvas({
       return true;
     }
 
-    const totalRouteCount = getAvailableConnectedRouteIdsForMarker(
-      marker,
-      allRoutes,
-    ).length;
+    const activeCorridorIds = getAvailableConnectedRouteIdsForMarker(marker, routes);
 
-    return isMarkerVisibleAtZoom(marker, totalRouteCount, zoom);
+    return isMarkerVisibleAtZoom(marker, zoom, activeCorridorIds);
   });
 
   // Intermediate stop dots are the finest level of detail, so they are keyed to
@@ -755,12 +762,13 @@ export default function CorridorMapCanvas({
         const isOnHighlightedRoute = connectedCorridorIds.some((routeId) =>
           highlightedRouteIds.includes(routeId),
         );
+        const tier = resolveMarkerTier(marker);
 
         return (
             <Marker
               key={marker.id}
               position={marker.coordinates}
-              icon={createMarkerIcon(marker, theme)}
+              icon={createMarkerIcon(marker, theme, { size: tier === "major" ? 36 : 22 })}
             >
             {isOnHighlightedRoute && showStopLabels ? (
               <Tooltip
