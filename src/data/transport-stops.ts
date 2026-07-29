@@ -247,12 +247,12 @@ export const TRANSPORT_STOPS: TransportStop[] = [
     en: "Horadiz",
     ru: "Горадиз",
   }),
-  createStop("aghband", "AZ", [39.06, 46.75], {
+  createStop("aghband", "AZ", [38.9118, 46.574], {
     az: "Ağbənd",
     en: "Aghband",
     ru: "Агбенд",
   }),
-  createStop("ordubad", "AZ", [38.906, 46.023], {
+  createStop("ordubad", "AZ", [38.8485, 46.1386], {
     az: "Ordubad",
     en: "Ordubad",
     ru: "Ордубад",
@@ -262,7 +262,7 @@ export const TRANSPORT_STOPS: TransportStop[] = [
     en: "Julfa",
     ru: "Джульфа",
   }),
-  createStop("nakhchivan", "AZ", [39.2089, 45.4122], {
+  createStop("nakhchivan", "AZ", [39.2029, 45.4053], {
     az: "Naxçıvan",
     en: "Nakhchivan",
     ru: "Нахчыван",
