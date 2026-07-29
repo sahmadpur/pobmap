@@ -99,7 +99,7 @@
               120.84
             ],
             [
-              40.0,
+              40,
               119.75
             ],
             [
@@ -391,7 +391,7 @@
               119.3
             ],
             [
-              28.0,
+              28,
               120.7
             ],
             [
@@ -447,7 +447,7 @@
             ],
             [
               26.6,
-              109.0
+              109
             ],
             [
               29.4316,
@@ -603,7 +603,7 @@
             ],
             [
               23.9,
-              106.0
+              106
             ],
             [
               22.8,
@@ -730,8 +730,8 @@
               75.9898
             ],
             [
-              40.0,
-              74.0
+              40,
+              74
             ],
             [
               40.7821,
@@ -787,7 +787,7 @@
               76.8897
             ],
             [
-              43.0,
+              43,
               75.6
             ],
             [
@@ -796,7 +796,7 @@
             ],
             [
               42.6,
-              72.0
+              72
             ],
             [
               42.3,
@@ -1015,7 +1015,7 @@
               65.79
             ],
             [
-              38.0,
+              38,
               66.6
             ],
             [
@@ -1097,8 +1097,8 @@
               67.2783
             ],
             [
-              38.0,
-              68.0
+              38,
+              68
             ],
             [
               38.5598,
@@ -1140,7 +1140,7 @@
               63.5786
             ],
             [
-              38.0,
+              38,
               64.9
             ],
             [
@@ -1656,7 +1656,7 @@
               39.5
             ],
             [
-              42.0,
+              42,
               37.5
             ],
             [
@@ -1700,14 +1700,14 @@
             ],
             [
               42.8,
-              34.0
+              34
             ],
             [
               43.7,
               31.5
             ],
             [
-              44.0,
+              44,
               29.8
             ],
             [
@@ -1751,7 +1751,7 @@
             ],
             [
               42.8,
-              34.0
+              34
             ],
             [
               43.7,
@@ -1802,7 +1802,7 @@
             ],
             [
               42.8,
-              34.0
+              34
             ],
             [
               43.7,
@@ -1853,7 +1853,7 @@
             ],
             [
               42.8,
-              34.0
+              34
             ],
             [
               43.7,
@@ -1911,7 +1911,7 @@
               43.0947
             ],
             [
-              40.0,
+              40,
               40.2
             ],
             [
@@ -2055,7 +2055,7 @@
             ],
             [
               40.2,
-              28.0
+              28
             ],
             [
               39.1,
@@ -2102,11 +2102,11 @@
             ],
             [
               36.2,
-              32.0
+              32
             ],
             [
               36.4,
-              29.0
+              29
             ],
             [
               36.9,
@@ -2168,7 +2168,7 @@
               18.3
             ],
             [
-              43.0,
+              43,
               14.8
             ],
             [
@@ -2211,12 +2211,12 @@
               27.1428
             ],
             [
-              37.0,
+              37,
               24.5
             ],
             [
-              36.0,
-              19.0
+              36,
+              19
             ],
             [
               36.6,
@@ -2235,11 +2235,11 @@
               -2.8
             ],
             [
-              36.0,
+              36,
               -5.6
             ],
             [
-              37.0,
+              37,
               -9.2
             ],
             [
@@ -2283,7 +2283,7 @@
             ],
             [
               39.8,
-              -10.0
+              -10
             ],
             [
               43.9,
@@ -2641,8 +2641,8 @@
               24.0297
             ],
             [
-              49.0,
-              26.0
+              49,
+              26
             ],
             [
               47.8,
@@ -2693,7 +2693,7 @@
             ],
             [
               46.6,
-              30.0
+              30
             ],
             [
               46.4825,
@@ -3020,7 +3020,7 @@
             ],
             [
               48.3,
-              21.0
+              21
             ],
             [
               48.7,
@@ -3199,7 +3199,7 @@
               6.7623
             ],
             [
-              51.0,
+              51,
               5.6
             ],
             [
@@ -3409,7 +3409,7 @@
             ],
             [
               48.6,
-              7.0
+              7
             ],
             [
               47.56,
@@ -3546,7 +3546,7 @@
               5.3698
             ],
             [
-              43.0,
+              43,
               3.1
             ],
             [
@@ -3865,7 +3865,7 @@
             ],
             [
               55.3,
-              92.0
+              92
             ],
             [
               52.2869,
@@ -3885,7 +3885,7 @@
             ],
             [
               50.6,
-              129.0
+              129
             ],
             [
               48.4802,
@@ -3939,7 +3939,7 @@
               137.0079
             ],
             [
-              50.0,
+              50,
               139.4
             ],
             [
@@ -3992,7 +3992,7 @@
             ],
             [
               43.8,
-              132.0
+              132
             ],
             [
               43.1155,
@@ -4039,7 +4039,7 @@
               131.8855
             ],
             [
-              41.0,
+              41,
               131.4
             ],
             [
@@ -4165,7 +4165,7 @@
               134.7
             ],
             [
-              34.0,
+              34,
               135.3
             ],
             [
@@ -4520,11 +4520,11 @@
             ],
             [
               42.7,
-              40.0
+              40
             ],
             [
               42.6,
-              38.0
+              38
             ],
             [
               41.2867,
@@ -4626,7 +4626,7 @@
               43.0947
             ],
             [
-              40.0,
+              40,
               40.2
             ],
             [
@@ -4770,7 +4770,7 @@
             ],
             [
               40.2,
-              28.0
+              28
             ],
             [
               39.1,
@@ -4878,7 +4878,7 @@
               69.5
             ],
             [
-              23.0,
+              23,
               63.5
             ],
             [
@@ -5070,7 +5070,7 @@
               49.4
             ],
             [
-              27.0,
+              27,
               50.6
             ],
             [
@@ -5405,7 +5405,7 @@
             ],
             [
               26.55,
-              64.0
+              64
             ],
             [
               25.9,
@@ -5893,7 +5893,7 @@
               43.0947
             ],
             [
-              40.0,
+              40,
               40.2
             ],
             [
@@ -6037,7 +6037,7 @@
             ],
             [
               40.2,
-              28.0
+              28
             ],
             [
               39.1,
@@ -6259,7 +6259,7 @@
             ],
             [
               44.9,
-              27.0
+              27
             ],
             [
               45.45,
@@ -6267,7 +6267,7 @@
             ],
             [
               45.8,
-              29.0
+              29
             ],
             [
               46.2,
@@ -6313,8 +6313,8 @@
               24.0297
             ],
             [
-              49.0,
-              26.0
+              49,
+              26
             ],
             [
               47.8,
@@ -6365,7 +6365,7 @@
             ],
             [
               46.6,
-              30.0
+              30
             ],
             [
               46.4825,
@@ -6413,7 +6413,7 @@
             ],
             [
               48.3,
-              21.0
+              21
             ],
             [
               48.7,
@@ -6728,8 +6728,8 @@
               6.7623
             ],
             [
-              52.0,
-              6.0
+              52,
+              6
             ],
             [
               52.3676,
@@ -6775,7 +6775,7 @@
               6.7623
             ],
             [
-              51.0,
+              51,
               5.6
             ],
             [
@@ -7014,7 +7014,7 @@
             ],
             [
               48.6,
-              7.0
+              7
             ],
             [
               47.56,
@@ -7151,7 +7151,7 @@
               5.3698
             ],
             [
-              43.0,
+              43,
               3.1
             ],
             [
@@ -7290,11 +7290,11 @@
             ],
             [
               44.6,
-              33.0
+              33
             ],
             [
               45.4,
-              31.0
+              31
             ],
             [
               46.3017,
@@ -7337,14 +7337,14 @@
             ],
             [
               43.3,
-              37.0
+              37
             ],
             [
               43.9,
-              32.0
+              32
             ],
             [
-              44.0,
+              44,
               29.8
             ],
             [
@@ -7392,11 +7392,11 @@
             ],
             [
               43.25,
-              33.0
+              33
             ],
             [
               43.4,
-              30.0
+              30
             ],
             [
               43.2141,
@@ -7439,15 +7439,15 @@
             ],
             [
               42.6,
-              37.0
+              37
             ],
             [
               42.9,
-              32.0
+              32
             ],
             [
               42.6,
-              29.0
+              29
             ],
             [
               42.5048,
@@ -7490,11 +7490,11 @@
             ],
             [
               42.4,
-              37.0
+              37
             ],
             [
               42.6,
-              33.0
+              33
             ],
             [
               41.8,
@@ -7592,11 +7592,11 @@
             ],
             [
               36.2,
-              32.0
+              32
             ],
             [
               36.4,
-              29.0
+              29
             ],
             [
               36.9,
@@ -7658,7 +7658,7 @@
               18.3
             ],
             [
-              43.0,
+              43,
               14.8
             ],
             [
@@ -7701,12 +7701,12 @@
               27.1428
             ],
             [
-              37.0,
+              37,
               24.5
             ],
             [
-              36.0,
-              19.0
+              36,
+              19
             ],
             [
               36.6,
@@ -7725,11 +7725,11 @@
               -2.8
             ],
             [
-              36.0,
+              36,
               -5.6
             ],
             [
-              37.0,
+              37,
               -9.2
             ],
             [
@@ -7773,7 +7773,7 @@
             ],
             [
               39.8,
-              -10.0
+              -10
             ],
             [
               43.9,
@@ -7836,15 +7836,15 @@
             ],
             [
               52.2,
-              4.0
+              4
             ],
             [
-              53.0,
+              53,
               4.3
             ],
             [
               53.7,
-              6.0
+              6
             ],
             [
               54.05,
@@ -7953,8 +7953,8 @@
               47.5034
             ],
             [
-              44.2,
-              47.7
+              44.715513732021364,
+              46.69189453125001
             ],
             [
               46.3497,
@@ -8187,7 +8187,7 @@
             ],
             [
               54.8,
-              32.0
+              32
             ],
             [
               53.9006,
@@ -8215,7 +8215,7 @@
             ],
             [
               51.4,
-              9.0
+              9
             ],
             [
               51.4344,
@@ -8346,8 +8346,8 @@
               6.7623
             ],
             [
-              52.0,
-              6.0
+              52,
+              6
             ],
             [
               52.3676,
@@ -8626,7 +8626,7 @@
             ],
             [
               29.9,
-              59.0
+              59
             ],
             [
               29.4963,
@@ -8641,7 +8641,7 @@
               66.975
             ],
             [
-              28.0,
+              28,
               67.4
             ],
             [
@@ -8793,7 +8793,7 @@
               49.4
             ],
             [
-              27.0,
+              27,
               50.6
             ],
             [
@@ -9202,24 +9202,24 @@
               46.574
             ],
             [
-              38.95,
-              46.6
+              38.88996392916758,
+              46.50581359863281
             ],
             [
-              38.85,
-              46.45
+              38.916147282764214,
+              46.342391967773445
             ],
             [
-              38.8,
-              46.3
+              38.887826086271176,
+              46.26617431640626
             ],
             [
-              38.78,
-              46.15
+              38.85468129471517,
+              46.219482421875
             ],
             [
-              38.82,
-              46.05
+              38.843986129756644,
+              46.17004394531251
             ],
             [
               38.8485,
@@ -9423,53 +9423,6 @@
       ]
     },
     {
-      "id": "helsinki-northern-terminal",
-      "name": {
-        "az": "Helsinki Şimal Terminalı",
-        "en": "Helsinki Northern Terminal",
-        "ru": "Северный терминал Хельсинки"
-      },
-      "description": {
-        "az": "Şimal-Cənub şəbəkəsinin yuxarı qoluna bağlanan şimal qapısı.",
-        "en": "A northern gateway connected to the upper branch of the North-South network.",
-        "ru": "Северный шлюз, подключенный к верхней ветке сети Север-Юг."
-      },
-      "category": "port",
-      "icon": "fas:ferry",
-      "coordinates": [
-        60.1699,
-        24.9384
-      ],
-      "connectedCorridorIds": [
-        "north-west",
-        "north-south"
-      ]
-    },
-    {
-      "id": "rotterdam-european-gateway",
-      "name": {
-        "az": "Rotterdam Avropa Keçidi",
-        "en": "Rotterdam European Gateway",
-        "ru": "Европейский шлюз Роттердама"
-      },
-      "description": {
-        "az": "Dəhlizin şimal qolunun Qərbi Avropa paylama son nöqtəsi.",
-        "en": "A western European distribution endpoint for the northern branch of the corridor.",
-        "ru": "Западноевропейская распределительная конечная точка северной ветки коридора."
-      },
-      "category": "port",
-      "icon": "fas:anchor",
-      "coordinates": [
-        51.9244,
-        4.4777
-      ],
-      "connectedCorridorIds": [
-        "east-west",
-        "north-south",
-        "south-west"
-      ]
-    },
-    {
       "id": "vladivostok-port",
       "name": {
         "az": "Vladivostok Limanı",
@@ -9508,52 +9461,6 @@
       "coordinates": [
         27.1832,
         56.2666
-      ],
-      "connectedCorridorIds": [
-        "north-south",
-        "south-west"
-      ]
-    },
-    {
-      "id": "jebel-ali-maritime-gateway",
-      "name": {
-        "az": "Cəbəl-Əli Dəniz Keçidi",
-        "en": "Jebel Ali Maritime Gateway",
-        "ru": "Морской шлюз Джебель-Али"
-      },
-      "description": {
-        "az": "Şimal-Cənub dəhlizinin cənub qoluna bağlanan Körfəz dəniz şaxələnmə nöqtəsi.",
-        "en": "A Gulf maritime branch point linked to the southern leg of the North-South corridor.",
-        "ru": "Узел морского ответвления в Персидском заливе, связанный с южной частью коридора Север-Юг."
-      },
-      "category": "port",
-      "icon": "fas:ship",
-      "coordinates": [
-        25.0657,
-        55.1713
-      ],
-      "connectedCorridorIds": [
-        "north-south",
-        "south-west"
-      ]
-    },
-    {
-      "id": "doha-gulf-terminal",
-      "name": {
-        "az": "Doha Körfəz Terminalı",
-        "en": "Doha Gulf Terminal",
-        "ru": "Терминал Доха"
-      },
-      "description": {
-        "az": "Yüklənmiş xəritədə cənub dəniz qolunu göstərmək üçün istifadə olunan aşağı Körfəz son nöqtəsi.",
-        "en": "A lower Gulf endpoint used to present the southern maritime branch on the uploaded map.",
-        "ru": "Нижнезаливная конечная точка, используемая для показа южной морской ветки на загруженной карте."
-      },
-      "category": "port",
-      "icon": "fas:location-dot",
-      "coordinates": [
-        25.2854,
-        51.531
       ],
       "connectedCorridorIds": [
         "north-south",
@@ -9627,6 +9534,232 @@
       "connectedCorridorIds": [
         "east-west",
         "north-west",
+        "north-south",
+        "south-west"
+      ]
+    },
+    {
+      "id": "turgundi-border-terminal",
+      "name": {
+        "az": "Turqundi Sərhəd Terminalı",
+        "en": "Turgundi Border Terminal",
+        "ru": "Пограничный терминал Тургунди"
+      },
+      "description": {
+        "az": "Mərkəzi Asiya dəhlizi trafikini qidalandıran Əfqanıstan-Türkmənistan sərhəd dəmir yolu keçidi.",
+        "en": "An Afghanistan-Turkmenistan border rail crossing feeding Central Asian corridor traffic.",
+        "ru": "Афгано-туркменский пограничный железнодорожный переход, питающий трафик центральноазиатского коридора."
+      },
+      "category": "station",
+      "icon": "fas:train",
+      "coordinates": [
+        35.2183,
+        62.2591
+      ],
+      "connectedCorridorIds": [
+        "east-west"
+      ]
+    },
+    {
+      "id": "mazar-i-sharif-rail-hub",
+      "name": {
+        "az": "Məzari-Şərif Dəmiryol Qovşağı",
+        "en": "Mazar-i-Sharif Rail Hub",
+        "ru": "Железнодорожный узел Мазари-Шариф"
+      },
+      "description": {
+        "az": "Mərkəzi Asiya dəhlizi trafikini Cənubi Asiyaya bağlayan şimali Əfqanıstan dəmir yolu qovşağı.",
+        "en": "A northern Afghanistan rail hub linking Central Asian corridor traffic toward South Asia.",
+        "ru": "Железнодорожный узел на севере Афганистана, связывающий трафик центральноазиатского коридора с Южной Азией."
+      },
+      "category": "station",
+      "icon": "fas:train",
+      "coordinates": [
+        36.7069,
+        67.1109
+      ],
+      "connectedCorridorIds": [
+        "east-west"
+      ]
+    },
+    {
+      "id": "dushanbe-rail-hub",
+      "name": {
+        "az": "Düşənbə Dəmiryol Qovşağı",
+        "en": "Dushanbe Rail Hub",
+        "ru": "Железнодорожный узел Душанбе"
+      },
+      "description": {
+        "az": "Mərkəzi Asiya dəhlizi trafikini Əfqanıstana yönəldən Tacikistan dəmir yolu qovşağı.",
+        "en": "A Tajikistan rail hub consolidating Central Asian corridor traffic toward Afghanistan.",
+        "ru": "Таджикский железнодорожный узел, консолидирующий трафик центральноазиатского коридора в сторону Афганистана."
+      },
+      "category": "station",
+      "icon": "fas:train",
+      "coordinates": [
+        38.5598,
+        68.787
+      ],
+      "connectedCorridorIds": [
+        "east-west"
+      ]
+    },
+    {
+      "id": "qingdao-port",
+      "name": {
+        "az": "Qingdao Limanı",
+        "en": "Qingdao Port",
+        "ru": "Порт Циндао"
+      },
+      "description": {
+        "az": "Sarı Dəniz sahilindən Şərq-Qərb dəhlizi yükünü qidalandıran şərqi Çin dəniz limanı.",
+        "en": "An eastern Chinese seaport feeding East-West corridor cargo from the Yellow Sea coast.",
+        "ru": "Восточно-китайский морской порт на побережье Жёлтого моря, питающий грузопоток коридора Восток-Запад."
+      },
+      "category": "port",
+      "icon": "fas:anchor",
+      "coordinates": [
+        36.0671,
+        120.3826
+      ],
+      "connectedCorridorIds": [
+        "east-west"
+      ]
+    },
+    {
+      "id": "lianyungang-port",
+      "name": {
+        "az": "Lianyungang Limanı",
+        "en": "Lianyungang Port",
+        "ru": "Порт Ляньюньган"
+      },
+      "description": {
+        "az": "Şərq-Qərb dəhlizi dəmir yolu trafiki üçün şərq son nöqtəsi olan Sarı Dəniz qapı limanı.",
+        "en": "A Yellow Sea gateway port and eastern terminus for East-West corridor rail traffic.",
+        "ru": "Портовые ворота на Жёлтом море, восточная конечная точка железнодорожного трафика коридора Восток-Запад."
+      },
+      "category": "port",
+      "icon": "fas:anchor",
+      "coordinates": [
+        34.5969,
+        119.2216
+      ],
+      "connectedCorridorIds": [
+        "east-west"
+      ]
+    },
+    {
+      "id": "mersin-port",
+      "name": {
+        "az": "Mersin Limanı",
+        "en": "Mersin Port",
+        "ru": "Порт Мерсин"
+      },
+      "description": {
+        "az": "Şərq-Qərb və Cənub-Qərb dəhlizi trafikini Avropa ilə birləşdirən Aralıq dənizi qapı limanı.",
+        "en": "A Mediterranean gateway port linking East-West and South-West corridor traffic to Europe.",
+        "ru": "Средиземноморский порт-ворота, связывающий трафик коридоров Восток-Запад и Юго-Запад с Европой."
+      },
+      "category": "port",
+      "icon": "fas:anchor",
+      "coordinates": [
+        36.8,
+        34.6333
+      ],
+      "connectedCorridorIds": [
+        "east-west",
+        "south-west"
+      ]
+    },
+    {
+      "id": "helsinki-northern-terminal",
+      "name": {
+        "az": "Helsinki Şimal Terminalı",
+        "en": "Helsinki Northern Terminal",
+        "ru": "Северный терминал Хельсинки"
+      },
+      "description": {
+        "az": "Şimal-Cənub şəbəkəsinin yuxarı qoluna bağlanan şimal qapısı.",
+        "en": "A northern gateway connected to the upper branch of the North-South network.",
+        "ru": "Северный шлюз, подключенный к верхней ветке сети Север-Юг."
+      },
+      "category": "port",
+      "icon": "fas:ferry",
+      "coordinates": [
+        60.1699,
+        24.9384
+      ],
+      "connectedCorridorIds": [
+        "north-west",
+        "north-south"
+      ]
+    },
+    {
+      "id": "rotterdam-european-gateway",
+      "name": {
+        "az": "Rotterdam Avropa Keçidi",
+        "en": "Rotterdam European Gateway",
+        "ru": "Европейский шлюз Роттердама"
+      },
+      "description": {
+        "az": "Dəhlizin şimal qolunun Qərbi Avropa paylama son nöqtəsi.",
+        "en": "A western European distribution endpoint for the northern branch of the corridor.",
+        "ru": "Западноевропейская распределительная конечная точка северной ветки коридора."
+      },
+      "category": "port",
+      "icon": "fas:anchor",
+      "coordinates": [
+        51.9244,
+        4.4777
+      ],
+      "connectedCorridorIds": [
+        "east-west",
+        "north-south",
+        "south-west"
+      ]
+    },
+    {
+      "id": "jebel-ali-maritime-gateway",
+      "name": {
+        "az": "Cəbəl-Əli Dəniz Keçidi",
+        "en": "Jebel Ali Maritime Gateway",
+        "ru": "Морской шлюз Джебель-Али"
+      },
+      "description": {
+        "az": "Şimal-Cənub dəhlizinin cənub qoluna bağlanan Körfəz dəniz şaxələnmə nöqtəsi.",
+        "en": "A Gulf maritime branch point linked to the southern leg of the North-South corridor.",
+        "ru": "Узел морского ответвления в Персидском заливе, связанный с южной частью коридора Север-Юг."
+      },
+      "category": "port",
+      "icon": "fas:ship",
+      "coordinates": [
+        25.0657,
+        55.1713
+      ],
+      "connectedCorridorIds": [
+        "north-south",
+        "south-west"
+      ]
+    },
+    {
+      "id": "doha-gulf-terminal",
+      "name": {
+        "az": "Doha Körfəz Terminalı",
+        "en": "Doha Gulf Terminal",
+        "ru": "Терминал Доха"
+      },
+      "description": {
+        "az": "Yüklənmiş xəritədə cənub dəniz qolunu göstərmək üçün istifadə olunan aşağı Körfəz son nöqtəsi.",
+        "en": "A lower Gulf endpoint used to present the southern maritime branch on the uploaded map.",
+        "ru": "Нижнезаливная конечная точка, используемая для показа южной морской ветки на загруженной карте."
+      },
+      "category": "port",
+      "icon": "fas:location-dot",
+      "coordinates": [
+        25.2854,
+        51.531
+      ],
+      "connectedCorridorIds": [
         "north-south",
         "south-west"
       ]
@@ -10300,139 +10433,6 @@
       ],
       "connectedCorridorIds": [
         "east-west"
-      ]
-    },
-    {
-      "id": "turgundi-border-terminal",
-      "name": {
-        "az": "Turqundi Sərhəd Terminalı",
-        "en": "Turgundi Border Terminal",
-        "ru": "Пограничный терминал Тургунди"
-      },
-      "description": {
-        "az": "Mərkəzi Asiya dəhlizi trafikini qidalandıran Əfqanıstan-Türkmənistan sərhəd dəmir yolu keçidi.",
-        "en": "An Afghanistan-Turkmenistan border rail crossing feeding Central Asian corridor traffic.",
-        "ru": "Афгано-туркменский пограничный железнодорожный переход, питающий трафик центральноазиатского коридора."
-      },
-      "category": "station",
-      "icon": "fas:train",
-      "coordinates": [
-        35.2183,
-        62.2591
-      ],
-      "connectedCorridorIds": [
-        "east-west"
-      ]
-    },
-    {
-      "id": "mazar-i-sharif-rail-hub",
-      "name": {
-        "az": "Məzari-Şərif Dəmiryol Qovşağı",
-        "en": "Mazar-i-Sharif Rail Hub",
-        "ru": "Железнодорожный узел Мазари-Шариф"
-      },
-      "description": {
-        "az": "Mərkəzi Asiya dəhlizi trafikini Cənubi Asiyaya bağlayan şimali Əfqanıstan dəmir yolu qovşağı.",
-        "en": "A northern Afghanistan rail hub linking Central Asian corridor traffic toward South Asia.",
-        "ru": "Железнодорожный узел на севере Афганистана, связывающий трафик центральноазиатского коридора с Южной Азией."
-      },
-      "category": "station",
-      "icon": "fas:train",
-      "coordinates": [
-        36.7069,
-        67.1109
-      ],
-      "connectedCorridorIds": [
-        "east-west"
-      ]
-    },
-    {
-      "id": "dushanbe-rail-hub",
-      "name": {
-        "az": "Düşənbə Dəmiryol Qovşağı",
-        "en": "Dushanbe Rail Hub",
-        "ru": "Железнодорожный узел Душанбе"
-      },
-      "description": {
-        "az": "Mərkəzi Asiya dəhlizi trafikini Əfqanıstana yönəldən Tacikistan dəmir yolu qovşağı.",
-        "en": "A Tajikistan rail hub consolidating Central Asian corridor traffic toward Afghanistan.",
-        "ru": "Таджикский железнодорожный узел, консолидирующий трафик центральноазиатского коридора в сторону Афганистана."
-      },
-      "category": "station",
-      "icon": "fas:train",
-      "coordinates": [
-        38.5598,
-        68.787
-      ],
-      "connectedCorridorIds": [
-        "east-west"
-      ]
-    },
-    {
-      "id": "qingdao-port",
-      "name": {
-        "az": "Qingdao Limanı",
-        "en": "Qingdao Port",
-        "ru": "Порт Циндао"
-      },
-      "description": {
-        "az": "Sarı Dəniz sahilindən Şərq-Qərb dəhlizi yükünü qidalandıran şərqi Çin dəniz limanı.",
-        "en": "An eastern Chinese seaport feeding East-West corridor cargo from the Yellow Sea coast.",
-        "ru": "Восточно-китайский морской порт на побережье Жёлтого моря, питающий грузопоток коридора Восток-Запад."
-      },
-      "category": "port",
-      "icon": "fas:anchor",
-      "coordinates": [
-        36.0671,
-        120.3826
-      ],
-      "connectedCorridorIds": [
-        "east-west"
-      ]
-    },
-    {
-      "id": "lianyungang-port",
-      "name": {
-        "az": "Lianyungang Limanı",
-        "en": "Lianyungang Port",
-        "ru": "Порт Ляньюньган"
-      },
-      "description": {
-        "az": "Şərq-Qərb dəhlizi dəmir yolu trafiki üçün şərq son nöqtəsi olan Sarı Dəniz qapı limanı.",
-        "en": "A Yellow Sea gateway port and eastern terminus for East-West corridor rail traffic.",
-        "ru": "Портовые ворота на Жёлтом море, восточная конечная точка железнодорожного трафика коридора Восток-Запад."
-      },
-      "category": "port",
-      "icon": "fas:anchor",
-      "coordinates": [
-        34.5969,
-        119.2216
-      ],
-      "connectedCorridorIds": [
-        "east-west"
-      ]
-    },
-    {
-      "id": "mersin-port",
-      "name": {
-        "az": "Mersin Limanı",
-        "en": "Mersin Port",
-        "ru": "Порт Мерсин"
-      },
-      "description": {
-        "az": "Şərq-Qərb və Cənub-Qərb dəhlizi trafikini Avropa ilə birləşdirən Aralıq dənizi qapı limanı.",
-        "en": "A Mediterranean gateway port linking East-West and South-West corridor traffic to Europe.",
-        "ru": "Средиземноморский порт-ворота, связывающий трафик коридоров Восток-Запад и Юго-Запад с Европой."
-      },
-      "category": "port",
-      "icon": "fas:anchor",
-      "coordinates": [
-        36.8,
-        34.6333
-      ],
-      "connectedCorridorIds": [
-        "east-west",
-        "south-west"
       ]
     }
   ],
