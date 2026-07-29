@@ -42,7 +42,7 @@ export const TRANSPORT_STOPS: TransportStop[] = [
     en: "Xi'an",
     ru: "Сиань",
   }),
-  createStop("beijing", "CN", [39.9042, 116.4074], {
+  createStop("beijing", "CN", [39.848382997920844, 116.63069557250218], {
     az: "Pekin",
     en: "Beijing",
     ru: "Пекин",
@@ -82,7 +82,7 @@ export const TRANSPORT_STOPS: TransportStop[] = [
     en: "Baku",
     ru: "Баку",
   }),
-  createStop("baku-city", "AZ", [40.4093, 49.8671], {
+  createStop("baku-city", "AZ", [40.41198017472428, 49.86442770644292], {
     az: "Bakı şəhəri",
     en: "Baku City",
     ru: "Баку",
@@ -92,12 +92,12 @@ export const TRANSPORT_STOPS: TransportStop[] = [
     en: "Tbilisi",
     ru: "Тбилиси",
   }),
-  createStop("kars", "TR", [40.6013, 43.0947], {
+  createStop("kars", "TR", [40.600439086831614, 43.09907678698981], {
     az: "Qars",
     en: "Kars",
     ru: "Карс",
   }),
-  createStop("istanbul", "TR", [41.0082, 28.9784], {
+  createStop("istanbul", "TR", [41.012778558625435, 28.989682085852195], {
     az: "İstanbul",
     en: "Istanbul",
     ru: "Стамбул",
@@ -132,12 +132,12 @@ export const TRANSPORT_STOPS: TransportStop[] = [
     en: "Madrid",
     ru: "Мадрид",
   }),
-  createStop("makhachkala", "RU", [42.6977, 47.5034], {
+  createStop("makhachkala", "RU", [42.98868773101421, 47.49974364170113], {
     az: "Maxaçqala",
     en: "Makhachkala",
     ru: "Махачкала",
   }),
-  createStop("astrakhan", "RU", [46.3497, 48.0408], {
+  createStop("astrakhan", "RU", [46.36181378554353, 48.04775306886071], {
     az: "Həştərxan",
     en: "Astrakhan",
     ru: "Астрахань",
@@ -147,7 +147,7 @@ export const TRANSPORT_STOPS: TransportStop[] = [
     en: "Moscow",
     ru: "Москва",
   }),
-  createStop("st-petersburg", "RU", [59.9343, 30.3351], {
+  createStop("st-petersburg", "RU", [59.93460060344935, 30.331845425988515], {
     az: "Sankt-Peterburq",
     en: "St. Petersburg",
     ru: "Санкт-Петербург",
@@ -172,12 +172,12 @@ export const TRANSPORT_STOPS: TransportStop[] = [
     en: "Vladivostok",
     ru: "Владивосток",
   }),
-  createStop("helsinki", "FI", [60.1699, 24.9384], {
+  createStop("helsinki", "FI", [60.18239550906139, 24.929459847023125], {
     az: "Helsinki",
     en: "Helsinki",
     ru: "Хельсинки",
   }),
-  createStop("lankaran", "AZ", [38.7529, 48.8475], {
+  createStop("lankaran", "AZ", [38.75782003253777, 48.769426789343576], {
     az: "Lənkəran",
     en: "Lankaran",
     ru: "Ленкорань",
@@ -217,7 +217,7 @@ export const TRANSPORT_STOPS: TransportStop[] = [
     en: "Rome",
     ru: "Рим",
   }),
-  createStop("marseille", "FR", [43.2965, 5.3698], {
+  createStop("marseille", "FR", [43.30483000061793, 5.376721134822359], {
     az: "Marsel",
     en: "Marseille",
     ru: "Марсель",
@@ -242,7 +242,7 @@ export const TRANSPORT_STOPS: TransportStop[] = [
     en: "Boyuk Kasik",
     ru: "Беюк-Кясик",
   }),
-  createStop("horadiz", "AZ", [39.4511, 47.3868], {
+  createStop("horadiz", "AZ", [39.45479701763839, 47.32168503617963], {
     az: "Horadiz",
     en: "Horadiz",
     ru: "Горадиз",
@@ -267,7 +267,7 @@ export const TRANSPORT_STOPS: TransportStop[] = [
     en: "Nakhchivan",
     ru: "Нахчыван",
   }),
-  createStop("igdir", "TR", [39.7191, 43.0503], {
+  createStop("igdir", "TR", [39.92562614977315, 44.040365699646536], {
     az: "İğdır",
     en: "Igdir",
     ru: "Ыгдыр",
@@ -342,12 +342,12 @@ export const TRANSPORT_STOPS: TransportStop[] = [
   createStop("sofia", "BG", [42.6977, 23.3219], localizedStopName("Sofia")),
   createStop("thessaloniki", "GR", [40.6401, 22.9444], localizedStopName("Thessaloniki")),
   createStop("piraeus", "GR", [37.942, 23.6465], localizedStopName("Piraeus")),
-  createStop("trieste", "IT", [45.6495, 13.7768], localizedStopName("Trieste")),
-  createStop("milan", "IT", [45.4642, 9.19], localizedStopName("Milan")),
+  createStop("trieste", "IT", [45.659785485030035, 13.778999799715153], localizedStopName("Trieste")),
+  createStop("milan", "IT", [45.50433699583818, 9.167047936478804], localizedStopName("Milan")),
   createStop("genoa", "IT", [44.4056, 8.9463], localizedStopName("Genoa")),
   createStop("lyon", "FR", [45.764, 4.8357], localizedStopName("Lyon")),
   createStop("le-havre", "FR", [49.4944, 0.1079], localizedStopName("Le Havre")),
-  createStop("barcelona", "ES", [41.3851, 2.1734], localizedStopName("Barcelona")),
+  createStop("barcelona", "ES", [41.35789331399737, 2.2567791725067354], localizedStopName("Barcelona")),
   createStop("valencia", "ES", [39.4699, -0.3763], localizedStopName("Valencia")),
   createStop("lisbon", "PT", [38.7223, -9.1393], localizedStopName("Lisbon")),
   createStop("constanta", "RO", [44.1598, 28.6348], localizedStopName("Constanta")),
@@ -376,7 +376,7 @@ export const TRANSPORT_STOPS: TransportStop[] = [
   createStop("guangzhou", "CN", [23.1291, 113.2644], localizedStopName("Guangzhou")),
   createStop("qingdao", "CN", [36.0671, 120.3826], localizedStopName("Qingdao")),
   createStop("tianjin", "CN", [39.0842, 117.2009], localizedStopName("Tianjin")),
-  createStop("dalian", "CN", [38.914, 121.6147], localizedStopName("Dalian")),
+  createStop("dalian", "CN", [39.01973304854119, 121.63880517002599], localizedStopName("Dalian")),
   createStop("chengdu", "CN", [30.5728, 104.0668], localizedStopName("Chengdu")),
   createStop("chongqing", "CN", [29.4316, 106.9123], localizedStopName("Chongqing")),
   createStop("zhengzhou", "CN", [34.7473, 113.6249], localizedStopName("Zhengzhou")),
@@ -388,9 +388,9 @@ export const TRANSPORT_STOPS: TransportStop[] = [
   createStop("kaohsiung", "TW", [22.6273, 120.3014], localizedStopName("Kaohsiung")),
   createStop("busan", "KR", [35.1796, 129.0756], localizedStopName("Busan")),
   createStop("incheon", "KR", [37.4563, 126.7052], localizedStopName("Incheon")),
-  createStop("tokyo", "JP", [35.6762, 139.6503], localizedStopName("Tokyo")),
+  createStop("tokyo", "JP", [35.67671321338031, 139.64656797497057], localizedStopName("Tokyo")),
   createStop("yokohama", "JP", [35.4437, 139.638], localizedStopName("Yokohama")),
-  createStop("osaka", "JP", [34.6937, 135.5023], localizedStopName("Osaka")),
+  createStop("osaka", "JP", [34.69646803954196, 135.5012411138975], localizedStopName("Osaka")),
   createStop("nagoya", "JP", [35.1815, 136.9066], localizedStopName("Nagoya")),
   createStop("singapore", "SG", [1.3521, 103.8198], localizedStopName("Singapore")),
   createStop("port-klang", "MY", [3.0033, 101.3991], localizedStopName("Port Klang")),
@@ -549,17 +549,17 @@ export const TRANSPORT_STOPS: TransportStop[] = [
     en: "Mersin",
     ru: "Мерсин",
   }),
-  createStop("izmir", "TR", [38.4237, 27.1428], {
+  createStop("izmir", "TR", [38.50741105808165, 27.16057937780109], {
     az: "İzmir",
     en: "Izmir",
     ru: "Измир",
   }),
-  createStop("astara", "AZ", [38.4437, 48.8756], {
+  createStop("astara", "AZ", [38.46418832953136, 48.86131188409395], {
     az: "Astara",
     en: "Astara",
     ru: "Астара",
   }),
-  createStop("rasht", "IR", [37.2808, 49.5832], {
+  createStop("rasht", "IR", [37.29755444245026, 49.59576181276999], {
     az: "Rəşt",
     en: "Rasht",
     ru: "Решт",
@@ -609,12 +609,12 @@ export const TRANSPORT_STOPS: TransportStop[] = [
     en: "Minsk",
     ru: "Минск",
   }),
-  createStop("riga", "LV", [56.9496, 24.1052], {
+  createStop("riga", "LV", [56.967754356112856, 24.10566681062681], {
     az: "Riqa",
     en: "Riga",
     ru: "Рига",
   }),
-  createStop("ventspils", "LV", [57.3894, 21.5606], {
+  createStop("ventspils", "LV", [57.39342571728238, 21.606527806309877], {
     az: "Ventspils",
     en: "Ventspils",
     ru: "Вентспилс",
@@ -738,6 +738,147 @@ export const TRANSPORT_STOPS: TransportStop[] = [
     az: "London",
     en: "London",
     ru: "Лондон",
+  }),
+  // Stops added from the city.md manual coordinate list.
+  createStop("tangshan", "CN", [39.69138875413673, 118.22962515474589], {
+    az: "Tanşan",
+    en: "Tangshan",
+    ru: "Таншань",
+  }),
+  createStop("qinhuangdao", "CN", [39.98243285297037, 119.75123158928783], {
+    az: "Çinxuandao",
+    en: "Qinhuangdao",
+    ru: "Циньхуандао",
+  }),
+  createStop("panjin", "CN", [41.0969972963909, 122.12977161525099], {
+    az: "Panjin",
+    en: "Panjin",
+    ru: "Паньцзинь",
+  }),
+  createStop("yingkou", "CN", [40.70402493540751, 122.3497984484184], {
+    az: "Yinkou",
+    en: "Yingkou",
+    ru: "Инкоу",
+  }),
+  createStop("montpellier", "FR", [43.616640660677035, 3.8570102743066355], {
+    az: "Monpelye",
+    en: "Montpellier",
+    ru: "Монпелье",
+  }),
+  createStop("vicenza", "IT", [45.540951835761895, 11.518751453337707], {
+    az: "Viçentsa",
+    en: "Vicenza",
+    ru: "Виченца",
+  }),
+  createStop("balikesir", "TR", [39.72880040700178, 27.787700306275752], {
+    az: "Balıkesir",
+    en: "Balikesir",
+    ru: "Балыкесир",
+  }),
+  createStop("masalli", "AZ", [39.037841574051015, 48.700762238804906], {
+    az: "Masallı",
+    en: "Masally",
+    ru: "Масаллы",
+  }),
+  createStop("rizvanshahr", "IR", [37.561656806593334, 49.11767648746933], {
+    az: "Rizvanşəhər",
+    en: "Rizvanshahr",
+    ru: "Резваншехр",
+  }),
+  createStop("artezian", "RU", [44.93254732802284, 46.67265977329368], {
+    az: "Artezian",
+    en: "Artezian",
+    ru: "Артезиан",
+  }),
+  createStop("babayurt", "RU", [43.59338296617132, 46.78494626522904], {
+    az: "Babayurd",
+    en: "Babayurt",
+    ru: "Бабаюрт",
+  }),
+  createStop("angarsk", "RU", [52.54691524733757, 103.89146123332462], {
+    az: "Anqarsk",
+    en: "Angarsk",
+    ru: "Ангарск",
+  }),
+  createStop("kultuk", "RU", [51.73767681239316, 103.70691783547667], {
+    az: "Kultuk",
+    en: "Kultuk",
+    ru: "Култук",
+  }),
+  createStop("kamensk", "RU", [51.992250151819924, 106.55968113241094], {
+    az: "Kamensk",
+    en: "Kamensk",
+    ru: "Каменск",
+  }),
+  createStop("ulan-ude", "RU", [51.83343914027329, 107.58380679496995], {
+    az: "Ulan Ude",
+    en: "Ulan-Ude",
+    ru: "Улан-Удэ",
+  }),
+  createStop("vyborg", "RU", [60.707603769782864, 28.764043085416162], {
+    az: "Viborq",
+    en: "Vyborg",
+    ru: "Выборг",
+  }),
+  createStop("porvoo", "FI", [60.40253330529121, 25.674165959395086], {
+    az: "Porvoo",
+    en: "Porvoo",
+    ru: "Порвоо",
+  }),
+  createStop("strazde", "LV", [57.129312982439714, 22.741574008179473], {
+    az: "Strazde",
+    en: "Strazde",
+    ru: "Страздэ",
+  }),
+  createStop("saatli", "AZ", [39.910927219952846, 48.34914519673688], {
+    az: "Saatlı",
+    en: "Saatly",
+    ru: "Саатлы",
+  }),
+  createStop("gobustan", "AZ", [40.08695554589084, 49.413046268934075], {
+    az: "Qobustan",
+    en: "Gobustan",
+    ru: "Гобустан",
+  }),
+  createStop("sangachal", "AZ", [40.174117699668514, 49.467633414317035], {
+    az: "Sanqaçal",
+    en: "Sangachal",
+    ru: "Сангачал",
+  }),
+  createStop("demirchi", "AZ", [39.61600709459735, 44.948751254999436], {
+    az: "Dəmirçi",
+    en: "Demirchi",
+    ru: "Демирчи",
+  }),
+  createStop("sarachli", "AZ", [39.909765666312694, 44.46493725109202], {
+    az: "Saraçlı",
+    en: "Sarachli",
+    ru: "Сарачлы",
+  }),
+  createStop("rustavi", "GE", [41.54451108652713, 45.012473053308526], {
+    az: "Rustavi",
+    en: "Rustavi",
+    ru: "Рустави",
+  }),
+  createStop("manglisi", "GE", [41.67589941837711, 44.379596212915146], {
+    az: "Manqlisi",
+    en: "Manglisi",
+    ru: "Манглиси",
+  }),
+  createStop("gamdzani", "GE", [41.357444670365446, 43.753960886357596], {
+    az: "Qamdzani",
+    en: "Gamdzani",
+    ru: "Гамдзани",
+  }),
+  createStop("oyama", "JP", [35.360948128928996, 138.9867016435153], {
+    az: "Oyama",
+    en: "Oyama",
+    ru: "Ояма",
+  }),
+  createStop("okazaki", "JP", [34.965202290939786, 137.1890637022306], {
+    az: "Okazaki",
+    en: "Okazaki",
+    ru: "Оказаки",
   }),
 ];
 
