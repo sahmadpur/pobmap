@@ -10,6 +10,7 @@ import {
   Save,
   Trash2,
 } from "lucide-react";
+import dynamic from "next/dynamic";
 import { useRouter } from "next/navigation";
 
 import { AdminThemeToggle } from "@/components/admin/admin-theme-toggle";
@@ -30,6 +31,16 @@ import {
 import { applyStopIdsToSegment, inferStopIdsFromCoordinates } from "@/lib/corridor-stop-utils";
 import type { AdminMarker } from "@/types/admin";
 import type { CorridorRoute, CorridorSegment, LocalizedText } from "@/types/map";
+
+const SegmentLineEditor = dynamic(
+  () => import("@/components/admin/segment-line-editor").then((mod) => mod.SegmentLineEditor),
+  {
+    ssr: false,
+    loading: () => (
+      <div className="hc-inset p-4 text-xs text-[var(--hc-muted)]">Loading map editor…</div>
+    ),
+  },
+);
 
 type Register = "routes" | "markers";
 
@@ -1327,6 +1338,23 @@ export function AdminConsole() {
                                   </div>
 
                                   <StopPathEditor
+                                    segment={segment}
+                                    onChange={(nextSegment) =>
+                                      setRoutes((current) =>
+                                        current.map((route) =>
+                                          route.id === selectedRoute.id
+                                            ? {
+                                                ...route,
+                                                segments: route.segments.map((item) =>
+                                                  item.id === segment.id ? nextSegment : item,
+                                                ),
+                                              }
+                                            : route,
+                                        ),
+                                      )
+                                    }
+                                  />
+                                  <SegmentLineEditor
                                     segment={segment}
                                     onChange={(nextSegment) =>
                                       setRoutes((current) =>
