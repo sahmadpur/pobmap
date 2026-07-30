@@ -1,6 +1,6 @@
-import { getTransportStop } from "@/data/transport-stops";
 import {
   getSegmentRenderCoordinates,
+  sliceSegmentBetweenStops,
   softenPathCorners,
 } from "@/lib/map-utils";
 import { createPathSampler } from "@/lib/vehicle-path";
@@ -145,78 +145,6 @@ export interface VehiclePlan {
 
 function pathLength(coordinates: Coordinate[]): number {
   return createPathSampler(coordinates).totalLength;
-}
-
-/**
- * Index of the polyline vertex closest to `target`.
- *
- * Stops are matched by proximity rather than equality because a segment's
- * `displayCoordinates` carries hand-authored bend points alongside the stop
- * vertices, and floating-point coordinates copied between the store and the
- * stop catalogue are not guaranteed to be bit-identical.
- */
-function nearestVertexIndex(
-  coordinates: Coordinate[],
-  target: Coordinate,
-): number {
-  let bestIndex = 0;
-  let bestDistance = Number.POSITIVE_INFINITY;
-
-  coordinates.forEach(([lat, lng], index) => {
-    const distance = Math.hypot(lat - target[0], lng - target[1]);
-
-    if (distance < bestDistance) {
-      bestDistance = distance;
-      bestIndex = index;
-    }
-  });
-
-  return bestIndex;
-}
-
-/**
- * The stretch of a segment's drawn line between two of its stops, in travel
- * order — reversed when the origin stop sits after the destination in the
- * authored array. Corners are left un-softened so consecutive legs can be
- * stitched and rounded as one path.
- *
- * Returns null when either stop is unknown or both land on the same vertex,
- * which would leave nothing to animate.
- */
-function sliceSegmentBetweenStops(
-  segment: CorridorSegment,
-  fromStopId: string,
-  toStopId: string,
-): Coordinate[] | null {
-  const fromStop = getTransportStop(fromStopId);
-  const toStop = getTransportStop(toStopId);
-
-  if (!fromStop || !toStop) {
-    return null;
-  }
-
-  const source =
-    segment.displayCoordinates && segment.displayCoordinates.length >= 2
-      ? segment.displayCoordinates
-      : segment.coordinates;
-
-  if (source.length < 2) {
-    return null;
-  }
-
-  const fromIndex = nearestVertexIndex(source, fromStop.coordinates);
-  const toIndex = nearestVertexIndex(source, toStop.coordinates);
-
-  if (fromIndex === toIndex) {
-    return null;
-  }
-
-  const slice = source.slice(
-    Math.min(fromIndex, toIndex),
-    Math.max(fromIndex, toIndex) + 1,
-  );
-
-  return fromIndex > toIndex ? [...slice].reverse() : slice;
 }
 
 /**

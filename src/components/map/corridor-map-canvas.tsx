@@ -22,10 +22,17 @@ import {
   getLocalizedText,
   TRANSPORT_MODE_META,
 } from "@/data/corridors";
+import { DOTTED_STRETCHES } from "@/data/dotted-stretches";
 import { getMarkerIconSvg } from "@/data/marker-icons";
 import { getTransportStop } from "@/data/transport-stops";
 import { collectRouteTerminalStopIds } from "@/lib/corridor-stop-utils";
-import { flattenRouteCoordinates, getSegmentRenderCoordinates } from "@/lib/map-utils";
+import {
+  flattenRouteCoordinates,
+  getCorridorOffsetPx,
+  getSegmentRenderCoordinates,
+  offsetPathPixels,
+  splitSegmentForDotting,
+} from "@/lib/map-utils";
 import {
   getMarkerTier,
   isMarkerVisibleAtZoom,
@@ -386,34 +393,39 @@ function getSelectionPadding(
   };
 }
 
+/**
+ * Frames a corridor, but only when asked.
+ *
+ * Framing used to follow the selection, which meant every click on a line threw
+ * away whatever zoom the user had set. It is now driven by an explicit counter —
+ * the same shape as `MapResetController` — so selecting a segment leaves the
+ * camera alone and only the deliberate jumps (a corridor button in a port popup,
+ * Reset view) move it.
+ */
 function SelectionController({
   route,
   hasDetailsPanel,
   isMapOnlyMode,
+  frameCount,
 }: {
   route: CorridorRoute | null;
   hasDetailsPanel: boolean;
   isMapOnlyMode: boolean;
+  frameCount: number;
 }) {
   const map = useMap();
-  // Tracks what was last fitted so re-renders that produce a new route object
-  // for the same selection (hover, filters) and window resizes never re-fit
-  // the view and undo the user's manual zoom.
-  const lastFitKeyRef = useRef<string | null>(null);
+  const lastFrameCountRef = useRef(frameCount);
 
   useEffect(() => {
+    if (lastFrameCountRef.current === frameCount) {
+      return;
+    }
+
+    lastFrameCountRef.current = frameCount;
+
     if (!route) {
-      lastFitKeyRef.current = null;
       return;
     }
-
-    const fitKey = `${route.id}|${hasDetailsPanel}|${isMapOnlyMode}`;
-
-    if (lastFitKeyRef.current === fitKey) {
-      return;
-    }
-
-    lastFitKeyRef.current = fitKey;
 
     const coordinates = flattenRouteCoordinates(route);
 
@@ -436,9 +448,208 @@ function SelectionController({
       paddingTopLeft: padding.paddingTopLeft,
       paddingBottomRight: padding.paddingBottomRight,
     });
-  }, [hasDetailsPanel, isMapOnlyMode, map, route]);
+  }, [frameCount, hasDetailsPanel, isMapOnlyMode, map, route]);
 
   return null;
+}
+
+/**
+ * Draws every visible corridor, offset into its own lane.
+ *
+ * Split out of the canvas so it can call `useMap()` — the offset is computed in
+ * projected pixel space and has to be recomputed whenever the zoom changes, or
+ * the lanes would widen and narrow as the user zooms.
+ */
+function CorridorLines({
+  routes,
+  allRoutes,
+  selectedRouteId,
+  selectedSegmentId,
+  hoveredRouteId,
+  locale,
+  zoom,
+  onRouteSelect,
+  onRouteHover,
+}: {
+  routes: CorridorRoute[];
+  allRoutes: CorridorRoute[];
+  selectedRouteId: string | null;
+  selectedSegmentId: string | null;
+  hoveredRouteId: string | null;
+  locale: SupportedLocale;
+  zoom: number;
+  onRouteSelect: (routeId: string, segmentId?: string | null) => void;
+  onRouteHover: (routeId: string | null) => void;
+}) {
+  const map = useMap();
+
+  const laneOffsets = useMemo(
+    () =>
+      new Map(
+        allRoutes.map((route) => [route.id, getCorridorOffsetPx(route.id, allRoutes)]),
+      ),
+    [allRoutes],
+  );
+
+  const drawnRoutes = useMemo(() => {
+    const project = (coordinate: Coordinate) => map.project(coordinate, zoom);
+    const unproject = (point: { x: number; y: number }) => {
+      const { lat, lng } = map.unproject(L.point(point.x, point.y), zoom);
+      return [lat, lng] as Coordinate;
+    };
+
+    return routes.map((route) => {
+      const offsetPx = laneOffsets.get(route.id) ?? 0;
+      const shift = (coordinates: Coordinate[]) =>
+        offsetPathPixels(coordinates, offsetPx, project, unproject);
+
+      return {
+        route,
+        segments: route.segments.map((segment) => {
+          const runs = splitSegmentForDotting(route.id, segment, DOTTED_STRETCHES);
+
+          return {
+            segment,
+            hitPath: shift(getSegmentRenderCoordinates(segment)),
+            solid: runs.solid.map(shift),
+            dotted: runs.dotted.map(shift),
+          };
+        }),
+      };
+    });
+    // `zoom` drives the projection, so it belongs in the dependency list even
+    // though it is not referenced outside the closures above.
+  }, [laneOffsets, map, routes, zoom]);
+
+  return (
+    <>
+      {drawnRoutes.map(({ route, segments }) => {
+        const isSelected = route.id === selectedRouteId;
+        const isHovered = route.id === hoveredRouteId;
+        const isDimmed = Boolean(selectedRouteId) && !isSelected;
+
+        return (
+          <Pane key={route.id} name={`pane-${route.id}`} style={{ zIndex: 420 }}>
+            {segments.map(({ segment, hitPath, solid, dotted }) => {
+              const isSelectedSegment = selectedSegmentId === segment.id;
+              const color = isSelected
+                ? TRANSPORT_MODE_META[segment.mode].color
+                : route.routeColor;
+              const weight = isSelectedSegment
+                ? route.type === "primary"
+                  ? 8
+                  : 5
+                : route.type === "primary"
+                  ? 6
+                  : 3;
+              const opacity = isSelectedSegment
+                ? 1
+                : isSelected
+                  ? 0.9
+                  : isDimmed
+                    ? 0.18
+                    : isHovered
+                      ? 0.9
+                      : route.type === "primary"
+                        ? 0.72
+                        : 0.5;
+              const className = isSelected || isSelectedSegment
+                ? "corridor-line corridor-line--selected"
+                : "corridor-line";
+
+              return (
+                <Pane
+                  key={segment.id}
+                  name={`segment-pane-${segment.id}`}
+                  style={{ zIndex: isSelectedSegment ? 435 : 420 }}
+                >
+                  {isSelectedSegment ? (
+                    <Polyline
+                      positions={hitPath}
+                      pathOptions={{
+                        pane: "corridor-glow",
+                        color,
+                        weight: route.type === "primary" ? 11 : 8,
+                        opacity: 0.22,
+                        lineCap: "round",
+                        lineJoin: "round",
+                      }}
+                    />
+                  ) : null}
+
+                  {/* One wide invisible line carries the hit area, hover and
+                      tooltip for the whole segment, so cutting the drawn line
+                      into solid and dotted runs cannot fragment them. */}
+                  <Polyline
+                    positions={hitPath}
+                    eventHandlers={{
+                      click: () => onRouteSelect(route.id, segment.id),
+                      mouseover: () => onRouteHover(route.id),
+                      mouseout: () => onRouteHover(null),
+                    }}
+                    pathOptions={{
+                      pane: "corridor-lines",
+                      color: "#000000",
+                      weight: 22,
+                      opacity: 0,
+                      lineCap: "round",
+                      lineJoin: "round",
+                      className: "corridor-hit-line",
+                    }}
+                  >
+                    <Tooltip
+                      sticky
+                      direction="top"
+                      offset={[0, -8]}
+                      className="corridor-tooltip"
+                    >
+                      {getLocalizedText(route.name, locale)}
+                    </Tooltip>
+                  </Polyline>
+
+                  {solid.map((positions, index) => (
+                    <Polyline
+                      key={`solid-${index}`}
+                      positions={positions}
+                      interactive={false}
+                      pathOptions={{
+                        pane: "corridor-lines",
+                        color,
+                        weight,
+                        opacity,
+                        dashArray: route.type === "secondary" ? "10 10" : undefined,
+                        lineCap: "round",
+                        lineJoin: "round",
+                        className,
+                      }}
+                    />
+                  ))}
+
+                  {dotted.map((positions, index) => (
+                    <Polyline
+                      key={`dotted-${index}`}
+                      positions={positions}
+                      interactive={false}
+                      pathOptions={{
+                        pane: "corridor-lines",
+                        color,
+                        weight,
+                        opacity,
+                        dashArray: `1 ${Math.round(weight * 1.6)}`,
+                        lineCap: "round",
+                        lineJoin: "round",
+                        className,
+                      }}
+                    />
+                  ))}
+                </Pane>
+              );
+            })}
+          </Pane>
+        );
+      })}
+    </>
+  );
 }
 
 interface CorridorMapCanvasProps {
@@ -452,6 +663,8 @@ interface CorridorMapCanvasProps {
   theme: "dark" | "light";
   showFlowAnimation: boolean;
   resetCount: number;
+  /** Bumped when a corridor should be framed; selection alone never re-frames. */
+  frameCount: number;
   isMapOnlyMode: boolean;
   onRouteSelect: (routeId: string, segmentId?: string | null) => void;
   onRouteHover: (routeId: string | null) => void;
@@ -471,6 +684,7 @@ export default function CorridorMapCanvas({
   theme,
   showFlowAnimation,
   resetCount,
+  frameCount,
   isMapOnlyMode,
   onRouteSelect,
   onRouteHover,
@@ -569,7 +783,7 @@ export default function CorridorMapCanvas({
       center={DEFAULT_MAP_VIEW.center}
       zoom={DEFAULT_MAP_VIEW.zoom}
       minZoom={3}
-      maxZoom={7}
+      maxZoom={14}
       zoomControl={false}
       attributionControl={false}
       className={`corridor-map-canvas corridor-map-canvas--${theme} h-full w-full`}
@@ -592,115 +806,27 @@ export default function CorridorMapCanvas({
         route={selectedRoute}
         hasDetailsPanel={!isMapOnlyMode && Boolean(selectedRoute)}
         isMapOnlyMode={isMapOnlyMode}
+        frameCount={frameCount}
       />
 
       <Pane name="corridor-glow" style={{ zIndex: 410 }} />
       <Pane name="corridor-lines" style={{ zIndex: 420 }} />
       <Pane name="corridor-markers" style={{ zIndex: 460 }} />
 
-      {routes.map((route) => {
-        const isSelected = route.id === selectedRouteId;
-        const isHovered = route.id === hoveredRouteId;
-        const isDimmed = Boolean(selectedRouteId) && !isSelected;
-
-        return (
-          <Pane key={route.id} name={`pane-${route.id}`} style={{ zIndex: 420 }}>
-            {route.segments.map((segment) => (
-              <Pane
-                key={segment.id}
-                name={`segment-pane-${segment.id}`}
-                style={{ zIndex: selectedSegmentId === segment.id ? 435 : 420 }}
-              >
-                {selectedSegmentId === segment.id ? (
-                  <Polyline
-                    positions={getSegmentRenderCoordinates(segment)}
-                    pathOptions={{
-                      pane: "corridor-glow",
-                      color: isSelected
-                        ? TRANSPORT_MODE_META[segment.mode].color
-                        : route.routeColor,
-                      weight: route.type === "primary" ? 11 : 8,
-                      opacity: 0.22,
-                      lineCap: "round",
-                      lineJoin: "round",
-                    }}
-                  />
-                ) : null}
-
-                <Polyline
-                  positions={getSegmentRenderCoordinates(segment)}
-                  eventHandlers={{
-                    click: () => onRouteSelect(route.id, segment.id),
-                    mouseover: () => onRouteHover(route.id),
-                    mouseout: () => onRouteHover(null),
-                  }}
-                  pathOptions={{
-                    pane: "corridor-lines",
-                    color: "#000000",
-                    weight: 22,
-                    opacity: 0,
-                    lineCap: "round",
-                    lineJoin: "round",
-                    className: "corridor-hit-line",
-                  }}
-                />
-
-                <Polyline
-                  positions={getSegmentRenderCoordinates(segment)}
-                  eventHandlers={{
-                    click: () => onRouteSelect(route.id, segment.id),
-                    mouseover: () => onRouteHover(route.id),
-                    mouseout: () => onRouteHover(null),
-                  }}
-                  pathOptions={{
-                    pane: "corridor-lines",
-                    color: isSelected
-                      ? TRANSPORT_MODE_META[segment.mode].color
-                      : route.routeColor,
-                    weight:
-                      selectedSegmentId === segment.id
-                        ? route.type === "primary"
-                          ? 8
-                          : 5
-                        : route.type === "primary"
-                          ? 6
-                          : 3,
-                    opacity: selectedSegmentId === segment.id
-                      ? 1
-                      : isSelected
-                        ? 0.9
-                        : isDimmed
-                          ? 0.18
-                          : isHovered
-                            ? 0.9
-                            : route.type === "primary"
-                              ? 0.72
-                              : 0.5,
-                    dashArray: route.type === "secondary" ? "10 10" : undefined,
-                    lineCap: "round",
-                    lineJoin: "round",
-                    className:
-                      isSelected || selectedSegmentId === segment.id
-                        ? "corridor-line corridor-line--selected"
-                        : "corridor-line",
-                  }}
-                >
-                  <Tooltip
-                    sticky
-                    direction="top"
-                    offset={[0, -8]}
-                    className="corridor-tooltip"
-                  >
-                    {getLocalizedText(route.name, locale)}
-                  </Tooltip>
-                </Polyline>
-              </Pane>
-            ))}
-          </Pane>
-        );
-      })}
-
-      {showFlowAnimation ? <VehicleLayer routes={activeRoutes} /> : null}
+      <CorridorLines
+        routes={routes}
+        allRoutes={allRoutes}
+        selectedRouteId={selectedRouteId}
+        selectedSegmentId={selectedSegmentId}
+        hoveredRouteId={hoveredRouteId}
+        locale={locale}
+        zoom={zoom}
+        onRouteSelect={onRouteSelect}
+        onRouteHover={onRouteHover}
+      />
+      {showFlowAnimation ? (
+        <VehicleLayer routes={activeRoutes} allRoutes={allRoutes} />
+      ) : null}
 
       <Marker
         key={primaryPortMarker.id}

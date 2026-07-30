@@ -10,6 +10,7 @@ import {
   isLeftward,
   type PathSampler,
 } from "@/lib/vehicle-path";
+import { getCorridorOffsetPx } from "@/lib/map-utils";
 import { planVehicles } from "@/lib/vehicle-plan";
 import type { Coordinate, CorridorRoute, TransportMode } from "@/types/map";
 
@@ -60,6 +61,11 @@ interface AnimatedVehicle extends VehicleNodes {
   reversed: boolean;
   // Path-length units per screen pixel at the current zoom; refreshed on zoomend.
   pathUnitsPerPx: number;
+  // Sideways shift matching the lane its corridor's line is drawn in, so the
+  // vehicle rides on that line instead of the unshifted centreline. Applied in
+  // pixel space each frame, which keeps it exact at every zoom without having to
+  // rebuild the path.
+  laneOffsetPx: number;
 }
 
 function svgElement<K extends keyof SVGElementTagNameMap>(
@@ -199,6 +205,33 @@ function toLayerPoint(map: L.Map, coordinate: Coordinate): L.Point {
   return map.project(coordinate).subtract(map.getPixelOrigin());
 }
 
+/**
+ * Perpendicular shift that puts a vehicle on its corridor's offset line.
+ *
+ * `aheadSign` restores the authored coordinate order from a travel-order sample
+ * pair, so the normal matches the one `offsetPathPixels` used on the polyline.
+ */
+function laneShift(
+  before: L.Point,
+  after: L.Point,
+  aheadSign: number,
+  offsetPx: number,
+): { x: number; y: number } {
+  if (offsetPx === 0) {
+    return { x: 0, y: 0 };
+  }
+
+  const dx = (after.x - before.x) * aheadSign;
+  const dy = (after.y - before.y) * aheadSign;
+  const length = Math.hypot(dx, dy);
+
+  if (length === 0) {
+    return { x: 0, y: 0 };
+  }
+
+  return { x: (-dy / length) * offsetPx, y: (dx / length) * offsetPx };
+}
+
 // Measures how many path-length units correspond to one screen pixel by
 // sampling the path and summing projected distances. Cheap enough to run on
 // every zoomend.
@@ -222,7 +255,13 @@ function measurePathUnitsPerPx(
   return pixelLength > 0 ? sampler.totalLength / pixelLength : 0;
 }
 
-export function VehicleLayer({ routes }: { routes: CorridorRoute[] }) {
+export function VehicleLayer({
+  routes,
+  allRoutes,
+}: {
+  routes: CorridorRoute[];
+  allRoutes: CorridorRoute[];
+}) {
   const map = useMap();
 
   useEffect(() => {
@@ -257,6 +296,12 @@ export function VehicleLayer({ routes }: { routes: CorridorRoute[] }) {
           seeded: false,
           reversed: plan.reversed,
           pathUnitsPerPx: measurePathUnitsPerPx(map, sampler),
+          // Plan keys are `routeId:segmentId`, and route ids never contain a
+          // colon, so the corridor is the part before the first one.
+          laneOffsetPx: getCorridorOffsetPx(
+            plan.key.slice(0, plan.key.indexOf(":")),
+            allRoutes,
+          ),
         };
       },
     );
@@ -346,11 +391,16 @@ export function VehicleLayer({ routes }: { routes: CorridorRoute[] }) {
           );
           const heading = headingDegrees(before, after);
           const flip = isLeftward(heading) ? " scale(1,-1)" : "";
+          // The lane normal has to be taken along the authored coordinate order,
+          // the same direction the polyline was offset in. `before`/`after` are
+          // sampled in travel order, so a reversed vehicle would otherwise be
+          // pushed to the opposite side of its own line.
+          const lane = laneShift(before, after, aheadSign, vehicle.laneOffsetPx);
 
           car.setAttribute("opacity", opacity.toFixed(2));
           car.setAttribute(
             "transform",
-            `translate(${point.x},${point.y + bobOffset}) rotate(${heading.toFixed(1)})${flip}`,
+            `translate(${point.x + lane.x},${point.y + lane.y + bobOffset}) rotate(${heading.toFixed(1)})${flip}`,
           );
         });
       });
@@ -364,7 +414,7 @@ export function VehicleLayer({ routes }: { routes: CorridorRoute[] }) {
       window.cancelAnimationFrame(frameId);
       svg.remove();
     };
-  }, [map, routes]);
+  }, [allRoutes, map, routes]);
 
   return null;
 }
