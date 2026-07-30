@@ -1,7 +1,7 @@
 {
   "app": {
     "eyebrow": "Strategic transport showcase",
-    "title": "Baku Port Interactive Transport Corridors",
+    "title": "International Transport Corridors",
     "subtitle": "A presentation-ready map of Azerbaijan's gateway role across Eurasian trade routes.",
     "seededRoutes": "{{count}} strategic corridors loaded",
     "loadingMap": "Loading the interactive map..."
@@ -46,9 +46,8 @@
     "title": "Legend",
     "primary": "Primary corridors",
     "secondary": "Secondary corridors",
-    "bakuPort": "Baku Port hub",
+    "bakuPort": "Baku Port",
     "transportModes": "Transport colors",
-    "corridorColors": "Corridor colors",
     "markers": "Map markers"
   },
   "status": {
@@ -67,7 +66,6 @@
   },
   "map": {
     "start": "Start",
-    "end": "End",
-    "customAttribution": "Basemap by CARTO and OpenStreetMap contributors"
+    "end": "End"
   }
 }

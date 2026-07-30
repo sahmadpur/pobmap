@@ -1,7 +1,7 @@
 {
   "app": {
     "eyebrow": "Strateji nəqliyyat təqdimatı",
-    "title": "Bakı Limanı İnteraktiv Nəqliyyat Dəhlizləri",
+    "title": "Beynəlxalq Nəqliyyat Dəhlizləri",
     "subtitle": "Azərbaycanın Avrasiya ticarət marşrutlarındakı qapı rolunu təqdimat üçün hazır xəritədə göstərin.",
     "seededRoutes": "{{count}} strateji dəhliz yüklənib",
     "loadingMap": "İnteraktiv xəritə yüklənir..."
@@ -46,9 +46,8 @@
     "title": "İzah",
     "primary": "Əsas dəhlizlər",
     "secondary": "İkinci dərəcəli dəhlizlər",
-    "bakuPort": "Bakı Limanı qovşağı",
+    "bakuPort": "Bakı Limanı",
     "transportModes": "Nəqliyyat rəngləri",
-    "corridorColors": "Dəhliz rəngləri",
     "markers": "Xəritə işarələri"
   },
   "status": {
@@ -67,7 +66,6 @@
   },
   "map": {
     "start": "Başlanğıc",
-    "end": "Son",
-    "customAttribution": "Xəritə bazası CARTO və OpenStreetMap iştirakçıları tərəfindən təmin edilir"
+    "end": "Son"
   }
 }

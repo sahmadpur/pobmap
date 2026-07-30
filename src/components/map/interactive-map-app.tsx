@@ -142,6 +142,7 @@ export function InteractiveMapApp({
   );
   const [showFlowAnimation, setShowFlowAnimation] = useState(true);
   const [resetCount, setResetCount] = useState(0);
+  const [frameCount, setFrameCount] = useState(0);
   const [isMapOnlyMode, setIsMapOnlyMode] = useState(false);
   const [isFiltersOpen, setIsFiltersOpen] = useState(false);
   const availableRouteIds = useMemo(() => routes.map((route) => route.id), [routes]);
@@ -231,6 +232,9 @@ export function InteractiveMapApp({
       ? selectedSegmentId
       : null;
 
+  // Selecting never moves the camera: clicking a line used to re-frame its whole
+  // corridor, which threw away the zoom the user had set. Framing is now an
+  // explicit request, made only by the jumps below.
   function handleRouteSelect(routeId: string, segmentId: string | null = null) {
     if (selectedRouteId !== routeId) {
       setSelectedRouteId(routeId);
@@ -267,6 +271,9 @@ export function InteractiveMapApp({
     });
 
     handleRouteSelect(routeId);
+    // Jumping in from a port popup is a deliberate "show me this corridor", so
+    // this is one of the few places that does frame the map.
+    setFrameCount((count) => count + 1);
   }
 
   function handleResetView() {
@@ -338,6 +345,7 @@ export function InteractiveMapApp({
           theme={theme}
           showFlowAnimation={showFlowAnimation}
           resetCount={resetCount}
+          frameCount={frameCount}
           isMapOnlyMode={isMapOnlyMode}
           onRouteSelect={handleRouteSelect}
           onRouteHover={setHoveredRouteId}
@@ -701,11 +709,6 @@ export function InteractiveMapApp({
               </div>
               <div className={`mt-3 grid gap-4 text-sm ${mutedTextClass}`}>
                 <div>
-                  <h3
-                    className={`font-label mb-2 text-[0.7rem] uppercase ${subtleTextClass}`}
-                  >
-                    {t("legend.corridorColors")}
-                  </h3>
                   <div className="grid gap-2">
                     {routes.map((route) => (
                       <div key={route.id} className="flex items-center gap-3">
@@ -792,14 +795,6 @@ export function InteractiveMapApp({
         </div>
       ) : null}
 
-      {/* Attribution */}
-      {!isMapOnlyMode ? (
-        <div
-          className={`pointer-events-none absolute bottom-3 left-1/2 z-[440] hidden -translate-x-1/2 rounded-full border px-3 py-1.5 text-[0.7rem] backdrop-blur lg:block ${cardClass} ${mutedTextClass}`}
-        >
-          {t("map.customAttribution")}
-        </div>
-      ) : null}
     </main>
   );
 }
