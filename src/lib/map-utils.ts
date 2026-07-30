@@ -4,7 +4,11 @@ import type { Coordinate, CorridorRoute, CorridorSegment } from "@/types/map";
 // preserved so segments keep meeting exactly at shared stops.
 const CORNER_SOFTENING_RATIO = 0.15;
 
-function softenCorners(coordinates: Coordinate[]): Coordinate[] {
+// Exported so a sliced sub-path (see vehicle-plan.ts) gets the same treatment as
+// the drawn polyline. Softening is local — each interior vertex only consults
+// its immediate neighbours — so a slice rounds identically to the full path,
+// apart from the cut points, which stay exact.
+export function softenPathCorners(coordinates: Coordinate[]): Coordinate[] {
   if (coordinates.length < 3) {
     return coordinates;
   }
@@ -35,10 +39,10 @@ function softenCorners(coordinates: Coordinate[]): Coordinate[] {
 
 export function getSegmentRenderCoordinates(segment: CorridorSegment): Coordinate[] {
   if (segment.displayCoordinates && segment.displayCoordinates.length >= 2) {
-    return softenCorners(segment.displayCoordinates);
+    return softenPathCorners(segment.displayCoordinates);
   }
 
-  return softenCorners(segment.coordinates);
+  return softenPathCorners(segment.coordinates);
 }
 
 export function flattenRouteCoordinates(route: CorridorRoute): Coordinate[] {

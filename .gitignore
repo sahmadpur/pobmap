@@ -42,3 +42,6 @@ next-env.d.ts
 
 # Superpowers scratch (brainstorm mockups, subagent work files)
 .superpowers/
+
+# Playwright MCP session artifacts (snapshots, console logs)
+.playwright-mcp/

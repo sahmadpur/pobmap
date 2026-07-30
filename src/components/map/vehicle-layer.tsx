@@ -4,37 +4,33 @@ import { useEffect } from "react";
 import type * as L from "leaflet";
 import { useMap } from "react-leaflet";
 
-import { getSegmentRenderCoordinates } from "@/lib/map-utils";
 import {
   createPathSampler,
   headingDegrees,
   isLeftward,
   type PathSampler,
 } from "@/lib/vehicle-path";
-import type {
-  Coordinate,
-  CorridorRoute,
-  CorridorSegment,
-  TransportMode,
-} from "@/types/map";
+import { planVehicles } from "@/lib/vehicle-plan";
+import type { Coordinate, CorridorRoute, TransportMode } from "@/types/map";
 
 const SVG_NS = "http://www.w3.org/2000/svg";
 const VEHICLE_PANE = "corridor-vehicles";
-// Quotas are per mode rather than per route so short sea crossings still get a
-// ship. Picking the longest N segments of a route regardless of mode used to
-// starve the Caspian legs: East-West has 66 segments, and Aktau-Baku (~430 km)
-// never placed against the trans-Eurasian rail hauls. `ship: 12` covers every
-// sea segment on the busiest corridor.
-const MAX_ANIMATED_SEGMENTS_PER_MODE: Record<TransportMode, number> = {
-  rail: 6,
-  ship: 12,
-  road: 4,
-};
-// Backstop for the case where every corridor is enabled at once.
-const MAX_ANIMATED_VEHICLES = 60;
 const TRAIN_CAR_SPACING_PX = 19;
 const EDGE_FADE_PX = 12;
 const HEADING_SAMPLE_PX = 2;
+// `animationSpeed` is authored as cycles per second, which made apparent speed
+// depend on both zoom and path length: a vehicle crossed its whole path in
+// 1/speed seconds however many pixels that path covered on screen. Zooming in
+// stretched the path and sent the vehicles racing. Converting through a
+// reference path width turns the same authored number into a screen speed, so
+// a route reads the same at every zoom level and short legs no longer crawl
+// while long hauls sprint. 0.1 (the admin default) lands at ~32 px/s.
+const REFERENCE_PATH_PX = 320;
+// Frames after a backgrounded tab or a long paint arrive with a huge delta;
+// advancing by it would teleport every vehicle. Kept well above a slow device's
+// frame time -- clamping tighter than the real frame interval would silently
+// scale the whole animation down on anything that cannot hit 60fps.
+const MAX_FRAME_SECONDS = 0.25;
 
 const FILL_PRIMARY = "#f8fafc";
 const FILL_SECONDARY = "#cbd5e1";
@@ -47,16 +43,20 @@ interface VehicleNodes {
   bob: boolean;
 }
 
-interface AnimatedSegment {
-  segment: CorridorSegment;
-  sampler: PathSampler;
-}
-
 interface AnimatedVehicle extends VehicleNodes {
   sampler: PathSampler;
-  speed: number;
-  offset: number;
-  // Travels end-of-path to start-of-path, so both freight directions are visible.
+  // Screen pixels per second, held constant across zoom levels.
+  pixelsPerSecond: number;
+  // Where the head sits along the path, in path-length units. Advanced
+  // incrementally rather than derived from absolute time so that a zoom change
+  // -- which changes how fast path units are consumed -- moves the vehicle on
+  // from where it is instead of snapping it to a new phase.
+  distance: number;
+  // Fraction of the cycle to start at, applied on the first frame once the
+  // cycle length is known.
+  startFraction: number;
+  seeded: boolean;
+  // Travels end-of-path to start-of-path. Decided per corridor in vehicle-plan.
   reversed: boolean;
   // Path-length units per screen pixel at the current zoom; refreshed on zoomend.
   pathUnitsPerPx: number;
@@ -244,42 +244,29 @@ export function VehicleLayer({ routes }: { routes: CorridorRoute[] }) {
     svg.style.left = "0";
     map.getPane(VEHICLE_PANE)!.appendChild(svg);
 
-    const vehicles: AnimatedVehicle[] = routes
-      .flatMap((route) => {
-        const byMode = new Map<TransportMode, AnimatedSegment[]>();
+    const vehicles: AnimatedVehicle[] = planVehicles(routes).map(
+      (plan, animationIndex) => {
+        const sampler = createPathSampler(plan.coordinates);
 
-        route.segments.forEach((segment) => {
-          const sampler = createPathSampler(getSegmentRenderCoordinates(segment));
+        return {
+          ...VEHICLE_BUILDERS[plan.mode](svg),
+          sampler,
+          pixelsPerSecond: plan.speed * REFERENCE_PATH_PX,
+          distance: 0,
+          startFraction: (animationIndex * 0.33) % 1,
+          seeded: false,
+          reversed: plan.reversed,
+          pathUnitsPerPx: measurePathUnitsPerPx(map, sampler),
+        };
+      },
+    );
 
-          if (sampler.totalLength <= 0) {
-            return;
-          }
-
-          const group = byMode.get(segment.mode);
-
-          if (group) {
-            group.push({ segment, sampler });
-          } else {
-            byMode.set(segment.mode, [{ segment, sampler }]);
-          }
-        });
-
-        return Array.from(byMode.entries()).flatMap(([mode, group]) =>
-          group
-            .sort((a, b) => b.sampler.totalLength - a.sampler.totalLength)
-            .slice(0, MAX_ANIMATED_SEGMENTS_PER_MODE[mode])
-            .map((entry) => ({ ...entry, route })),
-        );
-      })
-      .slice(0, MAX_ANIMATED_VEHICLES)
-      .map(({ segment, sampler, route }, animationIndex) => ({
-        ...VEHICLE_BUILDERS[segment.mode](svg),
-        sampler,
-        speed: route.animationSpeed,
-        offset: animationIndex * 0.33,
-        reversed: animationIndex % 2 === 1,
-        pathUnitsPerPx: measurePathUnitsPerPx(map, sampler),
-      }));
+    // Tracked against the zoom the scales were measured at rather than driven
+    // off `zoomend`: the layer can mount before the map settles on its final
+    // zoom (route selection fits bounds right after), and a stale scale now
+    // shows up directly as a wrong travel speed rather than as slightly-off
+    // car spacing.
+    let measuredZoom = map.getZoom();
 
     const refreshScales = () => {
       vehicles.forEach((vehicle) => {
@@ -287,12 +274,22 @@ export function VehicleLayer({ routes }: { routes: CorridorRoute[] }) {
       });
     };
 
-    map.on("zoomend", refreshScales);
-
     let frameId = 0;
+    let previousNow = 0;
 
     const frame = (now: number) => {
       const seconds = now / 1000;
+      const elapsed = previousNow
+        ? Math.min((now - previousNow) / 1000, MAX_FRAME_SECONDS)
+        : 0;
+      previousNow = now;
+
+      const zoom = map.getZoom();
+
+      if (zoom !== measuredZoom) {
+        measuredZoom = zoom;
+        refreshScales();
+      }
 
       vehicles.forEach((vehicle) => {
         const { sampler, cars, pathUnitsPerPx } = vehicle;
@@ -301,8 +298,22 @@ export function VehicleLayer({ routes }: { routes: CorridorRoute[] }) {
         const headingEps = HEADING_SAMPLE_PX * pathUnitsPerPx;
         const trainSpanUnits = (cars.length - 1) * spacingUnits;
         const cycleUnits = sampler.totalLength + trainSpanUnits;
-        const progress = ((seconds * vehicle.speed + vehicle.offset) % 1 + 1) % 1;
-        const headDistance = progress * cycleUnits;
+
+        if (!vehicle.seeded) {
+          vehicle.distance = vehicle.startFraction * cycleUnits;
+          vehicle.seeded = true;
+        }
+
+        // Constant screen speed: converting pixels per second into path units
+        // through the current zoom's scale keeps the vehicle moving at the same
+        // apparent pace however far the map is zoomed in.
+        vehicle.distance += elapsed * vehicle.pixelsPerSecond * pathUnitsPerPx;
+
+        if (cycleUnits > 0) {
+          vehicle.distance %= cycleUnits;
+        }
+
+        const headDistance = vehicle.distance;
         const bobOffset = vehicle.bob ? Math.sin(seconds * 2.2) * 1.4 : 0;
 
         cars.forEach((car, carIndex) => {
@@ -351,7 +362,6 @@ export function VehicleLayer({ routes }: { routes: CorridorRoute[] }) {
 
     return () => {
       window.cancelAnimationFrame(frameId);
-      map.off("zoomend", refreshScales);
       svg.remove();
     };
   }, [map, routes]);
