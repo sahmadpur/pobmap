@@ -7,7 +7,7 @@
         "en": "East-West Corridor",
         "ru": "Коридор Восток-Запад"
       },
-      "routeColor": "#E11D48",
+      "routeColor": "#0284C7",
       "type": "primary",
       "totalDistanceKm": 11000,
       "transitTime": {
@@ -1314,16 +1314,16 @@
           "id": "east-west-btk",
           "mode": "rail",
           "from": {
-            "az": "Bakı",
-            "en": "Baku",
-            "ru": "Баку"
+            "az": "Ələt",
+            "en": "Alat",
+            "ru": "Алят"
           },
           "to": {
-            "az": "Qars",
-            "en": "Kars",
-            "ru": "Карс"
+            "az": "Böyük Kəsik",
+            "en": "Boyuk Kasik",
+            "ru": "Беюк-Кясик"
           },
-          "distanceKm": 850,
+          "distanceKm": 529,
           "coordinates": [
             [
               40.3572,
@@ -1336,14 +1336,6 @@
             [
               41.3086,
               45.0919
-            ],
-            [
-              41.7151,
-              44.8271
-            ],
-            [
-              40.600439086831614,
-              43.09907678698981
             ]
           ],
           "displayCoordinates": [
@@ -1378,6 +1370,46 @@
             [
               41.3086,
               45.0919
+            ]
+          ],
+          "stopIds": [
+            "baku-port",
+            "ganja",
+            "boyuk-kasik"
+          ]
+        },
+        {
+          "id": "east-west-boyuk-kasik-kars",
+          "mode": "rail",
+          "from": {
+            "az": "Böyük Kəsik",
+            "en": "Boyuk Kasik",
+            "ru": "Беюк-Кясик"
+          },
+          "to": {
+            "az": "Qars",
+            "en": "Kars",
+            "ru": "Карс"
+          },
+          "distanceKm": 321,
+          "coordinates": [
+            [
+              41.3086,
+              45.0919
+            ],
+            [
+              41.7151,
+              44.8271
+            ],
+            [
+              40.600439086831614,
+              43.09907678698981
+            ]
+          ],
+          "displayCoordinates": [
+            [
+              41.3086,
+              45.0919
             ],
             [
               41.457,
@@ -1409,8 +1441,6 @@
             ]
           ],
           "stopIds": [
-            "baku-port",
-            "ganja",
             "boyuk-kasik",
             "tbilisi",
             "kars"
@@ -3685,14 +3715,7 @@
         "ru": "18-25 дней"
       },
       "countries": [
-        "FI",
         "RU",
-        "EE",
-        "LV",
-        "BY",
-        "PL",
-        "DE",
-        "NL",
         "AZ",
         "IR",
         "KW",
@@ -4641,11 +4664,6 @@
         "GE",
         "TR",
         "RU",
-        "FI",
-        "KZ",
-        "TM",
-        "KR",
-        "JP",
         "BG",
         "RS",
         "HU",
