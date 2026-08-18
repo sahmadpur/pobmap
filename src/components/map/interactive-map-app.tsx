@@ -248,10 +248,6 @@ export function InteractiveMapApp({
   // corridor, which threw away the zoom the user had set. Framing is now an
   // explicit request, made only by the jumps below.
   function handleRouteSelect(routeId: string, segmentId: string | null = null) {
-    // Picking a corridor gets the filters out of the way; the details panel on
-    // the other side is what the user is reading now.
-    setIsFiltersOpen(false);
-
     if (selectedRouteId !== routeId) {
       setSelectedRouteId(routeId);
       setSelectedSegmentId(null);
@@ -375,7 +371,12 @@ export function InteractiveMapApp({
           groupSegmentIds={groupSegmentIds}
           isMapOnlyMode={isMapOnlyMode}
           hasFilterPanel={isFiltersOpen && !isMapOnlyMode}
-          onRouteSelect={handleRouteSelect}
+          onRouteSelect={(routeId, segmentId) => {
+            // Picking a corridor on the map gets the filters out of the way;
+            // picking one from a filter row leaves the panel where it is.
+            setIsFiltersOpen(false);
+            handleRouteSelect(routeId, segmentId);
+          }}
           onRouteHover={setHoveredRouteId}
           onClearSelection={() => {
             setSelectedRouteId(null);
@@ -383,7 +384,10 @@ export function InteractiveMapApp({
             setHoveredRouteId(null);
             setGroupSegmentIds([]);
           }}
-          onPortCorridorSelect={handlePortCorridorSelect}
+          onPortCorridorSelect={(routeId) => {
+            setIsFiltersOpen(false);
+            handlePortCorridorSelect(routeId);
+          }}
           t={t}
         />
       </div>
