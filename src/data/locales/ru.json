@@ -8,7 +8,7 @@
   },
   "filters": {
     "title": "Фильтры",
-    "corridors": "По коридору",
+    "corridors": "Коридоры",
     "modes": "Вид транспорта",
     "statuses": "Статус",
     "enableAll": "Включить все",
@@ -20,7 +20,6 @@
     "hideCorridor": "Скрыть коридор"
   },
   "controls": {
-    "resetView": "Сбросить вид",
     "clearSelection": "Снять выбор",
     "showFlow": "Показать анимацию потока",
     "hideFlow": "Скрыть анимацию потока",
@@ -40,13 +39,15 @@
     "segmentHint": "Нажмите по уже выбранному маршруту на карте еще раз, чтобы открыть конкретный сегмент.",
     "segments": "Транспортные сегменты",
     "description": "Описание",
-    "connectedCorridors": "Связанные коридоры"
+    "connectedCorridors": "Связанные коридоры",
+    "scrollUp": "Прокрутить вверх",
+    "scrollDown": "Прокрутить вниз"
   },
   "legend": {
     "title": "Легенда",
     "primary": "Основные коридоры",
     "secondary": "Вторичные коридоры",
-    "bakuPort": "Бакинский порт",
+    "bakuPort": "Порт",
     "transportModes": "Цвета транспорта",
     "markers": "Маркеры карты"
   },

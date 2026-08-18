@@ -292,7 +292,7 @@ export function VehicleLayer({
           sampler,
           pixelsPerSecond: plan.speed * REFERENCE_PATH_PX,
           distance: 0,
-          startFraction: (animationIndex * 0.33) % 1,
+          startFraction: plan.startFraction ?? (animationIndex * 0.33) % 1,
           seeded: false,
           reversed: plan.reversed,
           pathUnitsPerPx: measurePathUnitsPerPx(map, sampler),

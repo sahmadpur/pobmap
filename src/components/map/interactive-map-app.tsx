@@ -10,7 +10,6 @@ import {
   Maximize2,
   Minimize2,
   MoonStar,
-  RotateCcw,
   Route,
   ShipWheel,
   SlidersHorizontal,
@@ -30,11 +29,14 @@ import {
   TRANSPORT_MODE_META,
 } from "@/data/corridors";
 import { getMarkerIconSvg } from "@/data/marker-icons";
+import { getSegmentRenderCoordinates } from "@/lib/map-utils";
 import { CountryFlag } from "@/components/ui/country-flag";
 import { RouteDetailsPanel } from "@/components/map/route-details-panel";
 import type { AdminMarker, MarkerCategory } from "@/types/admin";
 import type {
+  Coordinate,
   CorridorRoute,
+  CorridorSegment,
   CorridorStatus,
   SupportedLocale,
   TransportMode,
@@ -141,9 +143,13 @@ export function InteractiveMapApp({
     () => getAvailableStatuses(routes),
   );
   const [showFlowAnimation, setShowFlowAnimation] = useState(true);
-  const [resetCount, setResetCount] = useState(0);
   const [frameCount, setFrameCount] = useState(0);
+  // Segments of the group opened in the details panel; empty means no group is
+  // open, in which case the whole corridor stays lit.
+  const [groupSegmentIds, setGroupSegmentIds] = useState<string[]>([]);
+  const [frameCoordinates, setFrameCoordinates] = useState<Coordinate[] | null>(null);
   const [isMapOnlyMode, setIsMapOnlyMode] = useState(false);
+  // Open on desktop, closed on the narrow layout where it covers the map.
   const [isFiltersOpen, setIsFiltersOpen] = useState(false);
   const availableRouteIds = useMemo(() => routes.map((route) => route.id), [routes]);
   const availableModes = useMemo(() => getAvailableModes(routes), [routes]);
@@ -167,6 +173,12 @@ export function InteractiveMapApp({
       if (coarsePointer || reducedMotion) {
         setShowFlowAnimation(false);
       }
+
+      // The panel floats over the map, so it only starts open where there is
+      // room for it beside the corridors.
+      const desktop = window.matchMedia("(min-width: 1024px)").matches;
+
+      setIsFiltersOpen(desktop);
     });
 
     return () => {
@@ -236,14 +248,34 @@ export function InteractiveMapApp({
   // corridor, which threw away the zoom the user had set. Framing is now an
   // explicit request, made only by the jumps below.
   function handleRouteSelect(routeId: string, segmentId: string | null = null) {
+    // Picking a corridor gets the filters out of the way; the details panel on
+    // the other side is what the user is reading now.
+    setIsFiltersOpen(false);
+
     if (selectedRouteId !== routeId) {
       setSelectedRouteId(routeId);
       setSelectedSegmentId(null);
+      setGroupSegmentIds([]);
       return;
     }
 
     setSelectedRouteId(routeId);
     setSelectedSegmentId(segmentId);
+  }
+
+  function handleGroupOpen(
+    group: { id: string; segments: CorridorSegment[] } | null,
+  ) {
+    if (!group) {
+      setGroupSegmentIds([]);
+      return;
+    }
+
+    setGroupSegmentIds(group.segments.map((segment) => segment.id));
+    setFrameCoordinates(
+      group.segments.flatMap((segment) => getSegmentRenderCoordinates(segment)),
+    );
+    setFrameCount((count) => count + 1);
   }
 
   function handlePortCorridorSelect(routeId: string) {
@@ -273,14 +305,8 @@ export function InteractiveMapApp({
     handleRouteSelect(routeId);
     // Jumping in from a port popup is a deliberate "show me this corridor", so
     // this is one of the few places that does frame the map.
+    setFrameCoordinates(null);
     setFrameCount((count) => count + 1);
-  }
-
-  function handleResetView() {
-    setSelectedRouteId(null);
-    setSelectedSegmentId(null);
-    setHoveredRouteId(null);
-    setResetCount((count) => count + 1);
   }
 
   const isDark = theme === "dark";
@@ -344,15 +370,18 @@ export function InteractiveMapApp({
           locale={locale}
           theme={theme}
           showFlowAnimation={showFlowAnimation}
-          resetCount={resetCount}
           frameCount={frameCount}
+          frameCoordinates={frameCoordinates}
+          groupSegmentIds={groupSegmentIds}
           isMapOnlyMode={isMapOnlyMode}
+          hasFilterPanel={isFiltersOpen && !isMapOnlyMode}
           onRouteSelect={handleRouteSelect}
           onRouteHover={setHoveredRouteId}
           onClearSelection={() => {
             setSelectedRouteId(null);
             setSelectedSegmentId(null);
             setHoveredRouteId(null);
+            setGroupSegmentIds([]);
           }}
           onPortCorridorSelect={handlePortCorridorSelect}
           t={t}
@@ -397,8 +426,9 @@ export function InteractiveMapApp({
               <button
                 type="button"
                 onClick={() => setIsFiltersOpen((current) => !current)}
-                className={`inline-flex items-center gap-2 rounded-full border px-3 py-2 text-sm font-medium transition lg:hidden ${buttonClass}`}
+                className={`inline-flex items-center gap-2 rounded-full border px-3 py-2 text-sm font-medium transition ${buttonClass}`}
                 aria-expanded={isFiltersOpen}
+                aria-label={t(isFiltersOpen ? "filters.collapse" : "filters.expand")}
               >
                 <SlidersHorizontal className="h-4 w-4" aria-hidden="true" />
                 <span className="hidden sm:inline">{t("filters.title")}</span>
@@ -460,7 +490,7 @@ export function InteractiveMapApp({
         <aside
           className={`pointer-events-auto absolute bottom-3 left-3 top-[5.5rem] z-[460] flex w-[min(22rem,calc(100vw-1.5rem))] flex-col overflow-hidden rounded-2xl border backdrop-blur transition-transform duration-300 ${cardClass} ${
             isFiltersOpen ? "translate-x-0" : "-translate-x-[calc(100%+1.25rem)]"
-          } lg:translate-x-0`}
+          }`}
           aria-label={t("filters.title")}
         >
           <div
@@ -489,7 +519,7 @@ export function InteractiveMapApp({
               <button
                 type="button"
                 onClick={() => setIsFiltersOpen(false)}
-                className={`inline-flex h-8 w-8 items-center justify-center rounded-full border transition lg:hidden ${buttonClass}`}
+                className={`inline-flex h-8 w-8 items-center justify-center rounded-full border transition ${buttonClass}`}
                 aria-label={t("filters.collapse")}
               >
                 <X className="h-4 w-4" aria-hidden="true" />
@@ -502,14 +532,6 @@ export function InteractiveMapApp({
               isDark ? "border-white/10" : "border-slate-200"
             }`}
           >
-            <button
-              type="button"
-              onClick={handleResetView}
-              className={`inline-flex items-center gap-1.5 rounded-full border px-3 py-1.5 text-xs font-medium transition ${buttonClass}`}
-            >
-              <RotateCcw className="h-3.5 w-3.5" aria-hidden="true" />
-              {t("controls.resetView")}
-            </button>
             <button
               type="button"
               onClick={() => setShowFlowAnimation((current) => !current)}
@@ -775,9 +797,10 @@ export function InteractiveMapApp({
         onClose={() => {
           setSelectedRouteId(null);
           setSelectedSegmentId(null);
+          setGroupSegmentIds([]);
         }}
-        onResetView={handleResetView}
         onSegmentSelect={setSelectedSegmentId}
+        onGroupOpen={handleGroupOpen}
         t={t}
       />
 

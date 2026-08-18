@@ -146,8 +146,6 @@ body[data-theme="light"] .leaflet-container {
   overflow: hidden;
   border: 1px solid rgba(255, 255, 255, 0.16) !important;
   border-radius: 1.25rem !important;
-  margin-bottom: 22px !important;
-  margin-left: 18px !important;
   box-shadow: 0 18px 48px rgba(2, 6, 23, 0.28) !important;
 }
 
@@ -167,8 +165,6 @@ body[data-theme="light"] .leaflet-container {
 
 body[data-theme="light"] .leaflet-control-zoom {
   border-color: rgba(148, 163, 184, 0.3) !important;
-  margin-bottom: 22px !important;
-  margin-left: 18px !important;
   box-shadow: 0 18px 48px rgba(148, 163, 184, 0.22) !important;
 }
 
@@ -185,13 +181,10 @@ body[data-theme="light"] .leaflet-control-zoom a:hover {
   color: var(--accent-strong) !important;
 }
 
-/* On desktop the floating filters panel (w-22rem at left-3) occupies the
-   bottom-left corner, so shift the zoom control clear of it. */
-@media (min-width: 1024px) {
-  .leaflet-control-zoom {
-    margin-left: calc(22rem + 1.5rem) !important;
-    margin-bottom: 16px !important;
-  }
+/* Top-right, clear of the header card that floats above the map. */
+.leaflet-top.leaflet-right .leaflet-control-zoom {
+  margin-top: 5.5rem !important;
+  margin-right: 18px !important;
 }
 
 .leaflet-popup-content-wrapper,
@@ -269,9 +262,37 @@ body[data-theme="light"] .port-marker-tooltip {
   color: #0f172a !important;
 }
 
-.corridor-map-canvas--dark .leaflet-tile-pane,
-body[data-theme="dark"] .leaflet-tile-pane {
-  filter: brightness(1.55) contrast(0.9) saturate(0.88) !important;
+/* No tiles under the map: this is the ocean behind the country polygons.
+   MapContainer only applies its className at mount, so the --dark/--light
+   modifier goes stale on toggle; body[data-theme] is what actually tracks. */
+body[data-theme="dark"] .corridor-map-canvas {
+  background: #0b1929;
+}
+
+body[data-theme="light"] .corridor-map-canvas {
+  background: #dce7f1;
+}
+
+.country-label span {
+  position: absolute;
+  transform: translate(-50%, -50%);
+  white-space: nowrap;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  pointer-events: none;
+  user-select: none;
+}
+
+body[data-theme="dark"] .country-label span {
+  color: rgba(198, 216, 235, 0.62);
+  text-shadow: 0 1px 3px rgba(4, 12, 22, 0.9);
+}
+
+body[data-theme="light"] .country-label span {
+  color: rgba(45, 72, 102, 0.62);
+  text-shadow: 0 1px 3px rgba(255, 255, 255, 0.9);
 }
 
 .marker-legend-icon svg,

@@ -8,7 +8,7 @@
   },
   "filters": {
     "title": "Filters",
-    "corridors": "By corridor",
+    "corridors": "Corridors",
     "modes": "Transport mode",
     "statuses": "Status",
     "enableAll": "Enable all",
@@ -20,7 +20,6 @@
     "hideCorridor": "Hide corridor"
   },
   "controls": {
-    "resetView": "Reset view",
     "clearSelection": "Clear selection",
     "showFlow": "Show flow animation",
     "hideFlow": "Hide flow animation",
@@ -40,13 +39,15 @@
     "segmentHint": "Click a selected route again on the map to focus a specific segment.",
     "segments": "Transport segments",
     "description": "Description",
-    "connectedCorridors": "Connected corridors"
+    "connectedCorridors": "Connected corridors",
+    "scrollUp": "Scroll up",
+    "scrollDown": "Scroll down"
   },
   "legend": {
     "title": "Legend",
     "primary": "Primary corridors",
     "secondary": "Secondary corridors",
-    "bakuPort": "Baku Port",
+    "bakuPort": "Port",
     "transportModes": "Transport colors",
     "markers": "Map markers"
   },

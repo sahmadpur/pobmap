@@ -8,7 +8,7 @@
   },
   "filters": {
     "title": "Filtrlər",
-    "corridors": "Dəhlizə görə",
+    "corridors": "Dəhlizlər",
     "modes": "Nəqliyyat növü",
     "statuses": "Status",
     "enableAll": "Hamısını aktiv et",
@@ -20,7 +20,6 @@
     "hideCorridor": "Dəhlizi gizlət"
   },
   "controls": {
-    "resetView": "Görünüşü sıfırla",
     "clearSelection": "Seçimi təmizlə",
     "showFlow": "Axın animasiyasını göstər",
     "hideFlow": "Axın animasiyasını gizlət",
@@ -40,13 +39,15 @@
     "segmentHint": "Xəritədə seçilmiş marşruta yenidən klikləyin ki, konkret seqment açılsın.",
     "segments": "Nəqliyyat seqmentləri",
     "description": "Təsvir",
-    "connectedCorridors": "Bağlı dəhlizlər"
+    "connectedCorridors": "Bağlı dəhlizlər",
+    "scrollUp": "Yuxarı sürüşdür",
+    "scrollDown": "Aşağı sürüşdür"
   },
   "legend": {
     "title": "İzah",
     "primary": "Əsas dəhlizlər",
     "secondary": "İkinci dərəcəli dəhlizlər",
-    "bakuPort": "Bakı Limanı",
+    "bakuPort": "Liman",
     "transportModes": "Nəqliyyat rəngləri",
     "markers": "Xəritə işarələri"
   },

@@ -3,17 +3,18 @@
 import { useEffect, useMemo, useRef, useState } from "react";
 import L from "leaflet";
 import {
+  GeoJSON,
   MapContainer,
   Marker,
   Pane,
   Polyline,
   Popup,
-  TileLayer,
   Tooltip,
   ZoomControl,
   useMap,
   useMapEvent,
 } from "react-leaflet";
+import type { FeatureCollection } from "geojson";
 import type { TFunction } from "i18next";
 
 import {
@@ -22,6 +23,7 @@ import {
   getLocalizedText,
   TRANSPORT_MODE_META,
 } from "@/data/corridors";
+import { getCountryName } from "@/data/countries";
 import { DOTTED_STRETCHES } from "@/data/dotted-stretches";
 import { getMarkerIconSvg } from "@/data/marker-icons";
 import { getTransportStop } from "@/data/transport-stops";
@@ -322,6 +324,157 @@ function getAvailableConnectedRouteIdsForMarker(
   );
 }
 
+const BASEMAP_STYLE = {
+  dark: { color: "rgba(146, 180, 214, 0.32)", fillColor: "#16293d" },
+  light: { color: "rgba(15, 40, 70, 0.22)", fillColor: "#f7fafc" },
+} as const;
+
+// Natural Earth ships a per-country MIN_LABEL zoom and a label anchor, so the
+  // thinning rule is theirs, not a hand-rolled heuristic. Whatever survives it
+  // still has to fit on screen without landing on a neighbour, and Leaflet has
+  // no label collision of its own.
+function computeVisibleLabels(
+  map: L.Map,
+  bounds: L.LatLngBounds,
+  countries: FeatureCollection | null,
+  locale: SupportedLocale,
+  zoom: number,
+) {
+  if (!countries) {
+    return [];
+  }
+
+  const candidates = countries.features
+    .map((feature) => feature.properties as unknown as Partial<CountryLabel>)
+    .filter((properties): properties is CountryLabel =>
+      Boolean(properties.iso) && zoom >= (properties.minZoom ?? Infinity),
+    )
+    // Most important country wins the spot when two labels want it.
+    .sort((first, second) => first.minZoom - second.minZoom);
+
+  const placed: Array<[number, number, number, number]> = [];
+  const visible: VisibleCountryLabel[] = [];
+
+  for (const country of candidates) {
+    if (!bounds.contains(country.label)) {
+      continue;
+    }
+
+    const name = getCountryName(country.iso, locale);
+    const point = map.latLngToContainerPoint(country.label);
+    const halfWidth = (name.length * LABEL_CHAR_WIDTH_PX) / 2 + LABEL_GAP_PX;
+    const box: [number, number, number, number] = [
+      point.x - halfWidth,
+      point.y - LABEL_HALF_HEIGHT_PX,
+      point.x + halfWidth,
+      point.y + LABEL_HALF_HEIGHT_PX,
+    ];
+
+    const overlaps = placed.some(
+      (other) =>
+        box[0] < other[2] &&
+        box[2] > other[0] &&
+        box[1] < other[3] &&
+        box[3] > other[1],
+    );
+
+    if (overlaps) {
+      continue;
+    }
+
+    placed.push(box);
+    visible.push({ ...country, name });
+  }
+
+  return visible;
+}
+
+// Rough metrics for the .country-label type; only used to reserve space.
+const LABEL_CHAR_WIDTH_PX = 7.2;
+const LABEL_HALF_HEIGHT_PX = 8;
+const LABEL_GAP_PX = 6;
+
+interface CountryLabel {
+  iso: string;
+  label: [number, number];
+  minZoom: number;
+}
+
+type VisibleCountryLabel = CountryLabel & { name: string };
+
+// Country outlines only: the GeoJSON has no subnational geometry, so no state
+// or province borders can leak in the way they do with raster basemap tiles.
+function WorldBasemap({
+  theme,
+  locale,
+  zoom,
+}: {
+  theme: "dark" | "light";
+  locale: SupportedLocale;
+  zoom: number;
+}) {
+  const [countries, setCountries] = useState<FeatureCollection | null>(null);
+  const map = useMap();
+  const [bounds, setBounds] = useState(() => map.getBounds());
+
+  // Collision is measured in screen space, so any pan or zoom invalidates it.
+  useMapEvent("moveend", () => setBounds(map.getBounds()));
+
+  useEffect(() => {
+    let cancelled = false;
+
+    fetch("/geo/countries-50m.geojson")
+      .then((response) => response.json())
+      .then((data: FeatureCollection) => {
+        if (!cancelled) {
+          setCountries(data);
+        }
+      })
+      .catch(() => undefined);
+
+    return () => {
+      cancelled = true;
+    };
+  }, []);
+
+  const labels = useMemo(
+    () => computeVisibleLabels(map, bounds, countries, locale, zoom),
+    [bounds, countries, locale, map, zoom],
+  );
+
+
+  if (!countries) {
+    return null;
+  }
+
+  return (
+    <>
+      <GeoJSON
+        key={theme}
+        data={countries}
+        interactive={false}
+        style={{ ...BASEMAP_STYLE[theme], weight: 0.8, fillOpacity: 1 }}
+      />
+
+      <Pane name="country-labels" style={{ zIndex: 405 }}>
+        {labels.map((country) => (
+          <Marker
+            key={country.iso}
+            position={country.label}
+            interactive={false}
+            keyboard={false}
+            icon={L.divIcon({
+              className: "country-label",
+              iconSize: [0, 0],
+              html: `<span>${country.name}</span>`,
+            })}
+          />
+        ))}
+      </Pane>
+    </>
+  );
+}
+
 function MapClickHandler({ onClearSelection }: { onClearSelection: () => void }) {
   useMapEvent("click", (event) => {
     if ((event.originalEvent.target as HTMLElement)?.closest(".leaflet-interactive")) {
@@ -348,23 +501,14 @@ function ZoomWatcher({ onZoomChange }: { onZoomChange: (zoom: number) => void })
   return null;
 }
 
-function MapResetController({ resetCount }: { resetCount: number }) {
-  const map = useMap();
-
-  useEffect(() => {
-    map.flyTo(DEFAULT_MAP_VIEW.center, DEFAULT_MAP_VIEW.zoom, {
-      animate: true,
-      duration: 1.2,
-    });
-  }, [map, resetCount]);
-
-  return null;
-}
-
 function getSelectionPadding(
   viewportWidth: number,
   viewportHeight: number,
-  options: { hasDetailsPanel: boolean; isMapOnlyMode: boolean },
+  options: {
+    hasDetailsPanel: boolean;
+    hasFilterPanel: boolean;
+    isMapOnlyMode: boolean;
+  },
 ) {
   if (options.isMapOnlyMode) {
     return {
@@ -374,8 +518,9 @@ function getSelectionPadding(
   }
 
   if (viewportWidth >= 1280) {
+    // Both side panels float over the map, so they only steal room while open.
     return {
-      paddingTopLeft: L.point(470, 96),
+      paddingTopLeft: L.point(options.hasFilterPanel ? 470 : 80, 96),
       paddingBottomRight: L.point(options.hasDetailsPanel ? 460 : 80, 96),
     };
   }
@@ -398,18 +543,25 @@ function getSelectionPadding(
  *
  * Framing used to follow the selection, which meant every click on a line threw
  * away whatever zoom the user had set. It is now driven by an explicit counter —
- * the same shape as `MapResetController` — so selecting a segment leaves the
- * camera alone and only the deliberate jumps (a corridor button in a port popup,
- * Reset view) move it.
+ * an explicit counter, so selecting a segment leaves the camera alone and only
+ * the deliberate jumps (a corridor button in a port popup, opening a group in
+ * the details panel) move it.
+ *
+ * `coordinates` narrows the frame to part of the corridor; without it the whole
+ * route is framed.
  */
 function SelectionController({
   route,
+  coordinates: frameCoordinates,
   hasDetailsPanel,
+  hasFilterPanel,
   isMapOnlyMode,
   frameCount,
 }: {
   route: CorridorRoute | null;
+  coordinates: Coordinate[] | null;
   hasDetailsPanel: boolean;
+  hasFilterPanel: boolean;
   isMapOnlyMode: boolean;
   frameCount: number;
 }) {
@@ -427,7 +579,10 @@ function SelectionController({
       return;
     }
 
-    const coordinates = flattenRouteCoordinates(route);
+    const coordinates =
+      frameCoordinates && frameCoordinates.length > 0
+        ? frameCoordinates
+        : flattenRouteCoordinates(route);
 
     if (coordinates.length < 2) {
       map.flyTo(coordinates[0] ?? DEFAULT_MAP_VIEW.center, 6, {
@@ -439,6 +594,7 @@ function SelectionController({
 
     const padding = getSelectionPadding(window.innerWidth, window.innerHeight, {
       hasDetailsPanel,
+      hasFilterPanel,
       isMapOnlyMode,
     });
 
@@ -448,7 +604,10 @@ function SelectionController({
       paddingTopLeft: padding.paddingTopLeft,
       paddingBottomRight: padding.paddingBottomRight,
     });
-  }, [frameCount, hasDetailsPanel, isMapOnlyMode, map, route]);
+    // frameCoordinates is read through the counter, not depended on: the frame
+    // happens when asked for, not when the group's geometry happens to change.
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [frameCount, hasDetailsPanel, hasFilterPanel, isMapOnlyMode, map, route]);
 
   return null;
 }
@@ -466,6 +625,7 @@ function CorridorLines({
   selectedRouteId,
   selectedSegmentId,
   hoveredRouteId,
+  groupSegmentIds,
   locale,
   zoom,
   onRouteSelect,
@@ -476,6 +636,7 @@ function CorridorLines({
   selectedRouteId: string | null;
   selectedSegmentId: string | null;
   hoveredRouteId: string | null;
+  groupSegmentIds: string[];
   locale: SupportedLocale;
   zoom: number;
   onRouteSelect: (routeId: string, segmentId?: string | null) => void;
@@ -532,6 +693,11 @@ function CorridorLines({
           <Pane key={route.id} name={`pane-${route.id}`} style={{ zIndex: 420 }}>
             {segments.map(({ segment, hitPath, solid, dotted }) => {
               const isSelectedSegment = selectedSegmentId === segment.id;
+              // An open panel group narrows the highlight to its own segments.
+              const isOutsideGroup =
+                isSelected &&
+                groupSegmentIds.length > 0 &&
+                !groupSegmentIds.includes(segment.id);
               const color = isSelected
                 ? TRANSPORT_MODE_META[segment.mode].color
                 : route.routeColor;
@@ -542,17 +708,19 @@ function CorridorLines({
                 : route.type === "primary"
                   ? 6
                   : 3;
-              const opacity = isSelectedSegment
-                ? 1
-                : isSelected
-                  ? 0.9
-                  : isDimmed
-                    ? 0.18
-                    : isHovered
-                      ? 0.9
-                      : route.type === "primary"
-                        ? 0.72
-                        : 0.5;
+              const opacity = isOutsideGroup
+                ? 0.18
+                : isSelectedSegment
+                  ? 1
+                  : isSelected
+                    ? 0.9
+                    : isDimmed
+                      ? 0.18
+                      : isHovered
+                        ? 0.9
+                        : route.type === "primary"
+                          ? 0.72
+                          : 0.5;
               const className = isSelected || isSelectedSegment
                 ? "corridor-line corridor-line--selected"
                 : "corridor-line";
@@ -662,10 +830,15 @@ interface CorridorMapCanvasProps {
   locale: SupportedLocale;
   theme: "dark" | "light";
   showFlowAnimation: boolean;
-  resetCount: number;
   /** Bumped when a corridor should be framed; selection alone never re-frames. */
   frameCount: number;
+  /** Narrows that frame to part of the corridor, e.g. one panel group. */
+  frameCoordinates: Coordinate[] | null;
+  /** Segments of the open panel group; everything else on the route dims. */
+  groupSegmentIds: string[];
   isMapOnlyMode: boolean;
+  /** Open filter panel; it overlaps the map, so framing has to allow for it. */
+  hasFilterPanel: boolean;
   onRouteSelect: (routeId: string, segmentId?: string | null) => void;
   onRouteHover: (routeId: string | null) => void;
   onClearSelection: () => void;
@@ -683,9 +856,11 @@ export default function CorridorMapCanvas({
   locale,
   theme,
   showFlowAnimation,
-  resetCount,
   frameCount,
+  frameCoordinates,
+  groupSegmentIds,
   isMapOnlyMode,
+  hasFilterPanel,
   onRouteSelect,
   onRouteHover,
   onClearSelection,
@@ -783,28 +958,21 @@ export default function CorridorMapCanvas({
       center={DEFAULT_MAP_VIEW.center}
       zoom={DEFAULT_MAP_VIEW.zoom}
       minZoom={3}
-      maxZoom={14}
+      maxZoom={12}
       zoomControl={false}
       attributionControl={false}
       className={`corridor-map-canvas corridor-map-canvas--${theme} h-full w-full`}
     >
-      <TileLayer
-        key={theme}
-        url={
-          theme === "dark"
-            ? "https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png"
-            : "https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png"
-        }
-        subdomains={["a", "b", "c", "d"]}
-      />
+      <WorldBasemap theme={theme} locale={locale} zoom={zoom} />
 
-      <ZoomControl position="bottomleft" />
+      {hasFilterPanel ? <ZoomControl position="topright" /> : null}
       <ZoomWatcher onZoomChange={setZoom} />
       <MapClickHandler onClearSelection={onClearSelection} />
-      <MapResetController resetCount={resetCount} />
       <SelectionController
         route={selectedRoute}
+        coordinates={frameCoordinates}
         hasDetailsPanel={!isMapOnlyMode && Boolean(selectedRoute)}
+        hasFilterPanel={hasFilterPanel}
         isMapOnlyMode={isMapOnlyMode}
         frameCount={frameCount}
       />
@@ -814,6 +982,7 @@ export default function CorridorMapCanvas({
       <Pane name="corridor-markers" style={{ zIndex: 460 }} />
 
       <CorridorLines
+        groupSegmentIds={groupSegmentIds}
         routes={routes}
         allRoutes={allRoutes}
         selectedRouteId={selectedRouteId}
@@ -841,7 +1010,13 @@ export default function CorridorMapCanvas({
         >
           {getLocalizedText(primaryPortMarker.name, locale)}
         </Tooltip>
-        <Popup className="baku-port-popup" offset={[0, -12]}>
+        <Popup
+          className="baku-port-popup"
+          offset={[0, -12]}
+          autoPan
+          autoPanPaddingTopLeft={[24, 104]}
+          autoPanPaddingBottomRight={[24, 24]}
+        >
           <div className="space-y-3">
             <div>
               <h3 className="text-lg font-semibold text-slate-950">
@@ -906,7 +1081,13 @@ export default function CorridorMapCanvas({
                 {getLocalizedText(marker.name, locale)}
               </Tooltip>
             ) : null}
-            <Popup className="baku-port-popup" offset={[0, -12]}>
+            <Popup
+          className="baku-port-popup"
+          offset={[0, -12]}
+          autoPan
+          autoPanPaddingTopLeft={[24, 104]}
+          autoPanPaddingBottomRight={[24, 24]}
+        >
               <div className="space-y-3">
                 <div>
                   <h3 className="text-lg font-semibold text-slate-950">
