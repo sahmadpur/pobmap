@@ -26,7 +26,7 @@ import {
 import { getCountryName } from "@/data/countries";
 import { DOTTED_STRETCHES } from "@/data/dotted-stretches";
 import { getMarkerIconSvg } from "@/data/marker-icons";
-import { getTransportStop } from "@/data/transport-stops";
+import { getTransportStop, TRANSPORT_STOPS } from "@/data/transport-stops";
 import { collectRouteTerminalStopIds } from "@/lib/corridor-stop-utils";
 import {
   flattenRouteCoordinates,
@@ -329,45 +329,116 @@ const BASEMAP_STYLE = {
   light: { color: "rgba(15, 40, 70, 0.22)", fillColor: "#f7fafc" },
 } as const;
 
-// Natural Earth ships a per-country MIN_LABEL zoom and a label anchor, so the
-  // thinning rule is theirs, not a hand-rolled heuristic. Whatever survives it
-  // still has to fit on screen without landing on a neighbour, and Leaflet has
-  // no label collision of its own.
+// Rough metrics for the label type; only used to reserve collision space.
+const LABEL_CHAR_WIDTH_PX = 7.2;
+const LABEL_HALF_HEIGHT_PX = 8;
+const LABEL_GAP_PX = 6;
+const CITY_CHAR_WIDTH_PX = 6.2;
+const CITY_HALF_HEIGHT_PX = 7;
+/** Cities stay off the world view; the corridors need that room. */
+const CITY_MIN_ZOOM = 5;
+/** How close a Natural Earth city has to be to count as a corridor stop. */
+const CITY_STOP_TOLERANCE = 0.2;
+
+interface CountryLabel {
+  iso: string;
+  label: [number, number];
+  minZoom: number;
+}
+
+/** One city as shipped in public/geo/cities-50m.json. */
+interface RawCity {
+  /** English name. */
+  n: string;
+  /** Russian name. */
+  ru: string;
+  /** Natural Earth's own MIN_ZOOM. */
+  z: number;
+  c: [number, number];
+}
+
+interface CityLabel {
+  name: LocalizedText;
+  minZoom: number;
+  position: [number, number];
+}
+
+interface PlacedLabel {
+  key: string;
+  kind: "country" | "city";
+  name: string;
+  position: [number, number];
+}
+
+/**
+ * Natural Earth has no Azerbaijani city names, but the corridor stop catalogue
+ * does — for every city a corridor touches, which is exactly the set that
+ * matters here. Matched by proximity because the two datasets disagree on the
+ * exact point of a city by a few kilometres.
+ */
+function buildCityLabels(cities: RawCity[]): CityLabel[] {
+  return cities.map((city) => {
+    const stop = TRANSPORT_STOPS.find(
+      (candidate) =>
+        Math.abs(candidate.coordinates[0] - city.c[0]) < CITY_STOP_TOLERANCE &&
+        Math.abs(candidate.coordinates[1] - city.c[1]) < CITY_STOP_TOLERANCE,
+    );
+
+    return {
+      name: {
+        az: stop?.name.az ?? city.n,
+        en: city.n,
+        ru: city.ru,
+      },
+      minZoom: city.z,
+      position: city.c,
+    };
+  });
+}
+
+/**
+ * Natural Earth ships a per-feature minimum zoom and, for countries, a label
+ * anchor, so the thinning rule is theirs rather than a hand-rolled heuristic.
+ * Whatever survives it still has to fit on screen without landing on a
+ * neighbour, and Leaflet has no label collision of its own.
+ *
+ * Countries are placed first, so a city never pushes a country off the map.
+ */
 function computeVisibleLabels(
   map: L.Map,
   bounds: L.LatLngBounds,
   countries: FeatureCollection | null,
+  cities: CityLabel[],
+  labelledCoordinates: Coordinate[],
   locale: SupportedLocale,
   zoom: number,
-) {
+): PlacedLabel[] {
   if (!countries) {
     return [];
   }
 
-  const candidates = countries.features
-    .map((feature) => feature.properties as unknown as Partial<CountryLabel>)
-    .filter((properties): properties is CountryLabel =>
-      Boolean(properties.iso) && zoom >= (properties.minZoom ?? Infinity),
-    )
-    // Most important country wins the spot when two labels want it.
-    .sort((first, second) => first.minZoom - second.minZoom);
-
   const placed: Array<[number, number, number, number]> = [];
-  const visible: VisibleCountryLabel[] = [];
+  const visible: PlacedLabel[] = [];
 
-  for (const country of candidates) {
-    if (!bounds.contains(country.label)) {
-      continue;
+  function place(
+    key: string,
+    kind: PlacedLabel["kind"],
+    name: string,
+    position: [number, number],
+    halfHeight: number,
+    charWidth: number,
+  ) {
+    if (!bounds.contains(position)) {
+      return;
     }
 
-    const name = getCountryName(country.iso, locale);
-    const point = map.latLngToContainerPoint(country.label);
-    const halfWidth = (name.length * LABEL_CHAR_WIDTH_PX) / 2 + LABEL_GAP_PX;
+    const point = map.latLngToContainerPoint(position);
+    const halfWidth = (name.length * charWidth) / 2 + LABEL_GAP_PX;
     const box: [number, number, number, number] = [
       point.x - halfWidth,
-      point.y - LABEL_HALF_HEIGHT_PX,
+      point.y - halfHeight,
       point.x + halfWidth,
-      point.y + LABEL_HALF_HEIGHT_PX,
+      point.y + halfHeight,
     ];
 
     const overlaps = placed.some(
@@ -379,28 +450,55 @@ function computeVisibleLabels(
     );
 
     if (overlaps) {
-      continue;
+      return;
     }
 
     placed.push(box);
-    visible.push({ ...country, name });
+    visible.push({ key, kind, name, position });
+  }
+
+  countries.features
+    .map((feature) => feature.properties as unknown as Partial<CountryLabel>)
+    .filter((properties): properties is CountryLabel =>
+      Boolean(properties.iso) && zoom >= (properties.minZoom ?? Infinity),
+    )
+    // Most important country wins the spot when two labels want it.
+    .sort((first, second) => first.minZoom - second.minZoom)
+    .forEach((country) => {
+      place(
+        `country-${country.iso}`,
+        "country",
+        getCountryName(country.iso, locale),
+        country.label,
+        LABEL_HALF_HEIGHT_PX,
+        LABEL_CHAR_WIDTH_PX,
+      );
+    });
+
+  if (zoom >= CITY_MIN_ZOOM) {
+    cities
+      .filter(
+        (city) =>
+          zoom >= city.minZoom &&
+          !labelledCoordinates.some((coordinate) =>
+            areCoordinatesNear(coordinate, city.position, CITY_STOP_TOLERANCE),
+          ),
+      )
+      .sort((first, second) => first.minZoom - second.minZoom)
+      .forEach((city, index) => {
+        place(
+          `city-${index}-${city.name.en}`,
+          "city",
+          getLocalizedText(city.name, locale),
+          city.position,
+          CITY_HALF_HEIGHT_PX,
+          CITY_CHAR_WIDTH_PX,
+        );
+      });
   }
 
   return visible;
 }
-
-// Rough metrics for the .country-label type; only used to reserve space.
-const LABEL_CHAR_WIDTH_PX = 7.2;
-const LABEL_HALF_HEIGHT_PX = 8;
-const LABEL_GAP_PX = 6;
-
-interface CountryLabel {
-  iso: string;
-  label: [number, number];
-  minZoom: number;
-}
-
-type VisibleCountryLabel = CountryLabel & { name: string };
 
 // Country outlines only: the GeoJSON has no subnational geometry, so no state
 // or province borders can leak in the way they do with raster basemap tiles.
@@ -408,12 +506,16 @@ function WorldBasemap({
   theme,
   locale,
   zoom,
+  labelledCoordinates,
 }: {
   theme: "dark" | "light";
   locale: SupportedLocale;
   zoom: number;
+  /** Places the corridor markers already label; a city here would read twice. */
+  labelledCoordinates: Coordinate[];
 }) {
   const [countries, setCountries] = useState<FeatureCollection | null>(null);
+  const [cities, setCities] = useState<CityLabel[]>([]);
   const map = useMap();
   const [bounds, setBounds] = useState(() => map.getBounds());
 
@@ -432,14 +534,32 @@ function WorldBasemap({
       })
       .catch(() => undefined);
 
+    fetch("/geo/cities-50m.json")
+      .then((response) => response.json())
+      .then((data: RawCity[]) => {
+        if (!cancelled) {
+          setCities(buildCityLabels(data));
+        }
+      })
+      .catch(() => undefined);
+
     return () => {
       cancelled = true;
     };
   }, []);
 
   const labels = useMemo(
-    () => computeVisibleLabels(map, bounds, countries, locale, zoom),
-    [bounds, countries, locale, map, zoom],
+    () =>
+      computeVisibleLabels(
+        map,
+        bounds,
+        countries,
+        cities,
+        labelledCoordinates,
+        locale,
+        zoom,
+      ),
+    [bounds, cities, countries, labelledCoordinates, locale, map, zoom],
   );
 
 
@@ -457,16 +577,16 @@ function WorldBasemap({
       />
 
       <Pane name="country-labels" style={{ zIndex: 405 }}>
-        {labels.map((country) => (
+        {labels.map((label) => (
           <Marker
-            key={country.iso}
-            position={country.label}
+            key={label.key}
+            position={label.position}
             interactive={false}
             keyboard={false}
             icon={L.divIcon({
-              className: "country-label",
+              className: label.kind === "city" ? "city-label" : "country-label",
               iconSize: [0, 0],
-              html: `<span>${country.name}</span>`,
+              html: `<span>${label.name}</span>`,
             })}
           />
         ))}
@@ -953,6 +1073,23 @@ export default function CorridorMapCanvas({
       ? collectRouteStopMarkers(routes, safeMarkers)
       : [];
 
+  // Every place the corridor layer already spells out, so the basemap does not
+  // print the same city name a second time a few pixels away.
+  const labelledCoordinates = useMemo(
+    () =>
+      showStopLabels
+        ? [
+            primaryPortMarker.coordinates,
+            ...visibleSecondaryMarkers.map((marker) => marker.coordinates),
+            ...routeStopMarkers.map((stop) => stop.coordinate),
+          ]
+        : [primaryPortMarker.coordinates],
+    // Recomputed per render anyway; the memo only keeps the array identity
+    // stable enough for the basemap's own memo.
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    [primaryPortMarker, routeStopMarkers.length, showStopLabels, visibleSecondaryMarkers.length],
+  );
+
   return (
     <MapContainer
       center={DEFAULT_MAP_VIEW.center}
@@ -963,7 +1100,12 @@ export default function CorridorMapCanvas({
       attributionControl={false}
       className={`corridor-map-canvas corridor-map-canvas--${theme} h-full w-full`}
     >
-      <WorldBasemap theme={theme} locale={locale} zoom={zoom} />
+      <WorldBasemap
+        theme={theme}
+        locale={locale}
+        zoom={zoom}
+        labelledCoordinates={labelledCoordinates}
+      />
 
       {hasFilterPanel ? <ZoomControl position="topright" /> : null}
       <ZoomWatcher onZoomChange={setZoom} />

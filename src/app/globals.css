@@ -273,7 +273,8 @@ body[data-theme="light"] .corridor-map-canvas {
   background: #dce7f1;
 }
 
-.country-label span {
+.country-label span,
+.city-label span {
   position: absolute;
   transform: translate(-50%, -50%);
   white-space: nowrap;
@@ -285,6 +286,13 @@ body[data-theme="light"] .corridor-map-canvas {
   user-select: none;
 }
 
+.city-label span {
+  font-size: 10px;
+  font-weight: 500;
+  letter-spacing: 0.02em;
+  text-transform: none;
+}
+
 body[data-theme="dark"] .country-label span {
   color: rgba(198, 216, 235, 0.62);
   text-shadow: 0 1px 3px rgba(4, 12, 22, 0.9);
@@ -292,6 +300,16 @@ body[data-theme="dark"] .country-label span {
 
 body[data-theme="light"] .country-label span {
   color: rgba(45, 72, 102, 0.62);
+  text-shadow: 0 1px 3px rgba(255, 255, 255, 0.9);
+}
+
+body[data-theme="dark"] .city-label span {
+  color: rgba(180, 200, 220, 0.72);
+  text-shadow: 0 1px 3px rgba(4, 12, 22, 0.9);
+}
+
+body[data-theme="light"] .city-label span {
+  color: rgba(71, 92, 116, 0.78);
   text-shadow: 0 1px 3px rgba(255, 255, 255, 0.9);
 }
 
