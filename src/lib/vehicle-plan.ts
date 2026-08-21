@@ -55,6 +55,12 @@ interface PinnedVehicle {
   routeId: string;
   /** Stitched head to tail into one continuous path. */
   legs: PinnedLeg[];
+  /**
+   * Where in its own loop the vehicle starts, 0-1. Left unset the layer spaces
+   * vehicles out by plan order; pinning it to the same value on two journeys
+   * makes them depart together.
+   */
+  startFraction?: number;
 }
 
 // Journeys stakeholders expect to see running at all times. Without these the
@@ -88,45 +94,31 @@ const PINNED_VEHICLES: PinnedVehicle[] = [
       },
     ],
   },
-  // Out of Moscow the corridor splits, so it gets one train per branch.
-  // Northbound to the EU via St. Petersburg.
+  // The North-West corridor runs two trains that leave on the same beat: one
+  // down the Caspian shore from Moscow to Baku, one west out of Baku along
+  // BTK. Both are spelled out because the first runs against the corridor's
+  // westbound default, and both pin startFraction so they stay in step.
   {
-    id: "moscow-europe",
+    id: "moscow-baku",
     routeId: "north-west",
-    legs: [
-      {
-        segmentId: "north-west-main-2",
-        fromStopId: "moscow",
-        toStopId: "st-petersburg",
-      },
-      {
-        segmentId: "north-west-main-3",
-        fromStopId: "st-petersburg",
-        toStopId: "helsinki",
-      },
-    ],
-  },
-  // Southbound down the Caspian shore to Baku, then west along BTK into
-  // Turkey. Runs against the corridor's westbound default on its first leg,
-  // which is exactly why it has to be spelled out here.
-  {
-    id: "moscow-baku-turkey",
-    routeId: "north-west",
+    startFraction: 0,
     legs: [
       {
         segmentId: "north-west-main-1",
         fromStopId: "moscow",
         toStopId: "baku-port",
       },
+    ],
+  },
+  {
+    id: "baku-kars",
+    routeId: "north-west",
+    startFraction: 0,
+    legs: [
       {
         segmentId: "north-west-btk",
         fromStopId: "baku-port",
         toStopId: "kars",
-      },
-      {
-        segmentId: "north-west-anatolia",
-        fromStopId: "kars",
-        toStopId: "istanbul",
       },
     ],
   },
@@ -141,6 +133,8 @@ export interface VehiclePlan {
   /** True when the vehicle travels from the end of `coordinates` to the start. */
   reversed: boolean;
   speed: number;
+  /** Fixed start phase, 0-1; unset means the layer spaces the vehicle by order. */
+  startFraction?: number;
 }
 
 function pathLength(coordinates: Coordinate[]): number {
@@ -228,6 +222,7 @@ function planPinnedVehicles(routes: CorridorRoute[]): {
       // Legs are already stitched in travel order.
       reversed: false,
       speed: route.animationSpeed,
+      startFraction: pinned.startFraction,
     });
   });
 

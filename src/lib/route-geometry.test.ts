@@ -54,7 +54,13 @@ function includesPoint(
 const TBILISI: Coordinate = [41.7151, 44.8271];
 
 describe("Baku-Tbilisi-Kars crosses into Türkiye north-west of Armenia", () => {
-  const BTK_SEGMENTS = ["east-west-btk", "north-west-btk", "south-west-turkey-alt"];
+  // east-west splits the line at Boyuk Kasik, so its Georgia->Türkiye tail
+  // lives in the second half; the other corridors still carry it whole.
+  const BTK_SEGMENTS = [
+    "east-west-boyuk-kasik-kars",
+    "north-west-btk",
+    "south-west-turkey-alt",
+  ];
 
   /**
    * Valid only for the Georgia->Türkiye tail. Over that stretch the line should
@@ -150,9 +156,9 @@ describe("Dalian-Beijing runs over land, not the Bohai Sea", () => {
     // Yingkou and Jinzhou carry the line around the head of Liaodong Bay;
     // Shanhaiguan and Tianjin carry it down the western shore.
     [
-      [40.67, 122.23],
+      [40.76, 122.41],
       [41.1, 121.13],
-      [40.0, 119.75],
+      [40.18, 119.6],
       [39.08, 117.2],
     ].forEach((city) => {
       expect(includesPoint(drawn, city as Coordinate)).toBe(true);

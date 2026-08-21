@@ -1,8 +1,11 @@
 "use client";
 
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import {
+  ChevronDown,
+  ChevronRight,
+  ChevronUp,
   Globe2,
-  RotateCcw,
   Route as RouteIcon,
   ShipWheel,
   TimerReset,
@@ -18,8 +21,10 @@ import {
   TRANSPORT_MODE_META,
 } from "@/data/corridors";
 import { CountryFlag } from "@/components/ui/country-flag";
+import { resolveSegmentGroups } from "@/data/corridor-segment-groups";
 import type {
   CorridorRoute,
+  CorridorSegment,
   SupportedLocale,
   TransportMode,
 } from "@/types/map";
@@ -44,8 +49,9 @@ interface RouteDetailsPanelProps {
   isMapOnlyMode?: boolean;
   selectedSegmentId: string | null;
   onClose: () => void;
-  onResetView: () => void;
   onSegmentSelect: (segmentId: string | null) => void;
+  /** Fires with the open group's segments, or null when every group closes. */
+  onGroupOpen: (group: { id: string; segments: CorridorSegment[] } | null) => void;
   t: TFunction;
 }
 
@@ -57,13 +63,67 @@ export function RouteDetailsPanel({
   isMapOnlyMode = false,
   selectedSegmentId,
   onClose,
-  onResetView,
   onSegmentSelect,
+  onGroupOpen,
   t,
 }: RouteDetailsPanelProps) {
   const isDark = theme === "dark";
   const selectedSegment =
     route?.segments.find((segment) => segment.id === selectedSegmentId) ?? null;
+
+  const groups = useMemo(() => (route ? resolveSegmentGroups(route) : []), [route]);
+  const [openGroupId, setOpenGroupId] = useState<string | null>(null);
+  const bodyRef = useRef<HTMLDivElement | null>(null);
+  const [scroll, setScroll] = useState({ up: false, down: false });
+
+  // A different corridor means a different set of groups. Reset during render
+  // rather than in an effect, which is React's own adjust-state-on-prop-change
+  // pattern and avoids a second paint with the stale group open.
+  const [lastRouteId, setLastRouteId] = useState(route?.id ?? null);
+
+  if ((route?.id ?? null) !== lastRouteId) {
+    setLastRouteId(route?.id ?? null);
+    setOpenGroupId(null);
+  }
+
+  const toggleGroup = (groupId: string) => {
+    const next = openGroupId === groupId ? null : groupId;
+
+    setOpenGroupId(next);
+    onGroupOpen(
+      next ? { id: next, segments: groups.find((g) => g.id === next)!.segments } : null,
+    );
+  };
+
+  // Arrow affordances: the panel body is long enough that the scrollbar alone
+  // is easy to miss on a projector.
+  const syncScroll = useCallback(() => {
+    const body = bodyRef.current;
+
+    if (!body) {
+      return;
+    }
+
+    setScroll({
+      up: body.scrollTop > 8,
+      down: body.scrollTop + body.clientHeight < body.scrollHeight - 8,
+    });
+  }, []);
+
+  // A different corridor starts at the top of the panel, not wherever the last
+  // one was left.
+  useEffect(() => {
+    bodyRef.current?.scrollTo({ top: 0 });
+  }, [route?.id]);
+
+  useEffect(syncScroll, [syncScroll, route?.id, openGroupId, isOpen]);
+
+  const scrollBody = (direction: -1 | 1) => {
+    bodyRef.current?.scrollBy({
+      top: direction * bodyRef.current.clientHeight * 0.8,
+      behavior: "smooth",
+    });
+  };
 
   // Hidden by default; appears only when a route is selected.
   // Mobile: slides up as a bottom sheet. Desktop (lg+): slides in from the right,
@@ -97,19 +157,6 @@ export function RouteDetailsPanel({
           <div className="flex shrink-0 items-center gap-2">
             <button
               type="button"
-              onClick={onResetView}
-              className={`inline-flex h-10 w-10 items-center justify-center rounded-full border transition ${
-                isDark
-                  ? "border-white/12 bg-white/8 text-slate-100 hover:bg-white/14"
-                  : "border-slate-200 bg-slate-100 text-slate-700 hover:bg-slate-200"
-              }`}
-              aria-label={t("controls.resetView")}
-              title={t("controls.resetView")}
-            >
-              <RotateCcw className="h-5 w-5" aria-hidden="true" />
-            </button>
-            <button
-              type="button"
               onClick={onClose}
               className={`inline-flex h-10 w-10 items-center justify-center rounded-full border transition ${
                 isDark
@@ -133,7 +180,12 @@ export function RouteDetailsPanel({
             </p>
           </div>
         ) : (
-          <div className="flex-1 space-y-6 overflow-y-auto px-5 py-5">
+          <div className="relative flex min-h-0 flex-1 flex-col">
+          <div
+            ref={bodyRef}
+            onScroll={syncScroll}
+            className="flex-1 space-y-6 overflow-y-auto px-5 py-5"
+          >
             <div className="flex flex-wrap items-center gap-3">
               <span
                 className={`rounded-full px-3 py-1 text-xs font-semibold uppercase tracking-[0.18em] ${
@@ -241,61 +293,109 @@ export function RouteDetailsPanel({
               <h3 className={`text-xs uppercase tracking-[0.18em] ${isDark ? "text-slate-400" : "text-slate-500"}`}>
                 {t("panel.segments")}
               </h3>
+              {/* Grouped where the corridor defines groups, flat otherwise. */}
               <div className="mt-4 space-y-3">
-                {route.segments.map((segment) => (
-                  <button
-                    key={segment.id}
-                    type="button"
-                    onClick={() =>
-                      onSegmentSelect(
-                        selectedSegmentId === segment.id ? null : segment.id,
-                      )
-                    }
-                    className={`block w-full rounded-2xl border p-4 text-left transition ${
-                      selectedSegmentId === segment.id
-                        ? isDark
-                          ? "bg-slate-900/90 shadow-lg"
-                          : "bg-white shadow-lg"
-                        : isDark
-                          ? "border-white/8 bg-slate-950/70 hover:border-white/16 hover:bg-slate-900/78"
-                          : "border-slate-200 bg-white/90 hover:border-slate-300 hover:bg-white"
-                    }`}
-                    style={
-                      selectedSegmentId === segment.id
-                        ? {
-                            borderColor: `${TRANSPORT_MODE_META[segment.mode].color}88`,
-                            boxShadow: `0 18px 40px ${TRANSPORT_MODE_META[segment.mode].color}20`,
-                          }
-                        : undefined
-                    }
-                  >
-                    <div className="flex items-start justify-between gap-4">
-                      <div>
-                        <div className={`flex items-center gap-2 text-sm font-medium ${isDark ? "text-white" : "text-slate-900"}`}>
-                          <span
-                            className="inline-flex h-8 w-8 items-center justify-center rounded-full"
-                            style={{
-                              backgroundColor: `${TRANSPORT_MODE_META[segment.mode].color}22`,
-                              color: TRANSPORT_MODE_META[segment.mode].color,
-                            }}
-                          >
-                            <ModeIcon mode={segment.mode} />
+                {(groups.length > 0
+                  ? groups
+                  : [{ id: "all", name: null, segments: route.segments }]
+                ).map((group) => {
+                  const isOnlyGroup = group.name === null;
+                  const isGroupOpen = isOnlyGroup || openGroupId === group.id;
+
+                  return (
+                    <div key={group.id} className={isOnlyGroup ? "space-y-3" : undefined}>
+                      {!isOnlyGroup ? (
+                        <button
+                          type="button"
+                          onClick={() => toggleGroup(group.id)}
+                          aria-expanded={isGroupOpen}
+                          className={`flex w-full items-center gap-3 rounded-2xl border px-4 py-3 text-left transition ${
+                            isGroupOpen
+                              ? isDark
+                                ? "border-white/18 bg-slate-900/90"
+                                : "border-slate-300 bg-white shadow-sm"
+                              : isDark
+                                ? "border-white/8 bg-slate-950/70 hover:border-white/16"
+                                : "border-slate-200 bg-white/90 hover:border-slate-300"
+                          }`}
+                        >
+                          {isGroupOpen ? (
+                            <ChevronDown className="h-4 w-4 shrink-0" aria-hidden="true" />
+                          ) : (
+                            <ChevronRight className="h-4 w-4 shrink-0" aria-hidden="true" />
+                          )}
+                          <span className={`text-sm font-medium ${isDark ? "text-white" : "text-slate-900"}`}>
+                            {getLocalizedText(group.name!, locale)}
                           </span>
-                          {t(TRANSPORT_MODE_META[segment.mode].labelKey)}
+                          <span className={`ml-auto rounded-full px-2 py-0.5 text-xs font-medium ${
+                            isDark ? "bg-white/6 text-slate-300" : "bg-slate-100 text-slate-600"
+                          }`}>
+                            {group.segments.length}
+                          </span>
+                        </button>
+                      ) : null}
+
+                      {isGroupOpen ? (
+                        <div className={isOnlyGroup ? "space-y-3" : "mt-3 space-y-3 pl-2"}>
+                          {group.segments.map((segment) => (
+                    <button
+                      key={segment.id}
+                      type="button"
+                      onClick={() =>
+                        onSegmentSelect(
+                          selectedSegmentId === segment.id ? null : segment.id,
+                        )
+                      }
+                      className={`block w-full rounded-2xl border p-4 text-left transition ${
+                        selectedSegmentId === segment.id
+                          ? isDark
+                            ? "bg-slate-900/90 shadow-lg"
+                            : "bg-white shadow-lg"
+                          : isDark
+                            ? "border-white/8 bg-slate-950/70 hover:border-white/16 hover:bg-slate-900/78"
+                            : "border-slate-200 bg-white/90 hover:border-slate-300 hover:bg-white"
+                      }`}
+                      style={
+                        selectedSegmentId === segment.id
+                          ? {
+                              borderColor: `${TRANSPORT_MODE_META[segment.mode].color}88`,
+                              boxShadow: `0 18px 40px ${TRANSPORT_MODE_META[segment.mode].color}20`,
+                            }
+                          : undefined
+                      }
+                    >
+                      <div className="flex items-start justify-between gap-4">
+                        <div>
+                          <div className={`flex items-center gap-2 text-sm font-medium ${isDark ? "text-white" : "text-slate-900"}`}>
+                            <span
+                              className="inline-flex h-8 w-8 items-center justify-center rounded-full"
+                              style={{
+                                backgroundColor: `${TRANSPORT_MODE_META[segment.mode].color}22`,
+                                color: TRANSPORT_MODE_META[segment.mode].color,
+                              }}
+                            >
+                              <ModeIcon mode={segment.mode} />
+                            </span>
+                            {t(TRANSPORT_MODE_META[segment.mode].labelKey)}
+                          </div>
+                          <p className={`mt-2 text-sm leading-6 ${isDark ? "text-slate-300" : "text-slate-600"}`}>
+                            {getLocalizedText(segment.from, locale)} →{" "}
+                            {getLocalizedText(segment.to, locale)}
+                          </p>
                         </div>
-                        <p className={`mt-2 text-sm leading-6 ${isDark ? "text-slate-300" : "text-slate-600"}`}>
-                          {getLocalizedText(segment.from, locale)} →{" "}
-                          {getLocalizedText(segment.to, locale)}
-                        </p>
+                        <span className={`rounded-full px-2.5 py-1 text-xs font-medium ${
+                          isDark ? "bg-white/6 text-slate-200" : "bg-slate-100 text-slate-700"
+                        }`}>
+                          {segment.distanceKm} km
+                        </span>
                       </div>
-                      <span className={`rounded-full px-2.5 py-1 text-xs font-medium ${
-                        isDark ? "bg-white/6 text-slate-200" : "bg-slate-100 text-slate-700"
-                      }`}>
-                        {segment.distanceKm} km
-                      </span>
+                    </button>
+                          ))}
+                        </div>
+                      ) : null}
                     </div>
-                  </button>
-                ))}
+                  );
+                })}
               </div>
             </section>
 
@@ -307,6 +407,31 @@ export function RouteDetailsPanel({
                 {getLocalizedText(route.description, locale)}
               </p>
             </section>
+          </div>
+
+          {(["up", "down"] as const).map((direction) =>
+            scroll[direction] ? (
+              <button
+                key={direction}
+                type="button"
+                onClick={() => scrollBody(direction === "up" ? -1 : 1)}
+                className={`absolute right-4 z-10 inline-flex h-9 w-9 items-center justify-center rounded-full border shadow-lg transition ${
+                  direction === "up" ? "top-2" : "bottom-2"
+                } ${
+                  isDark
+                    ? "border-white/12 bg-slate-900/90 text-slate-100 hover:bg-slate-800"
+                    : "border-slate-200 bg-white/95 text-slate-700 hover:bg-slate-100"
+                }`}
+                aria-label={t(direction === "up" ? "panel.scrollUp" : "panel.scrollDown")}
+              >
+                {direction === "up" ? (
+                  <ChevronUp className="h-5 w-5" aria-hidden="true" />
+                ) : (
+                  <ChevronDown className="h-5 w-5" aria-hidden="true" />
+                )}
+              </button>
+            ) : null,
+          )}
           </div>
         )}
       </div>

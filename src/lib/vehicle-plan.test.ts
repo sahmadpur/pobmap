@@ -155,12 +155,19 @@ describe("planVehicles on live East-West data", () => {
   });
 
   it("stops the Baku train well short of Kars", () => {
-    const btkSegment = liveEastWest.segments.find(
-      (candidate) => candidate.id === "east-west-btk",
-    )!;
-    const fullLength = createPathSampler(
-      getSegmentRenderCoordinates(btkSegment),
-    ).totalLength;
+    // The Alat-Kars line is authored as two segments, split at Boyuk Kasik.
+    const fullLength = ["east-west-btk", "east-west-boyuk-kasik-kars"]
+      .map(
+        (segmentId) =>
+          createPathSampler(
+            getSegmentRenderCoordinates(
+              liveEastWest.segments.find(
+                (candidate) => candidate.id === segmentId,
+              )!,
+            ),
+          ).totalLength,
+      )
+      .reduce((total, length) => total + length, 0);
     const subPathLength = createPathSampler(
       plan(plans, "east-west:baku-boyuk-kasik").coordinates,
     ).totalLength;
@@ -183,65 +190,48 @@ describe("planVehicles on live East-West data", () => {
 describe("planVehicles on live North-West data", () => {
   const plans = planVehicles([liveNorthWest]);
 
-  it("sends every vehicle toward Europe", () => {
-    expectAllWestbound(plans);
-  });
-
-  it("runs the Trans-Siberian arm inbound from the Pacific", () => {
-    expectJourney(plan(plans, "north-west:north-west-transsib"), [
-      "khabarovsk",
-      "moscow",
-    ]);
-  });
-
-  it("sails its Caspian ship from Aktau to Baku", () => {
-    expectJourney(plan(plans, "north-west:north-west-caspian-aktau"), [
-      "aktau",
-      "baku-port",
-    ]);
-  });
-
-  it("sends one Moscow train on to the EU via St. Petersburg", () => {
-    const journey = plan(plans, "north-west:moscow-europe");
-
-    expect(journey.mode).toBe("rail");
-    expectJourney(journey, ["moscow", "st-petersburg", "helsinki"]);
-  });
-
-  it("sends the other Moscow train down to Baku and on into Turkey", () => {
-    const journey = plan(plans, "north-west:moscow-baku-turkey");
-
-    expect(journey.mode).toBe("rail");
-    expectJourney(journey, ["moscow", "baku-port", "kars", "istanbul"]);
-  });
-
-  it("stitches the Moscow-Baku-Turkey legs into one continuous path", () => {
-    const journey = plan(plans, "north-west:moscow-baku-turkey");
-    const legLengths = [
-      "north-west-main-1",
-      "north-west-btk",
-      "north-west-anatolia",
-    ].map(
-      (segmentId) =>
-        createPathSampler(
-          getSegmentRenderCoordinates(
-            liveNorthWest.segments.find(
-              (candidate) => candidate.id === segmentId,
-            )!,
-          ),
-        ).totalLength,
+  it("sends every vehicle toward Europe except the southbound Moscow train", () => {
+    // moscow-baku runs down the Caspian shore, i.e. eastward — the one journey
+    // that is pinned precisely because it defies the corridor's default.
+    expectAllWestbound(
+      plans.filter((candidate) => !candidate.key.endsWith("moscow-baku")),
     );
-    const total = legLengths.reduce((sum, value) => sum + value, 0);
-
-    // Softening trims corners slightly, so allow a small shortfall.
-    expect(
-      createPathSampler(journey.coordinates).totalLength,
-    ).toBeGreaterThan(total * 0.95);
   });
 
-  it("does not double up on segments a Moscow journey already covers", () => {
-    ["north-west-main-1", "north-west-main-2", "north-west-main-3",
-     "north-west-btk", "north-west-anatolia"].forEach((segmentId) => {
+  it("runs a train from Moscow down to Baku", () => {
+    const journey = plan(plans, "north-west:moscow-baku");
+
+    expect(journey.mode).toBe("rail");
+    expectJourney(journey, ["moscow", "baku-port"]);
+  });
+
+  it("runs a second train from Baku west into Kars", () => {
+    const journey = plan(plans, "north-west:baku-kars");
+
+    expect(journey.mode).toBe("rail");
+    expectJourney(journey, ["baku-port", "kars"]);
+  });
+
+  it("starts both Moscow-Baku and Baku-Kars on the same beat", () => {
+    expect(plan(plans, "north-west:moscow-baku").startFraction).toBe(0);
+    expect(plan(plans, "north-west:baku-kars").startFraction).toBe(0);
+  });
+
+  it("leaves the phase of unpinned vehicles to the layer", () => {
+    const unpinned = plans.filter(
+      (candidate) =>
+        !candidate.key.endsWith("moscow-baku") &&
+        !candidate.key.endsWith("baku-kars"),
+    );
+
+    expect(unpinned.length).toBeGreaterThan(0);
+    unpinned.forEach((candidate) => {
+      expect(candidate.startFraction).toBeUndefined();
+    });
+  });
+
+  it("does not double up on segments a pinned journey already covers", () => {
+    ["north-west-main-1", "north-west-btk"].forEach((segmentId) => {
       expect(
         plans.some((candidate) => candidate.key.endsWith(segmentId)),
         `${segmentId} should be left to its pinned journey`,

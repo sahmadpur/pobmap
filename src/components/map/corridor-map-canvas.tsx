@@ -3,17 +3,18 @@
 import { useEffect, useMemo, useRef, useState } from "react";
 import L from "leaflet";
 import {
+  GeoJSON,
   MapContainer,
   Marker,
   Pane,
   Polyline,
   Popup,
-  TileLayer,
   Tooltip,
   ZoomControl,
   useMap,
   useMapEvent,
 } from "react-leaflet";
+import type { FeatureCollection } from "geojson";
 import type { TFunction } from "i18next";
 
 import {
@@ -22,9 +23,10 @@ import {
   getLocalizedText,
   TRANSPORT_MODE_META,
 } from "@/data/corridors";
+import { getCountryName } from "@/data/countries";
 import { DOTTED_STRETCHES } from "@/data/dotted-stretches";
 import { getMarkerIconSvg } from "@/data/marker-icons";
-import { getTransportStop } from "@/data/transport-stops";
+import { getTransportStop, TRANSPORT_STOPS } from "@/data/transport-stops";
 import { collectRouteTerminalStopIds } from "@/lib/corridor-stop-utils";
 import {
   flattenRouteCoordinates,
@@ -322,6 +324,277 @@ function getAvailableConnectedRouteIdsForMarker(
   );
 }
 
+const BASEMAP_STYLE = {
+  dark: { color: "rgba(146, 180, 214, 0.32)", fillColor: "#16293d" },
+  light: { color: "rgba(15, 40, 70, 0.22)", fillColor: "#f7fafc" },
+} as const;
+
+// Rough metrics for the label type; only used to reserve collision space.
+const LABEL_CHAR_WIDTH_PX = 7.2;
+const LABEL_HALF_HEIGHT_PX = 8;
+const LABEL_GAP_PX = 6;
+const CITY_CHAR_WIDTH_PX = 6.2;
+const CITY_HALF_HEIGHT_PX = 7;
+/** Cities stay off the world view; the corridors need that room. */
+const CITY_MIN_ZOOM = 5;
+/** How close a Natural Earth city has to be to count as a corridor stop. */
+const CITY_STOP_TOLERANCE = 0.2;
+
+interface CountryLabel {
+  iso: string;
+  label: [number, number];
+  minZoom: number;
+}
+
+/** One city as shipped in public/geo/cities-50m.json. */
+interface RawCity {
+  /** English name. */
+  n: string;
+  /** Russian name. */
+  ru: string;
+  /** Natural Earth's own MIN_ZOOM. */
+  z: number;
+  c: [number, number];
+}
+
+interface CityLabel {
+  name: LocalizedText;
+  minZoom: number;
+  position: [number, number];
+}
+
+interface PlacedLabel {
+  key: string;
+  kind: "country" | "city";
+  name: string;
+  position: [number, number];
+}
+
+/**
+ * Natural Earth has no Azerbaijani city names, but the corridor stop catalogue
+ * does — for every city a corridor touches, which is exactly the set that
+ * matters here. Matched by proximity because the two datasets disagree on the
+ * exact point of a city by a few kilometres.
+ */
+function buildCityLabels(cities: RawCity[]): CityLabel[] {
+  return cities.map((city) => {
+    const stop = TRANSPORT_STOPS.find(
+      (candidate) =>
+        Math.abs(candidate.coordinates[0] - city.c[0]) < CITY_STOP_TOLERANCE &&
+        Math.abs(candidate.coordinates[1] - city.c[1]) < CITY_STOP_TOLERANCE,
+    );
+
+    return {
+      name: {
+        az: stop?.name.az ?? city.n,
+        en: city.n,
+        ru: city.ru,
+      },
+      minZoom: city.z,
+      position: city.c,
+    };
+  });
+}
+
+/**
+ * Natural Earth ships a per-feature minimum zoom and, for countries, a label
+ * anchor, so the thinning rule is theirs rather than a hand-rolled heuristic.
+ * Whatever survives it still has to fit on screen without landing on a
+ * neighbour, and Leaflet has no label collision of its own.
+ *
+ * Countries are placed first, so a city never pushes a country off the map.
+ */
+function computeVisibleLabels(
+  map: L.Map,
+  bounds: L.LatLngBounds,
+  countries: FeatureCollection | null,
+  cities: CityLabel[],
+  labelledCoordinates: Coordinate[],
+  locale: SupportedLocale,
+  zoom: number,
+): PlacedLabel[] {
+  if (!countries) {
+    return [];
+  }
+
+  const placed: Array<[number, number, number, number]> = [];
+  const visible: PlacedLabel[] = [];
+
+  function place(
+    key: string,
+    kind: PlacedLabel["kind"],
+    name: string,
+    position: [number, number],
+    halfHeight: number,
+    charWidth: number,
+  ) {
+    if (!bounds.contains(position)) {
+      return;
+    }
+
+    const point = map.latLngToContainerPoint(position);
+    const halfWidth = (name.length * charWidth) / 2 + LABEL_GAP_PX;
+    const box: [number, number, number, number] = [
+      point.x - halfWidth,
+      point.y - halfHeight,
+      point.x + halfWidth,
+      point.y + halfHeight,
+    ];
+
+    const overlaps = placed.some(
+      (other) =>
+        box[0] < other[2] &&
+        box[2] > other[0] &&
+        box[1] < other[3] &&
+        box[3] > other[1],
+    );
+
+    if (overlaps) {
+      return;
+    }
+
+    placed.push(box);
+    visible.push({ key, kind, name, position });
+  }
+
+  countries.features
+    .map((feature) => feature.properties as unknown as Partial<CountryLabel>)
+    .filter((properties): properties is CountryLabel =>
+      Boolean(properties.iso) && zoom >= (properties.minZoom ?? Infinity),
+    )
+    // Most important country wins the spot when two labels want it.
+    .sort((first, second) => first.minZoom - second.minZoom)
+    .forEach((country) => {
+      place(
+        `country-${country.iso}`,
+        "country",
+        getCountryName(country.iso, locale),
+        country.label,
+        LABEL_HALF_HEIGHT_PX,
+        LABEL_CHAR_WIDTH_PX,
+      );
+    });
+
+  if (zoom >= CITY_MIN_ZOOM) {
+    cities
+      .filter(
+        (city) =>
+          zoom >= city.minZoom &&
+          !labelledCoordinates.some((coordinate) =>
+            areCoordinatesNear(coordinate, city.position, CITY_STOP_TOLERANCE),
+          ),
+      )
+      .sort((first, second) => first.minZoom - second.minZoom)
+      .forEach((city, index) => {
+        place(
+          `city-${index}-${city.name.en}`,
+          "city",
+          getLocalizedText(city.name, locale),
+          city.position,
+          CITY_HALF_HEIGHT_PX,
+          CITY_CHAR_WIDTH_PX,
+        );
+      });
+  }
+
+  return visible;
+}
+
+// Country outlines only: the GeoJSON has no subnational geometry, so no state
+// or province borders can leak in the way they do with raster basemap tiles.
+function WorldBasemap({
+  theme,
+  locale,
+  zoom,
+  labelledCoordinates,
+}: {
+  theme: "dark" | "light";
+  locale: SupportedLocale;
+  zoom: number;
+  /** Places the corridor markers already label; a city here would read twice. */
+  labelledCoordinates: Coordinate[];
+}) {
+  const [countries, setCountries] = useState<FeatureCollection | null>(null);
+  const [cities, setCities] = useState<CityLabel[]>([]);
+  const map = useMap();
+  const [bounds, setBounds] = useState(() => map.getBounds());
+
+  // Collision is measured in screen space, so any pan or zoom invalidates it.
+  useMapEvent("moveend", () => setBounds(map.getBounds()));
+
+  useEffect(() => {
+    let cancelled = false;
+
+    fetch("/geo/countries-50m.geojson")
+      .then((response) => response.json())
+      .then((data: FeatureCollection) => {
+        if (!cancelled) {
+          setCountries(data);
+        }
+      })
+      .catch(() => undefined);
+
+    fetch("/geo/cities-50m.json")
+      .then((response) => response.json())
+      .then((data: RawCity[]) => {
+        if (!cancelled) {
+          setCities(buildCityLabels(data));
+        }
+      })
+      .catch(() => undefined);
+
+    return () => {
+      cancelled = true;
+    };
+  }, []);
+
+  const labels = useMemo(
+    () =>
+      computeVisibleLabels(
+        map,
+        bounds,
+        countries,
+        cities,
+        labelledCoordinates,
+        locale,
+        zoom,
+      ),
+    [bounds, cities, countries, labelledCoordinates, locale, map, zoom],
+  );
+
+
+  if (!countries) {
+    return null;
+  }
+
+  return (
+    <>
+      <GeoJSON
+        key={theme}
+        data={countries}
+        interactive={false}
+        style={{ ...BASEMAP_STYLE[theme], weight: 0.8, fillOpacity: 1 }}
+      />
+
+      <Pane name="country-labels" style={{ zIndex: 405 }}>
+        {labels.map((label) => (
+          <Marker
+            key={label.key}
+            position={label.position}
+            interactive={false}
+            keyboard={false}
+            icon={L.divIcon({
+              className: label.kind === "city" ? "city-label" : "country-label",
+              iconSize: [0, 0],
+              html: `<span>${label.name}</span>`,
+            })}
+          />
+        ))}
+      </Pane>
+    </>
+  );
+}
+
 function MapClickHandler({ onClearSelection }: { onClearSelection: () => void }) {
   useMapEvent("click", (event) => {
     if ((event.originalEvent.target as HTMLElement)?.closest(".leaflet-interactive")) {
@@ -348,23 +621,14 @@ function ZoomWatcher({ onZoomChange }: { onZoomChange: (zoom: number) => void })
   return null;
 }
 
-function MapResetController({ resetCount }: { resetCount: number }) {
-  const map = useMap();
-
-  useEffect(() => {
-    map.flyTo(DEFAULT_MAP_VIEW.center, DEFAULT_MAP_VIEW.zoom, {
-      animate: true,
-      duration: 1.2,
-    });
-  }, [map, resetCount]);
-
-  return null;
-}
-
 function getSelectionPadding(
   viewportWidth: number,
   viewportHeight: number,
-  options: { hasDetailsPanel: boolean; isMapOnlyMode: boolean },
+  options: {
+    hasDetailsPanel: boolean;
+    hasFilterPanel: boolean;
+    isMapOnlyMode: boolean;
+  },
 ) {
   if (options.isMapOnlyMode) {
     return {
@@ -374,8 +638,9 @@ function getSelectionPadding(
   }
 
   if (viewportWidth >= 1280) {
+    // Both side panels float over the map, so they only steal room while open.
     return {
-      paddingTopLeft: L.point(470, 96),
+      paddingTopLeft: L.point(options.hasFilterPanel ? 470 : 80, 96),
       paddingBottomRight: L.point(options.hasDetailsPanel ? 460 : 80, 96),
     };
   }
@@ -398,18 +663,25 @@ function getSelectionPadding(
  *
  * Framing used to follow the selection, which meant every click on a line threw
  * away whatever zoom the user had set. It is now driven by an explicit counter —
- * the same shape as `MapResetController` — so selecting a segment leaves the
- * camera alone and only the deliberate jumps (a corridor button in a port popup,
- * Reset view) move it.
+ * an explicit counter, so selecting a segment leaves the camera alone and only
+ * the deliberate jumps (a corridor button in a port popup, opening a group in
+ * the details panel) move it.
+ *
+ * `coordinates` narrows the frame to part of the corridor; without it the whole
+ * route is framed.
  */
 function SelectionController({
   route,
+  coordinates: frameCoordinates,
   hasDetailsPanel,
+  hasFilterPanel,
   isMapOnlyMode,
   frameCount,
 }: {
   route: CorridorRoute | null;
+  coordinates: Coordinate[] | null;
   hasDetailsPanel: boolean;
+  hasFilterPanel: boolean;
   isMapOnlyMode: boolean;
   frameCount: number;
 }) {
@@ -427,7 +699,10 @@ function SelectionController({
       return;
     }
 
-    const coordinates = flattenRouteCoordinates(route);
+    const coordinates =
+      frameCoordinates && frameCoordinates.length > 0
+        ? frameCoordinates
+        : flattenRouteCoordinates(route);
 
     if (coordinates.length < 2) {
       map.flyTo(coordinates[0] ?? DEFAULT_MAP_VIEW.center, 6, {
@@ -439,6 +714,7 @@ function SelectionController({
 
     const padding = getSelectionPadding(window.innerWidth, window.innerHeight, {
       hasDetailsPanel,
+      hasFilterPanel,
       isMapOnlyMode,
     });
 
@@ -448,7 +724,10 @@ function SelectionController({
       paddingTopLeft: padding.paddingTopLeft,
       paddingBottomRight: padding.paddingBottomRight,
     });
-  }, [frameCount, hasDetailsPanel, isMapOnlyMode, map, route]);
+    // frameCoordinates is read through the counter, not depended on: the frame
+    // happens when asked for, not when the group's geometry happens to change.
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [frameCount, hasDetailsPanel, hasFilterPanel, isMapOnlyMode, map, route]);
 
   return null;
 }
@@ -466,6 +745,7 @@ function CorridorLines({
   selectedRouteId,
   selectedSegmentId,
   hoveredRouteId,
+  groupSegmentIds,
   locale,
   zoom,
   onRouteSelect,
@@ -476,6 +756,7 @@ function CorridorLines({
   selectedRouteId: string | null;
   selectedSegmentId: string | null;
   hoveredRouteId: string | null;
+  groupSegmentIds: string[];
   locale: SupportedLocale;
   zoom: number;
   onRouteSelect: (routeId: string, segmentId?: string | null) => void;
@@ -532,6 +813,11 @@ function CorridorLines({
           <Pane key={route.id} name={`pane-${route.id}`} style={{ zIndex: 420 }}>
             {segments.map(({ segment, hitPath, solid, dotted }) => {
               const isSelectedSegment = selectedSegmentId === segment.id;
+              // An open panel group narrows the highlight to its own segments.
+              const isOutsideGroup =
+                isSelected &&
+                groupSegmentIds.length > 0 &&
+                !groupSegmentIds.includes(segment.id);
               const color = isSelected
                 ? TRANSPORT_MODE_META[segment.mode].color
                 : route.routeColor;
@@ -542,17 +828,19 @@ function CorridorLines({
                 : route.type === "primary"
                   ? 6
                   : 3;
-              const opacity = isSelectedSegment
-                ? 1
-                : isSelected
-                  ? 0.9
-                  : isDimmed
-                    ? 0.18
-                    : isHovered
-                      ? 0.9
-                      : route.type === "primary"
-                        ? 0.72
-                        : 0.5;
+              const opacity = isOutsideGroup
+                ? 0.18
+                : isSelectedSegment
+                  ? 1
+                  : isSelected
+                    ? 0.9
+                    : isDimmed
+                      ? 0.18
+                      : isHovered
+                        ? 0.9
+                        : route.type === "primary"
+                          ? 0.72
+                          : 0.5;
               const className = isSelected || isSelectedSegment
                 ? "corridor-line corridor-line--selected"
                 : "corridor-line";
@@ -662,10 +950,15 @@ interface CorridorMapCanvasProps {
   locale: SupportedLocale;
   theme: "dark" | "light";
   showFlowAnimation: boolean;
-  resetCount: number;
   /** Bumped when a corridor should be framed; selection alone never re-frames. */
   frameCount: number;
+  /** Narrows that frame to part of the corridor, e.g. one panel group. */
+  frameCoordinates: Coordinate[] | null;
+  /** Segments of the open panel group; everything else on the route dims. */
+  groupSegmentIds: string[];
   isMapOnlyMode: boolean;
+  /** Open filter panel; it overlaps the map, so framing has to allow for it. */
+  hasFilterPanel: boolean;
   onRouteSelect: (routeId: string, segmentId?: string | null) => void;
   onRouteHover: (routeId: string | null) => void;
   onClearSelection: () => void;
@@ -683,9 +976,11 @@ export default function CorridorMapCanvas({
   locale,
   theme,
   showFlowAnimation,
-  resetCount,
   frameCount,
+  frameCoordinates,
+  groupSegmentIds,
   isMapOnlyMode,
+  hasFilterPanel,
   onRouteSelect,
   onRouteHover,
   onClearSelection,
@@ -778,33 +1073,48 @@ export default function CorridorMapCanvas({
       ? collectRouteStopMarkers(routes, safeMarkers)
       : [];
 
+  // Every place the corridor layer already spells out, so the basemap does not
+  // print the same city name a second time a few pixels away.
+  const labelledCoordinates = useMemo(
+    () =>
+      showStopLabels
+        ? [
+            primaryPortMarker.coordinates,
+            ...visibleSecondaryMarkers.map((marker) => marker.coordinates),
+            ...routeStopMarkers.map((stop) => stop.coordinate),
+          ]
+        : [primaryPortMarker.coordinates],
+    // Recomputed per render anyway; the memo only keeps the array identity
+    // stable enough for the basemap's own memo.
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    [primaryPortMarker, routeStopMarkers.length, showStopLabels, visibleSecondaryMarkers.length],
+  );
+
   return (
     <MapContainer
       center={DEFAULT_MAP_VIEW.center}
       zoom={DEFAULT_MAP_VIEW.zoom}
       minZoom={3}
-      maxZoom={14}
+      maxZoom={12}
       zoomControl={false}
       attributionControl={false}
       className={`corridor-map-canvas corridor-map-canvas--${theme} h-full w-full`}
     >
-      <TileLayer
-        key={theme}
-        url={
-          theme === "dark"
-            ? "https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png"
-            : "https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png"
-        }
-        subdomains={["a", "b", "c", "d"]}
+      <WorldBasemap
+        theme={theme}
+        locale={locale}
+        zoom={zoom}
+        labelledCoordinates={labelledCoordinates}
       />
 
-      <ZoomControl position="bottomleft" />
+      {hasFilterPanel ? <ZoomControl position="topright" /> : null}
       <ZoomWatcher onZoomChange={setZoom} />
       <MapClickHandler onClearSelection={onClearSelection} />
-      <MapResetController resetCount={resetCount} />
       <SelectionController
         route={selectedRoute}
+        coordinates={frameCoordinates}
         hasDetailsPanel={!isMapOnlyMode && Boolean(selectedRoute)}
+        hasFilterPanel={hasFilterPanel}
         isMapOnlyMode={isMapOnlyMode}
         frameCount={frameCount}
       />
@@ -814,6 +1124,7 @@ export default function CorridorMapCanvas({
       <Pane name="corridor-markers" style={{ zIndex: 460 }} />
 
       <CorridorLines
+        groupSegmentIds={groupSegmentIds}
         routes={routes}
         allRoutes={allRoutes}
         selectedRouteId={selectedRouteId}
@@ -841,7 +1152,13 @@ export default function CorridorMapCanvas({
         >
           {getLocalizedText(primaryPortMarker.name, locale)}
         </Tooltip>
-        <Popup className="baku-port-popup" offset={[0, -12]}>
+        <Popup
+          className="baku-port-popup"
+          offset={[0, -12]}
+          autoPan
+          autoPanPaddingTopLeft={[24, 104]}
+          autoPanPaddingBottomRight={[24, 24]}
+        >
           <div className="space-y-3">
             <div>
               <h3 className="text-lg font-semibold text-slate-950">
@@ -906,7 +1223,13 @@ export default function CorridorMapCanvas({
                 {getLocalizedText(marker.name, locale)}
               </Tooltip>
             ) : null}
-            <Popup className="baku-port-popup" offset={[0, -12]}>
+            <Popup
+          className="baku-port-popup"
+          offset={[0, -12]}
+          autoPan
+          autoPanPaddingTopLeft={[24, 104]}
+          autoPanPaddingBottomRight={[24, 24]}
+        >
               <div className="space-y-3">
                 <div>
                   <h3 className="text-lg font-semibold text-slate-950">

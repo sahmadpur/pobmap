@@ -61,7 +61,36 @@ const COUNTRY_NAME_OVERRIDES: Partial<Record<string, LocalizedText>> = {
   CN: { az: "Çin", en: "China", ru: "Китай" },
 };
 
+// Chrome and Node ship no CLDR region data for Azerbaijani, so Intl.DisplayNames
+// silently falls back to English. These fill the gap for the countries the map
+// actually draws; anything missing still falls back to the English name.
+const AZ_COUNTRY_NAMES: Record<string, string> = {
+  AF: "Əfqanıstan", AL: "Albaniya", AM: "Ermənistan", AR: "Argentina",
+  AT: "Avstriya", AU: "Avstraliya", BA: "Bosniya və Herseqovina",
+  BD: "Banqladeş", BE: "Belçika", BG: "Bolqarıstan", BH: "Bəhreyn",
+  BR: "Braziliya", BT: "Butan", BY: "Belarus", CA: "Kanada", CH: "İsveçrə",
+  CY: "Kipr", DJ: "Cibuti", DK: "Danimarka", DZ: "Əlcəzair", EE: "Estoniya",
+  EG: "Misir", ER: "Eritreya", ET: "Efiopiya", FR: "Fransa", GR: "Yunanıstan",
+  HR: "Xorvatiya", ID: "İndoneziya", IE: "İrlandiya", IL: "İsrail",
+  IN: "Hindistan", IS: "İslandiya", JP: "Yaponiya", KE: "Keniya",
+  KG: "Qırğızıstan", KH: "Kamboca", KP: "Şimali Koreya", KR: "Cənubi Koreya",
+  KW: "Küveyt", KZ: "Qazaxıstan", LA: "Laos", LB: "Livan", LK: "Şri-Lanka",
+  LT: "Litva", LV: "Latviya", LY: "Liviya", MA: "Mərakeş", MD: "Moldova",
+  ME: "Monteneqro", MK: "Şimali Makedoniya", MM: "Myanma", MN: "Monqolustan",
+  MX: "Meksika", MY: "Malayziya", NG: "Nigeriya", NO: "Norveç", NP: "Nepal",
+  NZ: "Yeni Zelandiya", OM: "Oman", PH: "Filippin", PK: "Pakistan",
+  PL: "Polşa", PS: "Fələstin", PT: "Portuqaliya", QA: "Qətər", RS: "Serbiya",
+  SD: "Sudan", SE: "İsveç", SG: "Sinqapur", SI: "Sloveniya", SK: "Slovakiya",
+  SO: "Somali", TH: "Tailand", TJ: "Tacikistan", TN: "Tunis", TW: "Tayvan",
+  UA: "Ukrayna", UZ: "Özbəkistan", VN: "Vyetnam", YE: "Yəmən",
+  ZA: "Cənubi Afrika",
+};
+
 function getDisplayName(code: string, locale: SupportedLocale): string {
+  if (locale === "az" && AZ_COUNTRY_NAMES[code]) {
+    return AZ_COUNTRY_NAMES[code];
+  }
+
   return DISPLAY_NAMES[locale].of(code) ?? code;
 }
 
