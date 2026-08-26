@@ -187,6 +187,13 @@ body[data-theme="light"] .leaflet-control-zoom a:hover {
   margin-right: 18px !important;
 }
 
+/* Desktop route details panel docks top-right (22rem wide); step left of it. */
+@media (min-width: 1024px) {
+  .corridor-map-canvas--details .leaflet-top.leaflet-right .leaflet-control-zoom {
+    margin-right: calc(22rem + 30px) !important;
+  }
+}
+
 .leaflet-popup-content-wrapper,
 .leaflet-popup-tip {
   background: rgba(255, 255, 255, 0.96);

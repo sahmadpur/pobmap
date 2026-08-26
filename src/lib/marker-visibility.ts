@@ -12,7 +12,7 @@ export type { MarkerTier };
  * - `standard` the remaining corridor markers
  * - `stop`     intermediate stop dots along a corridor, plus every label
  *
- * The map is clamped to zoom 3-14 (`corridor-map-canvas.tsx`), so `major` at 3
+ * The map is clamped to zoom 3-8 (`corridor-map-canvas.tsx`), so `major` at 3
  * means "always" and everything is drawn from zoom 6 up.
  */
 export const MARKER_MIN_ZOOM = {

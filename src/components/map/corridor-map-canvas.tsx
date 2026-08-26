@@ -502,7 +502,7 @@ function computeVisibleLabels(
 
 // Country outlines only: the GeoJSON has no subnational geometry, so no state
 // or province borders can leak in the way they do with raster basemap tiles.
-function WorldBasemap({
+export function WorldBasemap({
   theme,
   locale,
   zoom,
@@ -607,7 +607,7 @@ function MapClickHandler({ onClearSelection }: { onClearSelection: () => void })
   return null;
 }
 
-function ZoomWatcher({ onZoomChange }: { onZoomChange: (zoom: number) => void }) {
+export function ZoomWatcher({ onZoomChange }: { onZoomChange: (zoom: number) => void }) {
   const map = useMap();
 
   useEffect(() => {
@@ -1095,10 +1095,12 @@ export default function CorridorMapCanvas({
       center={DEFAULT_MAP_VIEW.center}
       zoom={DEFAULT_MAP_VIEW.zoom}
       minZoom={3}
-      maxZoom={12}
+      maxZoom={8}
       zoomControl={false}
       attributionControl={false}
-      className={`corridor-map-canvas corridor-map-canvas--${theme} h-full w-full`}
+      className={`corridor-map-canvas corridor-map-canvas--${theme} ${
+        !isMapOnlyMode && selectedRoute ? "corridor-map-canvas--details" : ""
+      } h-full w-full`}
     >
       <WorldBasemap
         theme={theme}

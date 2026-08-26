@@ -1,8 +1,10 @@
 "use client";
 
-import { useEffect, useMemo } from "react";
+import { useEffect, useMemo, useState } from "react";
 import L from "leaflet";
-import { MapContainer, Marker, Polyline, TileLayer, useMap } from "react-leaflet";
+import { MapContainer, Marker, Polyline, useMap } from "react-leaflet";
+
+import { WorldBasemap, ZoomWatcher } from "@/components/map/corridor-map-canvas";
 
 import type { Coordinate, CorridorSegment } from "@/types/map";
 
@@ -82,6 +84,7 @@ export function SegmentLineEditor({
       ? segment.displayCoordinates
       : anchors;
 
+  const [zoom, setZoom] = useState(6);
   const points = useMemo(() => {
     if (rawPoints.length < 2 || anchors.length < 2) {
       return rawPoints;
@@ -163,11 +166,18 @@ export function SegmentLineEditor({
       </div>
 
       <div className="h-72 overflow-hidden rounded-lg border border-[var(--hc-line)]">
-        <MapContainer center={center} zoom={6} scrollWheelZoom className="h-full w-full">
-          <TileLayer
-            url="https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png"
-            attribution='&copy; <a href="https://carto.com/">CARTO</a>, &copy; OpenStreetMap contributors'
-          />
+        <MapContainer
+          center={center}
+          zoom={6}
+          minZoom={3}
+          maxZoom={8}
+          scrollWheelZoom
+          attributionControl={false}
+          className="corridor-map-canvas h-full w-full"
+        >
+          {/* Same vector basemap as the public map, so edits land where they will show. */}
+          <WorldBasemap theme="light" locale="en" zoom={zoom} labelledCoordinates={[]} />
+          <ZoomWatcher onZoomChange={setZoom} />
           <FitBounds points={points} />
           <Polyline
             positions={points as [number, number][]}
