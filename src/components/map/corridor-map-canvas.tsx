@@ -941,14 +941,23 @@ function CorridorLines({
   );
 }
 
-// The custom Google style (grey labels, cream landscape #f9f5ed, light roads,
-// blue water #aee0f4) compiled to the tile endpoint's `apistyle` encoding:
-// rules are comma-separated, `s.t` = feature type (5 landscape, 49 highway,
-// 6 water), `s.e` = element (l.t labels.text, g.s geometry.stroke), `p.c`
-// = color (aarrggbb), `p.v` = visibility. `|` and `#` are pre-URL-encoded.
-const GOOGLE_STYLED_APISTYLE = [
-  "s.e:l.t%7Cp.c:%23ff878787",
-  "s.e:l.t.s%7Cp.v:off",
+// Google's default map look with every label hidden except country names,
+// compiled to the tile endpoint's `apistyle` encoding: rules are
+// comma-separated, `s.t:17` = administrative.country, `s.e` = element (l
+// labels, l.t labels.text), `p.v` = visibility. `|` is pre-URL-encoded.
+const GOOGLE_COUNTRIES_APISTYLE = [
+  "s.e:l%7Cp.v:off",
+  "s.t:17%7Cs.e:l.t%7Cp.v:on",
+].join(",");
+
+// Countries-only again, but on the custom palette: grey labels #878787, cream
+// landscape #f9f5ed, light roads, blue water #aee0f4 (`p.c` = color aarrggbb,
+// `s.t` 5 landscape / 49 highway / 6 water, `g.s` geometry.stroke).
+const GOOGLE_COUNTRIES_STYLED_APISTYLE = [
+  "s.e:l%7Cp.v:off",
+  "s.t:17%7Cs.e:l.t%7Cp.v:on",
+  "s.t:17%7Cs.e:l.t.f%7Cp.c:%23ff878787",
+  "s.t:17%7Cs.e:l.t.s%7Cp.v:off",
   "s.t:5%7Cp.c:%23fff9f5ed",
   "s.t:49%7Cp.c:%23fff5f5f5",
   "s.t:49%7Cs.e:g.s%7Cp.c:%23ffc9c9c9",
@@ -974,7 +983,7 @@ interface CorridorMapCanvasProps {
   isMapOnlyMode: boolean;
   /** Open filter panel; it overlaps the map, so framing has to allow for it. */
   hasFilterPanel: boolean;
-  basemap: "vector" | "google" | "google-styled";
+  basemap: "vector" | "google-countries" | "google-countries-styled";
   onRouteSelect: (routeId: string, segmentId?: string | null) => void;
   onRouteHover: (routeId: string | null) => void;
   onClearSelection: () => void;
@@ -1119,14 +1128,16 @@ export default function CorridorMapCanvas({
         !isMapOnlyMode && selectedRoute ? "corridor-map-canvas--details" : ""
       } h-full w-full`}
     >
-      {basemap === "google" ? (
+      {basemap === "google-countries" ? (
         <TileLayer
-          url="https://mt{s}.google.com/vt/lyrs=m&x={x}&y={y}&z={z}"
+          key={`google-countries-${locale}`}
+          url={`https://mt{s}.google.com/vt/lyrs=m&hl=${locale}&x={x}&y={y}&z={z}&apistyle=${GOOGLE_COUNTRIES_APISTYLE}`}
           subdomains={["0", "1", "2", "3"]}
         />
-      ) : basemap === "google-styled" ? (
+      ) : basemap === "google-countries-styled" ? (
         <TileLayer
-          url={`https://mt{s}.google.com/vt/lyrs=m&x={x}&y={y}&z={z}&apistyle=${GOOGLE_STYLED_APISTYLE}`}
+          key={`google-countries-styled-${locale}`}
+          url={`https://mt{s}.google.com/vt/lyrs=m&hl=${locale}&x={x}&y={y}&z={z}&apistyle=${GOOGLE_COUNTRIES_STYLED_APISTYLE}`}
           subdomains={["0", "1", "2", "3"]}
         />
       ) : (

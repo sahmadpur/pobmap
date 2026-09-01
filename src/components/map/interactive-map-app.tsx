@@ -46,6 +46,21 @@ const CorridorMapCanvas = dynamic(() => import("@/components/map/corridor-map-ca
   ssr: false,
 });
 
+type Basemap = "vector" | "google-countries" | "google-countries-styled";
+
+const BASEMAP_CYCLE: Basemap[] = [
+  "vector",
+  "google-countries",
+  "google-countries-styled",
+];
+
+/** Title of the basemap the next click switches to. */
+const NEXT_BASEMAP_LABEL_KEY: Record<Basemap, string> = {
+  vector: "controls.basemapCountries",
+  "google-countries": "controls.basemapCountriesStyled",
+  "google-countries-styled": "controls.basemapVector",
+};
+
 const LOCALE_LABELS: Record<SupportedLocale, string> = {
   az: "Azerbaijani",
   en: "English",
@@ -127,9 +142,7 @@ export function InteractiveMapApp({
   const safeMarkers = markers ?? [];
   const { t, i18n } = useTranslation();
   const [theme, setTheme] = useState<ThemeMode>("light");
-  const [basemap, setBasemap] = useState<"vector" | "google" | "google-styled">(
-    "vector",
-  );
+  const [basemap, setBasemap] = useState<Basemap>("vector");
   const [locale, setLocale] = useState<SupportedLocale>("az");
   const [selectedRouteId, setSelectedRouteId] = useState<string | null>(null);
   // Closing the details panel keeps the route selected; any new selection reopens it.
@@ -472,29 +485,16 @@ export function InteractiveMapApp({
               <button
                 type="button"
                 onClick={() =>
-                  setBasemap((current) =>
-                    current === "vector"
-                      ? "google"
-                      : current === "google"
-                        ? "google-styled"
-                        : "vector",
+                  setBasemap(
+                    (current) =>
+                      BASEMAP_CYCLE[
+                        (BASEMAP_CYCLE.indexOf(current) + 1) % BASEMAP_CYCLE.length
+                      ],
                   )
                 }
                 className={`inline-flex h-10 w-10 items-center justify-center rounded-full border transition ${buttonClass}`}
-                aria-label={
-                  basemap === "vector"
-                    ? t("controls.basemapGoogle")
-                    : basemap === "google"
-                      ? t("controls.basemapCustom")
-                      : t("controls.basemapVector")
-                }
-                title={
-                  basemap === "vector"
-                    ? t("controls.basemapGoogle")
-                    : basemap === "google"
-                      ? t("controls.basemapCustom")
-                      : t("controls.basemapVector")
-                }
+                aria-label={t(NEXT_BASEMAP_LABEL_KEY[basemap])}
+                title={t(NEXT_BASEMAP_LABEL_KEY[basemap])}
                 aria-pressed={basemap !== "vector"}
               >
                 <Layers className="h-4 w-4" aria-hidden="true" />
