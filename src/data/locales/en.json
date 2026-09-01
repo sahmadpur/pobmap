@@ -24,6 +24,9 @@
     "showFlow": "Show flow animation",
     "hideFlow": "Hide flow animation",
     "mapOnly": "Map only",
+    "basemapGoogle": "Switch to Google map",
+    "basemapCustom": "Switch to custom style",
+    "basemapVector": "Switch to vector map",
     "showInterface": "Show interface",
     "switchToDark": "Dark mode",
     "switchToLight": "Light mode"

@@ -7,6 +7,7 @@ import {
   Eye,
   EyeOff,
   Globe2,
+  Layers,
   Maximize2,
   Minimize2,
   MoonStar,
@@ -126,6 +127,9 @@ export function InteractiveMapApp({
   const safeMarkers = markers ?? [];
   const { t, i18n } = useTranslation();
   const [theme, setTheme] = useState<ThemeMode>("light");
+  const [basemap, setBasemap] = useState<"vector" | "google" | "google-styled">(
+    "vector",
+  );
   const [locale, setLocale] = useState<SupportedLocale>("az");
   const [selectedRouteId, setSelectedRouteId] = useState<string | null>(null);
   // Closing the details panel keeps the route selected; any new selection reopens it.
@@ -373,6 +377,7 @@ export function InteractiveMapApp({
           frameCoordinates={frameCoordinates}
           groupSegmentIds={groupSegmentIds}
           isMapOnlyMode={isMapOnlyMode}
+          basemap={basemap}
           hasFilterPanel={isFiltersOpen && !isMapOnlyMode}
           onRouteSelect={(routeId, segmentId) => {
             // Picking a corridor on the map gets the filters out of the way;
@@ -463,6 +468,37 @@ export function InteractiveMapApp({
                   ))}
                 </select>
               </label>
+
+              <button
+                type="button"
+                onClick={() =>
+                  setBasemap((current) =>
+                    current === "vector"
+                      ? "google"
+                      : current === "google"
+                        ? "google-styled"
+                        : "vector",
+                  )
+                }
+                className={`inline-flex h-10 w-10 items-center justify-center rounded-full border transition ${buttonClass}`}
+                aria-label={
+                  basemap === "vector"
+                    ? t("controls.basemapGoogle")
+                    : basemap === "google"
+                      ? t("controls.basemapCustom")
+                      : t("controls.basemapVector")
+                }
+                title={
+                  basemap === "vector"
+                    ? t("controls.basemapGoogle")
+                    : basemap === "google"
+                      ? t("controls.basemapCustom")
+                      : t("controls.basemapVector")
+                }
+                aria-pressed={basemap !== "vector"}
+              >
+                <Layers className="h-4 w-4" aria-hidden="true" />
+              </button>
 
               <button
                 type="button"

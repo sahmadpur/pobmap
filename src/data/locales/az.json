@@ -24,6 +24,9 @@
     "showFlow": "Axın animasiyasını göstər",
     "hideFlow": "Axın animasiyasını gizlət",
     "mapOnly": "Yalnız xəritə",
+    "basemapGoogle": "Google xəritəyə keç",
+    "basemapCustom": "Xüsusi üsluba keç",
+    "basemapVector": "Vektor xəritəyə keç",
     "showInterface": "İnterfeysi göstər",
     "switchToDark": "Qaranlıq rejim",
     "switchToLight": "İşıqlı rejim"

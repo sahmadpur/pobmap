@@ -24,6 +24,9 @@
     "showFlow": "Показать анимацию потока",
     "hideFlow": "Скрыть анимацию потока",
     "mapOnly": "Только карта",
+    "basemapGoogle": "Переключить на карту Google",
+    "basemapCustom": "Переключить на пользовательский стиль",
+    "basemapVector": "Переключить на векторную карту",
     "showInterface": "Показать интерфейс",
     "switchToDark": "Темный режим",
     "switchToLight": "Светлый режим"

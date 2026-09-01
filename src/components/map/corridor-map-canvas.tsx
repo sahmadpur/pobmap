@@ -9,6 +9,7 @@ import {
   Pane,
   Polyline,
   Popup,
+  TileLayer,
   Tooltip,
   ZoomControl,
   useMap,
@@ -940,6 +941,20 @@ function CorridorLines({
   );
 }
 
+// The custom Google style (grey labels, cream landscape #f9f5ed, light roads,
+// blue water #aee0f4) compiled to the tile endpoint's `apistyle` encoding:
+// rules are comma-separated, `s.t` = feature type (5 landscape, 49 highway,
+// 6 water), `s.e` = element (l.t labels.text, g.s geometry.stroke), `p.c`
+// = color (aarrggbb), `p.v` = visibility. `|` and `#` are pre-URL-encoded.
+const GOOGLE_STYLED_APISTYLE = [
+  "s.e:l.t%7Cp.c:%23ff878787",
+  "s.e:l.t.s%7Cp.v:off",
+  "s.t:5%7Cp.c:%23fff9f5ed",
+  "s.t:49%7Cp.c:%23fff5f5f5",
+  "s.t:49%7Cs.e:g.s%7Cp.c:%23ffc9c9c9",
+  "s.t:6%7Cp.c:%23ffaee0f4",
+].join(",");
+
 interface CorridorMapCanvasProps {
   routes: CorridorRoute[];
   allRoutes: CorridorRoute[];
@@ -959,6 +974,7 @@ interface CorridorMapCanvasProps {
   isMapOnlyMode: boolean;
   /** Open filter panel; it overlaps the map, so framing has to allow for it. */
   hasFilterPanel: boolean;
+  basemap: "vector" | "google" | "google-styled";
   onRouteSelect: (routeId: string, segmentId?: string | null) => void;
   onRouteHover: (routeId: string | null) => void;
   onClearSelection: () => void;
@@ -981,6 +997,7 @@ export default function CorridorMapCanvas({
   groupSegmentIds,
   isMapOnlyMode,
   hasFilterPanel,
+  basemap,
   onRouteSelect,
   onRouteHover,
   onClearSelection,
@@ -1102,12 +1119,24 @@ export default function CorridorMapCanvas({
         !isMapOnlyMode && selectedRoute ? "corridor-map-canvas--details" : ""
       } h-full w-full`}
     >
-      <WorldBasemap
-        theme={theme}
-        locale={locale}
-        zoom={zoom}
-        labelledCoordinates={labelledCoordinates}
-      />
+      {basemap === "google" ? (
+        <TileLayer
+          url="https://mt{s}.google.com/vt/lyrs=m&x={x}&y={y}&z={z}"
+          subdomains={["0", "1", "2", "3"]}
+        />
+      ) : basemap === "google-styled" ? (
+        <TileLayer
+          url={`https://mt{s}.google.com/vt/lyrs=m&x={x}&y={y}&z={z}&apistyle=${GOOGLE_STYLED_APISTYLE}`}
+          subdomains={["0", "1", "2", "3"]}
+        />
+      ) : (
+        <WorldBasemap
+          theme={theme}
+          locale={locale}
+          zoom={zoom}
+          labelledCoordinates={labelledCoordinates}
+        />
+      )}
 
       {hasFilterPanel ? <ZoomControl position="topright" /> : null}
       <ZoomWatcher onZoomChange={setZoom} />
