@@ -1,4 +1,7 @@
-import { getTransportStop } from "@/data/transport-stops";
+import {
+  getTransportStop,
+  getTransportStopByCoordinate,
+} from "@/data/transport-stops";
 import type { Coordinate, CorridorRoute, CorridorSegment } from "@/types/map";
 
 // Ratio of each corner that gets cut when rounding polylines. Endpoints are
@@ -20,6 +23,13 @@ export function softenPathCorners(coordinates: Coordinate[]): Coordinate[] {
     const [previousLat, previousLng] = coordinates[index - 1];
     const [lat, lng] = coordinates[index];
     const [nextLat, nextLng] = coordinates[index + 1];
+
+    // A vertex that is a stop must stay on the line — cutting the corner would
+    // draw the corridor past the stop marker instead of through it.
+    if (getTransportStopByCoordinate(coordinates[index])) {
+      softened.push(coordinates[index]);
+      continue;
+    }
 
     softened.push(
       [

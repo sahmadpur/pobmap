@@ -170,7 +170,7 @@ export function SegmentLineEditor({
           center={center}
           zoom={6}
           minZoom={3}
-          maxZoom={8}
+          maxZoom={7}
           scrollWheelZoom
           attributionControl={false}
           className="corridor-map-canvas h-full w-full"

@@ -316,7 +316,7 @@
         },
         {
           "id": "east-west-cn-ningbo",
-          "mode": "rail",
+          "mode": "ship",
           "from": {
             "az": "Ninbo",
             "en": "Ningbo",
@@ -367,7 +367,7 @@
         },
         {
           "id": "east-west-cn-chaozhou",
-          "mode": "rail",
+          "mode": "ship",
           "from": {
             "az": "Çaoçjou",
             "en": "Chaozhou",
@@ -1006,7 +1006,7 @@
             "ru": "Самарканд"
           },
           "to": {
-            "az": "Termez",
+            "az": "Termiz",
             "en": "Termez",
             "ru": "Термез"
           },
@@ -1048,7 +1048,7 @@
           "id": "east-west-mazar",
           "mode": "rail",
           "from": {
-            "az": "Termez",
+            "az": "Termiz",
             "en": "Termez",
             "ru": "Термез"
           },
@@ -1087,7 +1087,7 @@
           "id": "east-west-dushanbe",
           "mode": "rail",
           "from": {
-            "az": "Termez",
+            "az": "Termiz",
             "en": "Termez",
             "ru": "Термез"
           },
@@ -1382,9 +1382,9 @@
           "id": "east-west-boyuk-kasik-kars",
           "mode": "rail",
           "from": {
-            "az": "Böyük Kəsik",
-            "en": "Boyuk Kasik",
-            "ru": "Беюк-Кясик"
+            "az": "Böyük Kəsik - Tbilisi",
+            "en": "Boyuk Kasik - Tbilisi",
+            "ru": "Беюк-Кясик - Тбилиси"
           },
           "to": {
             "az": "Qars",
@@ -1444,6 +1444,66 @@
             "boyuk-kasik",
             "tbilisi",
             "kars"
+          ]
+        },
+        {
+          "id": "east-west-georgia",
+          "mode": "rail",
+          "from": {
+            "az": "Tbilisi",
+            "en": "Tbilisi",
+            "ru": "Тбилиси"
+          },
+          "to": {
+            "az": "Batumi",
+            "en": "Batumi",
+            "ru": "Батуми"
+          },
+          "distanceKm": 350,
+          "coordinates": [
+            [
+              41.7151,
+              44.8271
+            ],
+            [
+              42.1462,
+              41.6719
+            ],
+            [
+              41.6459,
+              41.6404
+            ]
+          ],
+          "displayCoordinates": [
+            [
+              41.7151,
+              44.8271
+            ],
+            [
+              42.1,
+              43.5
+            ],
+            [
+              42.27,
+              42.7
+            ],
+            [
+              42.1462,
+              41.6719
+            ],
+            [
+              41.89307729913167,
+              41.80847167968751
+            ],
+            [
+              41.6459,
+              41.6404
+            ]
+          ],
+          "stopIds": [
+            "tbilisi",
+            "poti",
+            "batumi"
           ]
         },
         {
@@ -1630,66 +1690,6 @@
             "nakhchivan",
             "igdir",
             "kars"
-          ]
-        },
-        {
-          "id": "east-west-georgia",
-          "mode": "rail",
-          "from": {
-            "az": "Tbilisi",
-            "en": "Tbilisi",
-            "ru": "Тбилиси"
-          },
-          "to": {
-            "az": "Batumi",
-            "en": "Batumi",
-            "ru": "Батуми"
-          },
-          "distanceKm": 350,
-          "coordinates": [
-            [
-              41.7151,
-              44.8271
-            ],
-            [
-              42.1462,
-              41.6719
-            ],
-            [
-              41.6459,
-              41.6404
-            ]
-          ],
-          "displayCoordinates": [
-            [
-              41.7151,
-              44.8271
-            ],
-            [
-              42.1,
-              43.5
-            ],
-            [
-              42.27,
-              42.7
-            ],
-            [
-              42.1462,
-              41.6719
-            ],
-            [
-              41.89307729913167,
-              41.80847167968751
-            ],
-            [
-              41.6459,
-              41.6404
-            ]
-          ],
-          "stopIds": [
-            "tbilisi",
-            "poti",
-            "batumi"
           ]
         },
         {
@@ -4039,6 +4039,62 @@
           ]
         },
         {
+          "id": "north-south-khomeini",
+          "mode": "rail",
+          "from": {
+            "az": "Tehran",
+            "en": "Tehran",
+            "ru": "Тегеран"
+          },
+          "to": {
+            "az": "Bəndər İmam Xomeyni",
+            "en": "Bandar Khomeini",
+            "ru": "Бендер-Хомейни"
+          },
+          "distanceKm": 930,
+          "coordinates": [
+            [
+              35.6892,
+              51.389
+            ],
+            [
+              31.3183,
+              48.6706
+            ],
+            [
+              30.4333,
+              49.0864
+            ]
+          ],
+          "displayCoordinates": [
+            [
+              35.6892,
+              51.389
+            ],
+            [
+              34.1,
+              49.7
+            ],
+            [
+              32.7,
+              48.4
+            ],
+            [
+              31.3183,
+              48.6706
+            ],
+            [
+              30.4333,
+              49.0864
+            ]
+          ],
+          "stopIds": [
+            "tehran",
+            "ahvaz",
+            "bandar-khomeini"
+          ]
+        },
+        {
           "id": "north-south-karachi-rail",
           "mode": "rail",
           "from": {
@@ -4109,62 +4165,6 @@
             "zahedan",
             "quetta",
             "karachi"
-          ]
-        },
-        {
-          "id": "north-south-khomeini",
-          "mode": "rail",
-          "from": {
-            "az": "Tehran",
-            "en": "Tehran",
-            "ru": "Тегеран"
-          },
-          "to": {
-            "az": "Bəndər İmam Xomeyni",
-            "en": "Bandar Khomeini",
-            "ru": "Бендер-Хомейни"
-          },
-          "distanceKm": 930,
-          "coordinates": [
-            [
-              35.6892,
-              51.389
-            ],
-            [
-              31.3183,
-              48.6706
-            ],
-            [
-              30.4333,
-              49.0864
-            ]
-          ],
-          "displayCoordinates": [
-            [
-              35.6892,
-              51.389
-            ],
-            [
-              34.1,
-              49.7
-            ],
-            [
-              32.7,
-              48.4
-            ],
-            [
-              31.3183,
-              48.6706
-            ],
-            [
-              30.4333,
-              49.0864
-            ]
-          ],
-          "stopIds": [
-            "tehran",
-            "ahvaz",
-            "bandar-khomeini"
           ]
         },
         {
@@ -9461,7 +9461,6 @@
       ],
       "connectedCorridorIds": [
         "south-west",
-        "north-south",
         "north-west"
       ]
     },
@@ -9630,9 +9629,9 @@
     {
       "id": "barcelona",
       "name": {
-        "az": "Barcelona",
+        "az": "Barselona",
         "en": "Barcelona",
-        "ru": "Barcelona"
+        "ru": "Барселона"
       },
       "description": {
         "az": "Barcelona - Şərq-Qərb, Cənub-Qərb dəhlizi marşrutu üzərində Avropa Birliyi şəhəri.",
@@ -9687,16 +9686,15 @@
         "en": "A European distribution hub of the East-West corridor.",
         "ru": "Европейский распределительный узел коридора Восток-Запад."
       },
-      "category": "station",
-      "icon": "fas:train",
+      "category": "city",
+      "icon": "fas:city",
       "coordinates": [
         52.52,
         13.405
       ],
       "connectedCorridorIds": [
         "east-west",
-        "south-west",
-        "north-south"
+        "south-west"
       ]
     },
     {
@@ -9812,9 +9810,7 @@
         35.1796,
         129.0756
       ],
-      "connectedCorridorIds": [
-        "north-west"
-      ]
+      "connectedCorridorIds": []
     },
     {
       "id": "chabahar-port",
@@ -9910,9 +9906,9 @@
     {
       "id": "duisburg",
       "name": {
-        "az": "Duisburg",
+        "az": "Duisburq",
         "en": "Duisburg",
-        "ru": "Duisburg"
+        "ru": "Дуйсбург"
       },
       "description": {
         "az": "Duisburg - Şərq-Qərb, Cənub-Qərb, Şimal-Cənub dəhlizi marşrutu üzərində Avropa Birliyi şəhəri.",
@@ -9928,7 +9924,6 @@
       "connectedCorridorIds": [
         "east-west",
         "south-west",
-        "north-south",
         "north-west"
       ]
     },
@@ -9981,7 +9976,7 @@
       "name": {
         "az": "Frankfurt",
         "en": "Frankfurt",
-        "ru": "Frankfurt"
+        "ru": "Франкфурт"
       },
       "description": {
         "az": "Frankfurt - Şərq-Qərb, Cənub-Qərb dəhlizi marşrutu üzərində Avropa Birliyi şəhəri.",
@@ -10003,9 +9998,9 @@
     {
       "id": "genoa",
       "name": {
-        "az": "Genoa",
+        "az": "Genuya",
         "en": "Genoa",
-        "ru": "Genoa"
+        "ru": "Генуя"
       },
       "description": {
         "az": "Genoa - Şərq-Qərb, Cənub-Qərb dəhlizi marşrutu üzərində Avropa Birliyi şəhəri.",
@@ -10109,10 +10104,7 @@
         60.18239550906139,
         24.929459847023125
       ],
-      "connectedCorridorIds": [
-        "north-west",
-        "north-south"
-      ]
+      "connectedCorridorIds": []
     },
     {
       "id": "istanbul-gateway",
@@ -10301,9 +10293,9 @@
     {
       "id": "le-havre",
       "name": {
-        "az": "Le Havre",
+        "az": "Havr",
         "en": "Le Havre",
-        "ru": "Le Havre"
+        "ru": "Гавр"
       },
       "description": {
         "az": "Le Havre - Şərq-Qərb, Cənub-Qərb dəhlizi marşrutu üzərində Avropa Birliyi şəhəri.",
@@ -10347,9 +10339,9 @@
     {
       "id": "lisbon",
       "name": {
-        "az": "Lisbon",
+        "az": "Lissabon",
         "en": "Lisbon",
-        "ru": "Lisbon"
+        "ru": "Лиссабон"
       },
       "description": {
         "az": "Lisbon - Şərq-Qərb, Cənub-Qərb dəhlizi marşrutu üzərində Avropa Birliyi şəhəri.",
@@ -10394,9 +10386,9 @@
     {
       "id": "lyon",
       "name": {
-        "az": "Lyon",
+        "az": "Lion",
         "en": "Lyon",
-        "ru": "Lyon"
+        "ru": "Лион"
       },
       "description": {
         "az": "Lyon - Cənub-Qərb dəhlizi marşrutu üzərində Avropa Birliyi şəhəri.",
@@ -10534,7 +10526,7 @@
       "name": {
         "az": "Milan",
         "en": "Milan",
-        "ru": "Milan"
+        "ru": "Милан"
       },
       "description": {
         "az": "Milan - Şərq-Qərb, Cənub-Qərb dəhlizi marşrutu üzərində Avropa Birliyi şəhəri.",
@@ -10571,9 +10563,7 @@
         53.9006,
         27.559
       ],
-      "connectedCorridorIds": [
-        "north-south"
-      ]
+      "connectedCorridorIds": []
     },
     {
       "id": "moscow-freight-hub",
@@ -10662,9 +10652,7 @@
         59.4968,
         24.9573
       ],
-      "connectedCorridorIds": [
-        "north-south"
-      ]
+      "connectedCorridorIds": []
     },
     {
       "id": "nakhchivan-terminal",
@@ -10709,9 +10697,7 @@
         42.8236,
         132.8928
       ],
-      "connectedCorridorIds": [
-        "north-west"
-      ]
+      "connectedCorridorIds": []
     },
     {
       "id": "ningbo-port",
@@ -10753,9 +10739,7 @@
         59.3567,
         24.0531
       ],
-      "connectedCorridorIds": [
-        "north-south"
-      ]
+      "connectedCorridorIds": []
     },
     {
       "id": "paris",
@@ -10808,9 +10792,9 @@
     {
       "id": "prague",
       "name": {
-        "az": "Prague",
+        "az": "Praqa",
         "en": "Prague",
-        "ru": "Prague"
+        "ru": "Прага"
       },
       "description": {
         "az": "Prague - Cənub-Qərb dəhlizi marşrutu üzərində Avropa Birliyi şəhəri.",
@@ -10868,9 +10852,7 @@
         56.967754356112856,
         24.10566681062681
       ],
-      "connectedCorridorIds": [
-        "north-south"
-      ]
+      "connectedCorridorIds": []
     },
     {
       "id": "rotterdam-european-gateway",
@@ -10892,8 +10874,7 @@
       ],
       "connectedCorridorIds": [
         "east-west",
-        "south-west",
-        "north-south"
+        "south-west"
       ]
     },
     {
@@ -10965,9 +10946,9 @@
     {
       "id": "sofia",
       "name": {
-        "az": "Sofia",
+        "az": "Sofiya",
         "en": "Sofia",
-        "ru": "Sofia"
+        "ru": "София"
       },
       "description": {
         "az": "Sofia - Şərq-Qərb, Cənub-Qərb dəhlizi marşrutu üzərində Avropa Birliyi şəhəri.",
@@ -11004,10 +10985,7 @@
         59.93460060344935,
         30.331845425988515
       ],
-      "connectedCorridorIds": [
-        "north-west",
-        "north-south"
-      ]
+      "connectedCorridorIds": []
     },
     {
       "id": "tashkent-hub",
@@ -11081,9 +11059,9 @@
     {
       "id": "trieste",
       "name": {
-        "az": "Trieste",
+        "az": "Triyest",
         "en": "Trieste",
-        "ru": "Trieste"
+        "ru": "Триест"
       },
       "description": {
         "az": "Trieste - Şərq-Qərb, Cənub-Qərb dəhlizi marşrutu üzərində Avropa Birliyi şəhəri.",
@@ -11164,9 +11142,7 @@
         49.0869,
         140.2543
       ],
-      "connectedCorridorIds": [
-        "north-west"
-      ]
+      "connectedCorridorIds": []
     },
     {
       "id": "varna",
@@ -11209,16 +11185,14 @@
         57.39342571728238,
         21.606527806309877
       ],
-      "connectedCorridorIds": [
-        "north-south"
-      ]
+      "connectedCorridorIds": []
     },
     {
       "id": "vienna",
       "name": {
-        "az": "Vienna",
+        "az": "Vyana",
         "en": "Vienna",
-        "ru": "Vienna"
+        "ru": "Вена"
       },
       "description": {
         "az": "Vienna - Şərq-Qərb, Cənub-Qərb dəhlizi marşrutu üzərində Avropa Birliyi şəhəri.",
@@ -11255,9 +11229,7 @@
         43.1155,
         131.8855
       ],
-      "connectedCorridorIds": [
-        "north-west"
-      ]
+      "connectedCorridorIds": []
     },
     {
       "id": "warsaw-hub",
@@ -11271,15 +11243,14 @@
         "en": "A European distribution hub of the East-West corridor.",
         "ru": "Европейский распределительный узел коридора Восток-Запад."
       },
-      "category": "station",
-      "icon": "fas:train",
+      "category": "city",
+      "icon": "fas:city",
       "coordinates": [
         52.2297,
         21.0122
       ],
       "connectedCorridorIds": [
-        "east-west",
-        "north-south"
+        "east-west"
       ]
     },
     {
@@ -11294,16 +11265,15 @@
         "en": "A European distribution hub of the East-West corridor.",
         "ru": "Европейский распределительный узел коридора Восток-Запад."
       },
-      "category": "station",
-      "icon": "fas:train",
+      "category": "city",
+      "icon": "fas:city",
       "coordinates": [
         51.1079,
         17.0385
       ],
       "connectedCorridorIds": [
         "east-west",
-        "south-west",
-        "north-south"
+        "south-west"
       ]
     },
     {
@@ -11346,9 +11316,7 @@
         35.4437,
         139.638
       ],
-      "connectedCorridorIds": [
-        "north-west"
-      ]
+      "connectedCorridorIds": []
     }
   ],
   "settings": {

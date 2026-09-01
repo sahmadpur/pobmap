@@ -16,7 +16,6 @@ import {
   SunMedium,
   TrainFront,
   Truck,
-  Waves,
   X,
 } from "lucide-react";
 
@@ -129,6 +128,8 @@ export function InteractiveMapApp({
   const [theme, setTheme] = useState<ThemeMode>("light");
   const [locale, setLocale] = useState<SupportedLocale>("az");
   const [selectedRouteId, setSelectedRouteId] = useState<string | null>(null);
+  // Closing the details panel keeps the route selected; any new selection reopens it.
+  const [isRoutePanelHidden, setIsRoutePanelHidden] = useState(false);
   const [selectedSegmentId, setSelectedSegmentId] = useState<string | null>(null);
   const [hoveredRouteId, setHoveredRouteId] = useState<string | null>(null);
   // Corridors start hidden: the map opens on the Baku Port hub alone, and a
@@ -248,6 +249,8 @@ export function InteractiveMapApp({
   // corridor, which threw away the zoom the user had set. Framing is now an
   // explicit request, made only by the jumps below.
   function handleRouteSelect(routeId: string, segmentId: string | null = null) {
+    setIsRoutePanelHidden(false);
+
     if (selectedRouteId !== routeId) {
       setSelectedRouteId(routeId);
       setSelectedSegmentId(null);
@@ -542,19 +545,12 @@ export function InteractiveMapApp({
               className={`inline-flex items-center gap-1.5 rounded-full border px-3 py-1.5 text-xs font-medium transition ${buttonClass}`}
               aria-pressed={showFlowAnimation}
             >
-              <Waves className="h-3.5 w-3.5" aria-hidden="true" />
+              {showFlowAnimation ? (
+                <EyeOff className="h-3.5 w-3.5" aria-hidden="true" />
+              ) : (
+                <Eye className="h-3.5 w-3.5" aria-hidden="true" />
+              )}
               {showFlowAnimation ? t("controls.hideFlow") : t("controls.showFlow")}
-            </button>
-            <button
-              type="button"
-              onClick={() => {
-                setEnabledRouteIds(availableRouteIds);
-                setEnabledModes(availableModes);
-                setEnabledStatuses(availableStatuses);
-              }}
-              className="ml-auto text-xs font-medium text-[var(--accent)] transition hover:opacity-80"
-            >
-              {t("filters.enableAll")}
             </button>
           </div>
 
@@ -564,10 +560,21 @@ export function InteractiveMapApp({
                 <span>{t("filters.corridors")}</span>
                 <button
                   type="button"
-                  onClick={() => setEnabledRouteIds([])}
-                  className="text-[11px] font-medium transition hover:text-[var(--accent)]"
+                  onClick={() => {
+                    if (visibleRoutes.length === routes.length) {
+                      setEnabledRouteIds([]);
+                      return;
+                    }
+
+                    setEnabledRouteIds(availableRouteIds);
+                    setEnabledModes(availableModes);
+                    setEnabledStatuses(availableStatuses);
+                  }}
+                  className="text-[11px] font-medium text-[var(--accent)] transition hover:opacity-80"
                 >
-                  {t("filters.clearAll")}
+                  {visibleRoutes.length === routes.length
+                    ? t("filters.clearAll")
+                    : t("filters.enableAll")}
                 </button>
               </div>
               <div className="grid gap-2">
@@ -795,14 +802,10 @@ export function InteractiveMapApp({
         route={selectedRoute}
         locale={locale}
         theme={theme}
-        isOpen={Boolean(selectedRoute)}
+        isOpen={Boolean(selectedRoute) && !isRoutePanelHidden}
         isMapOnlyMode={isMapOnlyMode}
         selectedSegmentId={activeSelectedSegmentId}
-        onClose={() => {
-          setSelectedRouteId(null);
-          setSelectedSegmentId(null);
-          setGroupSegmentIds([]);
-        }}
+        onClose={() => setIsRoutePanelHidden(true)}
         onSegmentSelect={setSelectedSegmentId}
         onGroupOpen={handleGroupOpen}
         t={t}

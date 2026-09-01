@@ -1095,7 +1095,7 @@ export default function CorridorMapCanvas({
       center={DEFAULT_MAP_VIEW.center}
       zoom={DEFAULT_MAP_VIEW.zoom}
       minZoom={3}
-      maxZoom={8}
+      maxZoom={7}
       zoomControl={false}
       attributionControl={false}
       className={`corridor-map-canvas corridor-map-canvas--${theme} ${
