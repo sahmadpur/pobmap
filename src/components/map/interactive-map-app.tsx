@@ -46,20 +46,53 @@ const CorridorMapCanvas = dynamic(() => import("@/components/map/corridor-map-ca
   ssr: false,
 });
 
-type Basemap = "vector" | "google-countries" | "google-countries-styled";
+type Basemap = "default" | "styled" | "dark";
 
-const BASEMAP_CYCLE: Basemap[] = [
-  "vector",
-  "google-countries",
-  "google-countries-styled",
-];
+const BASEMAPS: Basemap[] = ["default", "styled", "dark"];
 
-/** Title of the basemap the next click switches to. */
-const NEXT_BASEMAP_LABEL_KEY: Record<Basemap, string> = {
-  vector: "controls.basemapCountries",
-  "google-countries": "controls.basemapCountriesStyled",
-  "google-countries-styled": "controls.basemapVector",
+// Google map tiles with every label hidden except country names, compiled to
+// the tile endpoint's `apistyle` encoding: rules are comma-separated,
+// `s.t:17` = administrative.country (5 landscape, 49 highway, 6 water),
+// `s.e` = element (l labels, l.t labels.text, g geometry, g.s geometry.stroke),
+// `p.v` = visibility, `p.c` = color aarrggbb. `|` is pre-URL-encoded.
+const COUNTRIES_ONLY = ["s.e:l%7Cp.v:off", "s.t:17%7Cs.e:l.t%7Cp.v:on"];
+
+const BASEMAP_APISTYLE: Record<Basemap, string> = {
+  default: COUNTRIES_ONLY.join(","),
+  // Grey labels, cream landscape, light roads, blue water.
+  styled: [
+    ...COUNTRIES_ONLY,
+    "s.t:17%7Cs.e:l.t.f%7Cp.c:%23ff878787",
+    "s.t:17%7Cs.e:l.t.s%7Cp.v:off",
+    "s.t:5%7Cp.c:%23fff9f5ed",
+    "s.t:49%7Cp.c:%23fff5f5f5",
+    "s.t:49%7Cs.e:g.s%7Cp.c:%23ffc9c9c9",
+    "s.t:6%7Cp.c:%23ffaee0f4",
+  ].join(","),
+  // Google's night palette: slate land, darker water and roads, muted labels.
+  dark: [
+    ...COUNTRIES_ONLY,
+    "s.e:g%7Cp.c:%23ff242f3e",
+    "s.t:17%7Cs.e:l.t.f%7Cp.c:%23ff9aa5b4",
+    "s.t:17%7Cs.e:l.t.s%7Cp.c:%23ff242f3e",
+    "s.t:49%7Cs.e:g%7Cp.c:%23ff38414e",
+    "s.t:49%7Cs.e:g.s%7Cp.c:%23ff212a37",
+    "s.t:6%7Cs.e:g%7Cp.c:%23ff17263c",
+  ].join(","),
 };
+
+function basemapTileUrl(basemap: Basemap, locale: SupportedLocale) {
+  return `https://mt{s}.google.com/vt/lyrs=m&hl=${locale}&x={x}&y={y}&z={z}&apistyle=${BASEMAP_APISTYLE[basemap]}`;
+}
+
+/** One real tile over the Caspian (z5) as the selector thumbnail. */
+function basemapPreviewUrl(basemap: Basemap, locale: SupportedLocale) {
+  return basemapTileUrl(basemap, locale)
+    .replace("{s}", "0")
+    .replace("{x}", "20")
+    .replace("{y}", "12")
+    .replace("{z}", "5");
+}
 
 const LOCALE_LABELS: Record<SupportedLocale, string> = {
   az: "Azerbaijani",
@@ -142,7 +175,8 @@ export function InteractiveMapApp({
   const safeMarkers = markers ?? [];
   const { t, i18n } = useTranslation();
   const [theme, setTheme] = useState<ThemeMode>("light");
-  const [basemap, setBasemap] = useState<Basemap>("vector");
+  const [basemap, setBasemap] = useState<Basemap>("default");
+  const [isBasemapPickerOpen, setIsBasemapPickerOpen] = useState(false);
   const [locale, setLocale] = useState<SupportedLocale>("az");
   const [selectedRouteId, setSelectedRouteId] = useState<string | null>(null);
   // Closing the details panel keeps the route selected; any new selection reopens it.
@@ -390,7 +424,7 @@ export function InteractiveMapApp({
           frameCoordinates={frameCoordinates}
           groupSegmentIds={groupSegmentIds}
           isMapOnlyMode={isMapOnlyMode}
-          basemap={basemap}
+          tileUrl={basemapTileUrl(basemap, locale)}
           hasFilterPanel={isFiltersOpen && !isMapOnlyMode}
           onRouteSelect={(routeId, segmentId) => {
             // Picking a corridor on the map gets the filters out of the way;
@@ -484,18 +518,11 @@ export function InteractiveMapApp({
 
               <button
                 type="button"
-                onClick={() =>
-                  setBasemap(
-                    (current) =>
-                      BASEMAP_CYCLE[
-                        (BASEMAP_CYCLE.indexOf(current) + 1) % BASEMAP_CYCLE.length
-                      ],
-                  )
-                }
+                onClick={() => setIsBasemapPickerOpen((current) => !current)}
                 className={`inline-flex h-10 w-10 items-center justify-center rounded-full border transition ${buttonClass}`}
-                aria-label={t(NEXT_BASEMAP_LABEL_KEY[basemap])}
-                title={t(NEXT_BASEMAP_LABEL_KEY[basemap])}
-                aria-pressed={basemap !== "vector"}
+                aria-label={t("basemap.title")}
+                title={t("basemap.title")}
+                aria-expanded={isBasemapPickerOpen}
               >
                 <Layers className="h-4 w-4" aria-hidden="true" />
               </button>
@@ -526,6 +553,58 @@ export function InteractiveMapApp({
             </div>
           </div>
         </header>
+      ) : null}
+
+      {/* Map type picker (right, under header) */}
+      {!isMapOnlyMode && isBasemapPickerOpen ? (
+        <section
+          className={`pointer-events-auto absolute right-16 top-[5.5rem] z-[470] w-[min(22rem,calc(100vw-1.5rem))] rounded-2xl border p-4 backdrop-blur ${cardClass}`}
+          aria-label={t("basemap.title")}
+        >
+          <div className="mb-4 flex items-center justify-between">
+            <h2 className={`text-base font-semibold ${headingTextClass}`}>{t("basemap.title")}</h2>
+            <button
+              type="button"
+              onClick={() => setIsBasemapPickerOpen(false)}
+              className={`inline-flex h-8 w-8 items-center justify-center rounded-full ${mutedTextClass} hover:bg-slate-500/10`}
+              aria-label={t("basemap.close")}
+            >
+              <X className="h-4 w-4" aria-hidden="true" />
+            </button>
+          </div>
+          <div className="grid grid-cols-3 gap-3">
+            {BASEMAPS.map((option) => {
+              const isActive = option === basemap;
+              return (
+                <button
+                  key={option}
+                  type="button"
+                  onClick={() => setBasemap(option)}
+                  className="flex flex-col items-center gap-2 text-sm font-medium"
+                  aria-pressed={isActive}
+                >
+                  <span
+                    className={`overflow-hidden rounded-xl border-[3px] transition ${
+                      isActive ? "border-[var(--accent)]" : "border-transparent"
+                    }`}
+                  >
+                    {/* eslint-disable-next-line @next/next/no-img-element */}
+                    <img
+                      src={basemapPreviewUrl(option, locale)}
+                      alt=""
+                      width={72}
+                      height={72}
+                      className="block h-[4.5rem] w-[4.5rem] object-cover"
+                    />
+                  </span>
+                  <span className={isActive ? "text-[var(--accent)]" : mutedTextClass}>
+                    {t(`basemap.${option}`)}
+                  </span>
+                </button>
+              );
+            })}
+          </div>
+        </section>
       ) : null}
 
       {/* Filters panel (left) */}

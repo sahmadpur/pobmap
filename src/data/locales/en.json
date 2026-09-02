@@ -24,9 +24,6 @@
     "showFlow": "Show flow animation",
     "hideFlow": "Hide flow animation",
     "mapOnly": "Map only",
-    "basemapCountries": "Switch to countries-only map",
-    "basemapCountriesStyled": "Switch to styled countries map",
-    "basemapVector": "Switch to vector map",
     "showInterface": "Show interface",
     "switchToDark": "Dark mode",
     "switchToLight": "Light mode"
@@ -71,5 +68,12 @@
   "map": {
     "start": "Start",
     "end": "End"
+  },
+  "basemap": {
+    "title": "Map type",
+    "close": "Close",
+    "default": "Default",
+    "styled": "Styled",
+    "dark": "Dark"
   }
 }

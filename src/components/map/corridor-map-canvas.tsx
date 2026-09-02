@@ -941,29 +941,6 @@ function CorridorLines({
   );
 }
 
-// Google's default map look with every label hidden except country names,
-// compiled to the tile endpoint's `apistyle` encoding: rules are
-// comma-separated, `s.t:17` = administrative.country, `s.e` = element (l
-// labels, l.t labels.text), `p.v` = visibility. `|` is pre-URL-encoded.
-const GOOGLE_COUNTRIES_APISTYLE = [
-  "s.e:l%7Cp.v:off",
-  "s.t:17%7Cs.e:l.t%7Cp.v:on",
-].join(",");
-
-// Countries-only again, but on the custom palette: grey labels #878787, cream
-// landscape #f9f5ed, light roads, blue water #aee0f4 (`p.c` = color aarrggbb,
-// `s.t` 5 landscape / 49 highway / 6 water, `g.s` geometry.stroke).
-const GOOGLE_COUNTRIES_STYLED_APISTYLE = [
-  "s.e:l%7Cp.v:off",
-  "s.t:17%7Cs.e:l.t%7Cp.v:on",
-  "s.t:17%7Cs.e:l.t.f%7Cp.c:%23ff878787",
-  "s.t:17%7Cs.e:l.t.s%7Cp.v:off",
-  "s.t:5%7Cp.c:%23fff9f5ed",
-  "s.t:49%7Cp.c:%23fff5f5f5",
-  "s.t:49%7Cs.e:g.s%7Cp.c:%23ffc9c9c9",
-  "s.t:6%7Cp.c:%23ffaee0f4",
-].join(",");
-
 interface CorridorMapCanvasProps {
   routes: CorridorRoute[];
   allRoutes: CorridorRoute[];
@@ -983,7 +960,8 @@ interface CorridorMapCanvasProps {
   isMapOnlyMode: boolean;
   /** Open filter panel; it overlaps the map, so framing has to allow for it. */
   hasFilterPanel: boolean;
-  basemap: "vector" | "google-countries" | "google-countries-styled";
+  /** Leaflet tile URL template of the Google basemap in use. */
+  tileUrl: string;
   onRouteSelect: (routeId: string, segmentId?: string | null) => void;
   onRouteHover: (routeId: string | null) => void;
   onClearSelection: () => void;
@@ -1006,7 +984,7 @@ export default function CorridorMapCanvas({
   groupSegmentIds,
   isMapOnlyMode,
   hasFilterPanel,
-  basemap,
+  tileUrl,
   onRouteSelect,
   onRouteHover,
   onClearSelection,
@@ -1099,23 +1077,6 @@ export default function CorridorMapCanvas({
       ? collectRouteStopMarkers(routes, safeMarkers)
       : [];
 
-  // Every place the corridor layer already spells out, so the basemap does not
-  // print the same city name a second time a few pixels away.
-  const labelledCoordinates = useMemo(
-    () =>
-      showStopLabels
-        ? [
-            primaryPortMarker.coordinates,
-            ...visibleSecondaryMarkers.map((marker) => marker.coordinates),
-            ...routeStopMarkers.map((stop) => stop.coordinate),
-          ]
-        : [primaryPortMarker.coordinates],
-    // Recomputed per render anyway; the memo only keeps the array identity
-    // stable enough for the basemap's own memo.
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    [primaryPortMarker, routeStopMarkers.length, showStopLabels, visibleSecondaryMarkers.length],
-  );
-
   return (
     <MapContainer
       center={DEFAULT_MAP_VIEW.center}
@@ -1128,26 +1089,7 @@ export default function CorridorMapCanvas({
         !isMapOnlyMode && selectedRoute ? "corridor-map-canvas--details" : ""
       } h-full w-full`}
     >
-      {basemap === "google-countries" ? (
-        <TileLayer
-          key={`google-countries-${locale}`}
-          url={`https://mt{s}.google.com/vt/lyrs=m&hl=${locale}&x={x}&y={y}&z={z}&apistyle=${GOOGLE_COUNTRIES_APISTYLE}`}
-          subdomains={["0", "1", "2", "3"]}
-        />
-      ) : basemap === "google-countries-styled" ? (
-        <TileLayer
-          key={`google-countries-styled-${locale}`}
-          url={`https://mt{s}.google.com/vt/lyrs=m&hl=${locale}&x={x}&y={y}&z={z}&apistyle=${GOOGLE_COUNTRIES_STYLED_APISTYLE}`}
-          subdomains={["0", "1", "2", "3"]}
-        />
-      ) : (
-        <WorldBasemap
-          theme={theme}
-          locale={locale}
-          zoom={zoom}
-          labelledCoordinates={labelledCoordinates}
-        />
-      )}
+      <TileLayer key={tileUrl} url={tileUrl} subdomains={["0", "1", "2", "3"]} />
 
       {hasFilterPanel ? <ZoomControl position="topright" /> : null}
       <ZoomWatcher onZoomChange={setZoom} />
