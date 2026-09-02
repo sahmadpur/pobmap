@@ -46,9 +46,10 @@ const CorridorMapCanvas = dynamic(() => import("@/components/map/corridor-map-ca
   ssr: false,
 });
 
-type Basemap = "default" | "styled" | "dark";
+type Basemap = "default" | "styled";
 
-const BASEMAPS: Basemap[] = ["default", "styled", "dark"];
+/** Pickable in light theme; dark theme always uses the night palette. */
+const BASEMAPS: Basemap[] = ["default", "styled"];
 
 // Google map tiles with every label hidden except country names, compiled to
 // the tile endpoint's `apistyle` encoding: rules are comma-separated,
@@ -57,7 +58,7 @@ const BASEMAPS: Basemap[] = ["default", "styled", "dark"];
 // `p.v` = visibility, `p.c` = color aarrggbb. `|` is pre-URL-encoded.
 const COUNTRIES_ONLY = ["s.e:l%7Cp.v:off", "s.t:17%7Cs.e:l.t%7Cp.v:on"];
 
-const BASEMAP_APISTYLE: Record<Basemap, string> = {
+const BASEMAP_APISTYLE: Record<Basemap | "dark", string> = {
   default: COUNTRIES_ONLY.join(","),
   // Grey labels, cream landscape, light roads, blue water.
   styled: [
@@ -81,7 +82,7 @@ const BASEMAP_APISTYLE: Record<Basemap, string> = {
   ].join(","),
 };
 
-function basemapTileUrl(basemap: Basemap, locale: SupportedLocale) {
+function basemapTileUrl(basemap: Basemap | "dark", locale: SupportedLocale) {
   return `https://mt{s}.google.com/vt/lyrs=m&hl=${locale}&x={x}&y={y}&z={z}&apistyle=${BASEMAP_APISTYLE[basemap]}`;
 }
 
@@ -424,7 +425,7 @@ export function InteractiveMapApp({
           frameCoordinates={frameCoordinates}
           groupSegmentIds={groupSegmentIds}
           isMapOnlyMode={isMapOnlyMode}
-          tileUrl={basemapTileUrl(basemap, locale)}
+          tileUrl={basemapTileUrl(isDark ? "dark" : basemap, locale)}
           hasFilterPanel={isFiltersOpen && !isMapOnlyMode}
           onRouteSelect={(routeId, segmentId) => {
             // Picking a corridor on the map gets the filters out of the way;
@@ -516,16 +517,18 @@ export function InteractiveMapApp({
                 </select>
               </label>
 
-              <button
-                type="button"
-                onClick={() => setIsBasemapPickerOpen((current) => !current)}
-                className={`inline-flex h-10 w-10 items-center justify-center rounded-full border transition ${buttonClass}`}
-                aria-label={t("basemap.title")}
-                title={t("basemap.title")}
-                aria-expanded={isBasemapPickerOpen}
-              >
-                <Layers className="h-4 w-4" aria-hidden="true" />
-              </button>
+              {!isDark ? (
+                <button
+                  type="button"
+                  onClick={() => setIsBasemapPickerOpen((current) => !current)}
+                  className={`inline-flex h-10 w-10 items-center justify-center rounded-full border transition ${buttonClass}`}
+                  aria-label={t("basemap.title")}
+                  title={t("basemap.title")}
+                  aria-expanded={isBasemapPickerOpen}
+                >
+                  <Layers className="h-4 w-4" aria-hidden="true" />
+                </button>
+              ) : null}
 
               <button
                 type="button"
@@ -556,7 +559,7 @@ export function InteractiveMapApp({
       ) : null}
 
       {/* Map type picker (right, under header) */}
-      {!isMapOnlyMode && isBasemapPickerOpen ? (
+      {!isMapOnlyMode && !isDark && isBasemapPickerOpen ? (
         <section
           className={`pointer-events-auto absolute right-16 top-[5.5rem] z-[470] w-[min(22rem,calc(100vw-1.5rem))] rounded-2xl border p-4 backdrop-blur ${cardClass}`}
           aria-label={t("basemap.title")}

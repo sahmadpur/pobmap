@@ -73,7 +73,6 @@
     "title": "Map type",
     "close": "Close",
     "default": "Default",
-    "styled": "Styled",
-    "dark": "Dark"
+    "styled": "Styled"
   }
 }
