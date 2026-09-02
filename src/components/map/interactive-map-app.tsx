@@ -561,7 +561,7 @@ export function InteractiveMapApp({
       {/* Map type picker (right, under header) */}
       {!isMapOnlyMode && !isDark && isBasemapPickerOpen ? (
         <section
-          className={`pointer-events-auto absolute right-16 top-[5.5rem] z-[470] w-[min(22rem,calc(100vw-1.5rem))] rounded-2xl border p-4 backdrop-blur ${cardClass}`}
+          className={`pointer-events-auto absolute right-16 top-[5.5rem] z-[470] w-max rounded-2xl border p-4 backdrop-blur ${cardClass}`}
           aria-label={t("basemap.title")}
         >
           <div className="mb-4 flex items-center justify-between">
@@ -575,7 +575,7 @@ export function InteractiveMapApp({
               <X className="h-4 w-4" aria-hidden="true" />
             </button>
           </div>
-          <div className="grid grid-cols-3 gap-3">
+          <div className="flex gap-4">
             {BASEMAPS.map((option) => {
               const isActive = option === basemap;
               return (
