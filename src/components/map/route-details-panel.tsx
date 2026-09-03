@@ -86,6 +86,25 @@ export function RouteDetailsPanel({
     setOpenGroupId(null);
   }
 
+  // A segment picked on the map may sit in a closed group: open that group so
+  // its card is visible. Deliberately not via onGroupOpen, which would re-frame
+  // the camera and dim the rest of the corridor.
+  // Keyed on the selection changing, so the user can still fold the group
+  // afterwards.
+  const [lastSegmentId, setLastSegmentId] = useState(selectedSegmentId);
+
+  if (selectedSegmentId !== lastSegmentId) {
+    setLastSegmentId(selectedSegmentId);
+
+    const owner = groups.find((group) =>
+      group.segments.some((segment) => segment.id === selectedSegmentId),
+    );
+
+    if (owner && openGroupId !== owner.id) {
+      setOpenGroupId(owner.id);
+    }
+  }
+
   const toggleGroup = (groupId: string) => {
     const next = openGroupId === groupId ? null : groupId;
 
@@ -229,6 +248,15 @@ export function RouteDetailsPanel({
                 </p>
               </div>
             </div>
+
+            <section className={`rounded-2xl border p-4 ${isDark ? "border-white/8 bg-white/4" : "border-slate-200 bg-slate-50/85"}`}>
+              <h3 className={`text-xs uppercase tracking-[0.18em] ${isDark ? "text-slate-400" : "text-slate-500"}`}>
+                {t("panel.description")}
+              </h3>
+              <p className={`mt-3 text-sm leading-7 ${isDark ? "text-slate-300" : "text-slate-600"}`}>
+                {getLocalizedText(route.description, locale)}
+              </p>
+            </section>
 
             <section className={`rounded-2xl border p-4 ${isDark ? "border-white/8 bg-white/4" : "border-slate-200 bg-slate-50/85"}`}>
               <div className={`flex items-center gap-2 text-xs uppercase tracking-[0.18em] ${isDark ? "text-slate-400" : "text-slate-500"}`}>
@@ -397,15 +425,6 @@ export function RouteDetailsPanel({
                   );
                 })}
               </div>
-            </section>
-
-            <section className={`rounded-2xl border p-4 ${isDark ? "border-white/8 bg-white/4" : "border-slate-200 bg-slate-50/85"}`}>
-              <h3 className={`text-xs uppercase tracking-[0.18em] ${isDark ? "text-slate-400" : "text-slate-500"}`}>
-                {t("panel.description")}
-              </h3>
-              <p className={`mt-3 text-sm leading-7 ${isDark ? "text-slate-300" : "text-slate-600"}`}>
-                {getLocalizedText(route.description, locale)}
-              </p>
             </section>
           </div>
 

@@ -231,7 +231,7 @@ describe("planVehicles on live North-West data", () => {
   });
 
   it("does not double up on segments a pinned journey already covers", () => {
-    ["north-west-main-1", "north-west-btk"].forEach((segmentId) => {
+    ["north-west-main-1", "north-west-yalama-baku", "north-west-btk"].forEach((segmentId) => {
       expect(
         plans.some((candidate) => candidate.key.endsWith(segmentId)),
         `${segmentId} should be left to its pinned journey`,

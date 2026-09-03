@@ -312,6 +312,12 @@ export function InteractiveMapApp({
 
     setSelectedRouteId(routeId);
     setSelectedSegmentId(segmentId);
+
+    // Picking a segment outside the open panel group lifts the group's dimming
+    // so the whole corridor is back in view around the new selection.
+    if (segmentId && groupSegmentIds.length > 0 && !groupSegmentIds.includes(segmentId)) {
+      setGroupSegmentIds([]);
+    }
   }
 
   function handleGroupOpen(

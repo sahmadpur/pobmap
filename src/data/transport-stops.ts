@@ -137,6 +137,11 @@ export const TRANSPORT_STOPS: TransportStop[] = [
     en: "Makhachkala",
     ru: "Махачкала",
   }),
+  createStop("yalama", "AZ", [41.5216, 48.5443], {
+    az: "Yalama",
+    en: "Yalama",
+    ru: "Ялама",
+  }),
   createStop("astrakhan", "RU", [46.36181378554353, 48.04775306886071], {
     az: "Həştərxan",
     en: "Astrakhan",
@@ -273,7 +278,7 @@ export const TRANSPORT_STOPS: TransportStop[] = [
     ru: "Ыгдыр",
   }),
   createStop("faw-port", "IQ", [29.9744, 48.4728], {
-    az: "Faw Limanı",
+    az: "Faw limanı",
     en: "Faw Port",
     ru: "Порт Фао",
   }),

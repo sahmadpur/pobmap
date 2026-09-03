@@ -106,6 +106,11 @@ const PINNED_VEHICLES: PinnedVehicle[] = [
       {
         segmentId: "north-west-main-1",
         fromStopId: "moscow",
+        toStopId: "yalama",
+      },
+      {
+        segmentId: "north-west-yalama-baku",
+        fromStopId: "yalama",
         toStopId: "baku-port",
       },
     ],

@@ -829,12 +829,16 @@ function CorridorLines({
                 : route.type === "primary"
                   ? 6
                   : 3;
-              const opacity = isOutsideGroup
-                ? 0.18
-                : isSelectedSegment
-                  ? 1
+              // A selected segment always reads at full strength; the rest of
+              // its corridor steps back so the selection is unmistakable.
+              const opacity = isSelectedSegment
+                ? 1
+                : isOutsideGroup
+                  ? 0.18
                   : isSelected
-                    ? 0.9
+                    ? selectedSegmentId
+                      ? 0.35
+                      : 0.9
                     : isDimmed
                       ? 0.18
                       : isHovered
@@ -842,7 +846,7 @@ function CorridorLines({
                         : route.type === "primary"
                           ? 0.72
                           : 0.5;
-              const className = isSelected || isSelectedSegment
+              const className = isSelectedSegment
                 ? "corridor-line corridor-line--selected"
                 : "corridor-line";
 
@@ -858,8 +862,8 @@ function CorridorLines({
                       pathOptions={{
                         pane: "corridor-glow",
                         color,
-                        weight: route.type === "primary" ? 11 : 8,
-                        opacity: 0.22,
+                        weight: route.type === "primary" ? 14 : 10,
+                        opacity: 0.45,
                         lineCap: "round",
                         lineJoin: "round",
                       }}

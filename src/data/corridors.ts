@@ -749,7 +749,7 @@ export const CORRIDORS: CorridorRoute[] = applyPresentationPaths([
         id: "iraq-1",
         mode: "rail",
         from: {
-          az: "Faw Limanı",
+          az: "Faw limanı",
           en: "Faw Port",
           ru: "Порт Фао",
         },

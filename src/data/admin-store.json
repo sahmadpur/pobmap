@@ -3737,73 +3737,112 @@
           "id": "north-south-main-1",
           "mode": "rail",
           "from": {
-            "az": "Bakı",
-            "en": "Baku",
-            "ru": "Баку"
-          },
-          "to": {
             "az": "Moskva",
             "en": "Moscow",
             "ru": "Москва"
           },
-          "distanceKm": 2500,
+          "to": {
+            "az": "Yalama",
+            "en": "Yalama",
+            "ru": "Ялама"
+          },
+          "distanceKm": 2300,
           "coordinates": [
             [
-              40.3572,
-              49.835
-            ],
-            [
-              42.98868773101421,
-              47.49974364170113
+              55.7558,
+              37.6173
             ],
             [
               46.36181378554353,
               48.04775306886071
             ],
             [
-              55.7558,
-              37.6173
+              42.98868773101421,
+              47.49974364170113
+            ],
+            [
+              41.5216,
+              48.5443
             ]
           ],
           "displayCoordinates": [
             [
-              40.3572,
-              49.835
-            ],
-            [
-              41.15,
-              49.1
-            ],
-            [
-              42.6977,
-              47.5034
-            ],
-            [
-              44.71551373202136,
-              46.69189453125001
-            ],
-            [
-              46.3497,
-              48.0408
-            ],
-            [
-              49.4,
-              45.3
+              55.7558,
+              37.6173
             ],
             [
               52.5,
               41.6
             ],
             [
-              55.7558,
-              37.6173
+              49.4,
+              45.3
+            ],
+            [
+              46.3497,
+              48.0408
+            ],
+            [
+              44.71551373202136,
+              46.69189453125001
+            ],
+            [
+              42.6977,
+              47.5034
+            ],
+            [
+              41.5216,
+              48.5443
             ]
           ],
           "stopIds": [
-            "baku-port",
-            "makhachkala",
+            "moscow",
             "astrakhan",
-            "moscow"
+            "makhachkala",
+            "yalama"
+          ]
+        },
+        {
+          "id": "north-south-yalama-baku",
+          "mode": "rail",
+          "from": {
+            "az": "Yalama",
+            "en": "Yalama",
+            "ru": "Ялама"
+          },
+          "to": {
+            "az": "Bakı",
+            "en": "Baku",
+            "ru": "Баку"
+          },
+          "distanceKm": 200,
+          "coordinates": [
+            [
+              41.5216,
+              48.5443
+            ],
+            [
+              40.3572,
+              49.835
+            ]
+          ],
+          "displayCoordinates": [
+            [
+              41.5216,
+              48.5443
+            ],
+            [
+              41.1,
+              49.1
+            ],
+            [
+              40.3572,
+              49.835
+            ]
+          ],
+          "stopIds": [
+            "yalama",
+            "baku-port"
           ]
         },
         {
@@ -4690,77 +4729,116 @@
           "id": "north-west-main-1",
           "mode": "rail",
           "from": {
-            "az": "Bakı",
-            "en": "Baku",
-            "ru": "Баку"
-          },
-          "to": {
             "az": "Moskva",
             "en": "Moscow",
             "ru": "Москва"
           },
-          "distanceKm": 2500,
+          "to": {
+            "az": "Yalama",
+            "en": "Yalama",
+            "ru": "Ялама"
+          },
+          "distanceKm": 2300,
           "coordinates": [
             [
-              40.3572,
-              49.835
-            ],
-            [
-              42.98868773101421,
-              47.49974364170113
+              55.7558,
+              37.6173
             ],
             [
               46.36181378554353,
               48.04775306886071
             ],
             [
-              55.7558,
-              37.6173
+              42.98868773101421,
+              47.49974364170113
+            ],
+            [
+              41.5216,
+              48.5443
             ]
           ],
           "displayCoordinates": [
             [
-              40.3572,
-              49.835
-            ],
-            [
-              41.1,
-              49.1
-            ],
-            [
-              42.6977,
-              47.5034
-            ],
-            [
-              44.166444664458595,
-              46.94458007812501
-            ],
-            [
-              45.27488643704891,
-              46.99951171875001
-            ],
-            [
-              46.3497,
-              48.0408
-            ],
-            [
-              49.2,
-              45.5
+              55.7558,
+              37.6173
             ],
             [
               52.5,
               41.8
             ],
             [
-              55.7558,
-              37.6173
+              49.2,
+              45.5
+            ],
+            [
+              46.3497,
+              48.0408
+            ],
+            [
+              45.27488643704891,
+              46.99951171875001
+            ],
+            [
+              44.166444664458595,
+              46.94458007812501
+            ],
+            [
+              42.6977,
+              47.5034
+            ],
+            [
+              41.5216,
+              48.5443
             ]
           ],
           "stopIds": [
-            "baku-port",
-            "makhachkala",
+            "moscow",
             "astrakhan",
-            "moscow"
+            "makhachkala",
+            "yalama"
+          ]
+        },
+        {
+          "id": "north-west-yalama-baku",
+          "mode": "rail",
+          "from": {
+            "az": "Yalama",
+            "en": "Yalama",
+            "ru": "Ялама"
+          },
+          "to": {
+            "az": "Bakı",
+            "en": "Baku",
+            "ru": "Баку"
+          },
+          "distanceKm": 200,
+          "coordinates": [
+            [
+              41.5216,
+              48.5443
+            ],
+            [
+              40.3572,
+              49.835
+            ]
+          ],
+          "displayCoordinates": [
+            [
+              41.5216,
+              48.5443
+            ],
+            [
+              41.1,
+              49.1
+            ],
+            [
+              40.3572,
+              49.835
+            ]
+          ],
+          "stopIds": [
+            "yalama",
+            "baku-port"
           ]
         },
         {
@@ -9400,7 +9478,7 @@
     {
       "id": "aktau-seaport",
       "name": {
-        "az": "Aktau Dəniz Limanı",
+        "az": "Aktau dəniz limanı",
         "en": "Aktau Seaport",
         "ru": "Морской порт Актау"
       },
@@ -9422,7 +9500,7 @@
     {
       "id": "almaty-logistics-hub",
       "name": {
-        "az": "Almatı Logistika Qovşağı",
+        "az": "Almatı logistika qovşağı",
         "en": "Almaty Logistics Hub",
         "ru": "Логистический хаб Алматы"
       },
@@ -9491,7 +9569,7 @@
     {
       "id": "ashgabat-hub",
       "name": {
-        "az": "Aşqabad Qovşağı",
+        "az": "Aşqabad qovşağı",
         "en": "Ashgabat Hub",
         "ru": "Узел Ашхабад"
       },
@@ -9513,7 +9591,7 @@
     {
       "id": "astara-terminal",
       "name": {
-        "az": "Astara Terminalı",
+        "az": "Astara terminalı",
         "en": "Astara Terminal",
         "ru": "Терминал Астара"
       },
@@ -9583,7 +9661,7 @@
     {
       "id": "bandar-abbas-port",
       "name": {
-        "az": "Bəndər-Abbas Limanı",
+        "az": "Bəndər-Abbas limanı",
         "en": "Bandar Abbas Port",
         "ru": "Порт Бендер-Аббас"
       },
@@ -9606,7 +9684,7 @@
     {
       "id": "bandar-khomeini-port",
       "name": {
-        "az": "Bəndər İmam Xomeyni Limanı",
+        "az": "Bəndər İmam Xomeyni limanı",
         "en": "Bandar Khomeini Port",
         "ru": "Порт Бендер-Хомейни"
       },
@@ -9653,7 +9731,7 @@
     {
       "id": "batumi-port",
       "name": {
-        "az": "Batumi Limanı",
+        "az": "Batumi limanı",
         "en": "Batumi Port",
         "ru": "Порт Батуми"
       },
@@ -9795,7 +9873,7 @@
     {
       "id": "busan-port",
       "name": {
-        "az": "Pusan Limanı",
+        "az": "Pusan limanı",
         "en": "Busan Port",
         "ru": "Порт Пусан"
       },
@@ -9815,7 +9893,7 @@
     {
       "id": "chabahar-port",
       "name": {
-        "az": "Çabahar Limanı",
+        "az": "Çabahar limanı",
         "en": "Chabahar Port",
         "ru": "Порт Чабахар"
       },
@@ -9860,7 +9938,7 @@
     {
       "id": "constanta-port",
       "name": {
-        "az": "Konstansa Limanı",
+        "az": "Konstansa limanı",
         "en": "Constanta Port",
         "ru": "Порт Констанца"
       },
@@ -9883,7 +9961,7 @@
     {
       "id": "doha-gulf-terminal",
       "name": {
-        "az": "Doha Körfəz Terminalı",
+        "az": "Doha körfəz terminalı",
         "en": "Doha Gulf Terminal",
         "ru": "Терминал Доха"
       },
@@ -9930,7 +10008,7 @@
     {
       "id": "dushanbe-rail-hub",
       "name": {
-        "az": "Düşənbə Dəmiryol Qovşağı",
+        "az": "Düşənbə dəmiryol qovşağı",
         "en": "Dushanbe Rail Hub",
         "ru": "Железнодорожный узел Душанбе"
       },
@@ -10089,7 +10167,7 @@
     {
       "id": "helsinki-northern-terminal",
       "name": {
-        "az": "Helsinki Şimal Terminalı",
+        "az": "Helsinki şimal terminalı",
         "en": "Helsinki Northern Terminal",
         "ru": "Северный терминал Хельсинки"
       },
@@ -10109,7 +10187,7 @@
     {
       "id": "istanbul-gateway",
       "name": {
-        "az": "İstanbul Keçid Qovşağı",
+        "az": "İstanbul keçid qovşağı",
         "en": "Istanbul Gateway",
         "ru": "Стамбульский шлюз"
       },
@@ -10157,7 +10235,7 @@
     {
       "id": "jebel-ali-maritime-gateway",
       "name": {
-        "az": "Cəbəl-Əli Dəniz Keçidi",
+        "az": "Cəbəl-Əli dəniz keçidi",
         "en": "Jebel Ali Maritime Gateway",
         "ru": "Морской шлюз Джебель-Али"
       },
@@ -10180,7 +10258,7 @@
     {
       "id": "karachi-gateway",
       "name": {
-        "az": "Kəraçi Keçid Qovşağı",
+        "az": "Kəraçi keçid qovşağı",
         "en": "Karachi Gateway",
         "ru": "Карачинский шлюз"
       },
@@ -10203,7 +10281,7 @@
     {
       "id": "kars-logistics-terminal",
       "name": {
-        "az": "Qars Logistika Terminalı",
+        "az": "Qars logistika terminalı",
         "en": "Kars Logistics Terminal",
         "ru": "Логистический терминал Карс"
       },
@@ -10227,7 +10305,7 @@
     {
       "id": "kashgar-gateway",
       "name": {
-        "az": "Kaşqar Qapısı",
+        "az": "Kaşqar qapısı",
         "en": "Kashgar Gateway",
         "ru": "Кашгарские ворота"
       },
@@ -10317,7 +10395,7 @@
     {
       "id": "lianyungang-port",
       "name": {
-        "az": "Lianyungang Limanı",
+        "az": "Lianyungang limanı",
         "en": "Lianyungang Port",
         "ru": "Порт Ляньюньган"
       },
@@ -10478,7 +10556,7 @@
     {
       "id": "mazar-i-sharif-rail-hub",
       "name": {
-        "az": "Məzari-Şərif Dəmiryol Qovşağı",
+        "az": "Məzari-Şərif dəmiryol qovşağı",
         "en": "Mazar-i-Sharif Rail Hub",
         "ru": "Железнодорожный узел Мазари-Шариф"
       },
@@ -10500,7 +10578,7 @@
     {
       "id": "mersin-port",
       "name": {
-        "az": "Mersin Limanı",
+        "az": "Mersin limanı",
         "en": "Mersin Port",
         "ru": "Порт Мерсин"
       },
@@ -10548,7 +10626,7 @@
     {
       "id": "minsk-hub",
       "name": {
-        "az": "Minsk Qovşağı",
+        "az": "Minsk qovşağı",
         "en": "Minsk Hub",
         "ru": "Узел Минск"
       },
@@ -10568,7 +10646,7 @@
     {
       "id": "moscow-freight-hub",
       "name": {
-        "az": "Moskva Yük Qovşağı",
+        "az": "Moskva yük qovşağı",
         "en": "Moscow Freight Hub",
         "ru": "Грузовой хаб Москва"
       },
@@ -10591,7 +10669,7 @@
     {
       "id": "mumbai-gateway",
       "name": {
-        "az": "Mumbay Qapısı",
+        "az": "Mumbay qapısı",
         "en": "Mumbai Gateway",
         "ru": "Ворота Мумбаи"
       },
@@ -10614,7 +10692,7 @@
     {
       "id": "muscat-port",
       "name": {
-        "az": "Maskat Limanı",
+        "az": "Maskat limanı",
         "en": "Muscat Port",
         "ru": "Порт Маскат"
       },
@@ -10682,7 +10760,7 @@
     {
       "id": "nakhodka-port",
       "name": {
-        "az": "Naxodka Limanı",
+        "az": "Naxodka limanı",
         "en": "Nakhodka Port",
         "ru": "Порт Находка"
       },
@@ -10768,7 +10846,7 @@
     {
       "id": "poti-port",
       "name": {
-        "az": "Poti Limanı",
+        "az": "Poti limanı",
         "en": "Poti Port",
         "ru": "Порт Поти"
       },
@@ -10815,7 +10893,7 @@
     {
       "id": "qingdao-port",
       "name": {
-        "az": "Qingdao Limanı",
+        "az": "Qingdao limanı",
         "en": "Qingdao Port",
         "ru": "Порт Циндао"
       },
@@ -10837,7 +10915,7 @@
     {
       "id": "riga-port",
       "name": {
-        "az": "Riqa Limanı",
+        "az": "Riqa limanı",
         "en": "Riga Port",
         "ru": "Порт Рига"
       },
@@ -10857,7 +10935,7 @@
     {
       "id": "rotterdam-european-gateway",
       "name": {
-        "az": "Rotterdam Avropa Keçidi",
+        "az": "Rotterdam Avropa keçidi",
         "en": "Rotterdam European Gateway",
         "ru": "Европейский шлюз Роттердама"
       },
@@ -10970,7 +11048,7 @@
     {
       "id": "st-petersburg-hub",
       "name": {
-        "az": "Sankt-Peterburq Qovşağı",
+        "az": "Sankt-Peterburq qovşağı",
         "en": "St. Petersburg Hub",
         "ru": "Узел Санкт-Петербург"
       },
@@ -10990,7 +11068,7 @@
     {
       "id": "tashkent-hub",
       "name": {
-        "az": "Daşkənd Logistika Mərkəzi",
+        "az": "Daşkənd logistika mərkəzi",
         "en": "Tashkent Logistics Hub",
         "ru": "Логистический узел Ташкент"
       },
@@ -11012,7 +11090,7 @@
     {
       "id": "tbilisi-intermodal-hub",
       "name": {
-        "az": "Tbilisi İntermodal Qovşağı",
+        "az": "Tbilisi intermodal qovşağı",
         "en": "Tbilisi Intermodal Hub",
         "ru": "Тбилисский интермодальный хаб"
       },
@@ -11036,7 +11114,7 @@
     {
       "id": "tehran-logistics-hub",
       "name": {
-        "az": "Tehran Logistika Qovşağı",
+        "az": "Tehran logistika qovşağı",
         "en": "Tehran Logistics Hub",
         "ru": "Логистический хаб Тегеран"
       },
@@ -11083,7 +11161,7 @@
     {
       "id": "turgundi-border-terminal",
       "name": {
-        "az": "Turqundi Sərhəd Terminalı",
+        "az": "Turqundi sərhəd terminalı",
         "en": "Turgundi Border Terminal",
         "ru": "Пограничный терминал Тургунди"
       },
@@ -11105,7 +11183,7 @@
     {
       "id": "turkmenbashi-port",
       "name": {
-        "az": "Türkmənbaşı Limanı",
+        "az": "Türkmənbaşı limanı",
         "en": "Turkmenbashi Port",
         "ru": "Порт Туркменбаши"
       },
@@ -11127,7 +11205,7 @@
     {
       "id": "vanino-port",
       "name": {
-        "az": "Vanino Limanı",
+        "az": "Vanino limanı",
         "en": "Vanino Port",
         "ru": "Порт Ванино"
       },
@@ -11214,7 +11292,7 @@
     {
       "id": "vladivostok-port",
       "name": {
-        "az": "Vladivostok Limanı",
+        "az": "Vladivostok limanı",
         "en": "Vladivostok Port",
         "ru": "Порт Владивосток"
       },
@@ -11279,7 +11357,7 @@
     {
       "id": "xian-inland-port",
       "name": {
-        "az": "Sian Quru Limanı",
+        "az": "Sian quru limanı",
         "en": "Xi'an Inland Port",
         "ru": "Сухой порт Сиань"
       },
@@ -11301,7 +11379,7 @@
     {
       "id": "yokohama-port",
       "name": {
-        "az": "Yokohama Limanı",
+        "az": "Yokohama limanı",
         "en": "Yokohama Port",
         "ru": "Порт Иокогама"
       },

@@ -12,6 +12,8 @@ export interface CorridorSegmentGroup {
   name: LocalizedText;
   /** ISO-2 codes of the stops this group claims. */
   countries: string[];
+  /** Segments claimed by id, ahead of the country rule. */
+  segmentIds?: string[];
 }
 
 /** Every European country the corridors currently reach. */
@@ -25,6 +27,8 @@ const EUROPE = [
  * Group order matters twice: it is the reading order in the panel, and a
  * segment joins the first group that claims any of its stops. That is what
  * keeps the Aktau-Baku crossing in Central Asia rather than in Az-Ge-Tr.
+ * `segmentIds` overrides the country rule for segments that would otherwise
+ * land in the wrong group, e.g. BTK leaving Baku still belongs to Ge-Tr.
  */
 export const CORRIDOR_SEGMENT_GROUPS: Record<string, CorridorSegmentGroup[]> = {
   "east-west": [
@@ -59,6 +63,7 @@ export const CORRIDOR_SEGMENT_GROUPS: Record<string, CorridorSegmentGroup[]> = {
       id: "georgia-turkey",
       name: { az: "Gürcüstan-Türkiyə", en: "Georgia-Türkiye", ru: "Грузия-Турция" },
       countries: ["GE", "TR"],
+      segmentIds: ["north-west-btk", "north-west-nakhchivan"],
     },
     {
       id: "europe",
@@ -134,9 +139,11 @@ export function resolveSegmentGroups(route: CorridorRoute): ResolvedSegmentGroup
 
   for (const segment of route.segments) {
     const countries = segmentCountries(segment);
-    const owner = groups.find((group) =>
-      countries.some((code) => group.countries.includes(code)),
-    );
+    const owner =
+      groups.find((group) => group.segmentIds?.includes(segment.id)) ??
+      groups.find((group) =>
+        countries.some((code) => group.countries.includes(code)),
+      );
 
     if (!owner) {
       ungrouped.push(segment);

@@ -26,7 +26,7 @@ export const SEED_MARKERS: AdminMarker[] = [
   {
     id: "xian-inland-port",
     name: localizedText("Xi'an Inland Port", {
-      az: "Sian Quru Limanı",
+      az: "Sian quru limanı",
       ru: "Сухой порт Сиань",
     }),
     description: localizedText(
@@ -44,7 +44,7 @@ export const SEED_MARKERS: AdminMarker[] = [
   {
     id: "almaty-logistics-hub",
     name: localizedText("Almaty Logistics Hub", {
-      az: "Almatı Logistika Qovşağı",
+      az: "Almatı logistika qovşağı",
       ru: "Логистический хаб Алматы",
     }),
     description: localizedText(
@@ -62,7 +62,7 @@ export const SEED_MARKERS: AdminMarker[] = [
   {
     id: "aktau-seaport",
     name: localizedText("Aktau Seaport", {
-      az: "Aktau Dəniz Limanı",
+      az: "Aktau dəniz limanı",
       ru: "Морской порт Актау",
     }),
     description: localizedText(
@@ -80,7 +80,7 @@ export const SEED_MARKERS: AdminMarker[] = [
   {
     id: "tbilisi-intermodal-hub",
     name: localizedText("Tbilisi Intermodal Hub", {
-      az: "Tbilisi İntermodal Qovşağı",
+      az: "Tbilisi intermodal qovşağı",
       ru: "Тбилисский интермодальный хаб",
     }),
     description: localizedText(
@@ -98,7 +98,7 @@ export const SEED_MARKERS: AdminMarker[] = [
   {
     id: "kars-logistics-terminal",
     name: localizedText("Kars Logistics Terminal", {
-      az: "Qars Logistika Terminalı",
+      az: "Qars logistika terminalı",
       ru: "Логистический терминал Карс",
     }),
     description: localizedText(
@@ -116,7 +116,7 @@ export const SEED_MARKERS: AdminMarker[] = [
   {
     id: "istanbul-gateway",
     name: localizedText("Istanbul Gateway", {
-      az: "İstanbul Keçid Qovşağı",
+      az: "İstanbul keçid qovşağı",
       ru: "Стамбульский шлюз",
     }),
     description: localizedText(
@@ -134,7 +134,7 @@ export const SEED_MARKERS: AdminMarker[] = [
   {
     id: "moscow-freight-hub",
     name: localizedText("Moscow Freight Hub", {
-      az: "Moskva Yük Qovşağı",
+      az: "Moskva yük qovşağı",
       ru: "Грузовой хаб Москва",
     }),
     description: localizedText(
@@ -152,7 +152,7 @@ export const SEED_MARKERS: AdminMarker[] = [
   {
     id: "vladivostok-port",
     name: localizedText("Vladivostok Port", {
-      az: "Vladivostok Limanı",
+      az: "Vladivostok limanı",
       ru: "Порт Владивосток",
     }),
     description: localizedText(
@@ -170,7 +170,7 @@ export const SEED_MARKERS: AdminMarker[] = [
   {
     id: "bandar-abbas-port",
     name: localizedText("Bandar Abbas Port", {
-      az: "Bəndər-Abbas Limanı",
+      az: "Bəndər-Abbas limanı",
       ru: "Порт Бендер-Аббас",
     }),
     description: localizedText(
@@ -188,7 +188,7 @@ export const SEED_MARKERS: AdminMarker[] = [
   {
     id: "tehran-logistics-hub",
     name: localizedText("Tehran Logistics Hub", {
-      az: "Tehran Logistika Qovşağı",
+      az: "Tehran logistika qovşağı",
       ru: "Логистический хаб Тегеран",
     }),
     description: localizedText(
@@ -206,7 +206,7 @@ export const SEED_MARKERS: AdminMarker[] = [
   {
     id: "karachi-gateway",
     name: localizedText("Karachi Gateway", {
-      az: "Kəraçi Keçid Qovşağı",
+      az: "Kəraçi keçid qovşağı",
       ru: "Карачинский шлюз",
     }),
     description: localizedText(
@@ -242,7 +242,7 @@ export const SEED_MARKERS: AdminMarker[] = [
   {
     id: "turgundi-border-terminal",
     name: localizedText("Turgundi Border Terminal", {
-      az: "Turqundi Sərhəd Terminalı",
+      az: "Turqundi sərhəd terminalı",
       ru: "Пограничный терминал Тургунди",
     }),
     description: localizedText(
@@ -260,7 +260,7 @@ export const SEED_MARKERS: AdminMarker[] = [
   {
     id: "mazar-i-sharif-rail-hub",
     name: localizedText("Mazar-i-Sharif Rail Hub", {
-      az: "Məzari-Şərif Dəmiryol Qovşağı",
+      az: "Məzari-Şərif dəmiryol qovşağı",
       ru: "Железнодорожный узел Мазари-Шариф",
     }),
     description: localizedText(
@@ -278,7 +278,7 @@ export const SEED_MARKERS: AdminMarker[] = [
   {
     id: "dushanbe-rail-hub",
     name: localizedText("Dushanbe Rail Hub", {
-      az: "Düşənbə Dəmiryol Qovşağı",
+      az: "Düşənbə dəmiryol qovşağı",
       ru: "Железнодорожный узел Душанбе",
     }),
     description: localizedText(
@@ -296,7 +296,7 @@ export const SEED_MARKERS: AdminMarker[] = [
   {
     id: "qingdao-port",
     name: localizedText("Qingdao Port", {
-      az: "Qingdao Limanı",
+      az: "Qingdao limanı",
       ru: "Порт Циндао",
     }),
     description: localizedText(
@@ -314,7 +314,7 @@ export const SEED_MARKERS: AdminMarker[] = [
   {
     id: "lianyungang-port",
     name: localizedText("Lianyungang Port", {
-      az: "Lianyungang Limanı",
+      az: "Lianyungang limanı",
       ru: "Порт Ляньюньган",
     }),
     description: localizedText(
@@ -332,7 +332,7 @@ export const SEED_MARKERS: AdminMarker[] = [
   {
     id: "mersin-port",
     name: localizedText("Mersin Port", {
-      az: "Mersin Limanı",
+      az: "Mersin limanı",
       ru: "Порт Мерсин",
     }),
     description: localizedText(
