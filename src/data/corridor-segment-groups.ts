@@ -107,10 +107,15 @@ export const CORRIDOR_SEGMENT_GROUPS: Record<string, CorridorSegmentGroup[]> = {
   ],
 };
 
-function segmentCountries(segment: CorridorSegment): string[] {
-  return (segment.stopIds ?? [])
-    .map((stopId) => getTransportStop(stopId)?.countryCode)
-    .filter((code): code is string => Boolean(code));
+/** ISO-2 codes of the countries a segment passes through, in stop order, deduped. */
+export function segmentCountries(segment: CorridorSegment): string[] {
+  return Array.from(
+    new Set(
+      (segment.stopIds ?? [])
+        .map((stopId) => getTransportStop(stopId)?.countryCode)
+        .filter((code): code is string => Boolean(code)),
+    ),
+  );
 }
 
 export interface ResolvedSegmentGroup {

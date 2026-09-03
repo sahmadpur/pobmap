@@ -5,7 +5,6 @@ import {
   ChevronDown,
   ChevronRight,
   ChevronUp,
-  Globe2,
   Route as RouteIcon,
   ShipWheel,
   TimerReset,
@@ -21,7 +20,7 @@ import {
   TRANSPORT_MODE_META,
 } from "@/data/corridors";
 import { CountryFlag } from "@/components/ui/country-flag";
-import { resolveSegmentGroups } from "@/data/corridor-segment-groups";
+import { resolveSegmentGroups, segmentCountries } from "@/data/corridor-segment-groups";
 import type {
   CorridorRoute,
   CorridorSegment,
@@ -259,28 +258,6 @@ export function RouteDetailsPanel({
             </section>
 
             <section className={`rounded-2xl border p-4 ${isDark ? "border-white/8 bg-white/4" : "border-slate-200 bg-slate-50/85"}`}>
-              <div className={`flex items-center gap-2 text-xs uppercase tracking-[0.18em] ${isDark ? "text-slate-400" : "text-slate-500"}`}>
-                <Globe2 className="h-4 w-4" aria-hidden="true" />
-                {t("panel.countries")}
-              </div>
-              <div className="mt-3 flex flex-wrap gap-2">
-                {route.countries.map((countryCode) => (
-                  <span
-                    key={countryCode}
-                    className={`inline-flex items-center gap-2 rounded-full border px-3 py-1.5 text-sm ${
-                      isDark
-                        ? "border-white/10 bg-slate-900/75 text-slate-100"
-                        : "border-slate-200 bg-white text-slate-800"
-                    }`}
-                  >
-                    <CountryFlag code={countryCode} size={20} />
-                    {getCountryName(countryCode, locale)}
-                  </span>
-                ))}
-              </div>
-            </section>
-
-            <section className={`rounded-2xl border p-4 ${isDark ? "border-white/8 bg-white/4" : "border-slate-200 bg-slate-50/85"}`}>
               {selectedSegment ? (
                 <div className={`mb-4 rounded-2xl border p-4 ${isDark ? "border-white/10 bg-slate-900/70" : "border-slate-200 bg-white/90"}`}>
                   <div className={`flex items-center gap-2 text-xs uppercase tracking-[0.18em] ${isDark ? "text-slate-400" : "text-slate-500"}`}>
@@ -305,6 +282,16 @@ export function RouteDetailsPanel({
                         {getLocalizedText(selectedSegment.from, locale)} →{" "}
                         {getLocalizedText(selectedSegment.to, locale)}
                       </p>
+                      <div className="mt-2 flex flex-wrap gap-1.5">
+                        {segmentCountries(selectedSegment).map((code) => (
+                          <CountryFlag
+                            key={code}
+                            code={code}
+                            size={20}
+                            title={getCountryName(code, locale)}
+                          />
+                        ))}
+                      </div>
                     </div>
                     <span className={`rounded-full px-2.5 py-1 text-xs font-medium ${
                       isDark ? "bg-white/6 text-slate-200" : "bg-slate-100 text-slate-700"
@@ -410,6 +397,16 @@ export function RouteDetailsPanel({
                             {getLocalizedText(segment.from, locale)} →{" "}
                             {getLocalizedText(segment.to, locale)}
                           </p>
+                          <div className="mt-2 flex flex-wrap gap-1.5">
+                            {segmentCountries(segment).map((code) => (
+                              <CountryFlag
+                                key={code}
+                                code={code}
+                                size={20}
+                                title={getCountryName(code, locale)}
+                              />
+                            ))}
+                          </div>
                         </div>
                         <span className={`rounded-full px-2.5 py-1 text-xs font-medium ${
                           isDark ? "bg-white/6 text-slate-200" : "bg-slate-100 text-slate-700"
