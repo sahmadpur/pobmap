@@ -49,6 +49,7 @@
     "secondary": "Вторичные коридоры",
     "bakuPort": "Порт",
     "transportModes": "Цвета транспорта",
+    "planned": "Планируемый",
     "markers": "Маркеры карты"
   },
   "status": {

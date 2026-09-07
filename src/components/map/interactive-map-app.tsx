@@ -37,7 +37,6 @@ import type {
   Coordinate,
   CorridorRoute,
   CorridorSegment,
-  CorridorStatus,
   SupportedLocale,
   TransportMode,
 } from "@/types/map";
@@ -102,7 +101,6 @@ const LOCALE_LABELS: Record<SupportedLocale, string> = {
 };
 
 const TRANSPORT_MODE_ORDER: TransportMode[] = ["rail", "ship", "road"];
-const STATUS_ORDER: CorridorStatus[] = ["active", "planned", "suspended"];
 
 type ThemeMode = "dark" | "light";
 
@@ -130,10 +128,6 @@ function getAvailableModes(routes: CorridorRoute[]) {
   return TRANSPORT_MODE_ORDER.filter((mode) =>
     routes.some((route) => route.segments.some((segment) => segment.mode === mode)),
   );
-}
-
-function getAvailableStatuses(routes: CorridorRoute[]) {
-  return STATUS_ORDER.filter((status) => routes.some((route) => route.status === status));
 }
 
 function getUniqueRouteModes(route: CorridorRoute) {
@@ -192,9 +186,6 @@ export function InteractiveMapApp({
   const [enabledModes, setEnabledModes] = useState<TransportMode[]>(
     () => getAvailableModes(routes),
   );
-  const [enabledStatuses, setEnabledStatuses] = useState<CorridorStatus[]>(
-    () => getAvailableStatuses(routes),
-  );
   const [showFlowAnimation, setShowFlowAnimation] = useState(true);
   const [frameCount, setFrameCount] = useState(0);
   // Segments of the group opened in the details panel; empty means no group is
@@ -206,7 +197,6 @@ export function InteractiveMapApp({
   const [isFiltersOpen, setIsFiltersOpen] = useState(false);
   const availableRouteIds = useMemo(() => routes.map((route) => route.id), [routes]);
   const availableModes = useMemo(() => getAvailableModes(routes), [routes]);
-  const availableStatuses = useMemo(() => getAvailableStatuses(routes), [routes]);
 
   useEffect(() => {
     const frameId = window.requestAnimationFrame(() => {
@@ -260,20 +250,13 @@ export function InteractiveMapApp({
     () => enabledModes.filter((mode) => availableModes.includes(mode)),
     [availableModes, enabledModes],
   );
-  const effectiveEnabledStatuses = useMemo(
-    () => enabledStatuses.filter((status) => availableStatuses.includes(status)),
-    [availableStatuses, enabledStatuses],
-  );
 
   // Memoized so the route objects keep a stable identity across unrelated
   // re-renders (hover, theme, locale) — downstream effects (map fitBounds,
   // vehicle spawning) depend on it and must not re-run spuriously.
   const visibleRoutes: CorridorRoute[] = useMemo(() =>
     routes.filter((route) => {
-      if (
-        !effectiveEnabledRouteIds.includes(route.id) ||
-        !effectiveEnabledStatuses.includes(route.status)
-      ) {
+      if (!effectiveEnabledRouteIds.includes(route.id)) {
         return false;
       }
 
@@ -282,7 +265,7 @@ export function InteractiveMapApp({
       ...route,
       segments: route.segments.filter((segment) => effectiveEnabledModes.includes(segment.mode)),
     })),
-  [routes, effectiveEnabledRouteIds, effectiveEnabledModes, effectiveEnabledStatuses]);
+  [routes, effectiveEnabledRouteIds, effectiveEnabledModes]);
 
   const activeSelectedRouteId = visibleRoutes.some(
     (route) => route.id === selectedRouteId,
@@ -345,9 +328,6 @@ export function InteractiveMapApp({
 
     setEnabledRouteIds((current) =>
       current.includes(routeId) ? current : [...current, routeId],
-    );
-    setEnabledStatuses((current) =>
-      current.includes(route.status) ? current : [...current, route.status],
     );
     setEnabledModes((current) => {
       const nextModes = new Set(current);
@@ -692,7 +672,6 @@ export function InteractiveMapApp({
 
                     setEnabledRouteIds(availableRouteIds);
                     setEnabledModes(availableModes);
-                    setEnabledStatuses(availableStatuses);
                   }}
                   className="text-[11px] font-medium text-[var(--accent)] transition hover:opacity-80"
                 >
@@ -822,39 +801,6 @@ export function InteractiveMapApp({
               </section>
             ) : null}
 
-            {availableStatuses.length > 0 ? (
-              <section>
-                <h2 className={sectionHeadingClass}>
-                  <span>{t("filters.statuses")}</span>
-                </h2>
-                <div className="flex flex-wrap gap-2">
-                  {availableStatuses.map((status) => {
-                    const enabled = effectiveEnabledStatuses.includes(status);
-                    const count = routes.filter((route) => route.status === status).length;
-
-                    return (
-                      <button
-                        key={status}
-                        type="button"
-                        onClick={() =>
-                          setEnabledStatuses((current) => toggleValue(current, status))
-                        }
-                        className={`rounded-full border px-3 py-2 text-sm transition ${
-                          enabled
-                            ? isDark
-                              ? "border-emerald-300/24 bg-emerald-300/10 text-emerald-100"
-                              : "border-emerald-200 bg-emerald-50 text-emerald-800"
-                            : chipBaseClass
-                        }`}
-                      >
-                        {t(`status.${status}`)} <span className="opacity-70">({count})</span>
-                      </button>
-                    );
-                  })}
-                </div>
-              </section>
-            ) : null}
-
             <section className={sectionCardClass}>
               <div
                 className={`font-label flex items-center gap-2 text-xs uppercase ${
@@ -896,6 +842,13 @@ export function InteractiveMapApp({
                         {t(TRANSPORT_MODE_META[mode].labelKey)}
                       </div>
                     ))}
+                    <div className="flex items-center gap-3">
+                      <span
+                        className="w-10 shrink-0 border-t-[3px] border-dotted border-current"
+                        aria-hidden="true"
+                      />
+                      {t("legend.planned")}
+                    </div>
                   </div>
                 </div>
                 <div>

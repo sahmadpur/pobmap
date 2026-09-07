@@ -5,9 +5,9 @@ import type { DottedStretch } from "@/lib/map-utils";
  *
  * Each entry names a sub-path inside a segment, not a segment of its own: the
  * unbuilt Aghband-Ordubad link sits in the middle of a longer Alat-Nakhchivan
- * line in three corridors, and Kashgar-Tashkent is the western half of the
- * Urumqi-Tashkent segment. Keyed by route as well as segment because the same
- * stretch is authored separately in each corridor that carries it.
+ * line in three corridors. Keyed by route as well as segment because the same
+ * stretch is authored separately in each corridor that carries it. A stretch
+ * may also span a whole segment, as Kashgar-Tashkent does.
  */
 export const DOTTED_STRETCHES: DottedStretch[] = [
   // The Zangezur gap, shown dotted in every corridor routed across it.
@@ -38,7 +38,7 @@ export const DOTTED_STRETCHES: DottedStretch[] = [
   // Kashgar - Andijan - Tashkent, the unbuilt half of the China-Uzbekistan rail.
   {
     routeId: "east-west",
-    segmentId: "east-west-kashgar",
+    segmentId: "east-west-kashgar-tashkent",
     fromStopId: "kashgar",
     toStopId: "tashkent",
   },

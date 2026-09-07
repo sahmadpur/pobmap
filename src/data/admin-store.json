@@ -701,7 +701,7 @@
           ]
         },
         {
-          "id": "east-west-kashgar",
+          "id": "east-west-urumqi-kashgar",
           "mode": "rail",
           "from": {
             "az": "Urumçi",
@@ -709,16 +709,55 @@
             "ru": "Урумчи"
           },
           "to": {
-            "az": "Daşkənd",
-            "en": "Tashkent",
-            "ru": "Ташкент"
+            "az": "Kaşqar",
+            "en": "Kashgar",
+            "ru": "Кашгар"
           },
-          "distanceKm": 1900,
+          "distanceKm": 1300,
           "coordinates": [
             [
               43.8256,
               87.6168
             ],
+            [
+              39.4704,
+              75.9898
+            ]
+          ],
+          "displayCoordinates": [
+            [
+              43.8256,
+              87.6168
+            ],
+            [
+              41.7,
+              82.9
+            ],
+            [
+              39.4704,
+              75.9898
+            ]
+          ],
+          "stopIds": [
+            "urumqi",
+            "kashgar"
+          ]
+        },
+        {
+          "id": "east-west-kashgar-tashkent",
+          "mode": "rail",
+          "from": {
+            "az": "Kaşqar",
+            "en": "Kashgar",
+            "ru": "Кашгар"
+          },
+          "to": {
+            "az": "Daşkənd",
+            "en": "Tashkent",
+            "ru": "Ташкент"
+          },
+          "distanceKm": 600,
+          "coordinates": [
             [
               39.4704,
               75.9898
@@ -733,14 +772,6 @@
             ]
           ],
           "displayCoordinates": [
-            [
-              43.8256,
-              87.6168
-            ],
-            [
-              41.7,
-              82.9
-            ],
             [
               39.4704,
               75.9898
@@ -763,7 +794,6 @@
             ]
           ],
           "stopIds": [
-            "urumqi",
             "kashgar",
             "andijan",
             "tashkent"
@@ -6147,7 +6177,7 @@
         "en": "South-West Corridor",
         "ru": "Коридор Юго-Запад"
       },
-      "routeColor": "#0F766E",
+      "routeColor": "#DB2777",
       "type": "primary",
       "totalDistanceKm": 41080,
       "transitTime": {

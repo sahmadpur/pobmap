@@ -1,7 +1,8 @@
+import { DOTTED_STRETCHES } from "@/data/dotted-stretches";
 import {
-  getSegmentRenderCoordinates,
   sliceSegmentBetweenStops,
   softenPathCorners,
+  splitSegmentForDotting,
 } from "@/lib/map-utils";
 import { createPathSampler } from "@/lib/vehicle-path";
 import type {
@@ -254,15 +255,18 @@ export function planVehicles(routes: CorridorRoute[]): VehiclePlan[] {
         return;
       }
 
-      const coordinates = getSegmentRenderCoordinates(segment);
-      const length = pathLength(coordinates);
+      // Vehicles only ride built track: a segment with a dotted (unbuilt)
+      // stretch contributes its longest solid run, or nothing if fully dotted.
+      const coordinates = splitSegmentForDotting(route.id, segment, DOTTED_STRETCHES)
+        .solid.map((run) => ({ run, length: pathLength(run) }))
+        .sort((a, b) => b.length - a.length)[0];
 
-      if (length <= 0) {
+      if (!coordinates || coordinates.length <= 0) {
         return;
       }
 
       const group = byMode.get(segment.mode);
-      const entry = { segment, coordinates, length };
+      const entry = { segment, coordinates: coordinates.run, length: coordinates.length };
 
       if (group) {
         group.push(entry);

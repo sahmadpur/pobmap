@@ -176,6 +176,22 @@ describe("planVehicles on live East-West data", () => {
     expect(subPathLength).toBeLessThan(fullLength * 0.7);
   });
 
+  it("keeps trains off dotted, unbuilt track", () => {
+    const keys = plans.map((item) => item.key);
+
+    expect(keys).not.toContain("east-west:east-west-kashgar-tashkent");
+
+    const zangezur = plans.find((item) => item.key === "east-west:east-west-zangezur");
+
+    if (zangezur) {
+      // Only the built Baku-Aghband stretch may carry a train.
+      const aghbandLng = stopCoordinate("aghband")[1];
+      zangezur.coordinates.forEach(([, lng]) => {
+        expect(lng).toBeGreaterThanOrEqual(aghbandLng - 0.05);
+      });
+    }
+  });
+
   it("never places two vehicles on the same line", () => {
     expect(new Set(plans.map((p) => p.key)).size).toBe(plans.length);
 

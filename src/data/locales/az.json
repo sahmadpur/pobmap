@@ -9,7 +9,7 @@
   "filters": {
     "title": "Filtrlər",
     "corridors": "Dəhlizlər",
-    "modes": "Nəqliyyat növü",
+    "modes": "Nəqliyyat növləri",
     "statuses": "Status",
     "enableAll": "Göstər",
     "clearAll": "Gizlət",
@@ -49,6 +49,7 @@
     "secondary": "İkinci dərəcəli dəhlizlər",
     "bakuPort": "Liman",
     "transportModes": "Nəqliyyat rəngləri",
+    "planned": "Planlaşdırılan",
     "markers": "Xəritə işarələri"
   },
   "status": {

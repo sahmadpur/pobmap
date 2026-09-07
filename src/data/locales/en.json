@@ -49,6 +49,7 @@
     "secondary": "Secondary corridors",
     "bakuPort": "Port",
     "transportModes": "Transport colors",
+    "planned": "Planned",
     "markers": "Map markers"
   },
   "status": {

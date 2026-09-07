@@ -54,21 +54,26 @@ describe("splitSegmentForDotting", () => {
     expect(distanceTo(dotted[dotted.length - 1], "ordubad")).toBeLessThan(0.05);
   });
 
-  it("leaves Urumqi-Kashgar solid while dotting Kashgar through to Tashkent", () => {
-    const runs = splitSegmentForDotting(
+  it("dots the whole Kashgar-Tashkent segment and leaves Urumqi-Kashgar solid", () => {
+    const dottedRuns = splitSegmentForDotting(
       "east-west",
-      segment("east-west", "east-west-kashgar"),
+      segment("east-west", "east-west-kashgar-tashkent"),
       DOTTED_STRETCHES,
     );
 
-    expect(runs.dotted).toHaveLength(1);
-    expect(runs.solid).toHaveLength(1);
+    expect(dottedRuns.solid).toHaveLength(0);
+    expect(dottedRuns.dotted).toHaveLength(1);
+    expect(distanceTo(dottedRuns.dotted[0][0], "kashgar")).toBeLessThan(0.05);
+    expect(distanceTo(dottedRuns.dotted[0].at(-1)!, "tashkent")).toBeLessThan(0.05);
 
-    const solid = runs.solid[0];
-    const dotted = runs.dotted[0];
-    expect(distanceTo(solid[0], "urumqi")).toBeLessThan(0.05);
-    expect(distanceTo(dotted[0], "kashgar")).toBeLessThan(0.05);
-    expect(distanceTo(dotted[dotted.length - 1], "tashkent")).toBeLessThan(0.05);
+    const solidRuns = splitSegmentForDotting(
+      "east-west",
+      segment("east-west", "east-west-urumqi-kashgar"),
+      DOTTED_STRETCHES,
+    );
+
+    expect(solidRuns.dotted).toHaveLength(0);
+    expect(solidRuns.solid).toHaveLength(1);
   });
 
   it("dots the Zangezur gap in every corridor that carries it", () => {
