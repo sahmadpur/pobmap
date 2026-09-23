@@ -800,7 +800,7 @@
           ]
         },
         {
-          "id": "east-west-bishkek",
+          "id": "east-west-almaty-tashkent",
           "mode": "rail",
           "from": {
             "az": "Almatı",
@@ -812,15 +812,19 @@
             "en": "Tashkent",
             "ru": "Ташкент"
           },
-          "distanceKm": 940,
+          "distanceKm": 800,
           "coordinates": [
             [
               43.2389,
               76.8897
             ],
             [
-              42.8746,
-              74.5698
+              42.9,
+              71.3667
+            ],
+            [
+              42.3417,
+              69.5901
             ],
             [
               41.2995,
@@ -833,20 +837,24 @@
               76.8897
             ],
             [
-              43,
-              75.6
+              43.35,
+              75.2
             ],
             [
-              42.8746,
-              74.5698
+              43.2,
+              73.3
+            ],
+            [
+              42.9,
+              71.3667
             ],
             [
               42.6,
-              72
+              70.4
             ],
             [
-              42.3,
-              69.6
+              42.3417,
+              69.5901
             ],
             [
               41.2995,
@@ -855,7 +863,8 @@
           ],
           "stopIds": [
             "almaty",
-            "bishkek",
+            "taraz",
+            "shymkent",
             "tashkent"
           ]
         },
@@ -921,6 +930,62 @@
             "almaty",
             "beyneu",
             "aktau"
+          ]
+        },
+        {
+          "id": "east-west-kuryk",
+          "mode": "rail",
+          "from": {
+            "az": "Beyneu",
+            "en": "Beyneu",
+            "ru": "Бейнеу"
+          },
+          "to": {
+            "az": "Kurık",
+            "en": "Kuryk",
+            "ru": "Курык"
+          },
+          "distanceKm": 480,
+          "coordinates": [
+            [
+              45.3167,
+              55.2
+            ],
+            [
+              43.3406,
+              52.8606
+            ],
+            [
+              43.1756,
+              51.6522
+            ]
+          ],
+          "displayCoordinates": [
+            [
+              45.3167,
+              55.2
+            ],
+            [
+              44.4,
+              54.1
+            ],
+            [
+              43.3406,
+              52.8606
+            ],
+            [
+              43.25,
+              52.25
+            ],
+            [
+              43.1756,
+              51.6522
+            ]
+          ],
+          "stopIds": [
+            "beyneu",
+            "uzen",
+            "kuryk"
           ]
         },
         {
@@ -1294,6 +1359,57 @@
           ]
         },
         {
+          "id": "east-west-caspian-kuryk",
+          "mode": "ship",
+          "from": {
+            "az": "Kurık",
+            "en": "Kuryk",
+            "ru": "Курык"
+          },
+          "to": {
+            "az": "Bakı",
+            "en": "Baku",
+            "ru": "Баку"
+          },
+          "distanceKm": 430,
+          "coordinates": [
+            [
+              43.1756,
+              51.6522
+            ],
+            [
+              40.3572,
+              49.835
+            ]
+          ],
+          "displayCoordinates": [
+            [
+              43.1756,
+              51.6522
+            ],
+            [
+              42.6,
+              51.2
+            ],
+            [
+              41.6,
+              50.4
+            ],
+            [
+              40.8,
+              50.05
+            ],
+            [
+              40.3572,
+              49.835
+            ]
+          ],
+          "stopIds": [
+            "kuryk",
+            "baku-port"
+          ]
+        },
+        {
           "id": "east-west-caspian-tm",
           "mode": "ship",
           "from": {
@@ -1412,9 +1528,9 @@
           "id": "east-west-boyuk-kasik-kars",
           "mode": "rail",
           "from": {
-            "az": "Böyük Kəsik - Tbilisi",
-            "en": "Boyuk Kasik - Tbilisi",
-            "ru": "Беюк-Кясик - Тбилиси"
+            "az": "Böyük Kəsik",
+            "en": "Boyuk Kasik",
+            "ru": "Беюк-Кясик"
           },
           "to": {
             "az": "Qars",
@@ -1430,6 +1546,10 @@
             [
               41.7151,
               44.8271
+            ],
+            [
+              41.4056,
+              43.4861
             ],
             [
               40.600439086831614,
@@ -1454,8 +1574,8 @@
               44.76
             ],
             [
-              41.4,
-              43.48
+              41.4056,
+              43.4861
             ],
             [
               41.19,
@@ -1473,6 +1593,7 @@
           "stopIds": [
             "boyuk-kasik",
             "tbilisi",
+            "akhalkalaki",
             "kars"
           ]
         },
@@ -1485,23 +1606,23 @@
             "ru": "Тбилиси"
           },
           "to": {
-            "az": "Batumi",
-            "en": "Batumi",
-            "ru": "Батуми"
+            "az": "Poti",
+            "en": "Poti",
+            "ru": "Поти"
           },
-          "distanceKm": 350,
+          "distanceKm": 310,
           "coordinates": [
             [
               41.7151,
               44.8271
             ],
             [
-              42.1462,
-              41.6719
+              42.1622,
+              42.3417
             ],
             [
-              41.6459,
-              41.6404
+              42.1462,
+              41.6719
             ]
           ],
           "displayCoordinates": [
@@ -1514,16 +1635,60 @@
               43.5
             ],
             [
-              42.27,
-              42.7
+              42.1622,
+              42.3417
+            ],
+            [
+              42.17,
+              41.95
             ],
             [
               42.1462,
               41.6719
+            ]
+          ],
+          "stopIds": [
+            "tbilisi",
+            "samtredia",
+            "poti"
+          ]
+        },
+        {
+          "id": "east-west-batumi",
+          "mode": "rail",
+          "from": {
+            "az": "Samtrediya",
+            "en": "Samtredia",
+            "ru": "Самтредиа"
+          },
+          "to": {
+            "az": "Batumi",
+            "en": "Batumi",
+            "ru": "Батуми"
+          },
+          "distanceKm": 105,
+          "coordinates": [
+            [
+              42.1622,
+              42.3417
             ],
             [
-              41.89307729913167,
-              41.80847167968751
+              41.6459,
+              41.6404
+            ]
+          ],
+          "displayCoordinates": [
+            [
+              42.1622,
+              42.3417
+            ],
+            [
+              42,
+              42.05
+            ],
+            [
+              41.82,
+              41.8
             ],
             [
               41.6459,
@@ -1531,8 +1696,7 @@
             ]
           ],
           "stopIds": [
-            "tbilisi",
-            "poti",
+            "samtredia",
             "batumi"
           ]
         },
@@ -3764,6 +3928,151 @@
       "animationSpeed": 0.1,
       "segments": [
         {
+          "id": "north-south-estonia",
+          "mode": "rail",
+          "from": {
+            "az": "Peçori",
+            "en": "Pechory",
+            "ru": "Печоры"
+          },
+          "to": {
+            "az": "Moskva",
+            "en": "Moscow",
+            "ru": "Москва"
+          },
+          "distanceKm": 690,
+          "coordinates": [
+            [
+              57.8144,
+              27.6089
+            ],
+            [
+              55.7558,
+              37.6173
+            ]
+          ],
+          "displayCoordinates": [
+            [
+              57.8144,
+              27.6089
+            ],
+            [
+              57.6,
+              30.2
+            ],
+            [
+              57,
+              33.4
+            ],
+            [
+              56.3,
+              36
+            ],
+            [
+              55.7558,
+              37.6173
+            ]
+          ],
+          "stopIds": [
+            "pechory",
+            "moscow"
+          ]
+        },
+        {
+          "id": "north-south-latvia",
+          "mode": "rail",
+          "from": {
+            "az": "Posin",
+            "en": "Posin",
+            "ru": "Посинь"
+          },
+          "to": {
+            "az": "Moskva",
+            "en": "Moscow",
+            "ru": "Москва"
+          },
+          "distanceKm": 600,
+          "coordinates": [
+            [
+              56.1289,
+              28.1811
+            ],
+            [
+              55.7558,
+              37.6173
+            ]
+          ],
+          "displayCoordinates": [
+            [
+              56.1289,
+              28.1811
+            ],
+            [
+              56.15,
+              31
+            ],
+            [
+              56,
+              34.2
+            ],
+            [
+              55.7558,
+              37.6173
+            ]
+          ],
+          "stopIds": [
+            "posin",
+            "moscow"
+          ]
+        },
+        {
+          "id": "north-south-belarus",
+          "mode": "rail",
+          "from": {
+            "az": "Krasnoye",
+            "en": "Krasnoye",
+            "ru": "Красное"
+          },
+          "to": {
+            "az": "Moskva",
+            "en": "Moscow",
+            "ru": "Москва"
+          },
+          "distanceKm": 420,
+          "coordinates": [
+            [
+              54.5617,
+              31.4325
+            ],
+            [
+              55.7558,
+              37.6173
+            ]
+          ],
+          "displayCoordinates": [
+            [
+              54.5617,
+              31.4325
+            ],
+            [
+              55,
+              33.5
+            ],
+            [
+              55.5,
+              35.8
+            ],
+            [
+              55.7558,
+              37.6173
+            ]
+          ],
+          "stopIds": [
+            "krasnoye",
+            "moscow"
+          ]
+        },
+        {
           "id": "north-south-main-1",
           "mode": "rail",
           "from": {
@@ -3776,11 +4085,19 @@
             "en": "Yalama",
             "ru": "Ялама"
           },
-          "distanceKm": 2300,
+          "distanceKm": 2600,
           "coordinates": [
             [
               55.7558,
               37.6173
+            ],
+            [
+              51.5331,
+              46.0342
+            ],
+            [
+              48.708,
+              44.5133
             ],
             [
               46.36181378554353,
@@ -3801,24 +4118,44 @@
               37.6173
             ],
             [
-              52.5,
-              41.6
+              54.3,
+              40.3
             ],
             [
-              49.4,
+              52.9,
+              43.9
+            ],
+            [
+              51.5331,
+              46.0342
+            ],
+            [
+              50.1,
               45.3
             ],
             [
-              46.3497,
-              48.0408
+              48.708,
+              44.5133
             ],
             [
-              44.71551373202136,
-              46.69189453125001
+              47.6,
+              46.5
             ],
             [
-              42.6977,
-              47.5034
+              46.36181378554353,
+              48.04775306886071
+            ],
+            [
+              45.275,
+              47
+            ],
+            [
+              44.166,
+              46.945
+            ],
+            [
+              42.98868773101421,
+              47.49974364170113
             ],
             [
               41.5216,
@@ -3827,6 +4164,8 @@
           ],
           "stopIds": [
             "moscow",
+            "saratov",
+            "volgograd",
             "astrakhan",
             "makhachkala",
             "yalama"
@@ -3998,6 +4337,10 @@
               45.4053
             ],
             [
+              38.9559,
+              45.6308
+            ],
+            [
               38.0804,
               46.2919
             ],
@@ -4012,8 +4355,8 @@
               45.4053
             ],
             [
-              38.9,
-              45.6
+              38.9559,
+              45.6308
             ],
             [
               38.0804,
@@ -4034,6 +4377,7 @@
           ],
           "stopIds": [
             "nakhchivan",
+            "julfa",
             "tabriz",
             "qazvin"
           ]
@@ -4768,11 +5112,19 @@
             "en": "Yalama",
             "ru": "Ялама"
           },
-          "distanceKm": 2300,
+          "distanceKm": 2600,
           "coordinates": [
             [
               55.7558,
               37.6173
+            ],
+            [
+              51.5331,
+              46.0342
+            ],
+            [
+              48.708,
+              44.5133
             ],
             [
               46.36181378554353,
@@ -4793,28 +5145,44 @@
               37.6173
             ],
             [
-              52.5,
-              41.8
+              54.3,
+              40.3
             ],
             [
-              49.2,
-              45.5
+              52.9,
+              43.9
             ],
             [
-              46.3497,
-              48.0408
+              51.5331,
+              46.0342
             ],
             [
-              45.27488643704891,
-              46.99951171875001
+              50.1,
+              45.3
             ],
             [
-              44.166444664458595,
-              46.94458007812501
+              48.708,
+              44.5133
             ],
             [
-              42.6977,
-              47.5034
+              47.6,
+              46.5
+            ],
+            [
+              46.36181378554353,
+              48.04775306886071
+            ],
+            [
+              45.275,
+              47
+            ],
+            [
+              44.166,
+              46.945
+            ],
+            [
+              42.98868773101421,
+              47.49974364170113
             ],
             [
               41.5216,
@@ -4823,6 +5191,8 @@
           ],
           "stopIds": [
             "moscow",
+            "saratov",
+            "volgograd",
             "astrakhan",
             "makhachkala",
             "yalama"
@@ -4903,6 +5273,10 @@
               44.8271
             ],
             [
+              41.4056,
+              43.4861
+            ],
+            [
               40.600439086831614,
               43.09907678698981
             ]
@@ -4953,8 +5327,8 @@
               44.76
             ],
             [
-              41.4,
-              43.48
+              41.4056,
+              43.4861
             ],
             [
               41.19,
@@ -4974,6 +5348,7 @@
             "ganja",
             "boyuk-kasik",
             "tbilisi",
+            "akhalkalaki",
             "kars"
           ]
         },
@@ -4986,23 +5361,23 @@
             "ru": "Тбилиси"
           },
           "to": {
-            "az": "Batumi",
-            "en": "Batumi",
-            "ru": "Батуми"
+            "az": "Poti",
+            "en": "Poti",
+            "ru": "Поти"
           },
-          "distanceKm": 350,
+          "distanceKm": 310,
           "coordinates": [
             [
               41.7151,
               44.8271
             ],
             [
-              42.1462,
-              41.6719
+              42.1622,
+              42.3417
             ],
             [
-              41.6459,
-              41.6404
+              42.1462,
+              41.6719
             ]
           ],
           "displayCoordinates": [
@@ -5015,20 +5390,60 @@
               43.5
             ],
             [
-              42.27,
-              42.7
+              42.1622,
+              42.3417
+            ],
+            [
+              42.17,
+              41.95
             ],
             [
               42.1462,
               41.6719
+            ]
+          ],
+          "stopIds": [
+            "tbilisi",
+            "samtredia",
+            "poti"
+          ]
+        },
+        {
+          "id": "north-west-batumi",
+          "mode": "rail",
+          "from": {
+            "az": "Samtrediya",
+            "en": "Samtredia",
+            "ru": "Самтредиа"
+          },
+          "to": {
+            "az": "Batumi",
+            "en": "Batumi",
+            "ru": "Батуми"
+          },
+          "distanceKm": 105,
+          "coordinates": [
+            [
+              42.1622,
+              42.3417
             ],
             [
-              42.012399550173726,
-              41.846888894371716
+              41.6459,
+              41.6404
+            ]
+          ],
+          "displayCoordinates": [
+            [
+              42.1622,
+              42.3417
             ],
             [
-              41.73034722675724,
-              41.82495117187501
+              42,
+              42.05
+            ],
+            [
+              41.82,
+              41.8
             ],
             [
               41.6459,
@@ -5036,8 +5451,7 @@
             ]
           ],
           "stopIds": [
-            "tbilisi",
-            "poti",
+            "samtredia",
             "batumi"
           ]
         },
@@ -6816,6 +7230,91 @@
           ]
         },
         {
+          "id": "south-west-baku-rasht",
+          "mode": "rail",
+          "from": {
+            "az": "Bakı",
+            "en": "Baku",
+            "ru": "Баку"
+          },
+          "to": {
+            "az": "Rəşt",
+            "en": "Rasht",
+            "ru": "Решт"
+          },
+          "distanceKm": 500,
+          "coordinates": [
+            [
+              40.3572,
+              49.835
+            ],
+            [
+              38.75782003253777,
+              48.769426789343576
+            ],
+            [
+              38.46418832953136,
+              48.86131188409395
+            ],
+            [
+              37.29755444245026,
+              49.59576181276999
+            ]
+          ],
+          "displayCoordinates": [
+            [
+              40.3572,
+              49.835
+            ],
+            [
+              40.28371627054261,
+              49.54284667968751
+            ],
+            [
+              40.02340800226773,
+              49.33410644531251
+            ],
+            [
+              39.6,
+              48.98
+            ],
+            [
+              39.03,
+              48.66
+            ],
+            [
+              38.74765730401543,
+              48.8287353515625
+            ],
+            [
+              38.436379603,
+              48.82324218750001
+            ],
+            [
+              37.8,
+              48.88
+            ],
+            [
+              37.55,
+              49.1
+            ],
+            [
+              37.2478212015543,
+              49.37255859375001
+            ],
+            [
+              37.29755444245026,
+              49.59576181276999
+            ]
+          ],
+          "stopIds": [
+            "baku-port",
+            "lankaran",
+            "astara",
+            "rasht"
+          ]
+        },
+        {
           "id": "south-west-rasht",
           "mode": "rail",
           "from": {
@@ -6942,6 +7441,10 @@
               45.4053
             ],
             [
+              38.9559,
+              45.6308
+            ],
+            [
               38.0804,
               46.2919
             ]
@@ -6952,8 +7455,8 @@
               45.4053
             ],
             [
-              38.94,
-              45.63
+              38.9559,
+              45.6308
             ],
             [
               38.43,
@@ -6966,6 +7469,7 @@
           ],
           "stopIds": [
             "nakhchivan",
+            "julfa",
             "tabriz"
           ]
         },
@@ -7100,11 +7604,11 @@
             "ru": "Баку"
           },
           "to": {
-            "az": "Batumi",
-            "en": "Batumi",
-            "ru": "Батуми"
+            "az": "Poti",
+            "en": "Poti",
+            "ru": "Поти"
           },
-          "distanceKm": 900,
+          "distanceKm": 850,
           "coordinates": [
             [
               40.3572,
@@ -7123,12 +7627,12 @@
               44.8271
             ],
             [
-              42.1462,
-              41.6719
+              42.1622,
+              42.3417
             ],
             [
-              41.6459,
-              41.6404
+              42.1462,
+              41.6719
             ]
           ],
           "displayCoordinates": [
@@ -7177,24 +7681,16 @@
               43.5
             ],
             [
-              42.27,
-              42.7
+              42.1622,
+              42.3417
+            ],
+            [
+              42.17,
+              41.95
             ],
             [
               42.1462,
               41.6719
-            ],
-            [
-              41.98405129857591,
-              41.81953324974267
-            ],
-            [
-              41.73445801604274,
-              41.80854960882948
-            ],
-            [
-              41.6459,
-              41.6404
             ]
           ],
           "stopIds": [
@@ -7202,7 +7698,54 @@
             "ganja",
             "boyuk-kasik",
             "tbilisi",
-            "poti",
+            "samtredia",
+            "poti"
+          ]
+        },
+        {
+          "id": "south-west-batumi",
+          "mode": "rail",
+          "from": {
+            "az": "Samtrediya",
+            "en": "Samtredia",
+            "ru": "Самтредиа"
+          },
+          "to": {
+            "az": "Batumi",
+            "en": "Batumi",
+            "ru": "Батуми"
+          },
+          "distanceKm": 105,
+          "coordinates": [
+            [
+              42.1622,
+              42.3417
+            ],
+            [
+              41.6459,
+              41.6404
+            ]
+          ],
+          "displayCoordinates": [
+            [
+              42.1622,
+              42.3417
+            ],
+            [
+              42,
+              42.05
+            ],
+            [
+              41.82,
+              41.8
+            ],
+            [
+              41.6459,
+              41.6404
+            ]
+          ],
+          "stopIds": [
+            "samtredia",
             "batumi"
           ]
         },
@@ -7226,6 +7769,10 @@
               44.8271
             ],
             [
+              41.4056,
+              43.4861
+            ],
+            [
               40.600439086831614,
               43.09907678698981
             ]
@@ -7240,8 +7787,8 @@
               44.76
             ],
             [
-              41.4,
-              43.48
+              41.4056,
+              43.4861
             ],
             [
               41.19,
@@ -7258,6 +7805,7 @@
           ],
           "stopIds": [
             "tbilisi",
+            "akhalkalaki",
             "kars"
           ]
         },
@@ -9506,6 +10054,30 @@
   ],
   "markers": [
     {
+      "id": "akhalkalaki-logistics-complex",
+      "name": {
+        "az": "Axalkalaki logistika kompleksi",
+        "en": "Akhalkalaki Logistics Complex",
+        "ru": "Логистический комплекс Ахалкалаки"
+      },
+      "description": {
+        "az": "Axalkalaki logistika kompleksi - Şərq-Qərb, Şimal-Qərb və Cənub-Qərb dəhlizləri marşrutu üzərində yerləşir.",
+        "en": "Akhalkalaki Logistics Complex lies on the East-West, North-West and South-West corridor routes.",
+        "ru": "Логистический комплекс Ахалкалаки расположен на маршруте коридоров Восток-Запад, Северо-Запад и Юго-Запад."
+      },
+      "category": "station",
+      "icon": "fas:warehouse",
+      "coordinates": [
+        41.4056,
+        43.4861
+      ],
+      "connectedCorridorIds": [
+        "east-west",
+        "north-west",
+        "south-west"
+      ]
+    },
+    {
       "id": "aktau-seaport",
       "name": {
         "az": "Aktau dəniz limanı",
@@ -9573,6 +10145,28 @@
       ]
     },
     {
+      "id": "andijan",
+      "name": {
+        "az": "Əndican",
+        "en": "Andijan",
+        "ru": "Андижан"
+      },
+      "description": {
+        "az": "Əndican - Şərq-Qərb dəhlizi marşrutu üzərində yerləşir.",
+        "en": "Andijan lies on the East-West corridor route.",
+        "ru": "Андижан расположен на маршруте коридора Восток-Запад."
+      },
+      "category": "station",
+      "icon": "fas:train",
+      "coordinates": [
+        40.7821,
+        72.3442
+      ],
+      "connectedCorridorIds": [
+        "east-west"
+      ]
+    },
+    {
       "id": "ankara",
       "name": {
         "az": "Ankara",
@@ -9594,6 +10188,28 @@
         "east-west",
         "north-west",
         "south-west"
+      ]
+    },
+    {
+      "id": "aqina",
+      "name": {
+        "az": "Akina",
+        "en": "Aqina",
+        "ru": "Акина"
+      },
+      "description": {
+        "az": "Akina - Şərq-Qərb dəhlizi marşrutu üzərində yerləşir.",
+        "en": "Aqina lies on the East-West corridor route.",
+        "ru": "Акина расположен на маршруте коридора Восток-Запад."
+      },
+      "category": "border",
+      "icon": "fas:train",
+      "coordinates": [
+        37.0891,
+        65.6572
+      ],
+      "connectedCorridorIds": [
+        "east-west"
       ]
     },
     {
@@ -9783,6 +10399,52 @@
       ]
     },
     {
+      "id": "beijing",
+      "name": {
+        "az": "Pekin",
+        "en": "Beijing",
+        "ru": "Пекин"
+      },
+      "description": {
+        "az": "Pekin - Şərq-Qərb dəhlizi marşrutu üzərində yerləşir.",
+        "en": "Beijing lies on the East-West corridor route.",
+        "ru": "Пекин расположен на маршруте коридора Восток-Запад."
+      },
+      "category": "city",
+      "icon": "fas:city",
+      "coordinates": [
+        39.848382997920844,
+        116.63069557250218
+      ],
+      "connectedCorridorIds": [
+        "east-west"
+      ]
+    },
+    {
+      "id": "belgrade",
+      "name": {
+        "az": "Belqrad",
+        "en": "Belgrade",
+        "ru": "Белград"
+      },
+      "description": {
+        "az": "Belqrad - Şərq-Qərb, Şimal-Qərb və Cənub-Qərb dəhlizləri marşrutu üzərində yerləşir.",
+        "en": "Belgrade lies on the East-West, North-West and South-West corridor routes.",
+        "ru": "Белград расположен на маршруте коридоров Восток-Запад, Северо-Запад и Юго-Запад."
+      },
+      "category": "city",
+      "icon": "fas:city",
+      "coordinates": [
+        44.7866,
+        20.4489
+      ],
+      "connectedCorridorIds": [
+        "east-west",
+        "north-west",
+        "south-west"
+      ]
+    },
+    {
       "id": "berlin-hub",
       "name": {
         "az": "Berlin",
@@ -9803,6 +10465,51 @@
       "connectedCorridorIds": [
         "east-west",
         "south-west"
+      ]
+    },
+    {
+      "id": "bern",
+      "name": {
+        "az": "Bern",
+        "en": "Bern",
+        "ru": "Берн"
+      },
+      "description": {
+        "az": "Bern - Şərq-Qərb və Cənub-Qərb dəhlizləri marşrutu üzərində yerləşir.",
+        "en": "Bern lies on the East-West and South-West corridor routes.",
+        "ru": "Берн расположен на маршруте коридоров Восток-Запад и Юго-Запад."
+      },
+      "category": "city",
+      "icon": "fas:city",
+      "coordinates": [
+        46.948,
+        7.4474
+      ],
+      "connectedCorridorIds": [
+        "east-west",
+        "south-west"
+      ]
+    },
+    {
+      "id": "beyneu",
+      "name": {
+        "az": "Beyneu",
+        "en": "Beyneu",
+        "ru": "Бейнеу"
+      },
+      "description": {
+        "az": "Beyneu - Şərq-Qərb dəhlizi marşrutu üzərində yerləşir.",
+        "en": "Beyneu lies on the East-West corridor route.",
+        "ru": "Бейнеу расположен на маршруте коридора Восток-Запад."
+      },
+      "category": "station",
+      "icon": "fas:train",
+      "coordinates": [
+        45.3167,
+        55.2
+      ],
+      "connectedCorridorIds": [
+        "east-west"
       ]
     },
     {
@@ -9875,6 +10582,28 @@
         "east-west",
         "south-west",
         "north-west"
+      ]
+    },
+    {
+      "id": "bukhara",
+      "name": {
+        "az": "Buxara",
+        "en": "Bukhara",
+        "ru": "Бухара"
+      },
+      "description": {
+        "az": "Buxara - Şərq-Qərb dəhlizi marşrutu üzərində yerləşir.",
+        "en": "Bukhara lies on the East-West corridor route.",
+        "ru": "Бухара расположен на маршруте коридора Восток-Запад."
+      },
+      "category": "city",
+      "icon": "fas:city",
+      "coordinates": [
+        39.7681,
+        64.4556
+      ],
+      "connectedCorridorIds": [
+        "east-west"
       ]
     },
     {
@@ -9960,6 +10689,50 @@
       "coordinates": [
         23.6567,
         116.6226
+      ],
+      "connectedCorridorIds": [
+        "east-west"
+      ]
+    },
+    {
+      "id": "chengdu",
+      "name": {
+        "az": "Çendu",
+        "en": "Chengdu",
+        "ru": "Чэнду"
+      },
+      "description": {
+        "az": "Çendu - Şərq-Qərb dəhlizi marşrutu üzərində yerləşir.",
+        "en": "Chengdu lies on the East-West corridor route.",
+        "ru": "Чэнду расположен на маршруте коридора Восток-Запад."
+      },
+      "category": "city",
+      "icon": "fas:city",
+      "coordinates": [
+        30.5728,
+        104.0668
+      ],
+      "connectedCorridorIds": [
+        "east-west"
+      ]
+    },
+    {
+      "id": "chongqing",
+      "name": {
+        "az": "Çuntsin",
+        "en": "Chongqing",
+        "ru": "Чунцин"
+      },
+      "description": {
+        "az": "Çuntsin - Şərq-Qərb dəhlizi marşrutu üzərində yerləşir.",
+        "en": "Chongqing lies on the East-West corridor route.",
+        "ru": "Чунцин расположен на маршруте коридора Восток-Запад."
+      },
+      "category": "city",
+      "icon": "fas:city",
+      "coordinates": [
+        29.4316,
+        106.9123
       ],
       "connectedCorridorIds": [
         "east-west"
@@ -10286,6 +11059,29 @@
       ]
     },
     {
+      "id": "julfa",
+      "name": {
+        "az": "Culfa",
+        "en": "Julfa",
+        "ru": "Джульфа"
+      },
+      "description": {
+        "az": "Culfa - Şimal-Cənub və Cənub-Qərb dəhlizləri marşrutu üzərində yerləşir.",
+        "en": "Julfa lies on the North-South and South-West corridor routes.",
+        "ru": "Джульфа расположен на маршруте коридоров Север-Юг и Юго-Запад."
+      },
+      "category": "border",
+      "icon": "fas:train",
+      "coordinates": [
+        38.9559,
+        45.6308
+      ],
+      "connectedCorridorIds": [
+        "north-south",
+        "south-west"
+      ]
+    },
+    {
       "id": "karachi-gateway",
       "name": {
         "az": "Kəraçi keçid qovşağı",
@@ -10355,6 +11151,29 @@
       ]
     },
     {
+      "id": "kerman",
+      "name": {
+        "az": "Kirman",
+        "en": "Kerman",
+        "ru": "Керман"
+      },
+      "description": {
+        "az": "Kirman - Şimal-Cənub və Cənub-Qərb dəhlizləri marşrutu üzərində yerləşir.",
+        "en": "Kerman lies on the North-South and South-West corridor routes.",
+        "ru": "Керман расположен на маршруте коридоров Север-Юг и Юго-Запад."
+      },
+      "category": "station",
+      "icon": "fas:train",
+      "coordinates": [
+        30.2839,
+        57.0834
+      ],
+      "connectedCorridorIds": [
+        "north-south",
+        "south-west"
+      ]
+    },
+    {
       "id": "krakow",
       "name": {
         "az": "Krakov",
@@ -10371,6 +11190,50 @@
       "coordinates": [
         50.0647,
         19.945
+      ],
+      "connectedCorridorIds": [
+        "east-west"
+      ]
+    },
+    {
+      "id": "kunming",
+      "name": {
+        "az": "Kunmin",
+        "en": "Kunming",
+        "ru": "Куньмин"
+      },
+      "description": {
+        "az": "Kunmin - Şərq-Qərb dəhlizi marşrutu üzərində yerləşir.",
+        "en": "Kunming lies on the East-West corridor route.",
+        "ru": "Куньмин расположен на маршруте коридора Восток-Запад."
+      },
+      "category": "city",
+      "icon": "fas:city",
+      "coordinates": [
+        25.0389,
+        102.7183
+      ],
+      "connectedCorridorIds": [
+        "east-west"
+      ]
+    },
+    {
+      "id": "kuryk-port",
+      "name": {
+        "az": "Kurık limanı",
+        "en": "Kuryk Port",
+        "ru": "Порт Курык"
+      },
+      "description": {
+        "az": "Kurık limanı - Şərq-Qərb dəhlizi marşrutu üzərində yerləşir.",
+        "en": "Kuryk Port lies on the East-West corridor route.",
+        "ru": "Порт Курык расположен на маршруте коридора Восток-Запад."
+      },
+      "category": "port",
+      "icon": "fas:anchor",
+      "coordinates": [
+        43.1756,
+        51.6522
       ],
       "connectedCorridorIds": [
         "east-west"
@@ -10492,6 +11355,29 @@
       ]
     },
     {
+      "id": "lviv",
+      "name": {
+        "az": "Lvov",
+        "en": "Lviv",
+        "ru": "Львов"
+      },
+      "description": {
+        "az": "Lvov - Şərq-Qərb və Cənub-Qərb dəhlizləri marşrutu üzərində yerləşir.",
+        "en": "Lviv lies on the East-West and South-West corridor routes.",
+        "ru": "Львов расположен на маршруте коридоров Восток-Запад и Юго-Запад."
+      },
+      "category": "city",
+      "icon": "fas:city",
+      "coordinates": [
+        49.8397,
+        24.0297
+      ],
+      "connectedCorridorIds": [
+        "east-west",
+        "south-west"
+      ]
+    },
+    {
       "id": "lyon",
       "name": {
         "az": "Lion",
@@ -10581,6 +11467,28 @@
       "connectedCorridorIds": [
         "south-west",
         "north-west"
+      ]
+    },
+    {
+      "id": "mary",
+      "name": {
+        "az": "Marı",
+        "en": "Mary",
+        "ru": "Мары"
+      },
+      "description": {
+        "az": "Marı - Şərq-Qərb dəhlizi marşrutu üzərində yerləşir.",
+        "en": "Mary lies on the East-West corridor route.",
+        "ru": "Мары расположен на маршруте коридора Восток-Запад."
+      },
+      "category": "station",
+      "icon": "fas:train",
+      "coordinates": [
+        37.6,
+        61.8303
+      ],
+      "connectedCorridorIds": [
+        "east-west"
       ]
     },
     {
@@ -10943,6 +11851,29 @@
       ]
     },
     {
+      "id": "rasht",
+      "name": {
+        "az": "Rəşt",
+        "en": "Rasht",
+        "ru": "Решт"
+      },
+      "description": {
+        "az": "Rəşt - Şimal-Cənub və Cənub-Qərb dəhlizləri marşrutu üzərində yerləşir.",
+        "en": "Rasht lies on the North-South and South-West corridor routes.",
+        "ru": "Решт расположен на маршруте коридоров Север-Юг и Юго-Запад."
+      },
+      "category": "station",
+      "icon": "fas:train",
+      "coordinates": [
+        37.29755444245026,
+        49.59576181276999
+      ],
+      "connectedCorridorIds": [
+        "north-south",
+        "south-west"
+      ]
+    },
+    {
       "id": "riga-port",
       "name": {
         "az": "Riqa limanı",
@@ -10983,6 +11914,28 @@
       "connectedCorridorIds": [
         "east-west",
         "south-west"
+      ]
+    },
+    {
+      "id": "samarkand",
+      "name": {
+        "az": "Səmərqənd",
+        "en": "Samarkand",
+        "ru": "Самарканд"
+      },
+      "description": {
+        "az": "Səmərqənd - Şərq-Qərb dəhlizi marşrutu üzərində yerləşir.",
+        "en": "Samarkand lies on the East-West corridor route.",
+        "ru": "Самарканд расположен на маршруте коридора Восток-Запад."
+      },
+      "category": "city",
+      "icon": "fas:city",
+      "coordinates": [
+        39.6542,
+        66.9597
+      ],
+      "connectedCorridorIds": [
+        "east-west"
       ]
     },
     {
@@ -11211,6 +12164,28 @@
       ]
     },
     {
+      "id": "turkmenabat",
+      "name": {
+        "az": "Türkmənabad",
+        "en": "Turkmenabat",
+        "ru": "Туркменабад"
+      },
+      "description": {
+        "az": "Türkmənabad - Şərq-Qərb dəhlizi marşrutu üzərində yerləşir.",
+        "en": "Turkmenabat lies on the East-West corridor route.",
+        "ru": "Туркменабад расположен на маршруте коридора Восток-Запад."
+      },
+      "category": "station",
+      "icon": "fas:train",
+      "coordinates": [
+        39.0733,
+        63.5786
+      ],
+      "connectedCorridorIds": [
+        "east-west"
+      ]
+    },
+    {
       "id": "turkmenbashi-port",
       "name": {
         "az": "Türkmənbaşı limanı",
@@ -11227,6 +12202,28 @@
       "coordinates": [
         40.0224,
         52.9697
+      ],
+      "connectedCorridorIds": [
+        "east-west"
+      ]
+    },
+    {
+      "id": "urumqi",
+      "name": {
+        "az": "Urumçi",
+        "en": "Urumqi",
+        "ru": "Урумчи"
+      },
+      "description": {
+        "az": "Urumçi - Şərq-Qərb dəhlizi marşrutu üzərində yerləşir.",
+        "en": "Urumqi lies on the East-West corridor route.",
+        "ru": "Урумчи расположен на маршруте коридора Восток-Запад."
+      },
+      "category": "city",
+      "icon": "fas:city",
+      "coordinates": [
+        43.8256,
+        87.6168
       ],
       "connectedCorridorIds": [
         "east-west"
@@ -11385,6 +12382,28 @@
       ]
     },
     {
+      "id": "wuhan",
+      "name": {
+        "az": "Uhan",
+        "en": "Wuhan",
+        "ru": "Ухань"
+      },
+      "description": {
+        "az": "Uhan - Şərq-Qərb dəhlizi marşrutu üzərində yerləşir.",
+        "en": "Wuhan lies on the East-West corridor route.",
+        "ru": "Ухань расположен на маршруте коридора Восток-Запад."
+      },
+      "category": "city",
+      "icon": "fas:city",
+      "coordinates": [
+        30.5928,
+        114.3055
+      ],
+      "connectedCorridorIds": [
+        "east-west"
+      ]
+    },
+    {
       "id": "xian-inland-port",
       "name": {
         "az": "Sian quru limanı",
@@ -11407,6 +12426,29 @@
       ]
     },
     {
+      "id": "yalama",
+      "name": {
+        "az": "Yalama",
+        "en": "Yalama",
+        "ru": "Ялама"
+      },
+      "description": {
+        "az": "Yalama - Şimal-Cənub və Şimal-Qərb dəhlizləri marşrutu üzərində yerləşir.",
+        "en": "Yalama lies on the North-South and North-West corridor routes.",
+        "ru": "Ялама расположен на маршруте коридоров Север-Юг и Северо-Запад."
+      },
+      "category": "border",
+      "icon": "fas:train",
+      "coordinates": [
+        41.5216,
+        48.5443
+      ],
+      "connectedCorridorIds": [
+        "north-south",
+        "north-west"
+      ]
+    },
+    {
       "id": "yokohama-port",
       "name": {
         "az": "Yokohama limanı",
@@ -11425,6 +12467,28 @@
         139.638
       ],
       "connectedCorridorIds": []
+    },
+    {
+      "id": "zhengzhou",
+      "name": {
+        "az": "Çjençjou",
+        "en": "Zhengzhou",
+        "ru": "Чжэнчжоу"
+      },
+      "description": {
+        "az": "Çjençjou - Şərq-Qərb dəhlizi marşrutu üzərində yerləşir.",
+        "en": "Zhengzhou lies on the East-West corridor route.",
+        "ru": "Чжэнчжоу расположен на маршруте коридора Восток-Запад."
+      },
+      "category": "city",
+      "icon": "fas:city",
+      "coordinates": [
+        34.7473,
+        113.6249
+      ],
+      "connectedCorridorIds": [
+        "east-west"
+      ]
     }
   ],
   "settings": {

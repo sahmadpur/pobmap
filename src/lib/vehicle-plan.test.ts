@@ -179,7 +179,7 @@ describe("planVehicles on live East-West data", () => {
   it("keeps trains off dotted, unbuilt track", () => {
     const keys = plans.map((item) => item.key);
 
-    expect(keys).not.toContain("east-west:east-west-kashgar-tashkent");
+    expect(keys).not.toContain("east-west:east-west-nakhchivan-kars");
 
     const zangezur = plans.find((item) => item.key === "east-west:east-west-zangezur");
 

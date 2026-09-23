@@ -885,6 +885,63 @@ export const TRANSPORT_STOPS: TransportStop[] = [
     en: "Okazaki",
     ru: "Оказаки",
   }),
+  // Russian border crossings where the Baltic and Belarus feeders of the
+  // North-South corridor enter Russia; the lines start here, not abroad.
+  createStop("pechory", "RU", [57.8144, 27.6089], {
+    az: "Peçori",
+    en: "Pechory",
+    ru: "Печоры",
+  }),
+  createStop("posin", "RU", [56.1289, 28.1811], {
+    az: "Posin",
+    en: "Posin",
+    ru: "Посинь",
+  }),
+  createStop("krasnoye", "RU", [54.5617, 31.4325], {
+    az: "Krasnoye",
+    en: "Krasnoye",
+    ru: "Красное",
+  }),
+  createStop("saratov", "RU", [51.5331, 46.0342], {
+    az: "Saratov",
+    en: "Saratov",
+    ru: "Саратов",
+  }),
+  createStop("volgograd", "RU", [48.708, 44.5133], {
+    az: "Volqoqrad",
+    en: "Volgograd",
+    ru: "Волгоград",
+  }),
+  createStop("uzen", "KZ", [43.3406, 52.8606], {
+    az: "Uzen",
+    en: "Uzen",
+    ru: "Узень",
+  }),
+  createStop("kuryk", "KZ", [43.1756, 51.6522], {
+    az: "Kurık",
+    en: "Kuryk",
+    ru: "Курык",
+  }),
+  createStop("taraz", "KZ", [42.9, 71.3667], {
+    az: "Taraz",
+    en: "Taraz",
+    ru: "Тараз",
+  }),
+  createStop("shymkent", "KZ", [42.3417, 69.5901], {
+    az: "Şımkent",
+    en: "Shymkent",
+    ru: "Шымкент",
+  }),
+  createStop("akhalkalaki", "GE", [41.4056, 43.4861], {
+    az: "Axalkalaki",
+    en: "Akhalkalaki",
+    ru: "Ахалкалаки",
+  }),
+  createStop("samtredia", "GE", [42.1622, 42.3417], {
+    az: "Samtrediya",
+    en: "Samtredia",
+    ru: "Самтредиа",
+  }),
 ];
 
 export const TRANSPORT_STOPS_BY_ID = Object.fromEntries(
