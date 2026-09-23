@@ -936,20 +936,67 @@
           "id": "east-west-kuryk",
           "mode": "rail",
           "from": {
-            "az": "Beyneu",
-            "en": "Beyneu",
-            "ru": "Бейнеу"
+            "az": "Aktau",
+            "en": "Aktau",
+            "ru": "Актау"
           },
           "to": {
             "az": "Kurık",
             "en": "Kuryk",
             "ru": "Курык"
           },
-          "distanceKm": 480,
+          "distanceKm": 70,
           "coordinates": [
             [
-              45.3167,
-              55.2
+              43.6532,
+              51.1975
+            ],
+            [
+              43.1756,
+              51.6522
+            ]
+          ],
+          "displayCoordinates": [
+            [
+              43.6532,
+              51.1975
+            ],
+            [
+              43.45,
+              51.45
+            ],
+            [
+              43.1756,
+              51.6522
+            ]
+          ],
+          "stopIds": [
+            "aktau",
+            "kuryk"
+          ]
+        },
+        {
+          "id": "east-west-tm-kuryk",
+          "mode": "rail",
+          "from": {
+            "az": "Bərəkət",
+            "en": "Bereket",
+            "ru": "Берекет"
+          },
+          "to": {
+            "az": "Kurık",
+            "en": "Kuryk",
+            "ru": "Курык"
+          },
+          "distanceKm": 610,
+          "coordinates": [
+            [
+              39.2446,
+              55.5154
+            ],
+            [
+              41.55,
+              53.95
             ],
             [
               43.3406,
@@ -962,12 +1009,24 @@
           ],
           "displayCoordinates": [
             [
-              45.3167,
-              55.2
+              39.2446,
+              55.5154
             ],
             [
-              44.4,
-              54.1
+              40,
+              55
+            ],
+            [
+              40.8,
+              54.5
+            ],
+            [
+              41.55,
+              53.95
+            ],
+            [
+              42.4,
+              53.5
             ],
             [
               43.3406,
@@ -983,7 +1042,8 @@
             ]
           ],
           "stopIds": [
-            "beyneu",
+            "bereket",
+            "serhetyaka",
             "uzen",
             "kuryk"
           ]
@@ -1001,7 +1061,7 @@
             "en": "Turkmenbashi",
             "ru": "Туркменбаши"
           },
-          "distanceKm": 1700,
+          "distanceKm": 1660,
           "coordinates": [
             [
               41.2995,
@@ -1010,6 +1070,10 @@
             [
               39.6542,
               66.9597
+            ],
+            [
+              40.1033,
+              65.3689
             ],
             [
               39.7681,
@@ -1028,6 +1092,18 @@
               58.3261
             ],
             [
+              38.9764,
+              56.2757
+            ],
+            [
+              39.2446,
+              55.5154
+            ],
+            [
+              39.5108,
+              54.3671
+            ],
+            [
               40.0224,
               52.9697
             ]
@@ -1044,6 +1120,14 @@
             [
               39.6542,
               66.9597
+            ],
+            [
+              39.9,
+              66.1
+            ],
+            [
+              40.1033,
+              65.3689
             ],
             [
               39.7681,
@@ -1070,12 +1154,24 @@
               58.3261
             ],
             [
-              38.9,
-              56.3
+              38.4,
+              57.4
             ],
             [
-              39.6,
-              54.6
+              38.9764,
+              56.2757
+            ],
+            [
+              39.2446,
+              55.5154
+            ],
+            [
+              39.5108,
+              54.3671
+            ],
+            [
+              39.8,
+              53.6
             ],
             [
               40.0224,
@@ -1085,11 +1181,165 @@
           "stopIds": [
             "tashkent",
             "samarkand",
+            "navoi",
             "bukhara",
             "turkmenabat",
             "mary",
             "ashgabat",
+            "serdar",
+            "bereket",
+            "balkanabat",
             "turkmenbashi"
+          ]
+        },
+        {
+          "id": "east-west-beyneu-navoi",
+          "mode": "rail",
+          "from": {
+            "az": "Beyneu",
+            "en": "Beyneu",
+            "ru": "Бейнеу"
+          },
+          "to": {
+            "az": "Nəvai",
+            "en": "Navoi",
+            "ru": "Навои"
+          },
+          "distanceKm": 1120,
+          "coordinates": [
+            [
+              45.3167,
+              55.2
+            ],
+            [
+              43.0758,
+              58.9067
+            ],
+            [
+              42.4531,
+              59.6103
+            ],
+            [
+              42.1564,
+              63.5557
+            ],
+            [
+              40.1033,
+              65.3689
+            ]
+          ],
+          "displayCoordinates": [
+            [
+              45.3167,
+              55.2
+            ],
+            [
+              44.6,
+              56.4
+            ],
+            [
+              43.8,
+              57.9
+            ],
+            [
+              43.0758,
+              58.9067
+            ],
+            [
+              42.4531,
+              59.6103
+            ],
+            [
+              41.6,
+              61
+            ],
+            [
+              41.95,
+              62.4
+            ],
+            [
+              42.1564,
+              63.5557
+            ],
+            [
+              41.2,
+              64.3
+            ],
+            [
+              40.1033,
+              65.3689
+            ]
+          ],
+          "stopIds": [
+            "beyneu",
+            "kungrad",
+            "nukus",
+            "uchkuduk",
+            "navoi"
+          ]
+        },
+        {
+          "id": "east-west-trans-karakum",
+          "mode": "rail",
+          "from": {
+            "az": "Aşqabad",
+            "en": "Ashgabat",
+            "ru": "Ашхабад"
+          },
+          "to": {
+            "az": "Nukus",
+            "en": "Nukus",
+            "ru": "Нукус"
+          },
+          "distanceKm": 530,
+          "coordinates": [
+            [
+              37.9601,
+              58.3261
+            ],
+            [
+              41.8363,
+              59.9666
+            ],
+            [
+              42.4531,
+              59.6103
+            ]
+          ],
+          "displayCoordinates": [
+            [
+              37.9601,
+              58.3261
+            ],
+            [
+              38.9,
+              58.6
+            ],
+            [
+              39.9,
+              59
+            ],
+            [
+              40.9,
+              59.5
+            ],
+            [
+              41.8363,
+              59.9666
+            ],
+            [
+              42.1,
+              59.8
+            ],
+            [
+              42.4531,
+              59.6103
+            ]
+          ],
+          "stopIds": [
+            "ashgabat",
+            "dashoguz",
+            "nukus"
           ]
         },
         {
@@ -4073,6 +4323,79 @@
           ]
         },
         {
+          "id": "north-south-finland",
+          "mode": "rail",
+          "from": {
+            "az": "Buslovskaya",
+            "en": "Buslovskaya",
+            "ru": "Бусловская"
+          },
+          "to": {
+            "az": "Moskva",
+            "en": "Moscow",
+            "ru": "Москва"
+          },
+          "distanceKm": 780,
+          "coordinates": [
+            [
+              60.82,
+              28.48
+            ],
+            [
+              60.707603769782864,
+              28.764043085416162
+            ],
+            [
+              59.93460060344935,
+              30.331845425988515
+            ],
+            [
+              55.7558,
+              37.6173
+            ]
+          ],
+          "displayCoordinates": [
+            [
+              60.82,
+              28.48
+            ],
+            [
+              60.707603769782864,
+              28.764043085416162
+            ],
+            [
+              60.3,
+              29.6
+            ],
+            [
+              59.93460060344935,
+              30.331845425988515
+            ],
+            [
+              58.9,
+              32
+            ],
+            [
+              57.88,
+              34.05
+            ],
+            [
+              56.86,
+              35.9
+            ],
+            [
+              55.7558,
+              37.6173
+            ]
+          ],
+          "stopIds": [
+            "buslovskaya",
+            "vyborg",
+            "st-petersburg",
+            "moscow"
+          ]
+        },
+        {
           "id": "north-south-main-1",
           "mode": "rail",
           "from": {
@@ -4314,6 +4637,83 @@
             "astara",
             "rasht",
             "qazvin",
+            "tehran"
+          ]
+        },
+        {
+          "id": "north-south-kz-tm-iran",
+          "mode": "rail",
+          "from": {
+            "az": "Bərəkət",
+            "en": "Bereket",
+            "ru": "Берекет"
+          },
+          "to": {
+            "az": "Tehran",
+            "en": "Tehran",
+            "ru": "Тегеран"
+          },
+          "distanceKm": 680,
+          "coordinates": [
+            [
+              39.2446,
+              55.5154
+            ],
+            [
+              37.6653,
+              54.7725
+            ],
+            [
+              36.8456,
+              54.4393
+            ],
+            [
+              35.6892,
+              51.389
+            ]
+          ],
+          "displayCoordinates": [
+            [
+              39.2446,
+              55.5154
+            ],
+            [
+              38.5,
+              55.1
+            ],
+            [
+              37.6653,
+              54.7725
+            ],
+            [
+              37.2,
+              54.6
+            ],
+            [
+              36.8456,
+              54.4393
+            ],
+            [
+              36.56,
+              53.06
+            ],
+            [
+              35.75,
+              52.77
+            ],
+            [
+              35.22,
+              52.34
+            ],
+            [
+              35.6892,
+              51.389
+            ]
+          ],
+          "stopIds": [
+            "bereket",
+            "etrek",
+            "gorgan",
             "tehran"
           ]
         },
@@ -10445,6 +10845,29 @@
       ]
     },
     {
+      "id": "bereket",
+      "name": {
+        "az": "Bərəkət",
+        "en": "Bereket",
+        "ru": "Берекет"
+      },
+      "description": {
+        "az": "Bərəkət - Şərq-Qərb və Şimal-Cənub dəhlizləri marşrutu üzərində yerləşir.",
+        "en": "Bereket lies on the East-West and North-South corridor routes.",
+        "ru": "Берекет расположен на маршруте коридоров Восток-Запад и Север-Юг."
+      },
+      "category": "station",
+      "icon": "fas:train",
+      "coordinates": [
+        39.2446,
+        55.5154
+      ],
+      "connectedCorridorIds": [
+        "east-west",
+        "north-south"
+      ]
+    },
+    {
       "id": "berlin-hub",
       "name": {
         "az": "Berlin",
@@ -10648,6 +11071,28 @@
         129.0756
       ],
       "connectedCorridorIds": []
+    },
+    {
+      "id": "buslovskaya",
+      "name": {
+        "az": "Buslovskaya",
+        "en": "Buslovskaya",
+        "ru": "Бусловская"
+      },
+      "description": {
+        "az": "Buslovskaya - Şimal-Cənub dəhlizi marşrutu üzərində yerləşir.",
+        "en": "Buslovskaya lies on the North-South corridor route.",
+        "ru": "Бусловская расположен на маршруте коридора Север-Юг."
+      },
+      "category": "station",
+      "icon": "fas:train",
+      "coordinates": [
+        60.82,
+        28.48
+      ],
+      "connectedCorridorIds": [
+        "north-south"
+      ]
     },
     {
       "id": "chabahar-port",
@@ -11196,6 +11641,28 @@
       ]
     },
     {
+      "id": "kungrad",
+      "name": {
+        "az": "Qunqrad",
+        "en": "Kungrad",
+        "ru": "Кунград"
+      },
+      "description": {
+        "az": "Qunqrad - Şərq-Qərb dəhlizi marşrutu üzərində yerləşir.",
+        "en": "Kungrad lies on the East-West corridor route.",
+        "ru": "Кунград расположен на маршруте коридора Восток-Запад."
+      },
+      "category": "station",
+      "icon": "fas:train",
+      "coordinates": [
+        43.0758,
+        58.9067
+      ],
+      "connectedCorridorIds": [
+        "east-west"
+      ]
+    },
+    {
       "id": "kunming",
       "name": {
         "az": "Kunmin",
@@ -11732,6 +12199,28 @@
       "coordinates": [
         29.8683,
         121.544
+      ],
+      "connectedCorridorIds": [
+        "east-west"
+      ]
+    },
+    {
+      "id": "nukus",
+      "name": {
+        "az": "Nukus",
+        "en": "Nukus",
+        "ru": "Нукус"
+      },
+      "description": {
+        "az": "Nukus - Şərq-Qərb dəhlizi marşrutu üzərində yerləşir.",
+        "en": "Nukus lies on the East-West corridor route.",
+        "ru": "Нукус расположен на маршруте коридора Восток-Запад."
+      },
+      "category": "station",
+      "icon": "fas:train",
+      "coordinates": [
+        42.4531,
+        59.6103
       ],
       "connectedCorridorIds": [
         "east-west"

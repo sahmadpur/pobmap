@@ -942,6 +942,66 @@ export const TRANSPORT_STOPS: TransportStop[] = [
     en: "Samtredia",
     ru: "Самтредиа",
   }),
+  createStop("buslovskaya", "RU", [60.82, 28.48], {
+    az: "Buslovskaya",
+    en: "Buslovskaya",
+    ru: "Бусловская",
+  }),
+  createStop("bereket", "TM", [39.2446, 55.5154], {
+    az: "Bərəkət",
+    en: "Bereket",
+    ru: "Берекет",
+  }),
+  createStop("serhetyaka", "TM", [41.55, 53.95], {
+    az: "Serhetyaka",
+    en: "Serhetyaka",
+    ru: "Серхетяка",
+  }),
+  createStop("balkanabat", "TM", [39.5108, 54.3671], {
+    az: "Balkanabat",
+    en: "Balkanabat",
+    ru: "Балканабад",
+  }),
+  createStop("serdar", "TM", [38.9764, 56.2757], {
+    az: "Sərdar",
+    en: "Serdar",
+    ru: "Сердар",
+  }),
+  createStop("etrek", "TM", [37.6653, 54.7725], {
+    az: "Etrek",
+    en: "Etrek",
+    ru: "Этрек",
+  }),
+  createStop("gorgan", "IR", [36.8456, 54.4393], {
+    az: "Qorqan",
+    en: "Gorgan",
+    ru: "Горган",
+  }),
+  createStop("kungrad", "UZ", [43.0758, 58.9067], {
+    az: "Qunqrad",
+    en: "Kungrad",
+    ru: "Кунград",
+  }),
+  createStop("nukus", "UZ", [42.4531, 59.6103], {
+    az: "Nukus",
+    en: "Nukus",
+    ru: "Нукус",
+  }),
+  createStop("uchkuduk", "UZ", [42.1564, 63.5557], {
+    az: "Uçquduq",
+    en: "Uchkuduk",
+    ru: "Учкудук",
+  }),
+  createStop("navoi", "UZ", [40.1033, 65.3689], {
+    az: "Nəvai",
+    en: "Navoi",
+    ru: "Навои",
+  }),
+  createStop("dashoguz", "TM", [41.8363, 59.9666], {
+    az: "Daşoğuz",
+    en: "Dashoguz",
+    ru: "Дашогуз",
+  }),
 ];
 
 export const TRANSPORT_STOPS_BY_ID = Object.fromEntries(
