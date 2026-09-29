@@ -6981,6 +6981,104 @@
             "madrid",
             "lisbon"
           ]
+        },
+        {
+          "id": "north-west-moscow-st-petersburg",
+          "mode": "rail",
+          "from": {
+            "az": "Moskva",
+            "en": "Moscow",
+            "ru": "Москва"
+          },
+          "to": {
+            "az": "Sankt-Peterburq",
+            "en": "St. Petersburg",
+            "ru": "Санкт-Петербург"
+          },
+          "distanceKm": 633,
+          "coordinates": [
+            [
+              55.7558,
+              37.6173
+            ],
+            [
+              59.93460060344935,
+              30.331845425988515
+            ]
+          ],
+          "displayCoordinates": [
+            [
+              55.7558,
+              37.6173
+            ],
+            [
+              57.213659759616576,
+              37.05688476562501
+            ],
+            [
+              58.072066597147945,
+              37.07885742187501
+            ],
+            [
+              58.44198345065033,
+              36.70532226562501
+            ],
+            [
+              58.50517468678928,
+              35.41992187500001
+            ],
+            [
+              59.55659188568175,
+              33.37646484375001
+            ],
+            [
+              59.93460060344935,
+              30.331845425988515
+            ]
+          ],
+          "stopIds": [
+            "moscow",
+            "st-petersburg"
+          ]
+        },
+        {
+          "id": "north-west-moscow-pechory",
+          "mode": "rail",
+          "from": {
+            "az": "Moskva",
+            "en": "Moscow",
+            "ru": "Москва"
+          },
+          "to": {
+            "az": "Peçori",
+            "en": "Pechory",
+            "ru": "Печоры"
+          },
+          "distanceKm": 650,
+          "coordinates": [
+            [
+              55.7558,
+              37.6173
+            ],
+            [
+              57.8144,
+              27.6089
+            ]
+          ],
+          "displayCoordinates": [
+            [
+              55.7558,
+              37.6173
+            ],
+            [
+              57.8144,
+              27.6089
+            ]
+          ],
+          "stopIds": [
+            "moscow",
+            "pechory"
+          ]
         }
       ]
     },
@@ -10454,27 +10552,72 @@
   ],
   "markers": [
     {
-      "id": "akhalkalaki-logistics-complex",
+      "id": "baku-port",
       "name": {
-        "az": "Axalkalaki logistika kompleksi",
-        "en": "Akhalkalaki Logistics Complex",
-        "ru": "Логистический комплекс Ахалкалаки"
+        "az": "Bakı Limanı",
+        "en": "Baku Port",
+        "ru": "Бакинский порт"
       },
       "description": {
-        "az": "Axalkalaki logistika kompleksi - Şərq-Qərb, Şimal-Qərb və Cənub-Qərb dəhlizləri marşrutu üzərində yerləşir.",
-        "en": "Akhalkalaki Logistics Complex lies on the East-West, North-West and South-West corridor routes.",
-        "ru": "Логистический комплекс Ахалкалаки расположен на маршруте коридоров Восток-Запад, Северо-Запад и Юго-Запад."
+        "az": "Ələt qovşağı bu test quruluşunda yenilənmiş Şimal-Cənub dəhlizinin əsas logistika mərkəzi kimi təqdim olunur.",
+        "en": "In this test build, the Alat gateway is presented as the primary logistics hub of the rebuilt North-South corridor.",
+        "ru": "В этой тестовой сборке узел в Аляте представлен как основной логистический центр обновленного коридора Север-Юг."
       },
-      "category": "station",
-      "icon": "fas:warehouse",
+      "category": "port",
+      "icon": "anchor",
       "coordinates": [
-        41.4056,
-        43.4861
+        40.3572,
+        49.835
       ],
       "connectedCorridorIds": [
         "east-west",
         "north-west",
+        "north-south",
         "south-west"
+      ]
+    },
+    {
+      "id": "xian-inland-port",
+      "name": {
+        "az": "Sian quru limanı",
+        "en": "Xi'an Inland Port",
+        "ru": "Сухой порт Сиань"
+      },
+      "description": {
+        "az": "Şərq-Qərb dəhlizini daxili Çindən qidalandıran əsas şərq dəmir yolu qovşağı.",
+        "en": "Eastern rail gateway feeding the East-West corridor from inland China.",
+        "ru": "Восточный железнодорожный шлюз, подпитывающий коридор Восток-Запад из внутренних районов Китая."
+      },
+      "category": "station",
+      "icon": "fas:warehouse",
+      "coordinates": [
+        34.3416,
+        108.9398
+      ],
+      "connectedCorridorIds": [
+        "east-west"
+      ]
+    },
+    {
+      "id": "almaty-logistics-hub",
+      "name": {
+        "az": "Almatı logistika qovşağı",
+        "en": "Almaty Logistics Hub",
+        "ru": "Логистический хаб Алматы"
+      },
+      "description": {
+        "az": "Xəzər keçidinə yönələn dəmir yolu yükləri üçün Mərkəzi Asiyanın əsas konsolidasiya nöqtəsi.",
+        "en": "A Central Asian consolidation point for rail cargo moving toward the Caspian crossing.",
+        "ru": "Ключевой центральноазиатский пункт консолидации железнодорожных грузов на подходе к Каспию."
+      },
+      "category": "station",
+      "icon": "fas:boxes-stacked",
+      "coordinates": [
+        43.2389,
+        76.8897
+      ],
+      "connectedCorridorIds": [
+        "east-west"
       ]
     },
     {
@@ -10500,25 +10643,370 @@
       ]
     },
     {
-      "id": "almaty-logistics-hub",
+      "id": "tbilisi-intermodal-hub",
       "name": {
-        "az": "Almatı logistika qovşağı",
-        "en": "Almaty Logistics Hub",
-        "ru": "Логистический хаб Алматы"
+        "az": "Tbilisi intermodal qovşağı",
+        "en": "Tbilisi Intermodal Hub",
+        "ru": "Тбилисский интермодальный хаб"
       },
       "description": {
-        "az": "Xəzər keçidinə yönələn dəmir yolu yükləri üçün Mərkəzi Asiyanın əsas konsolidasiya nöqtəsi.",
-        "en": "A Central Asian consolidation point for rail cargo moving toward the Caspian crossing.",
-        "ru": "Ключевой центральноазиатский пункт консолидации железнодорожных грузов на подходе к Каспию."
+        "az": "Xəzər axınlarını sonrakı dəmir yolu və avtomobil paylaması ilə birləşdirən Cənubi Qafqaz transfer nöqtəsi.",
+        "en": "A South Caucasus transfer point linking Caspian traffic with onward rail and road distribution.",
+        "ru": "Южнокавказский перевалочный узел, связывающий каспийские потоки с дальнейшим железнодорожным и автодорожным распределением."
       },
       "category": "station",
-      "icon": "fas:boxes-stacked",
+      "icon": "fas:train",
       "coordinates": [
-        43.2389,
-        76.8897
+        41.7151,
+        44.8271
+      ],
+      "connectedCorridorIds": [
+        "east-west",
+        "north-west",
+        "south-west"
+      ]
+    },
+    {
+      "id": "kars-logistics-terminal",
+      "name": {
+        "az": "Qars logistika terminalı",
+        "en": "Kars Logistics Terminal",
+        "ru": "Логистический терминал Карс"
+      },
+      "description": {
+        "az": "Şərq-Qərb, Cənub-Qərb və Zəngəzur dəhlizi trafikləri üçün əsas Anadolu dəmir yolu ötürmə nöqtəsi.",
+        "en": "A key Anatolian rail handoff point for East-West, South-West, and Zangazur corridor traffic.",
+        "ru": "Ключевая анатолийская железнодорожная точка передачи потоков коридоров Восток-Запад, Юго-Запад и Зангезур."
+      },
+      "category": "station",
+      "icon": "fas:warehouse",
+      "coordinates": [
+        40.600439086831614,
+        43.09907678698981
+      ],
+      "connectedCorridorIds": [
+        "east-west",
+        "north-west",
+        "south-west"
+      ]
+    },
+    {
+      "id": "istanbul-gateway",
+      "name": {
+        "az": "İstanbul keçid qovşağı",
+        "en": "Istanbul Gateway",
+        "ru": "Стамбульский шлюз"
+      },
+      "description": {
+        "az": "Dəhliz trafikinin Avropanın avtomobil, dəniz və dəmir yolu şəbəkələrinə şaxələndiyi Bosfor qovşağı.",
+        "en": "A Bosporus-side gateway where corridor traffic fans into European road, sea, and rail networks.",
+        "ru": "Узел на Босфоре, где трафик коридоров распределяется по европейским автомобильным, морским и железнодорожным сетям."
+      },
+      "category": "port",
+      "icon": "fas:bridge",
+      "coordinates": [
+        41.012778558625435,
+        28.989682085852195
+      ],
+      "connectedCorridorIds": [
+        "east-west",
+        "north-west",
+        "south-west"
+      ]
+    },
+    {
+      "id": "moscow-freight-hub",
+      "name": {
+        "az": "Moskva yük qovşağı",
+        "en": "Moscow Freight Hub",
+        "ru": "Грузовой хаб Москва"
+      },
+      "description": {
+        "az": "Uzun məsafəli Avrasiya və Şimal-Cənub yük paylaması üçün əsas şimal qovşağı.",
+        "en": "A northern corridor control point for long-haul Eurasian and North-South freight distribution.",
+        "ru": "Северный опорный узел для распределения грузов по евразийским и северо-южным направлениям."
+      },
+      "category": "station",
+      "icon": "fas:industry",
+      "coordinates": [
+        55.7558,
+        37.6173
+      ],
+      "connectedCorridorIds": [
+        "north-west",
+        "north-south"
+      ]
+    },
+    {
+      "id": "vladivostok-port",
+      "name": {
+        "az": "Vladivostok limanı",
+        "en": "Vladivostok Port",
+        "ru": "Порт Владивосток"
+      },
+      "description": {
+        "az": "Şimal-Qərb dəhlizinin şərq ucunu təmin edən Sakit okean dəniz terminalı.",
+        "en": "Pacific maritime endpoint anchoring the eastern side of the North-West corridor.",
+        "ru": "Тихоокеанский морской терминал, закрепляющий восточную часть коридора Северо-Запад."
+      },
+      "category": "port",
+      "icon": "fas:ship",
+      "coordinates": [
+        43.1155,
+        131.8855
+      ],
+      "connectedCorridorIds": []
+    },
+    {
+      "id": "bandar-abbas-port",
+      "name": {
+        "az": "Bəndər-Abbas limanı",
+        "en": "Bandar Abbas Port",
+        "ru": "Порт Бендер-Аббас"
+      },
+      "description": {
+        "az": "Qafqazdan gələn Şimal-Cənub dəhlizi yüklərini qəbul edən Fars körfəzi liman qapısı.",
+        "en": "A Persian Gulf port gateway receiving North-South corridor freight from the Caucasus.",
+        "ru": "Портовый шлюз в Персидском заливе, принимающий грузы коридора Север-Юг из Кавказского региона."
+      },
+      "category": "port",
+      "icon": "fas:anchor",
+      "coordinates": [
+        27.1832,
+        56.2666
+      ],
+      "connectedCorridorIds": [
+        "north-south",
+        "south-west"
+      ]
+    },
+    {
+      "id": "tehran-logistics-hub",
+      "name": {
+        "az": "Tehran logistika qovşağı",
+        "en": "Tehran Logistics Hub",
+        "ru": "Логистический хаб Тегеран"
+      },
+      "description": {
+        "az": "Şimal istiqamətli yük axınlarını Körfəz və Cənubi Asiya bağlantıları ilə balanslaşdıran daxili transfer mərkəzi.",
+        "en": "An inland transfer hub balancing northbound cargo with Gulf and South Asia connections.",
+        "ru": "Внутренний перевалочный хаб, балансирующий северные потоки грузов с направлениями к Персидскому заливу и Южной Азии."
+      },
+      "category": "station",
+      "icon": "fas:industry",
+      "coordinates": [
+        35.6892,
+        51.389
+      ],
+      "connectedCorridorIds": [
+        "north-south",
+        "south-west"
+      ]
+    },
+    {
+      "id": "karachi-gateway",
+      "name": {
+        "az": "Kəraçi keçid qovşağı",
+        "en": "Karachi Gateway",
+        "ru": "Карачинский шлюз"
+      },
+      "description": {
+        "az": "Cənub dəhlizi axınlarının aşağı ucunda yerləşən Cənubi Asiya dəniz qapısı.",
+        "en": "A South Asia maritime gateway at the lower end of southern corridor flows.",
+        "ru": "Южноазиатский морской шлюз на южном окончании коридорных потоков."
+      },
+      "category": "port",
+      "icon": "fas:anchor",
+      "coordinates": [
+        24.8607,
+        67.0011
+      ],
+      "connectedCorridorIds": [
+        "north-south",
+        "south-west"
+      ]
+    },
+    {
+      "id": "nakhchivan-terminal",
+      "name": {
+        "az": "Naxçıvan",
+        "en": "Nakhchivan",
+        "ru": "Нахчыван"
+      },
+      "description": {
+        "az": "Zəngəzur dəhlizi bağlantısını dəstəkləyən qərbi Azərbaycan transfer nöqtəsi.",
+        "en": "A western Azerbaijan transfer point supporting the Zangazur corridor connection.",
+        "ru": "Точка перевалки в западном Азербайджане, поддерживающая связь по Зангезурскому коридору."
+      },
+      "category": "station",
+      "icon": "fas:warehouse",
+      "coordinates": [
+        39.2029,
+        45.4053
+      ],
+      "connectedCorridorIds": [
+        "east-west",
+        "north-west",
+        "north-south",
+        "south-west"
+      ]
+    },
+    {
+      "id": "turgundi-border-terminal",
+      "name": {
+        "az": "Turqundi sərhəd terminalı",
+        "en": "Turgundi Border Terminal",
+        "ru": "Пограничный терминал Тургунди"
+      },
+      "description": {
+        "az": "Mərkəzi Asiya dəhlizi trafikini qidalandıran Əfqanıstan-Türkmənistan sərhəd dəmir yolu keçidi.",
+        "en": "An Afghanistan-Turkmenistan border rail crossing feeding Central Asian corridor traffic.",
+        "ru": "Афгано-туркменский пограничный железнодорожный переход, питающий трафик центральноазиатского коридора."
+      },
+      "category": "station",
+      "icon": "fas:train",
+      "coordinates": [
+        35.2183,
+        62.2591
       ],
       "connectedCorridorIds": [
         "east-west"
+      ]
+    },
+    {
+      "id": "mazar-i-sharif-rail-hub",
+      "name": {
+        "az": "Məzari-Şərif dəmiryol qovşağı",
+        "en": "Mazar-i-Sharif Rail Hub",
+        "ru": "Железнодорожный узел Мазари-Шариф"
+      },
+      "description": {
+        "az": "Mərkəzi Asiya dəhlizi trafikini Cənubi Asiyaya bağlayan şimali Əfqanıstan dəmir yolu qovşağı.",
+        "en": "A northern Afghanistan rail hub linking Central Asian corridor traffic toward South Asia.",
+        "ru": "Железнодорожный узел на севере Афганистана, связывающий трафик центральноазиатского коридора с Южной Азией."
+      },
+      "category": "station",
+      "icon": "fas:train",
+      "coordinates": [
+        36.7069,
+        67.1109
+      ],
+      "connectedCorridorIds": [
+        "east-west"
+      ]
+    },
+    {
+      "id": "dushanbe-rail-hub",
+      "name": {
+        "az": "Düşənbə dəmiryol qovşağı",
+        "en": "Dushanbe Rail Hub",
+        "ru": "Железнодорожный узел Душанбе"
+      },
+      "description": {
+        "az": "Mərkəzi Asiya dəhlizi trafikini Əfqanıstana yönəldən Tacikistan dəmir yolu qovşağı.",
+        "en": "A Tajikistan rail hub consolidating Central Asian corridor traffic toward Afghanistan.",
+        "ru": "Таджикский железнодорожный узел, консолидирующий трафик центральноазиатского коридора в сторону Афганистана."
+      },
+      "category": "station",
+      "icon": "fas:train",
+      "coordinates": [
+        38.5598,
+        68.787
+      ],
+      "connectedCorridorIds": [
+        "east-west"
+      ]
+    },
+    {
+      "id": "qingdao-port",
+      "name": {
+        "az": "Qingdao limanı",
+        "en": "Qingdao Port",
+        "ru": "Порт Циндао"
+      },
+      "description": {
+        "az": "Sarı Dəniz sahilindən Şərq-Qərb dəhlizi yükünü qidalandıran şərqi Çin dəniz limanı.",
+        "en": "An eastern Chinese seaport feeding East-West corridor cargo from the Yellow Sea coast.",
+        "ru": "Восточно-китайский морской порт на побережье Жёлтого моря, питающий грузопоток коридора Восток-Запад."
+      },
+      "category": "port",
+      "icon": "fas:anchor",
+      "coordinates": [
+        36.0671,
+        120.3826
+      ],
+      "connectedCorridorIds": [
+        "east-west"
+      ]
+    },
+    {
+      "id": "lianyungang-port",
+      "name": {
+        "az": "Lianyungang limanı",
+        "en": "Lianyungang Port",
+        "ru": "Порт Ляньюньган"
+      },
+      "description": {
+        "az": "Şərq-Qərb dəhlizi dəmir yolu trafiki üçün şərq son nöqtəsi olan Sarı Dəniz qapı limanı.",
+        "en": "A Yellow Sea gateway port and eastern terminus for East-West corridor rail traffic.",
+        "ru": "Портовые ворота на Жёлтом море, восточная конечная точка железнодорожного трафика коридора Восток-Запад."
+      },
+      "category": "port",
+      "icon": "fas:anchor",
+      "coordinates": [
+        34.5969,
+        119.2216
+      ],
+      "connectedCorridorIds": [
+        "east-west"
+      ]
+    },
+    {
+      "id": "mersin-port",
+      "name": {
+        "az": "Mersin limanı",
+        "en": "Mersin Port",
+        "ru": "Порт Мерсин"
+      },
+      "description": {
+        "az": "Şərq-Qərb və Cənub-Qərb dəhlizi trafikini Avropa ilə birləşdirən Aralıq dənizi qapı limanı.",
+        "en": "A Mediterranean gateway port linking East-West and South-West corridor traffic to Europe.",
+        "ru": "Средиземноморский порт-ворота, связывающий трафик коридоров Восток-Запад и Юго-Запад с Европой."
+      },
+      "category": "port",
+      "icon": "fas:anchor",
+      "coordinates": [
+        36.8,
+        34.6333
+      ],
+      "connectedCorridorIds": [
+        "east-west",
+        "south-west",
+        "north-west"
+      ]
+    },
+    {
+      "id": "akhalkalaki-logistics-complex",
+      "name": {
+        "az": "Axalkalaki logistika kompleksi",
+        "en": "Akhalkalaki Logistics Complex",
+        "ru": "Логистический комплекс Ахалкалаки"
+      },
+      "description": {
+        "az": "Axalkalaki logistika kompleksi - Şərq-Qərb, Şimal-Qərb və Cənub-Qərb dəhlizləri marşrutu üzərində yerləşir.",
+        "en": "Akhalkalaki Logistics Complex lies on the East-West, North-West and South-West corridor routes.",
+        "ru": "Логистический комплекс Ахалкалаки расположен на маршруте коридоров Восток-Запад, Северо-Запад и Юго-Запад."
+      },
+      "category": "station",
+      "icon": "fas:warehouse",
+      "coordinates": [
+        41.4056,
+        43.4861
+      ],
+      "connectedCorridorIds": [
+        "east-west",
+        "north-west",
+        "south-west"
       ]
     },
     {
@@ -10677,54 +11165,6 @@
       "connectedCorridorIds": [
         "north-south",
         "north-west"
-      ]
-    },
-    {
-      "id": "baku-port",
-      "name": {
-        "az": "Bakı Limanı",
-        "en": "Baku Port",
-        "ru": "Бакинский порт"
-      },
-      "description": {
-        "az": "Ələt qovşağı bu test quruluşunda yenilənmiş Şimal-Cənub dəhlizinin əsas logistika mərkəzi kimi təqdim olunur.",
-        "en": "In this test build, the Alat gateway is presented as the primary logistics hub of the rebuilt North-South corridor.",
-        "ru": "В этой тестовой сборке узел в Аляте представлен как основной логистический центр обновленного коридора Север-Юг."
-      },
-      "category": "port",
-      "icon": "anchor",
-      "coordinates": [
-        40.3572,
-        49.835
-      ],
-      "connectedCorridorIds": [
-        "east-west",
-        "north-west",
-        "north-south",
-        "south-west"
-      ]
-    },
-    {
-      "id": "bandar-abbas-port",
-      "name": {
-        "az": "Bəndər-Abbas limanı",
-        "en": "Bandar Abbas Port",
-        "ru": "Порт Бендер-Аббас"
-      },
-      "description": {
-        "az": "Qafqazdan gələn Şimal-Cənub dəhlizi yüklərini qəbul edən Fars körfəzi liman qapısı.",
-        "en": "A Persian Gulf port gateway receiving North-South corridor freight from the Caucasus.",
-        "ru": "Портовый шлюз в Персидском заливе, принимающий грузы коридора Север-Юг из Кавказского региона."
-      },
-      "category": "port",
-      "icon": "fas:anchor",
-      "coordinates": [
-        27.1832,
-        56.2666
-      ],
-      "connectedCorridorIds": [
-        "north-south",
-        "south-west"
       ]
     },
     {
@@ -11254,28 +11694,6 @@
       ]
     },
     {
-      "id": "dushanbe-rail-hub",
-      "name": {
-        "az": "Düşənbə dəmiryol qovşağı",
-        "en": "Dushanbe Rail Hub",
-        "ru": "Железнодорожный узел Душанбе"
-      },
-      "description": {
-        "az": "Mərkəzi Asiya dəhlizi trafikini Əfqanıstana yönəldən Tacikistan dəmir yolu qovşağı.",
-        "en": "A Tajikistan rail hub consolidating Central Asian corridor traffic toward Afghanistan.",
-        "ru": "Таджикский железнодорожный узел, консолидирующий трафик центральноазиатского коридора в сторону Афганистана."
-      },
-      "category": "station",
-      "icon": "fas:train",
-      "coordinates": [
-        38.5598,
-        68.787
-      ],
-      "connectedCorridorIds": [
-        "east-west"
-      ]
-    },
-    {
       "id": "fangcheng-port",
       "name": {
         "az": "Fançen",
@@ -11433,30 +11851,6 @@
       "connectedCorridorIds": []
     },
     {
-      "id": "istanbul-gateway",
-      "name": {
-        "az": "İstanbul keçid qovşağı",
-        "en": "Istanbul Gateway",
-        "ru": "Стамбульский шлюз"
-      },
-      "description": {
-        "az": "Dəhliz trafikinin Avropanın avtomobil, dəniz və dəmir yolu şəbəkələrinə şaxələndiyi Bosfor qovşağı.",
-        "en": "A Bosporus-side gateway where corridor traffic fans into European road, sea, and rail networks.",
-        "ru": "Узел на Босфоре, где трафик коридоров распределяется по европейским автомобильным, морским и железнодорожным сетям."
-      },
-      "category": "port",
-      "icon": "fas:bridge",
-      "coordinates": [
-        41.012778558625435,
-        28.989682085852195
-      ],
-      "connectedCorridorIds": [
-        "east-west",
-        "north-west",
-        "south-west"
-      ]
-    },
-    {
       "id": "izmir",
       "name": {
         "az": "İzmir",
@@ -11523,53 +11917,6 @@
       ],
       "connectedCorridorIds": [
         "north-south",
-        "south-west"
-      ]
-    },
-    {
-      "id": "karachi-gateway",
-      "name": {
-        "az": "Kəraçi keçid qovşağı",
-        "en": "Karachi Gateway",
-        "ru": "Карачинский шлюз"
-      },
-      "description": {
-        "az": "Cənub dəhlizi axınlarının aşağı ucunda yerləşən Cənubi Asiya dəniz qapısı.",
-        "en": "A South Asia maritime gateway at the lower end of southern corridor flows.",
-        "ru": "Южноазиатский морской шлюз на южном окончании коридорных потоков."
-      },
-      "category": "port",
-      "icon": "fas:anchor",
-      "coordinates": [
-        24.8607,
-        67.0011
-      ],
-      "connectedCorridorIds": [
-        "north-south",
-        "south-west"
-      ]
-    },
-    {
-      "id": "kars-logistics-terminal",
-      "name": {
-        "az": "Qars logistika terminalı",
-        "en": "Kars Logistics Terminal",
-        "ru": "Логистический терминал Карс"
-      },
-      "description": {
-        "az": "Şərq-Qərb, Cənub-Qərb və Zəngəzur dəhlizi trafikləri üçün əsas Anadolu dəmir yolu ötürmə nöqtəsi.",
-        "en": "A key Anatolian rail handoff point for East-West, South-West, and Zangazur corridor traffic.",
-        "ru": "Ключевая анатолийская железнодорожная точка передачи потоков коридоров Восток-Запад, Юго-Запад и Зангезур."
-      },
-      "category": "station",
-      "icon": "fas:warehouse",
-      "coordinates": [
-        40.600439086831614,
-        43.09907678698981
-      ],
-      "connectedCorridorIds": [
-        "east-west",
-        "north-west",
         "south-west"
       ]
     },
@@ -11750,28 +12097,6 @@
         "east-west",
         "south-west",
         "north-west"
-      ]
-    },
-    {
-      "id": "lianyungang-port",
-      "name": {
-        "az": "Lianyungang limanı",
-        "en": "Lianyungang Port",
-        "ru": "Порт Ляньюньган"
-      },
-      "description": {
-        "az": "Şərq-Qərb dəhlizi dəmir yolu trafiki üçün şərq son nöqtəsi olan Sarı Dəniz qapı limanı.",
-        "en": "A Yellow Sea gateway port and eastern terminus for East-West corridor rail traffic.",
-        "ru": "Портовые ворота на Жёлтом море, восточная конечная точка железнодорожного трафика коридора Восток-Запад."
-      },
-      "category": "port",
-      "icon": "fas:anchor",
-      "coordinates": [
-        34.5969,
-        119.2216
-      ],
-      "connectedCorridorIds": [
-        "east-west"
       ]
     },
     {
@@ -11959,52 +12284,6 @@
       ]
     },
     {
-      "id": "mazar-i-sharif-rail-hub",
-      "name": {
-        "az": "Məzari-Şərif dəmiryol qovşağı",
-        "en": "Mazar-i-Sharif Rail Hub",
-        "ru": "Железнодорожный узел Мазари-Шариф"
-      },
-      "description": {
-        "az": "Mərkəzi Asiya dəhlizi trafikini Cənubi Asiyaya bağlayan şimali Əfqanıstan dəmir yolu qovşağı.",
-        "en": "A northern Afghanistan rail hub linking Central Asian corridor traffic toward South Asia.",
-        "ru": "Железнодорожный узел на севере Афганистана, связывающий трафик центральноазиатского коридора с Южной Азией."
-      },
-      "category": "station",
-      "icon": "fas:train",
-      "coordinates": [
-        36.7069,
-        67.1109
-      ],
-      "connectedCorridorIds": [
-        "east-west"
-      ]
-    },
-    {
-      "id": "mersin-port",
-      "name": {
-        "az": "Mersin limanı",
-        "en": "Mersin Port",
-        "ru": "Порт Мерсин"
-      },
-      "description": {
-        "az": "Şərq-Qərb və Cənub-Qərb dəhlizi trafikini Avropa ilə birləşdirən Aralıq dənizi qapı limanı.",
-        "en": "A Mediterranean gateway port linking East-West and South-West corridor traffic to Europe.",
-        "ru": "Средиземноморский порт-ворота, связывающий трафик коридоров Восток-Запад и Юго-Запад с Европой."
-      },
-      "category": "port",
-      "icon": "fas:anchor",
-      "coordinates": [
-        36.8,
-        34.6333
-      ],
-      "connectedCorridorIds": [
-        "east-west",
-        "south-west",
-        "north-west"
-      ]
-    },
-    {
       "id": "milan",
       "name": {
         "az": "Milan",
@@ -12047,29 +12326,6 @@
         27.559
       ],
       "connectedCorridorIds": []
-    },
-    {
-      "id": "moscow-freight-hub",
-      "name": {
-        "az": "Moskva yük qovşağı",
-        "en": "Moscow Freight Hub",
-        "ru": "Грузовой хаб Москва"
-      },
-      "description": {
-        "az": "Uzun məsafəli Avrasiya və Şimal-Cənub yük paylaması üçün əsas şimal qovşağı.",
-        "en": "A northern corridor control point for long-haul Eurasian and North-South freight distribution.",
-        "ru": "Северный опорный узел для распределения грузов по евразийским и северо-южным направлениям."
-      },
-      "category": "station",
-      "icon": "fas:industry",
-      "coordinates": [
-        55.7558,
-        37.6173
-      ],
-      "connectedCorridorIds": [
-        "north-west",
-        "north-south"
-      ]
     },
     {
       "id": "mumbai-gateway",
@@ -12136,31 +12392,6 @@
         24.9573
       ],
       "connectedCorridorIds": []
-    },
-    {
-      "id": "nakhchivan-terminal",
-      "name": {
-        "az": "Naxçıvan",
-        "en": "Nakhchivan",
-        "ru": "Нахчыван"
-      },
-      "description": {
-        "az": "Zəngəzur dəhlizi bağlantısını dəstəkləyən qərbi Azərbaycan transfer nöqtəsi.",
-        "en": "A western Azerbaijan transfer point supporting the Zangazur corridor connection.",
-        "ru": "Точка перевалки в западном Азербайджане, поддерживающая связь по Зангезурскому коридору."
-      },
-      "category": "station",
-      "icon": "fas:warehouse",
-      "coordinates": [
-        39.2029,
-        45.4053
-      ],
-      "connectedCorridorIds": [
-        "east-west",
-        "north-west",
-        "north-south",
-        "south-west"
-      ]
     },
     {
       "id": "nakhodka-port",
@@ -12315,28 +12546,6 @@
       "connectedCorridorIds": [
         "south-west",
         "north-west"
-      ]
-    },
-    {
-      "id": "qingdao-port",
-      "name": {
-        "az": "Qingdao limanı",
-        "en": "Qingdao Port",
-        "ru": "Порт Циндао"
-      },
-      "description": {
-        "az": "Sarı Dəniz sahilindən Şərq-Qərb dəhlizi yükünü qidalandıran şərqi Çin dəniz limanı.",
-        "en": "An eastern Chinese seaport feeding East-West corridor cargo from the Yellow Sea coast.",
-        "ru": "Восточно-китайский морской порт на побережье Жёлтого моря, питающий грузопоток коридора Восток-Запад."
-      },
-      "category": "port",
-      "icon": "fas:anchor",
-      "coordinates": [
-        36.0671,
-        120.3826
-      ],
-      "connectedCorridorIds": [
-        "east-west"
       ]
     },
     {
@@ -12560,53 +12769,6 @@
       ]
     },
     {
-      "id": "tbilisi-intermodal-hub",
-      "name": {
-        "az": "Tbilisi intermodal qovşağı",
-        "en": "Tbilisi Intermodal Hub",
-        "ru": "Тбилисский интермодальный хаб"
-      },
-      "description": {
-        "az": "Xəzər axınlarını sonrakı dəmir yolu və avtomobil paylaması ilə birləşdirən Cənubi Qafqaz transfer nöqtəsi.",
-        "en": "A South Caucasus transfer point linking Caspian traffic with onward rail and road distribution.",
-        "ru": "Южнокавказский перевалочный узел, связывающий каспийские потоки с дальнейшим железнодорожным и автодорожным распределением."
-      },
-      "category": "station",
-      "icon": "fas:train",
-      "coordinates": [
-        41.7151,
-        44.8271
-      ],
-      "connectedCorridorIds": [
-        "east-west",
-        "north-west",
-        "south-west"
-      ]
-    },
-    {
-      "id": "tehran-logistics-hub",
-      "name": {
-        "az": "Tehran logistika qovşağı",
-        "en": "Tehran Logistics Hub",
-        "ru": "Логистический хаб Тегеран"
-      },
-      "description": {
-        "az": "Şimal istiqamətli yük axınlarını Körfəz və Cənubi Asiya bağlantıları ilə balanslaşdıran daxili transfer mərkəzi.",
-        "en": "An inland transfer hub balancing northbound cargo with Gulf and South Asia connections.",
-        "ru": "Внутренний перевалочный хаб, балансирующий северные потоки грузов с направлениями к Персидскому заливу и Южной Азии."
-      },
-      "category": "station",
-      "icon": "fas:industry",
-      "coordinates": [
-        35.6892,
-        51.389
-      ],
-      "connectedCorridorIds": [
-        "north-south",
-        "south-west"
-      ]
-    },
-    {
       "id": "trieste",
       "name": {
         "az": "Triyest",
@@ -12628,28 +12790,6 @@
         "east-west",
         "south-west",
         "north-west"
-      ]
-    },
-    {
-      "id": "turgundi-border-terminal",
-      "name": {
-        "az": "Turqundi sərhəd terminalı",
-        "en": "Turgundi Border Terminal",
-        "ru": "Пограничный терминал Тургунди"
-      },
-      "description": {
-        "az": "Mərkəzi Asiya dəhlizi trafikini qidalandıran Əfqanıstan-Türkmənistan sərhəd dəmir yolu keçidi.",
-        "en": "An Afghanistan-Turkmenistan border rail crossing feeding Central Asian corridor traffic.",
-        "ru": "Афгано-туркменский пограничный железнодорожный переход, питающий трафик центральноазиатского коридора."
-      },
-      "category": "station",
-      "icon": "fas:train",
-      "coordinates": [
-        35.2183,
-        62.2591
-      ],
-      "connectedCorridorIds": [
-        "east-west"
       ]
     },
     {
@@ -12806,26 +12946,6 @@
       ]
     },
     {
-      "id": "vladivostok-port",
-      "name": {
-        "az": "Vladivostok limanı",
-        "en": "Vladivostok Port",
-        "ru": "Порт Владивосток"
-      },
-      "description": {
-        "az": "Şimal-Qərb dəhlizinin şərq ucunu təmin edən Sakit okean dəniz terminalı.",
-        "en": "Pacific maritime endpoint anchoring the eastern side of the North-West corridor.",
-        "ru": "Тихоокеанский морской терминал, закрепляющий восточную часть коридора Северо-Запад."
-      },
-      "category": "port",
-      "icon": "fas:ship",
-      "coordinates": [
-        43.1155,
-        131.8855
-      ],
-      "connectedCorridorIds": []
-    },
-    {
       "id": "warsaw-hub",
       "name": {
         "az": "Varşava",
@@ -12887,28 +13007,6 @@
       "coordinates": [
         30.5928,
         114.3055
-      ],
-      "connectedCorridorIds": [
-        "east-west"
-      ]
-    },
-    {
-      "id": "xian-inland-port",
-      "name": {
-        "az": "Sian quru limanı",
-        "en": "Xi'an Inland Port",
-        "ru": "Сухой порт Сиань"
-      },
-      "description": {
-        "az": "Şərq-Qərb dəhlizini daxili Çindən qidalandıran əsas şərq dəmir yolu qovşağı.",
-        "en": "Eastern rail gateway feeding the East-West corridor from inland China.",
-        "ru": "Восточный железнодорожный шлюз, подпитывающий коридор Восток-Запад из внутренних районов Китая."
-      },
-      "category": "station",
-      "icon": "fas:warehouse",
-      "coordinates": [
-        34.3416,
-        108.9398
       ],
       "connectedCorridorIds": [
         "east-west"
@@ -12986,6 +13084,8 @@
       49
     ],
     "defaultZoom": 4,
+    "minZoom": 3,
+    "maxZoom": 8,
     "defaultLanguage": "az",
     "animationEnabled": true
   }
