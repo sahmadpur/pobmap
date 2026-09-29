@@ -48,6 +48,7 @@ The public map is intended to look strong in demos and stakeholder presentations
 - Collapsible route/marker lists
 - Collapsible route/marker editors
 - Segment cards are collapsible too
+- Full-screen map editor at `/admin/map` (September 2026): draw legs by clicking cities or markers, drag handles with pixel snapping, midpoint insertion, undo/redo, custom cities and markers created on the map, per-leg line style (solid / dotted via `segment.lineStyle`)
 
 ## Important Architecture Decisions
 
@@ -62,6 +63,10 @@ The app supports two modes:
    Intended for PostgreSQL-backed hosting
 
 For local work, `file` mode is currently the main path.
+
+### Custom Cities (Stops)
+
+`src/data/transport-stops.ts` is both the static catalog and a runtime registry. `registerTransportStops(stops, markers)` merges admin-created cities and admin markers (as `source: "marker"` stops, skipped when a stop already sits within 0.002° or shares the id) into every lookup (`getTransportStop`, `getTransportStopByCoordinate`, search). It runs on the server inside the store (before route normalization) and on the client in `InteractiveMapShell`, the admin console and the map editor. Custom cities live in `AdminStore.stops` / Prisma `Stop`. A city cannot be deleted while a leg references it (409), and catalog ids are reserved.
 
 ### Route Geometry Model
 
@@ -211,14 +216,13 @@ Still open for future phases:
 - better production PostgreSQL workflows and seed scripts
 - offline / kiosk / Electron packaging
 - finer marker density control by zoom level
-- admin editing for manual `displayCoordinates`
 
 ## Suggested Next Steps
 
 Good next candidates for a new session:
 
 1. Add zoom-aware marker clustering or density rules
-2. Add dedicated editing for presentation paths
+2. Polish the map editor (split leg at a point, drag-to-reorder legs)
 3. Improve marker popup design and content richness
 4. Finish the Prisma/PostgreSQL production path
 5. Remove visible credential display from the admin login page for safer demos

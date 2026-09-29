@@ -160,6 +160,12 @@ export function splitSegmentForDotting(
   stretches: DottedStretch[],
 ): SegmentRuns {
   const source = getSegmentSourceCoordinates(segment);
+
+  // A leg authored as dotted is dotted end to end; no stretch bookkeeping.
+  if (segment.lineStyle === "dotted" && source.length >= 2) {
+    return { solid: [], dotted: [softenPathCorners(source)] };
+  }
+
   const matches = stretches.filter(
     (stretch) => stretch.routeId === routeId && stretch.segmentId === segment.id,
   );

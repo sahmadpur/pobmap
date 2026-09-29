@@ -2,7 +2,8 @@
 
 import dynamic from "next/dynamic";
 
-import type { AdminMarker } from "@/types/admin";
+import { registerTransportStops } from "@/data/transport-stops";
+import type { AdminMarker, AdminStop } from "@/types/admin";
 import type { CorridorRoute } from "@/types/map";
 
 const InteractiveMapApp = dynamic(
@@ -36,9 +37,16 @@ const InteractiveMapApp = dynamic(
 export function InteractiveMapShell({
   routes,
   markers,
+  stops,
 }: {
   routes: CorridorRoute[];
   markers?: AdminMarker[];
+  /** Admin-created cities; registered before the map so every lookup sees them. */
+  stops?: AdminStop[];
 }) {
+  // Synchronous on purpose: the registry is a module singleton and the map
+  // reads it during its first render, so an effect would be one render late.
+  registerTransportStops(stops ?? [], markers ?? []);
+
   return <InteractiveMapApp routes={routes} markers={markers ?? []} />;
 }

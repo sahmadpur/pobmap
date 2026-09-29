@@ -7,6 +7,20 @@ export interface TransportStop {
   countryCode: string;
   coordinates: Coordinate;
   editorVisible?: boolean;
+  /**
+   * Where the stop comes from. Catalog stops live in this file; custom stops
+   * are created by admins on the map and stored with the routes. Absent means
+   * catalog.
+   */
+  source?: "catalog" | "custom" | "marker";
+}
+
+/** The part of an admin marker the registry needs; avoids importing admin types here. */
+export interface MarkerLikeStop {
+  id: string;
+  name: LocalizedText;
+  coordinates: Coordinate;
+  countryCode?: string;
 }
 
 function createStop(
@@ -1016,14 +1030,127 @@ export const TRANSPORT_STOPS_BY_COORDINATE = Object.fromEntries(
   TRANSPORT_STOPS.map((stop) => [getStopCoordinateKey(stop.coordinates), stop]),
 ) as Record<string, TransportStop>;
 
+/*
+ * Registry of custom stops.
+ *
+ * Admins can create cities on the map that the static catalog above does not
+ * know. Those live in the admin store and are registered here at runtime — on
+ * the server before routes are normalized, on the client before the map
+ * renders — so every lookup in the app (rendering, vehicle planning, corner
+ * softening, segment grouping) sees catalog and custom stops alike.
+ *
+ * The maps are rebuilt on every registration rather than mutated, so a stale
+ * custom stop never lingers after it is deleted.
+ */
+let customStops: TransportStop[] = [];
+let markerStops: TransportStop[] = [];
+let stopsById: Record<string, TransportStop> = TRANSPORT_STOPS_BY_ID;
+let stopsByCoordinate: Record<string, TransportStop> = TRANSPORT_STOPS_BY_COORDINATE;
+let allStops: TransportStop[] = TRANSPORT_STOPS;
+
+/** A marker this close to an existing stop is that stop, not a new one. */
+const MARKER_STOP_TOLERANCE = 0.002;
+
+/**
+ * Markers (ports, terminals, hubs) double as leg endpoints. A marker becomes a
+ * stop of its own unless a catalog or custom stop already has its id or sits
+ * on the same spot, in which case that stop stands for the marker.
+ */
+function markerToStop(
+  marker: MarkerLikeStop,
+  existing: TransportStop[],
+): TransportStop | null {
+  const duplicate = existing.some(
+    (stop) =>
+      stop.id === marker.id ||
+      (Math.abs(stop.coordinates[0] - marker.coordinates[0]) <= MARKER_STOP_TOLERANCE &&
+        Math.abs(stop.coordinates[1] - marker.coordinates[1]) <= MARKER_STOP_TOLERANCE),
+  );
+
+  if (duplicate) {
+    return null;
+  }
+
+  return {
+    id: marker.id,
+    name: marker.name,
+    countryCode: marker.countryCode ?? "",
+    coordinates: marker.coordinates,
+    source: "marker",
+  };
+}
+
+export function registerTransportStops(stops: TransportStop[], markers: MarkerLikeStop[] = []) {
+  customStops = stops.map((stop) => ({ ...stop, source: "custom" as const }));
+  const known = [...TRANSPORT_STOPS, ...customStops];
+  markerStops = [];
+
+  markers.forEach((marker) => {
+    const stop = markerToStop(marker, [...known, ...markerStops]);
+
+    if (stop) {
+      markerStops.push(stop);
+    }
+  });
+
+  allStops = [...known, ...markerStops];
+  stopsById = {
+    ...TRANSPORT_STOPS_BY_ID,
+    ...Object.fromEntries([...customStops, ...markerStops].map((stop) => [stop.id, stop])),
+  };
+  stopsByCoordinate = {
+    ...TRANSPORT_STOPS_BY_COORDINATE,
+    ...Object.fromEntries(
+      [...customStops, ...markerStops].map((stop) => [
+        getStopCoordinateKey(stop.coordinates),
+        stop,
+      ]),
+    ),
+  };
+}
+
+/** The stop that stands for a marker: itself, or the stop sharing its spot. */
+export function getStopForMarker(marker: MarkerLikeStop): TransportStop | null {
+  const own = stopsById[marker.id];
+
+  if (own) {
+    return own;
+  }
+
+  return (
+    allStops.find(
+      (stop) =>
+        Math.abs(stop.coordinates[0] - marker.coordinates[0]) <= MARKER_STOP_TOLERANCE &&
+        Math.abs(stop.coordinates[1] - marker.coordinates[1]) <= MARKER_STOP_TOLERANCE,
+    ) ?? null
+  );
+}
+
+/** Catalog stops followed by every registered custom stop. */
+export function getAllTransportStops(): TransportStop[] {
+  return allStops;
+}
+
+export function getCustomTransportStops(): TransportStop[] {
+  return customStops;
+}
+
+export function isCustomTransportStop(stopId: string): boolean {
+  return stopsById[stopId]?.source === "custom";
+}
+
+export function isCatalogTransportStopId(stopId: string): boolean {
+  return Boolean(TRANSPORT_STOPS_BY_ID[stopId]);
+}
+
 export function getTransportStop(stopId: string): TransportStop | null {
-  return TRANSPORT_STOPS_BY_ID[stopId] ?? null;
+  return stopsById[stopId] ?? null;
 }
 
 export function getTransportStopByCoordinate(
   coordinate: Coordinate,
 ): TransportStop | null {
-  return TRANSPORT_STOPS_BY_COORDINATE[getStopCoordinateKey(coordinate)] ?? null;
+  return stopsByCoordinate[getStopCoordinateKey(coordinate)] ?? null;
 }
 
 export function getTransportStopLabel(
@@ -1040,14 +1167,14 @@ export function getTransportStopCountryLabel(
   return COUNTRY_NAMES[stop.countryCode]?.[locale] ?? stop.countryCode;
 }
 
-export function searchTransportStops(query: string): TransportStop[] {
+export function searchTransportStops(query: string, limit = 10): TransportStop[] {
   const normalizedQuery = query.trim().toLocaleLowerCase();
 
   if (!normalizedQuery) {
-    return TRANSPORT_STOPS.filter((stop) => stop.editorVisible !== false).slice(0, 10);
+    return allStops.filter((stop) => stop.editorVisible !== false).slice(0, limit);
   }
 
-  return TRANSPORT_STOPS.filter((stop) => {
+  return allStops.filter((stop) => {
     if (stop.editorVisible === false) {
       return false;
     }
@@ -1067,5 +1194,5 @@ export function searchTransportStops(query: string): TransportStop[] {
       .toLocaleLowerCase();
 
     return searchable.includes(normalizedQuery);
-  }).slice(0, 10);
+  }).slice(0, limit);
 }

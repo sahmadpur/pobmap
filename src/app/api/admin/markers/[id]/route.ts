@@ -1,7 +1,12 @@
 import { NextResponse } from "next/server";
 
 import { adminMarkerSchema } from "@/lib/server/admin-schemas";
-import { deleteMarker, listMarkers, upsertMarker } from "@/lib/server/admin-store";
+import {
+  deleteMarker,
+  listMarkers,
+  StopConflictError,
+  upsertMarker,
+} from "@/lib/server/admin-store";
 
 export async function GET(
   _request: Request,
@@ -46,6 +51,10 @@ export async function DELETE(
     await deleteMarker(id);
     return NextResponse.json({ ok: true });
   } catch (error) {
+    if (error instanceof StopConflictError) {
+      return NextResponse.json({ error: error.message }, { status: 409 });
+    }
+
     console.error("DELETE /api/admin/markers/[id] failed", error);
     return NextResponse.json({ error: "Failed to delete marker." }, { status: 500 });
   }

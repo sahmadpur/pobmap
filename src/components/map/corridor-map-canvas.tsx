@@ -27,7 +27,7 @@ import {
 import { getCountryName } from "@/data/countries";
 import { DOTTED_STRETCHES } from "@/data/dotted-stretches";
 import { getMarkerIconSvg } from "@/data/marker-icons";
-import { getTransportStop, TRANSPORT_STOPS } from "@/data/transport-stops";
+import { getAllTransportStops, getTransportStop } from "@/data/transport-stops";
 import { collectRouteTerminalStopIds } from "@/lib/corridor-stop-utils";
 import {
   flattenRouteCoordinates,
@@ -379,7 +379,7 @@ interface PlacedLabel {
  */
 function buildCityLabels(cities: RawCity[]): CityLabel[] {
   return cities.map((city) => {
-    const stop = TRANSPORT_STOPS.find(
+    const stop = getAllTransportStops().find(
       (candidate) =>
         Math.abs(candidate.coordinates[0] - city.c[0]) < CITY_STOP_TOLERANCE &&
         Math.abs(candidate.coordinates[1] - city.c[1]) < CITY_STOP_TOLERANCE,

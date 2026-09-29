@@ -38,6 +38,7 @@ Current scope includes:
 - Searchable connected-corridor selector based on existing routes
 - Searchable Font Awesome Free icon picker for markers
 - Collapsible list and editor sections for easier editing
+- Full-screen map editor (`/admin/map`) for drawing and reshaping corridor legs directly on the map, with undo/redo, snapping to cities and admin-created custom cities
 
 ## Tech Stack
 
@@ -111,6 +112,16 @@ Important notes:
 - Short passwords are allowed if you intentionally set one in `.env`
 - Restart the app after changing admin env values
 
+## Map Editor
+
+`/admin/map` is the fastest way to build a corridor:
+
+- **Draw leg**: click a city to start, click bend points, click cities to pass through, double-click the last city (or press Enter) to finish. "Chain legs" starts the next leg where the previous one ended.
+- **Select**: click a leg, drag its points, drop a point on a city to route through it, click the line or a hollow midpoint to add a point, double-click or press Delete to remove one.
+- **Place**: click the map to add a city or a marker (port, terminal, hub) there; country and name are pre-filled from the basemap data. Click an amber city or pink marker to edit or delete it. Custom cities are stored with the routes (`stops` in the file store, `Stop` table in Prisma) and behave like catalog cities everywhere. Markers double as leg endpoints: a marker becomes a stop of its own unless a city already sits on the same spot.
+- **Line style** per leg: solid or dotted (planned / unbuilt track), also editable in the console.
+- Undo/redo with ⌘Z / ⇧⌘Z, save with ⌘S. Every leg must start and end on a city or marker.
+
 ## Storage Modes
 
 ### File Mode
@@ -164,11 +175,17 @@ src/components/map
 src/components/admin
   admin-console.tsx           Admin editor UI
   login-form.tsx              Admin login form
+  map-editor/                 Full-screen route map editor (draw, reshape, cities)
+
+src/lib
+  route-editor-model.ts       Pure leg <-> vertex model, validation, undo history
+  geo-country.ts              Point-in-country lookup for new cities
 
 src/data
   corridors.ts                Seed routes and map config
   seed-markers.ts             Seed marker layer
-  transport-stops.ts          Global logistics stop catalog
+  transport-stops.ts          Global logistics stop catalog + runtime registry for custom cities
+  basemaps.ts                 Google tile styles shared by the public map and the editor
   countries.ts                Full country metadata
   marker-icons.ts             Font Awesome icon registry
   admin-store.json            File-mode content storage

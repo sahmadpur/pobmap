@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import {
   ChevronDown,
   LogOut,
+  Map,
   MapPinned,
   Plus,
   Route,
@@ -26,10 +27,11 @@ import {
   getTransportStop,
   getTransportStopCountryLabel,
   getTransportStopLabel,
+  registerTransportStops,
   searchTransportStops,
 } from "@/data/transport-stops";
 import { applyStopIdsToSegment, inferStopIdsFromCoordinates } from "@/lib/corridor-stop-utils";
-import type { AdminMarker } from "@/types/admin";
+import type { AdminMarker, AdminStop } from "@/types/admin";
 import type { CorridorRoute, CorridorSegment, LocalizedText } from "@/types/map";
 
 const SegmentLineEditor = dynamic(
@@ -651,7 +653,10 @@ export function AdminConsole() {
     void Promise.all([
       fetch("/api/admin/routes").then((response) => response.json()),
       fetch("/api/admin/markers").then((response) => response.json()),
-    ]).then(([routesPayload, markersPayload]) => {
+      fetch("/api/admin/stops").then((response) => response.json()),
+    ]).then(([routesPayload, markersPayload, stopsPayload]) => {
+      // Cities created in the map editor must be known before any leg renders.
+      registerTransportStops(stopsPayload as AdminStop[], markersPayload as AdminMarker[]);
       setRoutes(routesPayload as CorridorRoute[]);
       setMarkers(markersPayload as AdminMarker[]);
       setPersistedRouteIds((routesPayload as CorridorRoute[]).map((route) => route.id));
@@ -845,6 +850,10 @@ export function AdminConsole() {
               </p>
             </div>
             <div className="flex shrink-0 items-center gap-2 self-start">
+              <a href="/admin/map" className="hc-btn hc-btn--primary" title="Draw and reshape corridor legs on a full-screen map">
+                <Map className="h-4 w-4" aria-hidden="true" />
+                Map editor
+              </a>
               <AdminThemeToggle />
               <button type="button" onClick={() => void handleLogout()} className="hc-btn">
                 <LogOut className="h-4 w-4" aria-hidden="true" />
@@ -971,6 +980,14 @@ export function AdminConsole() {
                       </h2>
                     </div>
                     <div className="flex shrink-0 gap-2">
+                      <a
+                        href={`/admin/map?route=${encodeURIComponent(selectedRoute.id)}`}
+                        className="hc-btn"
+                        title="Draw and reshape this corridor's legs on the map"
+                      >
+                        <Map className="h-4 w-4" aria-hidden="true" />
+                        Edit on map
+                      </a>
                       <button
                         type="button"
                         onClick={() => void saveRoute(selectedRoute)}
@@ -1206,6 +1223,13 @@ export function AdminConsole() {
                                   </span>
                                 </button>
                                 <div className="flex shrink-0 items-center gap-1.5">
+                                  <a
+                                    href={`/admin/map?route=${encodeURIComponent(selectedRoute.id)}&segment=${encodeURIComponent(segment.id)}`}
+                                    className="hc-btn hc-btn--xs"
+                                    title="Reshape this leg on the map"
+                                  >
+                                    <Map className="h-3.5 w-3.5" aria-hidden="true" />
+                                  </a>
                                   <button
                                     type="button"
                                     onClick={() => toggleSegmentExpansion(segment.id)}
@@ -1251,7 +1275,7 @@ export function AdminConsole() {
 
                               {isExpanded ? (
                                 <div className="space-y-4 border-t border-[var(--hc-line)] px-4 py-4">
-                                  <div className="grid gap-4 md:grid-cols-3">
+                                  <div className="grid gap-4 md:grid-cols-4">
                                     <label className="block">
                                       <span className="hc-label mb-2">Mode</span>
                                       <select
@@ -1311,6 +1335,38 @@ export function AdminConsole() {
                                         }
                                         className="hc-field hc-mono"
                                       />
+                                    </label>
+                                    <label className="block">
+                                      <span className="hc-label mb-2">Line style</span>
+                                      <select
+                                        value={segment.lineStyle ?? "solid"}
+                                        onChange={(event) =>
+                                          setRoutes((current) =>
+                                            current.map((route) =>
+                                              route.id === selectedRoute.id
+                                                ? {
+                                                    ...route,
+                                                    segments: route.segments.map((item) =>
+                                                      item.id === segment.id
+                                                        ? {
+                                                            ...item,
+                                                            lineStyle:
+                                                              event.target.value === "dotted"
+                                                                ? "dotted"
+                                                                : undefined,
+                                                          }
+                                                        : item,
+                                                    ),
+                                                  }
+                                                : route,
+                                            ),
+                                          )
+                                        }
+                                        className="hc-field"
+                                      >
+                                        <option value="solid">Solid</option>
+                                        <option value="dotted">Dotted (planned)</option>
+                                      </select>
                                     </label>
                                     <label className="block">
                                       <span className="hc-label mb-2">Segment ID</span>

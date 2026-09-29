@@ -20,11 +20,29 @@ if (!process.env.DATABASE_URL) {
 }
 
 const store = JSON.parse(await fs.readFile(STORE_FILE_PATH, "utf8"));
+const stops = store.stops ?? [];
 
 const prisma = new PrismaClient({
   adapter: new PrismaPg({ connectionString: process.env.DATABASE_URL }),
   log: ["error"],
 });
+
+// Custom cities go first: routes reference them by id and are normalized
+// against the stop registry on read.
+for (const stop of stops) {
+  const stopFields = {
+    name: stop.name,
+    countryCode: stop.countryCode,
+    coordinates: stop.coordinates,
+    editorVisible: stop.editorVisible ?? true,
+  };
+
+  await prisma.stop.upsert({
+    where: { id: stop.id },
+    update: stopFields,
+    create: { id: stop.id, ...stopFields },
+  });
+}
 
 for (const route of store.routes) {
   const routeFields = {
@@ -47,6 +65,7 @@ for (const route of store.routes) {
     coordinates: segment.coordinates,
     displayCoordinates: segment.displayCoordinates,
     stopIds: segment.stopIds ?? [],
+    lineStyle: segment.lineStyle ?? "solid",
     position: index,
   }));
 
@@ -65,6 +84,7 @@ for (const marker of store.markers) {
     icon: marker.icon,
     coordinates: marker.coordinates,
     connectedCorridorIds: marker.connectedCorridorIds ?? [],
+    countryCode: marker.countryCode ?? null,
   };
 
   await prisma.marker.upsert({
@@ -87,5 +107,5 @@ await prisma.$disconnect();
 console.log(
   `[push-to-prod] Wrote ${store.routes.length} routes, ` +
     `${store.routes.reduce((total, route) => total + route.segments.length, 0)} segments, ` +
-    `${store.markers.length} markers to the database`,
+    `${store.markers.length} markers, ${stops.length} custom cities to the database`,
 );

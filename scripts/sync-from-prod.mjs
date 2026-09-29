@@ -23,12 +23,13 @@ const prisma = new PrismaClient({
   log: ["error"],
 });
 
-const [routes, markers, settings] = await Promise.all([
+const [routes, markers, stops, settings] = await Promise.all([
   prisma.route.findMany({
     include: { segments: { orderBy: { position: "asc" } } },
     orderBy: { id: "asc" },
   }),
   prisma.marker.findMany({ orderBy: { id: "asc" } }),
+  prisma.stop.findMany({ orderBy: { id: "asc" } }),
   prisma.appSettings.findUnique({ where: { id: "default" } }),
 ]);
 
@@ -55,6 +56,7 @@ const store = {
         ? { displayCoordinates: segment.displayCoordinates }
         : {}),
       stopIds: segment.stopIds,
+      ...(segment.lineStyle === "dotted" ? { lineStyle: "dotted" } : {}),
     })),
   })),
   markers: markers.map((marker) => ({
@@ -65,6 +67,14 @@ const store = {
     icon: marker.icon,
     coordinates: marker.coordinates,
     connectedCorridorIds: marker.connectedCorridorIds,
+    ...(marker.countryCode ? { countryCode: marker.countryCode } : {}),
+  })),
+  stops: stops.map((stop) => ({
+    id: stop.id,
+    name: stop.name,
+    countryCode: stop.countryCode,
+    coordinates: stop.coordinates,
+    editorVisible: stop.editorVisible,
   })),
   // Production has no AppSettings row (the app falls back to the seed defaults
   // there), so keep whatever the local store already carries.
@@ -84,5 +94,5 @@ await prisma.$disconnect();
 console.log(
   `[sync-from-prod] Wrote ${store.routes.length} routes, ` +
     `${store.routes.reduce((total, route) => total + route.segments.length, 0)} segments, ` +
-    `${store.markers.length} markers to src/data/admin-store.json`,
+    `${store.markers.length} markers, ${store.stops.length} custom cities to src/data/admin-store.json`,
 );

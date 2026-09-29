@@ -10,6 +10,9 @@ export type CorridorType = "primary" | "secondary";
 
 export type CorridorStatus = "active" | "planned" | "suspended";
 
+/** How a leg is drawn; dotted marks track that is planned or unbuilt. */
+export type SegmentLineStyle = "solid" | "dotted";
+
 export interface CorridorSegment {
   id: string;
   mode: TransportMode;
@@ -19,6 +22,8 @@ export interface CorridorSegment {
   coordinates: Coordinate[];
   displayCoordinates?: Coordinate[];
   stopIds?: string[];
+  /** Absent means solid. */
+  lineStyle?: SegmentLineStyle;
 }
 
 export interface CorridorRoute {

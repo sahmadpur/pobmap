@@ -9,9 +9,10 @@ import {
 } from "@/data/corridors";
 import { REFERENCE_MAP_ROUTES } from "@/data/reference-map-routes";
 import { SEED_MARKERS } from "@/data/seed-markers";
+import { isCatalogTransportStopId, registerTransportStops } from "@/data/transport-stops";
 import { normalizeCorridorRoute, normalizeCorridorSegment } from "@/lib/corridor-stop-utils";
 import { getPrismaClient } from "@/lib/server/prisma";
-import type { AppSettings, AdminMarker, AdminStore } from "@/types/admin";
+import type { AdminStop, AppSettings, AdminMarker, AdminStore } from "@/types/admin";
 import type { CorridorRoute, LocalizedText } from "@/types/map";
 
 const STORE_FILE_PATH = path.join(process.cwd(), "src/data/admin-store.json");
@@ -38,6 +39,7 @@ function createSeedStore(): AdminStore {
   return {
     routes: CORRIDORS.map(normalizeCorridorRoute),
     markers: SEED_MARKERS,
+    stops: [],
     settings: {
       defaultMapCenter: DEFAULT_MAP_VIEW.center,
       defaultZoom: DEFAULT_MAP_VIEW.zoom,
@@ -104,7 +106,10 @@ async function ensureFileStore(): Promise<AdminStore> {
   try {
     const raw = await fs.readFile(STORE_FILE_PATH, "utf8");
     const parsedStore = JSON.parse(raw) as AdminStore;
+    // Custom cities have to be known before any route is normalized, or their
+    // stop ids would be dropped as unknown.
     const mergedMarkers = mergeSeedMarkers(parsedStore.markers ?? []);
+    registerTransportStops(parsedStore.stops ?? [], mergedMarkers);
     const mergedRoutes = shouldMigrateReferenceRoutes(parsedStore.routes)
       ? mergeReferenceRoutes(parsedStore.routes ?? [])
       : parsedStore.routes ?? [];
@@ -129,6 +134,7 @@ async function ensureFileStore(): Promise<AdminStore> {
     };
   } catch {
     const seed = createSeedStore();
+    registerTransportStops([], seed.markers);
     await fs.writeFile(STORE_FILE_PATH, JSON.stringify(seed, null, 2), "utf8");
     return seed;
   }
@@ -158,6 +164,7 @@ function routeFromPrisma(route: {
     coordinates: Prisma.JsonValue;
     displayCoordinates: Prisma.JsonValue | null;
     stopIds: string[];
+    lineStyle: string;
   }>;
 }): CorridorRoute {
   if (
@@ -199,6 +206,7 @@ function routeFromPrisma(route: {
           ? (segment.displayCoordinates as CorridorRoute["segments"][number]["coordinates"])
           : undefined,
         stopIds: segment.stopIds,
+        lineStyle: segment.lineStyle === "dotted" ? "dotted" : undefined,
       });
     }),
   });
@@ -212,6 +220,7 @@ function markerFromPrisma(marker: {
   icon: string;
   coordinates: Prisma.JsonValue;
   connectedCorridorIds: string[];
+  countryCode: string | null;
 }): AdminMarker {
   if (
     !isLocalizedText(marker.name) ||
@@ -229,10 +238,45 @@ function markerFromPrisma(marker: {
     icon: marker.icon,
     coordinates: marker.coordinates as AdminMarker["coordinates"],
     connectedCorridorIds: marker.connectedCorridorIds,
+    countryCode: marker.countryCode ?? undefined,
   };
 }
 
+function stopFromPrisma(stop: {
+  id: string;
+  name: Prisma.JsonValue;
+  countryCode: string;
+  coordinates: Prisma.JsonValue;
+  editorVisible: boolean;
+}): AdminStop {
+  if (!isLocalizedText(stop.name) || !Array.isArray(stop.coordinates)) {
+    throw new Error("Invalid stop payload in database.");
+  }
+
+  return {
+    id: stop.id,
+    name: stop.name,
+    countryCode: stop.countryCode,
+    coordinates: stop.coordinates as AdminStop["coordinates"],
+    editorVisible: stop.editorVisible,
+    source: "custom",
+  };
+}
+
+async function listPrismaStops(): Promise<AdminStop[]> {
+  const stops = await getPrismaClient().stop.findMany({ orderBy: { id: "asc" } });
+
+  return stops.map(stopFromPrisma);
+}
+
+/** Loads custom cities into the stop registry so route normalization sees them. */
+async function syncPrismaStopRegistry() {
+  const [stops, markers] = await Promise.all([listPrismaStops(), listPrismaMarkers()]);
+  registerTransportStops(stops, markers);
+}
+
 async function listPrismaRoutes() {
+  await syncPrismaStopRegistry();
   const routes = await getPrismaClient().route.findMany({
     include: {
       segments: {
@@ -282,6 +326,14 @@ export async function listRoutes(): Promise<CorridorRoute[]> {
 }
 
 export async function upsertRoute(route: CorridorRoute): Promise<CorridorRoute> {
+  // File mode registers stops while reading the store; Prisma has to do it
+  // explicitly before the route is normalized.
+  const fileStore = SHOULD_USE_PRISMA ? null : await ensureFileStore();
+
+  if (SHOULD_USE_PRISMA) {
+    await syncPrismaStopRegistry();
+  }
+
   const normalizedRoute = mergeSeedPresentationPath(normalizeCorridorRoute(route));
 
   if (SHOULD_USE_PRISMA) {
@@ -308,6 +360,7 @@ export async function upsertRoute(route: CorridorRoute): Promise<CorridorRoute> 
             coordinates: segment.coordinates,
             displayCoordinates: segment.displayCoordinates,
             stopIds: segment.stopIds ?? [],
+            lineStyle: segment.lineStyle ?? "solid",
             position: index,
           })),
         },
@@ -333,6 +386,7 @@ export async function upsertRoute(route: CorridorRoute): Promise<CorridorRoute> 
             coordinates: segment.coordinates,
             displayCoordinates: segment.displayCoordinates,
             stopIds: segment.stopIds ?? [],
+            lineStyle: segment.lineStyle ?? "solid",
             position: index,
           })),
         },
@@ -342,7 +396,7 @@ export async function upsertRoute(route: CorridorRoute): Promise<CorridorRoute> 
     return normalizedRoute;
   }
 
-  const store = await ensureFileStore();
+  const store = fileStore ?? (await ensureFileStore());
   const existingIndex = store.routes.findIndex((item) => item.id === normalizedRoute.id);
 
   if (existingIndex >= 0) {
@@ -387,6 +441,7 @@ export async function upsertMarker(marker: AdminMarker): Promise<AdminMarker> {
         icon: marker.icon,
         coordinates: marker.coordinates,
         connectedCorridorIds: marker.connectedCorridorIds,
+        countryCode: marker.countryCode ?? null,
       },
       create: {
         id: marker.id,
@@ -396,6 +451,7 @@ export async function upsertMarker(marker: AdminMarker): Promise<AdminMarker> {
         icon: marker.icon,
         coordinates: marker.coordinates,
         connectedCorridorIds: marker.connectedCorridorIds,
+        countryCode: marker.countryCode ?? null,
       },
     });
 
@@ -416,6 +472,14 @@ export async function upsertMarker(marker: AdminMarker): Promise<AdminMarker> {
 }
 
 export async function deleteMarker(id: string) {
+  const usedBy = await findRoutesUsingStop(id);
+
+  if (usedBy.length > 0) {
+    throw new StopConflictError(
+      `Marker is still used as a leg endpoint by: ${usedBy.join(", ")}. Remove it from those legs first.`,
+    );
+  }
+
   if (SHOULD_USE_PRISMA) {
     await getPrismaClient().marker.delete({ where: { id } });
     return;
@@ -423,6 +487,104 @@ export async function deleteMarker(id: string) {
 
   const store = await ensureFileStore();
   store.markers = store.markers.filter((marker) => marker.id !== id);
+
+  await saveFileStore(store);
+}
+
+export async function listStops(): Promise<AdminStop[]> {
+  if (SHOULD_USE_PRISMA) {
+    return listPrismaStops();
+  }
+
+  const store = await ensureFileStore();
+
+  return (store.stops ?? []).map((stop) => ({ ...stop, source: "custom" as const }));
+}
+
+/** Route ids whose segments reference the stop; non-empty blocks deletion. */
+export async function findRoutesUsingStop(stopId: string): Promise<string[]> {
+  const routes = await listRoutes();
+
+  return routes
+    .filter((route) =>
+      route.segments.some((segment) => (segment.stopIds ?? []).includes(stopId)),
+    )
+    .map((route) => route.id);
+}
+
+export class StopConflictError extends Error {}
+
+export async function upsertStop(stop: AdminStop): Promise<AdminStop> {
+  if (isCatalogTransportStopId(stop.id)) {
+    throw new StopConflictError(`"${stop.id}" is a built-in city id; pick another id.`);
+  }
+
+  const record: AdminStop = {
+    id: stop.id,
+    name: stop.name,
+    countryCode: stop.countryCode,
+    coordinates: stop.coordinates,
+    editorVisible: stop.editorVisible ?? true,
+  };
+
+  if (SHOULD_USE_PRISMA) {
+    await getPrismaClient().stop.upsert({
+      where: { id: record.id },
+      update: {
+        name: record.name,
+        countryCode: record.countryCode,
+        coordinates: record.coordinates,
+        editorVisible: record.editorVisible ?? true,
+      },
+      create: {
+        id: record.id,
+        name: record.name,
+        countryCode: record.countryCode,
+        coordinates: record.coordinates,
+        editorVisible: record.editorVisible ?? true,
+      },
+    });
+
+    await syncPrismaStopRegistry();
+
+    return { ...record, source: "custom" };
+  }
+
+  const store = await ensureFileStore();
+  const stops = store.stops ?? [];
+  const existingIndex = stops.findIndex((item) => item.id === record.id);
+
+  if (existingIndex >= 0) {
+    stops[existingIndex] = record;
+  } else {
+    stops.push(record);
+  }
+
+  store.stops = stops;
+  registerTransportStops(stops);
+  await saveFileStore(store);
+
+  return { ...record, source: "custom" };
+}
+
+export async function deleteStop(id: string) {
+  const usedBy = await findRoutesUsingStop(id);
+
+  if (usedBy.length > 0) {
+    throw new StopConflictError(
+      `City is still used by: ${usedBy.join(", ")}. Remove it from those legs first.`,
+    );
+  }
+
+  if (SHOULD_USE_PRISMA) {
+    await getPrismaClient().stop.delete({ where: { id } });
+    await syncPrismaStopRegistry();
+    return;
+  }
+
+  const store = await ensureFileStore();
+  store.stops = (store.stops ?? []).filter((stop) => stop.id !== id);
+  registerTransportStops(store.stops);
 
   await saveFileStore(store);
 }

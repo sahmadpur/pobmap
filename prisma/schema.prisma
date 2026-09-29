@@ -41,6 +41,7 @@ model RouteSegment {
   coordinates Json
   displayCoordinates Json?
   stopIds    String[]
+  lineStyle  String @default("solid")
   position   Int
 }
 
@@ -52,8 +53,19 @@ model Marker {
   icon                String
   coordinates         Json
   connectedCorridorIds String[]
+  countryCode         String?
   createdAt           DateTime @default(now())
   updatedAt           DateTime @updatedAt
+}
+
+model Stop {
+  id            String   @id
+  name          Json
+  countryCode   String
+  coordinates   Json
+  editorVisible Boolean  @default(true)
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
 }
 
 model AppSettings {
