@@ -43,7 +43,7 @@ import {
   MARKER_MIN_ZOOM,
 } from "@/lib/marker-visibility";
 import { VehicleLayer } from "@/components/map/vehicle-layer";
-import type { AdminMarker, MarkerCategory } from "@/types/admin";
+import type { AdminMarker, MapViewSettings, MarkerCategory } from "@/types/admin";
 import type { Coordinate, CorridorRoute, LocalizedText, SupportedLocale, TransportMode } from "@/types/map";
 
 function createMarkerIcon(
@@ -949,6 +949,8 @@ interface CorridorMapCanvasProps {
   routes: CorridorRoute[];
   allRoutes: CorridorRoute[];
   markers: AdminMarker[];
+  /** Admin-set start view and zoom limits; falls back to the seed view. */
+  mapView?: MapViewSettings;
   selectedRouteId: string | null;
   selectedSegmentId: string | null;
   hoveredRouteId: string | null;
@@ -989,12 +991,19 @@ export default function CorridorMapCanvas({
   isMapOnlyMode,
   hasFilterPanel,
   tileUrl,
+  mapView,
   onRouteSelect,
   onRouteHover,
   onClearSelection,
   onPortCorridorSelect,
   t,
 }: CorridorMapCanvasProps) {
+  const initialView = {
+    center: mapView?.defaultMapCenter ?? DEFAULT_MAP_VIEW.center,
+    zoom: mapView?.defaultZoom ?? DEFAULT_MAP_VIEW.zoom,
+    minZoom: mapView?.minZoom ?? DEFAULT_MAP_VIEW.minZoom,
+    maxZoom: mapView?.maxZoom ?? DEFAULT_MAP_VIEW.maxZoom,
+  };
   const activeRoutes = useMemo(
     () => routes.filter((route) => route.status === "active"),
     [routes],
@@ -1024,7 +1033,7 @@ export default function CorridorMapCanvas({
     () => Array.from(new Set([selectedRouteId, hoveredRouteId].filter((id): id is string => Boolean(id)))),
     [selectedRouteId, hoveredRouteId],
   );
-  const [zoom, setZoom] = useState(DEFAULT_MAP_VIEW.zoom);
+  const [zoom, setZoom] = useState(initialView.zoom);
   const showStopLabels = zoom >= LABEL_MIN_ZOOM;
 
   // Where each visible corridor begins and ends. These are shown as soon as the
@@ -1083,10 +1092,10 @@ export default function CorridorMapCanvas({
 
   return (
     <MapContainer
-      center={DEFAULT_MAP_VIEW.center}
-      zoom={DEFAULT_MAP_VIEW.zoom}
-      minZoom={3}
-      maxZoom={8}
+      center={initialView.center}
+      zoom={initialView.zoom}
+      minZoom={initialView.minZoom}
+      maxZoom={initialView.maxZoom}
       zoomControl={false}
       attributionControl={false}
       className={`corridor-map-canvas corridor-map-canvas--${theme} ${

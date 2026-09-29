@@ -51,4 +51,6 @@ export interface PortMarker {
 export interface MapView {
   center: Coordinate;
   zoom: number;
+  minZoom: number;
+  maxZoom: number;
 }

@@ -20,6 +20,8 @@ export const SUPPORTED_LOCALES: SupportedLocale[] = ["az", "en", "ru"];
 export const DEFAULT_MAP_VIEW: MapView = {
   center: [41, 49],
   zoom: 4,
+  minZoom: 3,
+  maxZoom: 8,
 };
 
 export const TRANSPORT_MODE_META: Record<

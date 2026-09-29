@@ -33,7 +33,7 @@ import { getMarkerIconSvg } from "@/data/marker-icons";
 import { getSegmentRenderCoordinates } from "@/lib/map-utils";
 import { CountryFlag } from "@/components/ui/country-flag";
 import { RouteDetailsPanel } from "@/components/map/route-details-panel";
-import type { AdminMarker, MarkerCategory } from "@/types/admin";
+import type { AdminMarker, MapViewSettings, MarkerCategory } from "@/types/admin";
 import type {
   Coordinate,
   CorridorRoute,
@@ -115,9 +115,11 @@ function MarkerLegendGlyph({
 export function InteractiveMapApp({
   routes,
   markers,
+  mapView,
 }: {
   routes: CorridorRoute[];
   markers?: AdminMarker[];
+  mapView?: MapViewSettings;
 }) {
   const safeMarkers = markers ?? [];
   const { t, i18n } = useTranslation();
@@ -353,6 +355,7 @@ export function InteractiveMapApp({
           routes={visibleRoutes}
           allRoutes={routes}
           markers={safeMarkers}
+          mapView={mapView}
           selectedRouteId={activeSelectedRouteId}
           selectedSegmentId={activeSelectedSegmentId}
           hoveredRouteId={hoveredRouteId}

@@ -72,6 +72,8 @@ model AppSettings {
   id               String   @id @default("default")
   defaultMapCenter Json
   defaultZoom      Int
+  minZoom          Int      @default(3)
+  maxZoom          Int      @default(8)
   defaultLanguage  String
   animationEnabled Boolean
   createdAt        DateTime @default(now())

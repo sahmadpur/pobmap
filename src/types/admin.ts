@@ -34,9 +34,19 @@ export interface AdminMarker {
 export interface AppSettings {
   defaultMapCenter: Coordinate;
   defaultZoom: number;
+  /** Furthest the public map zooms out; stores written before this had none. */
+  minZoom: number;
+  /** Closest the public map zooms in. */
+  maxZoom: number;
   defaultLanguage: SupportedLocale;
   animationEnabled: boolean;
 }
+
+/** The subset of settings the public map reads to set up its viewport. */
+export type MapViewSettings = Pick<
+  AppSettings,
+  "defaultMapCenter" | "defaultZoom" | "minZoom" | "maxZoom"
+>;
 
 export interface AdminStore {
   routes: CorridorRoute[];

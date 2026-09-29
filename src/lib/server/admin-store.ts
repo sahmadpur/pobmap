@@ -43,9 +43,26 @@ function createSeedStore(): AdminStore {
     settings: {
       defaultMapCenter: DEFAULT_MAP_VIEW.center,
       defaultZoom: DEFAULT_MAP_VIEW.zoom,
+      minZoom: DEFAULT_MAP_VIEW.minZoom,
+      maxZoom: DEFAULT_MAP_VIEW.maxZoom,
       defaultLanguage: "az",
       animationEnabled: true,
     },
+  };
+}
+
+/**
+ * Fills in fields a store written by an older build never had, so the public
+ * map always gets a complete viewport even before an admin opens the settings.
+ */
+function normalizeSettings(settings: Partial<AppSettings> | undefined): AppSettings {
+  const seed = createSeedStore().settings;
+
+  return {
+    ...seed,
+    ...settings,
+    minZoom: settings?.minZoom ?? seed.minZoom,
+    maxZoom: settings?.maxZoom ?? seed.maxZoom,
   };
 }
 
@@ -306,12 +323,14 @@ async function getPrismaSettings(): Promise<AppSettings> {
     return createSeedStore().settings;
   }
 
-  return {
+  return normalizeSettings({
     defaultMapCenter: settings.defaultMapCenter as AppSettings["defaultMapCenter"],
     defaultZoom: settings.defaultZoom,
+    minZoom: settings.minZoom,
+    maxZoom: settings.maxZoom,
     defaultLanguage: settings.defaultLanguage as AppSettings["defaultLanguage"],
     animationEnabled: settings.animationEnabled,
-  };
+  });
 }
 
 export async function listRoutes(): Promise<CorridorRoute[]> {
@@ -595,5 +614,34 @@ export async function getSettings(): Promise<AppSettings> {
   }
 
   const store = await ensureFileStore();
-  return store.settings;
+  return normalizeSettings(store.settings);
+}
+
+export async function updateSettings(settings: AppSettings): Promise<AppSettings> {
+  const next = normalizeSettings(settings);
+
+  if (SHOULD_USE_PRISMA) {
+    const record = {
+      defaultMapCenter: next.defaultMapCenter,
+      defaultZoom: next.defaultZoom,
+      minZoom: next.minZoom,
+      maxZoom: next.maxZoom,
+      defaultLanguage: next.defaultLanguage,
+      animationEnabled: next.animationEnabled,
+    };
+
+    await getPrismaClient().appSettings.upsert({
+      where: { id: "default" },
+      create: { id: "default", ...record },
+      update: record,
+    });
+
+    return next;
+  }
+
+  const store = await ensureFileStore();
+  store.settings = next;
+  await saveFileStore(store);
+
+  return next;
 }

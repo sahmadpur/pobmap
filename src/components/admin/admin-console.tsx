@@ -9,6 +9,7 @@ import {
   Plus,
   Route,
   Save,
+  SlidersHorizontal,
   Trash2,
 } from "lucide-react";
 import dynamic from "next/dynamic";
@@ -42,6 +43,11 @@ const SegmentLineEditor = dynamic(
       <div className="hc-inset p-4 text-xs text-[var(--hc-muted)]">Loading map editor…</div>
     ),
   },
+);
+
+const MapSettingsDialog = dynamic(
+  () => import("@/components/admin/map-settings-dialog").then((mod) => mod.MapSettingsDialog),
+  { ssr: false },
 );
 
 type Register = "routes" | "markers";
@@ -648,6 +654,7 @@ export function AdminConsole() {
   const [saveSuccess, setSaveSuccess] = useState<string | null>(null);
   const [expandedSegmentIds, setExpandedSegmentIds] = useState<string[]>([]);
   const [activeRegister, setActiveRegister] = useState<Register>("routes");
+  const [isMapSettingsOpen, setIsMapSettingsOpen] = useState(false);
 
   useEffect(() => {
     void Promise.all([
@@ -854,6 +861,18 @@ export function AdminConsole() {
                 <Map className="h-4 w-4" aria-hidden="true" />
                 Map editor
               </a>
+              <button
+                type="button"
+                onClick={() => {
+                  resetStatus();
+                  setIsMapSettingsOpen(true);
+                }}
+                className="hc-btn"
+                title="Start view and zoom limits of the public map"
+              >
+                <SlidersHorizontal className="h-4 w-4" aria-hidden="true" />
+                Map settings
+              </button>
               <AdminThemeToggle />
               <button type="button" onClick={() => void handleLogout()} className="hc-btn">
                 <LogOut className="h-4 w-4" aria-hidden="true" />
@@ -1673,6 +1692,16 @@ export function AdminConsole() {
           </div>
         </div>
       </div>
+
+      {isMapSettingsOpen ? (
+        <MapSettingsDialog
+          onClose={() => setIsMapSettingsOpen(false)}
+          onSaved={() => {
+            setIsMapSettingsOpen(false);
+            setSaveSuccess("Map settings saved. The public map uses them on next load.");
+          }}
+        />
+      ) : null}
     </div>
   );
 }

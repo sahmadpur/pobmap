@@ -58,6 +58,37 @@ export const adminStopSchema = z.object({
   editorVisible: z.boolean().optional(),
 });
 
+// Leaflet's own limits are 0-18 for standard raster tiles; anything below 1
+// is a single world tile and reads as broken.
+export const ZOOM_RANGE = { min: 1, max: 18 } as const;
+
+const zoomLevelSchema = z.coerce.number().int().min(ZOOM_RANGE.min).max(ZOOM_RANGE.max);
+
+export const appSettingsSchema = z
+  .object({
+    defaultMapCenter: z.tuple([
+      z.coerce.number().min(-85).max(85),
+      z.coerce.number().min(-180).max(180),
+    ]),
+    defaultZoom: zoomLevelSchema,
+    minZoom: zoomLevelSchema,
+    maxZoom: zoomLevelSchema,
+    defaultLanguage: z.enum(["az", "en", "ru"]),
+    animationEnabled: z.boolean(),
+  })
+  .refine((settings) => settings.minZoom <= settings.maxZoom, {
+    message: "Min zoom must not exceed max zoom.",
+    path: ["minZoom"],
+  })
+  .refine(
+    (settings) =>
+      settings.defaultZoom >= settings.minZoom && settings.defaultZoom <= settings.maxZoom,
+    {
+      message: "Default zoom must sit between min and max zoom.",
+      path: ["defaultZoom"],
+    },
+  );
+
 export const loginSchema = z.object({
   email: z.string().email(),
   password: z.string().min(1),
