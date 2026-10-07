@@ -800,7 +800,20 @@ export function AdminConsole() {
       return;
     }
 
-    await fetch(`/api/admin/markers/${id}`, { method: "DELETE" });
+    setSaveError(null);
+    setSaveSuccess(null);
+
+    // A marker never saved exists only here; there is nothing to delete upstream.
+    const response = persistedMarkerIds.includes(id)
+      ? await fetch(`/api/admin/markers/${id}`, { method: "DELETE" }).catch(() => null)
+      : new Response("{}");
+
+    if (!response?.ok) {
+      const payload = (await response?.json().catch(() => null)) as { error?: string } | null;
+      setSaveError(payload?.error || "Failed to delete marker.");
+      return;
+    }
+
     const nextMarkers = markers.filter((marker) => marker.id !== id);
     setMarkers(nextMarkers);
     setPersistedMarkerIds((current) => current.filter((markerId) => markerId !== id));

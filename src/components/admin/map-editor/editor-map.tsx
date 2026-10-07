@@ -16,7 +16,7 @@ import {
 } from "react-leaflet";
 
 import { DEFAULT_MAP_VIEW, TRANSPORT_MODE_META } from "@/data/corridors";
-import type { TransportStop } from "@/data/transport-stops";
+import { getMarkerIdForStop, type TransportStop } from "@/data/transport-stops";
 import { getSegmentRenderCoordinates } from "@/lib/map-utils";
 import { nearestInsertionIndex, type EditorVertex } from "@/lib/route-editor-model";
 import type { Coordinate, CorridorRoute, SegmentLineStyle } from "@/types/map";
@@ -156,6 +156,11 @@ function FitController({ request }: { request: FitRequest | null }) {
   return null;
 }
 
+/** Custom cities, and markers including those drawn as a built-in city's dot. */
+function isEditableStop(stop: TransportStop): boolean {
+  return stop.source === "custom" || Boolean(getMarkerIdForStop(stop.id));
+}
+
 /** Degrees of slack around the viewport so dots do not pop at the edge. */
 const VIEW_PADDING = 0.5;
 /** Below this zoom every city dot is drawn; above it only the ones in view. */
@@ -197,6 +202,8 @@ const CityLayer = memo(function CityLayer({
       {visible.map((stop) => {
         const isCustom = stop.source === "custom";
         const isMarker = stop.source === "marker";
+        // A built-in city with a marker on it: ringed pink, opens the marker.
+        const carriesMarker = !isCustom && !isMarker && isEditableStop(stop);
         const isOnRoute = routeStopIds.has(stop.id);
         const isSnapTarget = snapTargetId === stop.id;
 
@@ -213,8 +220,8 @@ const CityLayer = memo(function CityLayer({
             }}
             pathOptions={{
               pane: "rme-cities",
-              color: isCustom ? "#b06f08" : isMarker ? "#9d174d" : "#1e293b",
-              weight: isSnapTarget ? 3 : isMarker ? 2 : 1.5,
+              color: isCustom ? "#b06f08" : isMarker || carriesMarker ? "#9d174d" : "#1e293b",
+              weight: isSnapTarget ? 3 : isMarker || carriesMarker ? 2 : 1.5,
               fillColor: isCustom
                 ? "#f6b53d"
                 : isMarker
@@ -349,7 +356,7 @@ function EditorLayers({
       if (tool === "city") {
         const stop = snapToStop(event.latlng);
 
-        if (stop && (stop.source === "custom" || stop.source === "marker")) {
+        if (stop && isEditableStop(stop)) {
           onStopEdit(stop);
           return;
         }
@@ -378,7 +385,7 @@ function EditorLayers({
   cityClickRef.current = (stop, latlng) => {
     if (tool === "draw") {
       addDraftPoint(latlng, stop);
-    } else if (tool === "city" && (stop.source === "custom" || stop.source === "marker")) {
+    } else if (tool === "city" && isEditableStop(stop)) {
       onStopEdit(stop);
     }
   };

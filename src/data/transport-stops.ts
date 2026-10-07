@@ -1047,6 +1047,8 @@ let markerStops: TransportStop[] = [];
 let stopsById: Record<string, TransportStop> = TRANSPORT_STOPS_BY_ID;
 let stopsByCoordinate: Record<string, TransportStop> = TRANSPORT_STOPS_BY_COORDINATE;
 let allStops: TransportStop[] = TRANSPORT_STOPS;
+/** Marker id by the id of the stop that stands for it (itself or a stop it sits on). */
+let markerIdsByStopId: Record<string, string> = {};
 
 /** A marker this close to an existing stop is that stop, not a new one. */
 const MARKER_STOP_TOLERANCE = 0.002;
@@ -1084,6 +1086,7 @@ export function registerTransportStops(stops: TransportStop[], markers: MarkerLi
   customStops = stops.map((stop) => ({ ...stop, source: "custom" as const }));
   const known = [...TRANSPORT_STOPS, ...customStops];
   markerStops = [];
+  markerIdsByStopId = {};
 
   markers.forEach((marker) => {
     const stop = markerToStop(marker, [...known, ...markerStops]);
@@ -1107,6 +1110,24 @@ export function registerTransportStops(stops: TransportStop[], markers: MarkerLi
       ]),
     ),
   };
+
+  // The first marker on a spot keeps it, matching which marker became a stop.
+  markers.forEach((marker) => {
+    const stop = getStopForMarker(marker);
+
+    if (stop && !markerIdsByStopId[stop.id]) {
+      markerIdsByStopId[stop.id] = marker.id;
+    }
+  });
+}
+
+/**
+ * The marker a stop stands for: the marker itself, or one sitting on a catalog
+ * or custom stop and so drawn as that stop. Lets the editor open the marker
+ * when its shared dot is clicked.
+ */
+export function getMarkerIdForStop(stopId: string): string | null {
+  return markerIdsByStopId[stopId] ?? null;
 }
 
 /** The stop that stands for a marker: itself, or the stop sharing its spot. */

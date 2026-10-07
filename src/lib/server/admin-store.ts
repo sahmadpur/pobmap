@@ -11,6 +11,8 @@ import { REFERENCE_MAP_ROUTES } from "@/data/reference-map-routes";
 import { SEED_MARKERS } from "@/data/seed-markers";
 import { isCatalogTransportStopId, registerTransportStops } from "@/data/transport-stops";
 import { normalizeCorridorRoute, normalizeCorridorSegment } from "@/lib/corridor-stop-utils";
+import { mergeSeedMarkers } from "@/lib/seed-markers-merge";
+import { describeStopUsage, findStopUsage } from "@/lib/stop-usage";
 import { getPrismaClient } from "@/lib/server/prisma";
 import type { AdminStop, AppSettings, AdminMarker, AdminStore } from "@/types/admin";
 import type { CorridorRoute, LocalizedText } from "@/types/map";
@@ -66,20 +68,6 @@ function normalizeSettings(settings: Partial<AppSettings> | undefined): AppSetti
   };
 }
 
-function mergeSeedMarkers(markers: AdminMarker[]): AdminMarker[] {
-  const mergedMarkers = new Map<string, AdminMarker>();
-
-  SEED_MARKERS.forEach((marker) => {
-    mergedMarkers.set(marker.id, marker);
-  });
-
-  markers.forEach((marker) => {
-    mergedMarkers.set(marker.id, marker);
-  });
-
-  return Array.from(mergedMarkers.values());
-}
-
 function mergeReferenceRoutes(routes: CorridorRoute[]): CorridorRoute[] {
   const mergedRoutes = new Map<string, CorridorRoute>();
 
@@ -125,7 +113,11 @@ async function ensureFileStore(): Promise<AdminStore> {
     const parsedStore = JSON.parse(raw) as AdminStore;
     // Custom cities have to be known before any route is normalized, or their
     // stop ids would be dropped as unknown.
-    const mergedMarkers = mergeSeedMarkers(parsedStore.markers ?? []);
+    const mergedMarkers = mergeSeedMarkers(
+      SEED_MARKERS,
+      parsedStore.markers ?? [],
+      parsedStore.deletedSeedMarkerIds ?? [],
+    );
     registerTransportStops(parsedStore.stops ?? [], mergedMarkers);
     const mergedRoutes = shouldMigrateReferenceRoutes(parsedStore.routes)
       ? mergeReferenceRoutes(parsedStore.routes ?? [])
@@ -446,7 +438,7 @@ export async function listMarkers(): Promise<AdminMarker[]> {
   }
 
   const store = await ensureFileStore();
-  return mergeSeedMarkers(store.markers ?? []);
+  return mergeSeedMarkers(SEED_MARKERS, store.markers ?? [], store.deletedSeedMarkerIds ?? []);
 }
 
 export async function upsertMarker(marker: AdminMarker): Promise<AdminMarker> {
@@ -486,16 +478,18 @@ export async function upsertMarker(marker: AdminMarker): Promise<AdminMarker> {
     store.markers.push(marker);
   }
 
+  store.deletedSeedMarkerIds = store.deletedSeedMarkerIds?.filter((id) => id !== marker.id);
+
   await saveFileStore(store);
   return marker;
 }
 
 export async function deleteMarker(id: string) {
-  const usedBy = await findRoutesUsingStop(id);
+  const usage = findStopUsage(await listRoutes(), id);
 
-  if (usedBy.length > 0) {
+  if (usage.length > 0) {
     throw new StopConflictError(
-      `Marker is still used as a leg endpoint by: ${usedBy.join(", ")}. Remove it from those legs first.`,
+      `Marker is still a stop on ${describeStopUsage(usage)}. Remove it from those legs first.`,
     );
   }
 
@@ -506,6 +500,11 @@ export async function deleteMarker(id: string) {
 
   const store = await ensureFileStore();
   store.markers = store.markers.filter((marker) => marker.id !== id);
+
+  // Seed markers are merged back in on every read unless marked deleted.
+  if (SEED_MARKERS.some((marker) => marker.id === id)) {
+    store.deletedSeedMarkerIds = [...new Set([...(store.deletedSeedMarkerIds ?? []), id])];
+  }
 
   await saveFileStore(store);
 }
@@ -587,11 +586,11 @@ export async function upsertStop(stop: AdminStop): Promise<AdminStop> {
 }
 
 export async function deleteStop(id: string) {
-  const usedBy = await findRoutesUsingStop(id);
+  const usage = findStopUsage(await listRoutes(), id);
 
-  if (usedBy.length > 0) {
+  if (usage.length > 0) {
     throw new StopConflictError(
-      `City is still used by: ${usedBy.join(", ")}. Remove it from those legs first.`,
+      `City is still a stop on ${describeStopUsage(usage)}. Remove it from those legs first.`,
     );
   }
 

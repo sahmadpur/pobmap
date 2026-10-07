@@ -2,6 +2,7 @@ import { afterEach, describe, expect, it } from "vitest";
 
 import {
   getAllTransportStops,
+  getMarkerIdForStop,
   getStopForMarker,
   getTransportStop,
   registerTransportStops,
@@ -64,5 +65,29 @@ describe("registerTransportStops", () => {
 
     registerTransportStops([]);
     expect(getTransportStop("temp")).toBeNull();
+  });
+});
+
+describe("getMarkerIdForStop", () => {
+  it("finds the marker a catalog stop stands for, by id or by position", () => {
+    const tbilisi = getTransportStop("tbilisi")!;
+    registerTransportStops([], [
+      { id: "baku-port", name: getTransportStop("baku-port")!.name, coordinates: getTransportStop("baku-port")!.coordinates },
+      { id: "tbilisi-hub", name: tbilisi.name, coordinates: [tbilisi.coordinates[0] + 0.001, tbilisi.coordinates[1]] },
+      { id: "new-terminal", name: { az: "T", en: "T", ru: "T" }, coordinates: [45.5, 60.5] },
+    ]);
+
+    expect(getMarkerIdForStop("baku-port")).toBe("baku-port");
+    expect(getMarkerIdForStop("tbilisi")).toBe("tbilisi-hub");
+    expect(getMarkerIdForStop("new-terminal")).toBe("new-terminal");
+    expect(getMarkerIdForStop("moscow")).toBeNull();
+  });
+
+  it("forgets the link on the next registration", () => {
+    const tbilisi = getTransportStop("tbilisi")!;
+    registerTransportStops([], [{ id: "tbilisi-hub", name: tbilisi.name, coordinates: tbilisi.coordinates }]);
+    registerTransportStops([]);
+
+    expect(getMarkerIdForStop("tbilisi")).toBeNull();
   });
 });

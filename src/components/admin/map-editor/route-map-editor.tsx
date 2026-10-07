@@ -34,6 +34,7 @@ import { basemapTileUrl, type Basemap } from "@/data/basemaps";
 import { getCountryFlagEmoji, TRANSPORT_MODE_META } from "@/data/corridors";
 import {
   getAllTransportStops,
+  getMarkerIdForStop,
   getStopForMarker,
   getTransportStop,
   registerTransportStops,
@@ -590,8 +591,12 @@ export function RouteMapEditor() {
   function editPlace(stop: TransportStop) {
     setCityForVertex(null);
 
-    if (stop.source === "marker") {
-      const marker = markers.find((item) => item.id === stop.id);
+    // Custom cities keep their own dialog; anything else here is a marker,
+    // possibly one drawn as the built-in city it sits on.
+    const markerId = stop.source === "custom" ? null : getMarkerIdForStop(stop.id);
+
+    if (markerId) {
+      const marker = markers.find((item) => item.id === markerId);
 
       if (marker) {
         setMarkerError(null);
@@ -604,6 +609,10 @@ export function RouteMapEditor() {
         });
       }
 
+      return;
+    }
+
+    if (stop.source !== "custom") {
       return;
     }
 
@@ -1165,8 +1174,8 @@ export function RouteMapEditor() {
                 {placeKind === "city"
                   ? "Click the map to add a city there."
                   : "Click the map to add a port, terminal or hub there. It shows on the public map with its icon and popup, and legs can start or end on it."}{" "}
-                Click an amber city or pink marker to edit or delete it. Built-in cities (white /
-                blue) cannot be edited here.
+                Click an amber city or a pink marker (or pink-ringed city) to edit or delete it.
+                Other built-in cities (white / blue) cannot be edited here.
               </p>
               <p className="hc-mono mt-2 text-xs text-[var(--hc-muted)]">
                 {customStops.length} custom cities · {markers.length} markers ·{" "}

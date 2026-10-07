@@ -53,6 +53,8 @@ export interface AdminStore {
   markers: AdminMarker[];
   /** Custom cities; absent in stores written before the map editor existed. */
   stops?: AdminStop[];
+  /** Seed markers an admin deleted, so the file store does not merge them back. */
+  deletedSeedMarkerIds?: string[];
   settings: AppSettings;
 }
 
