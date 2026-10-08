@@ -1,10 +1,10 @@
 "use client";
 
 import { useState } from "react";
-import { MapPin, Trash2, X } from "lucide-react";
+import { MapPin, MapPinned, Trash2, X } from "lucide-react";
 
 import { COUNTRY_NAMES, getCountryFlagEmoji } from "@/data/corridors";
-import type { TransportStop } from "@/data/transport-stops";
+import { isCatalogTransportStopId, type TransportStop } from "@/data/transport-stops";
 import { slugifyStopId } from "@/lib/route-editor-model";
 import type { AdminStop } from "@/types/admin";
 import type { Coordinate } from "@/types/map";
@@ -87,6 +87,8 @@ export function CityDialog({
   onDelete,
   onCancel,
   onCoordinateChange,
+  markerId,
+  onOpenMarker,
 }: {
   draft: CityDraft;
   saving: boolean;
@@ -95,8 +97,12 @@ export function CityDialog({
   onDelete?: () => void;
   onCancel: () => void;
   onCoordinateChange: (coordinate: Coordinate) => void;
+  /** A marker drawn as this city's dot, opened from a link in the dialog. */
+  markerId?: string | null;
+  onOpenMarker?: (markerId: string) => void;
 }) {
   const isEdit = draft.mode === "edit";
+  const isBuiltIn = Boolean(draft.stop && isCatalogTransportStopId(draft.stop.id));
   const [nameEn, setNameEn] = useState(draft.stop?.name.en ?? draft.suggestedName?.en ?? "");
   const [nameAz, setNameAz] = useState(draft.stop?.name.az ?? "");
   const [nameRu, setNameRu] = useState(draft.stop?.name.ru ?? "");
@@ -142,11 +148,22 @@ export function CityDialog({
         <div>
           <p className="hc-eyebrow flex items-center gap-2">
             <MapPin className="h-3.5 w-3.5" aria-hidden="true" />
-            {isEdit ? "Edit city" : "New city"}
+            {isEdit ? (isBuiltIn ? "Edit built-in city" : "Edit city") : "New city"}
           </p>
           <p className="mt-1 text-xs text-[var(--hc-muted)]">
             Drag the pin on the map to fine-tune the position.
           </p>
+          {markerId && onOpenMarker ? (
+            <button
+              type="button"
+              onClick={() => onOpenMarker(markerId)}
+              className="hc-chip mt-2"
+              title="Edit the marker shown on this city"
+            >
+              <MapPinned className="h-3.5 w-3.5" aria-hidden="true" />
+              Edit marker on this city
+            </button>
+          ) : null}
         </div>
         <button type="button" onClick={onCancel} className="hc-btn hc-btn--xs" aria-label="Close">
           <X className="h-3.5 w-3.5" aria-hidden="true" />

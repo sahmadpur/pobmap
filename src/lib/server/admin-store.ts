@@ -9,8 +9,13 @@ import {
 } from "@/data/corridors";
 import { REFERENCE_MAP_ROUTES } from "@/data/reference-map-routes";
 import { SEED_MARKERS } from "@/data/seed-markers";
-import { isCatalogTransportStopId, registerTransportStops } from "@/data/transport-stops";
+import {
+  isCatalogTransportStopId,
+  registerTransportStops,
+  TRANSPORT_STOPS_BY_ID,
+} from "@/data/transport-stops";
 import { normalizeCorridorRoute, normalizeCorridorSegment } from "@/lib/corridor-stop-utils";
+import { detachStopFromRoutes } from "@/lib/route-editor-model";
 import { mergeSeedMarkers } from "@/lib/seed-markers-merge";
 import { describeStopUsage, findStopUsage } from "@/lib/stop-usage";
 import { getPrismaClient } from "@/lib/server/prisma";
@@ -262,13 +267,16 @@ function stopFromPrisma(stop: {
     throw new Error("Invalid stop payload in database.");
   }
 
+  const { hidden, ...name } = stop.name as LocalizedText & { hidden?: boolean };
+
   return {
     id: stop.id,
-    name: stop.name,
+    name,
     countryCode: stop.countryCode,
     coordinates: stop.coordinates as AdminStop["coordinates"],
     editorVisible: stop.editorVisible,
-    source: "custom",
+    ...(hidden ? { hidden: true } : {}),
+    source: isCatalogTransportStopId(stop.id) ? "catalog" : "custom",
   };
 }
 
@@ -516,7 +524,10 @@ export async function listStops(): Promise<AdminStop[]> {
 
   const store = await ensureFileStore();
 
-  return (store.stops ?? []).map((stop) => ({ ...stop, source: "custom" as const }));
+  return (store.stops ?? []).map((stop) => ({
+    ...stop,
+    source: isCatalogTransportStopId(stop.id) ? ("catalog" as const) : ("custom" as const),
+  }));
 }
 
 /** Route ids whose segments reference the stop; non-empty blocks deletion. */
@@ -532,31 +543,39 @@ export async function findRoutesUsingStop(stopId: string): Promise<string[]> {
 
 export class StopConflictError extends Error {}
 
-export async function upsertStop(stop: AdminStop): Promise<AdminStop> {
-  if (isCatalogTransportStopId(stop.id)) {
-    throw new StopConflictError(`"${stop.id}" is a built-in city id; pick another id.`);
-  }
+/** The city is still on corridor legs; deleting with `detach` reshapes them. */
+export class StopInUseError extends StopConflictError {}
 
+/**
+ * Saves a custom city, or an edit of a built-in one: a record with a catalog
+ * id overrides that catalog entry (see `registerTransportStops`).
+ */
+export async function upsertStop(stop: AdminStop): Promise<AdminStop> {
   const record: AdminStop = {
     id: stop.id,
     name: stop.name,
     countryCode: stop.countryCode,
     coordinates: stop.coordinates,
     editorVisible: stop.editorVisible ?? true,
+    ...(stop.hidden ? { hidden: true } : {}),
   };
 
   if (SHOULD_USE_PRISMA) {
+    // The table has no column for a deleted built-in city; the flag rides in
+    // the name JSON so the schema stays as deployed.
+    const name = record.hidden ? { ...record.name, hidden: true } : record.name;
+
     await getPrismaClient().stop.upsert({
       where: { id: record.id },
       update: {
-        name: record.name,
+        name,
         countryCode: record.countryCode,
         coordinates: record.coordinates,
         editorVisible: record.editorVisible ?? true,
       },
       create: {
         id: record.id,
-        name: record.name,
+        name,
         countryCode: record.countryCode,
         coordinates: record.coordinates,
         editorVisible: record.editorVisible ?? true,
@@ -565,7 +584,7 @@ export async function upsertStop(stop: AdminStop): Promise<AdminStop> {
 
     await syncPrismaStopRegistry();
 
-    return { ...record, source: "custom" };
+    return withStopSource(record);
   }
 
   const store = await ensureFileStore();
@@ -579,19 +598,41 @@ export async function upsertStop(stop: AdminStop): Promise<AdminStop> {
   }
 
   store.stops = stops;
-  registerTransportStops(stops);
+  registerTransportStops(stops, store.markers);
   await saveFileStore(store);
 
-  return { ...record, source: "custom" };
+  return withStopSource(record);
 }
 
-export async function deleteStop(id: string) {
-  const usage = findStopUsage(await listRoutes(), id);
+function withStopSource(stop: AdminStop): AdminStop {
+  return { ...stop, source: isCatalogTransportStopId(stop.id) ? "catalog" : "custom" };
+}
 
-  if (usage.length > 0) {
-    throw new StopConflictError(
-      `City is still a stop on ${describeStopUsage(usage)}. Remove it from those legs first.`,
-    );
+/**
+ * Deletes a city. While legs still use it this is refused, unless `detach` is
+ * set: then those legs let go of it first (see `detachStopFromRoutes`).
+ */
+export async function deleteStop(id: string, { detach = false }: { detach?: boolean } = {}) {
+  const routes = await listRoutes();
+  const usage = findStopUsage(routes, id);
+
+  if (usage.length > 0 && !detach) {
+    throw new StopInUseError(`City is still a stop on ${describeStopUsage(usage)}.`);
+  }
+
+  // Legs are reshaped while the city is still registered, so its vertex can be found.
+  for (const route of detachStopFromRoutes(routes, id).routes) {
+    await upsertRoute(route);
+  }
+
+  // A built-in city cannot leave the catalog, so deleting one stores it as
+  // hidden; deleting a custom city removes its record.
+  const catalogStop = TRANSPORT_STOPS_BY_ID[id];
+
+  if (catalogStop) {
+    const current = (await listStops()).find((stop) => stop.id === id) ?? catalogStop;
+    await upsertStop({ ...current, hidden: true });
+    return;
   }
 
   if (SHOULD_USE_PRISMA) {
@@ -602,7 +643,7 @@ export async function deleteStop(id: string) {
 
   const store = await ensureFileStore();
   store.stops = (store.stops ?? []).filter((stop) => stop.id !== id);
-  registerTransportStops(store.stops);
+  registerTransportStops(store.stops, store.markers);
 
   await saveFileStore(store);
 }

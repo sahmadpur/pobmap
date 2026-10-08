@@ -35,6 +35,7 @@ import { getCountryFlagEmoji, TRANSPORT_MODE_META } from "@/data/corridors";
 import {
   getAllTransportStops,
   getMarkerIdForStop,
+  isCatalogTransportStopId,
   getStopForMarker,
   getTransportStop,
   registerTransportStops,
@@ -160,7 +161,8 @@ function isTypingTarget(target: EventTarget | null): boolean {
 
 export function RouteMapEditor() {
   const [routes, setRoutes] = useState<CorridorRoute[]>([]);
-  const [customStops, setCustomStops] = useState<AdminStop[]>([]);
+  /** Custom cities plus edits and deletions of built-in ones, as stored. */
+  const [storedStops, setStoredStops] = useState<AdminStop[]>([]);
   const [markers, setMarkers] = useState<AdminMarker[]>([]);
   /** What the Place tool drops on a click. */
   const [placeKind, setPlaceKind] = useState<"city" | "marker">("city");
@@ -200,7 +202,7 @@ export function RouteMapEditor() {
 
   const route = history?.present ?? null;
   const isDirty = Boolean(route && JSON.stringify(route) !== JSON.stringify(savedRoute));
-  const allStops = useMemo(() => getAllTransportStops(), [customStops, markers]); // eslint-disable-line react-hooks/exhaustive-deps
+  const allStops = useMemo(() => getAllTransportStops(), [storedStops, markers]); // eslint-disable-line react-hooks/exhaustive-deps
   const selectedSegment = route?.segments.find((segment) => segment.id === selectedSegmentId) ?? null;
   const vertices = useMemo(
     () => (selectedSegment ? segmentToVertices(selectedSegment) : []),
@@ -269,7 +271,7 @@ export function RouteMapEditor() {
       // Register before anything derives vertices, or custom cities and
       // markers would read as unknown and their legs would look broken.
       registerTransportStops(loadedStops, loadedMarkers);
-      setCustomStops(loadedStops);
+      setStoredStops(loadedStops);
       setMarkers(loadedMarkers);
       setRoutes(loadedRoutes);
       setPersistedRouteIds(loadedRoutes.map((item) => item.id));
@@ -587,38 +589,35 @@ export function RouteMapEditor() {
     setCityDraft({ mode: "create", coordinate, detectedCountry, suggestedName });
   }
 
-  /** A click on an editable stop: custom cities and markers open their dialog. */
+  /** A click on a stop: markers open the marker dialog, cities the city dialog. */
   function editPlace(stop: TransportStop) {
     setCityForVertex(null);
 
-    // Custom cities keep their own dialog; anything else here is a marker,
-    // possibly one drawn as the built-in city it sits on.
-    const markerId = stop.source === "custom" ? null : getMarkerIdForStop(stop.id);
-
-    if (markerId) {
-      const marker = markers.find((item) => item.id === markerId);
-
-      if (marker) {
-        setMarkerError(null);
-        setCityDraft(null);
-        setMarkerDraft({
-          mode: "edit",
-          marker,
-          coordinate: marker.coordinates,
-          routeId: selectedRouteId,
-        });
-      }
-
-      return;
-    }
-
-    if (stop.source !== "custom") {
+    if (stop.source === "marker") {
+      openMarker(stop.id);
       return;
     }
 
     setCityError(null);
     setMarkerDraft(null);
     setCityDraft({ mode: "edit", stop, coordinate: stop.coordinates });
+  }
+
+  function openMarker(markerId: string) {
+    const marker = markers.find((item) => item.id === markerId);
+
+    if (!marker) {
+      return;
+    }
+
+    setMarkerError(null);
+    setCityDraft(null);
+    setMarkerDraft({
+      mode: "edit",
+      marker,
+      coordinate: marker.coordinates,
+      routeId: selectedRouteId,
+    });
   }
 
   async function saveMarker(marker: AdminMarker) {
@@ -652,7 +651,7 @@ export function RouteMapEditor() {
         ? markers.map((item) => (item.id === body.id ? body : item))
         : [...markers, body];
 
-      registerTransportStops(customStops, nextMarkers);
+      registerTransportStops(storedStops, nextMarkers);
       setMarkers(nextMarkers);
 
       const stop = getStopForMarker(body);
@@ -705,7 +704,7 @@ export function RouteMapEditor() {
       }
 
       const nextMarkers = markers.filter((item) => item.id !== markerDraft.marker!.id);
-      registerTransportStops(customStops, nextMarkers);
+      registerTransportStops(storedStops, nextMarkers);
       setMarkers(nextMarkers);
       setMarkerDraft(null);
       setStatus({ kind: "success", text: "Marker deleted." });
@@ -780,12 +779,12 @@ export function RouteMapEditor() {
         return;
       }
 
-      const nextStops = customStops.some((item) => item.id === body.id)
-        ? customStops.map((item) => (item.id === body.id ? body : item))
-        : [...customStops, body];
+      const nextStops = storedStops.some((item) => item.id === body.id)
+        ? storedStops.map((item) => (item.id === body.id ? body : item))
+        : [...storedStops, body];
 
       registerTransportStops(nextStops, markers);
-      setCustomStops(nextStops);
+      setStoredStops(nextStops);
 
       const previous = cityDraft.stop;
       const moved =
@@ -797,7 +796,7 @@ export function RouteMapEditor() {
         await followMovedCity(body);
       }
 
-      anchorSavedPlace({ ...body, source: "custom" });
+      anchorSavedPlace(getTransportStop(body.id) ?? body);
       setCityDraft(null);
       setStatus({ kind: "success", text: `City ${body.name.en} ${isEdit ? "updated" : "added"}.` });
     } catch {
@@ -834,7 +833,16 @@ export function RouteMapEditor() {
   }
 
   async function deleteCity() {
-    if (!cityDraft?.stop || !window.confirm(`Delete city ${cityDraft.stop.name.en}?`)) {
+    const deleted = cityDraft?.stop;
+
+    if (!deleted || !window.confirm(`Delete city ${deleted.name.en}?`)) {
+      return;
+    }
+
+    // Deleting may reshape the open corridor on the server; unsaved edits there
+    // would then be overwritten, so they have to be settled first.
+    if (isDirty && route?.segments.some((segment) => segment.stopIds?.includes(deleted.id))) {
+      setCityError(`Save or undo your changes to ${route.name.en} first; it uses this city.`);
       return;
     }
 
@@ -842,19 +850,66 @@ export function RouteMapEditor() {
     setCityError(null);
 
     try {
-      const response = await fetch(`/api/admin/stops/${cityDraft.stop.id}`, { method: "DELETE" });
-      const body = (await response.json().catch(() => null)) as { error?: string } | null;
+      const url = `/api/admin/stops/${deleted.id}`;
+      let response = await fetch(url, { method: "DELETE" });
+      let body = (await response.json().catch(() => null)) as
+        | { error?: string; inUse?: boolean }
+        | null;
+      const inUse = response.status === 409 && Boolean(body?.inUse);
+
+      if (inUse) {
+        const confirmed = window.confirm(
+          `${body?.error}\n\nDelete it anyway? Legs ending at ${deleted.name.en} will end at the ` +
+            "previous city on them instead, and a leg with no other city is removed. " +
+            `Where ${deleted.name.en} is in the middle of a leg, the line stays as it is.`,
+        );
+
+        if (!confirmed) {
+          return;
+        }
+
+        response = await fetch(`${url}?detach=true`, { method: "DELETE" });
+        body = (await response.json().catch(() => null)) as { error?: string } | null;
+      }
 
       if (!response.ok) {
         setCityError(body?.error || "Failed to delete city.");
         return;
       }
 
-      const nextStops = customStops.filter((item) => item.id !== cityDraft.stop!.id);
+      // A built-in city stays in the catalog and is stored as hidden instead.
+      const nextStops = isCatalogTransportStopId(deleted.id)
+        ? [
+            ...storedStops.filter((item) => item.id !== deleted.id),
+            { ...deleted, source: "catalog" as const, hidden: true },
+          ]
+        : storedStops.filter((item) => item.id !== deleted.id);
       registerTransportStops(nextStops, markers);
-      setCustomStops(nextStops);
+      setStoredStops(nextStops);
       setCityDraft(null);
-      setStatus({ kind: "success", text: "City deleted." });
+
+      if (inUse) {
+        const reloaded = (await fetch("/api/admin/routes").then((result) =>
+          result.json(),
+        )) as CorridorRoute[];
+        setRoutes(reloaded);
+
+        const reopened = reloaded.find((item) => item.id === selectedRouteId);
+
+        if (reopened) {
+          setHistory(createHistory(reopened));
+          setSavedRoute(reopened);
+          setSelectedSegmentId((current) =>
+            reopened.segments.some((segment) => segment.id === current) ? current : null,
+          );
+          setActiveVertexIndex(null);
+        }
+      }
+
+      setStatus({
+        kind: "success",
+        text: inUse ? `City deleted; the legs that used it were updated.` : "City deleted.",
+      });
     } finally {
       setCitySaving(false);
     }
@@ -1174,11 +1229,11 @@ export function RouteMapEditor() {
                 {placeKind === "city"
                   ? "Click the map to add a city there."
                   : "Click the map to add a port, terminal or hub there. It shows on the public map with its icon and popup, and legs can start or end on it."}{" "}
-                Click an amber city or a pink marker (or pink-ringed city) to edit or delete it.
-                Other built-in cities (white / blue) cannot be edited here.
+                Click any city or marker to edit or delete it.
               </p>
               <p className="hc-mono mt-2 text-xs text-[var(--hc-muted)]">
-                {customStops.length} custom cities · {markers.length} markers ·{" "}
+                {allStops.filter((stop) => stop.source === "custom").length} custom cities ·{" "}
+                {markers.length} markers ·{" "}
                 {allStops.filter((stop) => !stop.source || stop.source === "catalog").length}{" "}
                 built-in cities
               </p>
@@ -1615,6 +1670,8 @@ export function RouteMapEditor() {
             error={cityError}
             onSave={(stop) => void saveCity(stop)}
             onDelete={cityDraft.mode === "edit" ? () => void deleteCity() : undefined}
+            markerId={cityDraft.stop ? getMarkerIdForStop(cityDraft.stop.id) : null}
+            onOpenMarker={openMarker}
             onCancel={() => {
               setCityDraft(null);
               setCityForVertex(null);

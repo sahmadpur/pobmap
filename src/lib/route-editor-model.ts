@@ -298,6 +298,63 @@ export function relocateStopInRoutes(
   return changed;
 }
 
+/**
+ * Takes a city out of every leg that uses it, ahead of deleting the city.
+ *
+ * A leg ending (or starting) on the city is shortened to the next city along
+ * it, dropping the stretch beyond; a city in the middle of a leg becomes a
+ * plain bend so the line keeps its shape. A leg left with a single city has
+ * nothing to draw and is removed. Returns the corridors that changed.
+ */
+export function detachStopFromRoutes(
+  routes: CorridorRoute[],
+  stopId: string,
+): {
+  routes: CorridorRoute[];
+  removedLegs: { routeId: string; segmentId: string }[];
+} {
+  const changed: CorridorRoute[] = [];
+  const removedLegs: { routeId: string; segmentId: string }[] = [];
+
+  routes.forEach((route) => {
+    let touched = false;
+    const segments = route.segments.flatMap((segment) => {
+      if (!(segment.stopIds ?? []).includes(stopId)) {
+        return [segment];
+      }
+
+      touched = true;
+      let vertices = segmentToVertices(segment);
+      const isAnchor = (vertex: EditorVertex) => Boolean(vertex.stopId) && vertex.stopId !== stopId;
+      const first = vertices.findIndex(isAnchor);
+      const last = vertices.findLastIndex(isAnchor);
+
+      if (first < 0 || first === last) {
+        removedLegs.push({ routeId: route.id, segmentId: segment.id });
+        return [];
+      }
+
+      const endsMoved = first > 0 || last < vertices.length - 1;
+      vertices = vertices
+        .slice(first, last + 1)
+        .map((vertex) => (vertex.stopId === stopId ? { ...vertex, stopId: null } : vertex));
+      const next = verticesToSegment(segment, vertices);
+
+      return [
+        endsMoved
+          ? { ...next, distanceKm: pathLengthKm(vertices.map((vertex) => vertex.coordinate)) }
+          : next,
+      ];
+    });
+
+    if (touched) {
+      changed.push({ ...route, segments });
+    }
+  });
+
+  return { routes: changed, removedLegs };
+}
+
 /** Lowercase dashed id from a city name, e.g. "Bandar-e Anzali" -> "bandar-e-anzali". */
 export function slugifyStopId(name: string): string {
   return name

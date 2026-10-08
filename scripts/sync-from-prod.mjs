@@ -69,13 +69,20 @@ const store = {
     connectedCorridorIds: marker.connectedCorridorIds,
     ...(marker.countryCode ? { countryCode: marker.countryCode } : {}),
   })),
-  stops: stops.map((stop) => ({
-    id: stop.id,
-    name: stop.name,
-    countryCode: stop.countryCode,
-    coordinates: stop.coordinates,
-    editorVisible: stop.editorVisible,
-  })),
+  // A deleted built-in city carries `hidden` inside its name JSON in the
+  // database (see admin-store.ts upsertStop); the file store keeps it top-level.
+  stops: stops.map((stop) => {
+    const { hidden, ...name } = stop.name;
+
+    return {
+      id: stop.id,
+      name,
+      countryCode: stop.countryCode,
+      coordinates: stop.coordinates,
+      editorVisible: stop.editorVisible,
+      ...(hidden ? { hidden: true } : {}),
+    };
+  }),
   // Production has no AppSettings row (the app falls back to the seed defaults
   // there), so keep whatever the local store already carries.
   settings: settings

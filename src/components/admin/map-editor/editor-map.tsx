@@ -156,11 +156,6 @@ function FitController({ request }: { request: FitRequest | null }) {
   return null;
 }
 
-/** Custom cities, and markers including those drawn as a built-in city's dot. */
-function isEditableStop(stop: TransportStop): boolean {
-  return stop.source === "custom" || Boolean(getMarkerIdForStop(stop.id));
-}
-
 /** Degrees of slack around the viewport so dots do not pop at the edge. */
 const VIEW_PADDING = 0.5;
 /** Below this zoom every city dot is drawn; above it only the ones in view. */
@@ -202,8 +197,8 @@ const CityLayer = memo(function CityLayer({
       {visible.map((stop) => {
         const isCustom = stop.source === "custom";
         const isMarker = stop.source === "marker";
-        // A built-in city with a marker on it: ringed pink, opens the marker.
-        const carriesMarker = !isCustom && !isMarker && isEditableStop(stop);
+        // A built-in city with a marker on it: ringed pink.
+        const carriesMarker = !isCustom && !isMarker && Boolean(getMarkerIdForStop(stop.id));
         const isOnRoute = routeStopIds.has(stop.id);
         const isSnapTarget = snapTargetId === stop.id;
 
@@ -356,7 +351,7 @@ function EditorLayers({
       if (tool === "city") {
         const stop = snapToStop(event.latlng);
 
-        if (stop && isEditableStop(stop)) {
+        if (stop) {
           onStopEdit(stop);
           return;
         }
@@ -385,7 +380,7 @@ function EditorLayers({
   cityClickRef.current = (stop, latlng) => {
     if (tool === "draw") {
       addDraftPoint(latlng, stop);
-    } else if (tool === "city" && isEditableStop(stop)) {
+    } else if (tool === "city") {
       onStopEdit(stop);
     }
   };

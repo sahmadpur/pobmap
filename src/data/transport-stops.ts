@@ -13,6 +13,11 @@ export interface TransportStop {
    * catalog.
    */
   source?: "catalog" | "custom" | "marker";
+  /**
+   * Only on stored records: a built-in city an admin deleted. The record keeps
+   * the catalog id so the registry knows which entry to drop.
+   */
+  hidden?: boolean;
 }
 
 /** The part of an admin marker the registry needs; avoids importing admin types here. */
@@ -1082,9 +1087,46 @@ function markerToStop(
   };
 }
 
+/**
+ * The catalog as admins left it. Stored records with a catalog id are edits of
+ * that built-in city and replace it in place; hidden ones remove it.
+ */
+function applyCatalogOverrides(overrides: TransportStop[]): TransportStop[] {
+  if (!overrides.length) {
+    return TRANSPORT_STOPS;
+  }
+
+  const byId = new Map(overrides.map((stop) => [stop.id, stop]));
+
+  return TRANSPORT_STOPS.flatMap((stop) => {
+    const override = byId.get(stop.id);
+
+    if (!override) {
+      return [stop];
+    }
+
+    if (override.hidden) {
+      return [];
+    }
+
+    return [
+      {
+        ...stop,
+        name: override.name,
+        countryCode: override.countryCode,
+        coordinates: override.coordinates,
+        editorVisible: override.editorVisible ?? stop.editorVisible,
+      },
+    ];
+  });
+}
+
 export function registerTransportStops(stops: TransportStop[], markers: MarkerLikeStop[] = []) {
-  customStops = stops.map((stop) => ({ ...stop, source: "custom" as const }));
-  const known = [...TRANSPORT_STOPS, ...customStops];
+  const catalogStops = applyCatalogOverrides(stops.filter((stop) => isCatalogTransportStopId(stop.id)));
+  customStops = stops
+    .filter((stop) => !isCatalogTransportStopId(stop.id) && !stop.hidden)
+    .map((stop) => ({ ...stop, source: "custom" as const }));
+  const known = [...catalogStops, ...customStops];
   markerStops = [];
   markerIdsByStopId = {};
 
@@ -1097,19 +1139,11 @@ export function registerTransportStops(stops: TransportStop[], markers: MarkerLi
   });
 
   allStops = [...known, ...markerStops];
-  stopsById = {
-    ...TRANSPORT_STOPS_BY_ID,
-    ...Object.fromEntries([...customStops, ...markerStops].map((stop) => [stop.id, stop])),
-  };
-  stopsByCoordinate = {
-    ...TRANSPORT_STOPS_BY_COORDINATE,
-    ...Object.fromEntries(
-      [...customStops, ...markerStops].map((stop) => [
-        getStopCoordinateKey(stop.coordinates),
-        stop,
-      ]),
-    ),
-  };
+  stopsById = Object.fromEntries(allStops.map((stop) => [stop.id, stop]));
+  // Later stops win a shared spot, as custom and marker stops always have.
+  stopsByCoordinate = Object.fromEntries(
+    allStops.map((stop) => [getStopCoordinateKey(stop.coordinates), stop]),
+  );
 
   // The first marker on a spot keeps it, matching which marker became a stop.
   markers.forEach((marker) => {

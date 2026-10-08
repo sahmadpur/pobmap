@@ -5,6 +5,7 @@ import {
   getMarkerIdForStop,
   getStopForMarker,
   getTransportStop,
+  getTransportStopByCoordinate,
   registerTransportStops,
   searchTransportStops,
 } from "@/data/transport-stops";
@@ -89,5 +90,43 @@ describe("getMarkerIdForStop", () => {
     registerTransportStops([]);
 
     expect(getMarkerIdForStop("tbilisi")).toBeNull();
+  });
+});
+
+describe("built-in city overrides", () => {
+  it("applies a stored edit of a built-in city in place of the catalog entry", () => {
+    registerTransportStops([
+      {
+        id: "berlin",
+        name: { az: "Berlin", en: "Berlin Hbf", ru: "Берлин" },
+        countryCode: "DE",
+        coordinates: [52.525, 13.369],
+      },
+    ]);
+
+    const berlin = getTransportStop("berlin");
+    expect(berlin?.name.en).toBe("Berlin Hbf");
+    expect(berlin?.coordinates).toEqual([52.525, 13.369]);
+    // Still a built-in city, not a custom one.
+    expect(berlin?.source).toBeUndefined();
+    expect(getAllTransportStops().filter((stop) => stop.id === "berlin")).toHaveLength(1);
+    expect(getTransportStopByCoordinate([52.525, 13.369])?.id).toBe("berlin");
+    expect(getTransportStopByCoordinate([52.52, 13.405])).toBeNull();
+  });
+
+  it("drops a built-in city an admin deleted", () => {
+    const warsaw = getTransportStop("warsaw")!;
+    registerTransportStops([{ ...warsaw, hidden: true }]);
+
+    expect(getTransportStop("warsaw")).toBeNull();
+    expect(getAllTransportStops().some((stop) => stop.id === "warsaw")).toBe(false);
+    expect(searchTransportStops("warsaw").map((stop) => stop.id)).not.toContain("warsaw");
+  });
+
+  it("restores the catalog entry once the override is gone", () => {
+    registerTransportStops([{ ...getTransportStop("hamburg")!, hidden: true }]);
+    registerTransportStops([]);
+
+    expect(getTransportStop("hamburg")?.name.en).toBe("Hamburg");
   });
 });

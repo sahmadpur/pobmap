@@ -6,6 +6,7 @@ import {
   findRoutesUsingStop,
   listStops,
   StopConflictError,
+  StopInUseError,
   upsertStop,
 } from "@/lib/server/admin-store";
 
@@ -70,17 +71,22 @@ export async function PATCH(
   }
 }
 
+/** `?detach=true` also takes the city out of the legs that use it. */
 export async function DELETE(
-  _request: Request,
+  request: Request,
   context: { params: Promise<{ id: string }> },
 ) {
   try {
     const { id } = await context.params;
-    await deleteStop(id);
+    const detach = new URL(request.url).searchParams.get("detach") === "true";
+    await deleteStop(id, { detach });
     return NextResponse.json({ ok: true });
   } catch (error) {
     if (error instanceof StopConflictError) {
-      return NextResponse.json({ error: error.message }, { status: 409 });
+      return NextResponse.json(
+        { error: error.message, inUse: error instanceof StopInUseError },
+        { status: 409 },
+      );
     }
 
     console.error("DELETE /api/admin/stops/[id] failed", error);
