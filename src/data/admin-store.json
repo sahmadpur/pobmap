@@ -6404,10 +6404,6 @@
               28.48
             ],
             [
-              60.707603769782864,
-              28.764043085416162
-            ],
-            [
               59.93460060344935,
               30.331845425988515
             ]
@@ -6428,7 +6424,6 @@
           ],
           "stopIds": [
             "buslovskaya",
-            "vyborg",
             "st-petersburg"
           ]
         }
@@ -8100,10 +8095,6 @@
               30.331845425988515
             ],
             [
-              60.707603769782864,
-              28.764043085416162
-            ],
-            [
               60.82,
               28.48
             ]
@@ -8129,7 +8120,6 @@
           "stopIds": [
             "moscow",
             "st-petersburg",
-            "vyborg",
             "buslovskaya"
           ]
         },
@@ -13091,8 +13081,8 @@
         "en": "",
         "ru": ""
       },
-      "category": "port",
-      "icon": "fas:anchor",
+      "category": "station",
+      "icon": "fas:train",
       "coordinates": [
         51.75906157319095,
         19.462351562500004
@@ -13379,22 +13369,25 @@
     {
       "id": "minsk-hub",
       "name": {
-        "az": "Minsk qovşağı",
-        "en": "Minsk Hub",
-        "ru": "Узел Минск"
+        "az": "Minsk",
+        "en": "Minsk",
+        "ru": "Минск"
       },
       "description": {
         "az": "Moskva ilə Mərkəzi Avropa arasında quru yol qovşağı.",
         "en": "The overland junction between Moscow and Central Europe.",
         "ru": "Сухопутный узел между Москвой и Центральной Европой."
       },
-      "category": "station",
-      "icon": "fas:warehouse",
+      "category": "city",
+      "icon": "fas:city",
       "coordinates": [
         53.9006,
         27.559
       ],
-      "connectedCorridorIds": []
+      "connectedCorridorIds": [
+        "north-south",
+        "north-west"
+      ]
     },
     {
       "id": "mirabad",
@@ -13422,17 +13415,17 @@
     {
       "id": "moscow-freight-hub",
       "name": {
-        "az": "Moskva yük qovşağı",
-        "en": "Moscow Freight Hub",
-        "ru": "Грузовой хаб Москва"
+        "az": "Moskva",
+        "en": "Moscow",
+        "ru": "Москва"
       },
       "description": {
         "az": "Uzun məsafəli Avrasiya və Şimal-Cənub yük paylaması üçün əsas şimal qovşağı.",
         "en": "A northern corridor control point for long-haul Eurasian and North-South freight distribution.",
         "ru": "Северный опорный узел для распределения грузов по евразийским и северо-южным направлениям."
       },
-      "category": "station",
-      "icon": "fas:industry",
+      "category": "city",
+      "icon": "fas:city",
       "coordinates": [
         55.7558,
         37.6173
@@ -13611,13 +13604,16 @@
         "en": "An EU city on the North-South corridor route.",
         "ru": "Город ЕС на маршруте коридора Север-Юг."
       },
-      "category": "city",
+      "category": "port",
       "icon": "fas:anchor",
       "coordinates": [
         59.3567,
         24.0531
       ],
-      "connectedCorridorIds": []
+      "connectedCorridorIds": [
+        "north-south",
+        "north-west"
+      ]
     },
     {
       "id": "paris",
@@ -14170,13 +14166,16 @@
         "en": "An EU city on the North-South corridor route.",
         "ru": "Город ЕС на маршруте коридора Север-Юг."
       },
-      "category": "city",
-      "icon": "fas:city",
+      "category": "port",
+      "icon": "fas:anchor",
       "coordinates": [
         57.39342571728238,
         21.606527806309877
       ],
-      "connectedCorridorIds": []
+      "connectedCorridorIds": [
+        "north-south",
+        "north-west"
+      ]
     },
     {
       "id": "vienna",
@@ -15554,6 +15553,240 @@
         "east-west"
       ],
       "countryCode": "GR"
+    },
+    {
+      "id": "isfahan",
+      "name": {
+        "az": "İsfahan",
+        "en": "Isfahan",
+        "ru": "Исфахан"
+      },
+      "description": {
+        "az": "",
+        "en": "",
+        "ru": ""
+      },
+      "category": "city",
+      "icon": "fas:city",
+      "coordinates": [
+        32.787444554996455,
+        51.74560546875
+      ],
+      "connectedCorridorIds": [
+        "north-south"
+      ],
+      "countryCode": "IR"
+    },
+    {
+      "id": "abu-dhabi",
+      "name": {
+        "az": "Əbu-Dabi",
+        "en": "Abu Dhabi",
+        "ru": "Абу-Даби"
+      },
+      "description": {
+        "az": "",
+        "en": "",
+        "ru": ""
+      },
+      "category": "city",
+      "icon": "fas:city",
+      "coordinates": [
+        24.4539,
+        54.3773
+      ],
+      "connectedCorridorIds": [
+        "north-south",
+        "south-west"
+      ],
+      "countryCode": "AE"
+    },
+    {
+      "id": "gorgan",
+      "name": {
+        "az": "Qorqan",
+        "en": "Gorgan",
+        "ru": "Горган"
+      },
+      "description": {
+        "az": "",
+        "en": "",
+        "ru": ""
+      },
+      "category": "station",
+      "icon": "fas:train",
+      "coordinates": [
+        36.8456,
+        54.4393
+      ],
+      "connectedCorridorIds": [
+        "north-south"
+      ],
+      "countryCode": "IR"
+    },
+    {
+      "id": "etrek",
+      "name": {
+        "az": "Etrek",
+        "en": "Etrek",
+        "ru": "Этрек"
+      },
+      "description": {
+        "az": "",
+        "en": "",
+        "ru": ""
+      },
+      "category": "station",
+      "icon": "fas:train",
+      "coordinates": [
+        37.6653,
+        54.7725
+      ],
+      "connectedCorridorIds": [
+        "north-south"
+      ],
+      "countryCode": "TM"
+    },
+    {
+      "id": "zahedan",
+      "name": {
+        "az": "Zahidan",
+        "en": "Zahedan",
+        "ru": "Захедан"
+      },
+      "description": {
+        "az": "",
+        "en": "",
+        "ru": ""
+      },
+      "category": "station",
+      "icon": "fas:train",
+      "coordinates": [
+        29.4963,
+        60.8629
+      ],
+      "connectedCorridorIds": [
+        "north-south"
+      ],
+      "countryCode": "IR"
+    },
+    {
+      "id": "saratov",
+      "name": {
+        "az": "Saratov",
+        "en": "Saratov",
+        "ru": "Саратов"
+      },
+      "description": {
+        "az": "",
+        "en": "",
+        "ru": ""
+      },
+      "category": "station",
+      "icon": "fas:train",
+      "coordinates": [
+        51.5331,
+        46.0342
+      ],
+      "connectedCorridorIds": [
+        "north-south",
+        "north-west"
+      ],
+      "countryCode": "RU"
+    },
+    {
+      "id": "volgograd",
+      "name": {
+        "az": "Volqoqrad",
+        "en": "Volgograd",
+        "ru": "Волгоград"
+      },
+      "description": {
+        "az": "",
+        "en": "",
+        "ru": ""
+      },
+      "category": "station",
+      "icon": "fas:train",
+      "coordinates": [
+        48.708,
+        44.5133
+      ],
+      "connectedCorridorIds": [
+        "north-south",
+        "north-west"
+      ],
+      "countryCode": "RU"
+    },
+    {
+      "id": "krasnoye",
+      "name": {
+        "az": "Krasnoye",
+        "en": "Krasnoye",
+        "ru": "Красное"
+      },
+      "description": {
+        "az": "",
+        "en": "",
+        "ru": ""
+      },
+      "category": "station",
+      "icon": "fas:train",
+      "coordinates": [
+        54.5617,
+        31.4325
+      ],
+      "connectedCorridorIds": [
+        "north-south",
+        "north-west"
+      ],
+      "countryCode": "RU"
+    },
+    {
+      "id": "venlo",
+      "name": {
+        "az": "Venlo",
+        "en": "Venlo",
+        "ru": "Venlo"
+      },
+      "description": {
+        "az": "",
+        "en": "",
+        "ru": ""
+      },
+      "category": "station",
+      "icon": "fas:train",
+      "coordinates": [
+        51.37520943448466,
+        6.1962890625
+      ],
+      "connectedCorridorIds": [
+        "north-south"
+      ],
+      "countryCode": "DE"
+    },
+    {
+      "id": "slavkuv",
+      "name": {
+        "az": "Slavkov",
+        "en": "Slavkov",
+        "ru": "Славков"
+      },
+      "description": {
+        "az": "",
+        "en": "",
+        "ru": ""
+      },
+      "category": "station",
+      "icon": "fas:train",
+      "coordinates": [
+        50.28159113343386,
+        19.314949218750005
+      ],
+      "connectedCorridorIds": [
+        "east-west"
+      ],
+      "countryCode": "PL"
     }
   ],
   "stops": [
@@ -16170,6 +16403,21 @@
       "coordinates": [
         46.3017,
         30.6569
+      ],
+      "editorVisible": true,
+      "hidden": true
+    },
+    {
+      "id": "vyborg",
+      "name": {
+        "az": "Viborq",
+        "en": "Vyborg",
+        "ru": "Выборг"
+      },
+      "countryCode": "RU",
+      "coordinates": [
+        60.707603769782864,
+        28.764043085416162
       ],
       "editorVisible": true,
       "hidden": true
