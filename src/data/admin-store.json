@@ -1794,9 +1794,9 @@
             "ru": "Самсун"
           },
           "to": {
-            "az": "Çernomorsk",
-            "en": "Chernomorsk",
-            "ru": "Черноморск"
+            "az": "Odessa",
+            "en": "Odessa",
+            "ru": "Одесса"
           },
           "distanceKm": 950,
           "coordinates": [
@@ -1805,8 +1805,8 @@
               36.33
             ],
             [
-              46.3017,
-              30.6569
+              46.4825,
+              30.7233
             ]
           ],
           "displayCoordinates": [
@@ -1827,13 +1827,13 @@
               30.9
             ],
             [
-              46.3017,
-              30.6569
+              46.4825,
+              30.7233
             ]
           ],
           "stopIds": [
             "samsun",
-            "chernomorsk"
+            "odessa"
           ]
         },
         {
@@ -12966,50 +12966,6 @@
       ]
     },
     {
-      "id": "kungrad",
-      "name": {
-        "az": "Qunqrad",
-        "en": "Kungrad",
-        "ru": "Кунград"
-      },
-      "description": {
-        "az": "Qunqrad - Şərq-Qərb dəhlizi marşrutu üzərində yerləşir.",
-        "en": "Kungrad lies on the East-West corridor route.",
-        "ru": "Кунград расположен на маршруте коридора Восток-Запад."
-      },
-      "category": "station",
-      "icon": "fas:train",
-      "coordinates": [
-        43.0758,
-        58.9067
-      ],
-      "connectedCorridorIds": [
-        "east-west"
-      ]
-    },
-    {
-      "id": "kunming",
-      "name": {
-        "az": "Kunmin",
-        "en": "Kunming",
-        "ru": "Куньмин"
-      },
-      "description": {
-        "az": "Kunmin - Şərq-Qərb dəhlizi marşrutu üzərində yerləşir.",
-        "en": "Kunming lies on the East-West corridor route.",
-        "ru": "Куньмин расположен на маршруте коридора Восток-Запад."
-      },
-      "category": "city",
-      "icon": "fas:city",
-      "coordinates": [
-        25.0389,
-        102.7183
-      ],
-      "connectedCorridorIds": [
-        "east-west"
-      ]
-    },
-    {
       "id": "kuryk-port",
       "name": {
         "az": "Kurık limanı",
@@ -13620,28 +13576,6 @@
       ]
     },
     {
-      "id": "nukus",
-      "name": {
-        "az": "Nukus",
-        "en": "Nukus",
-        "ru": "Нукус"
-      },
-      "description": {
-        "az": "Nukus - Şərq-Qərb dəhlizi marşrutu üzərində yerləşir.",
-        "en": "Nukus lies on the East-West corridor route.",
-        "ru": "Нукус расположен на маршруте коридора Восток-Запад."
-      },
-      "category": "station",
-      "icon": "fas:train",
-      "coordinates": [
-        42.4531,
-        59.6103
-      ],
-      "connectedCorridorIds": [
-        "east-west"
-      ]
-    },
-    {
       "id": "odessa",
       "name": {
         "az": "Odessa",
@@ -14205,7 +14139,7 @@
       "name": {
         "az": "Varna",
         "en": "Varna",
-        "ru": "Varna"
+        "ru": "Варна"
       },
       "description": {
         "az": "",
@@ -14215,12 +14149,14 @@
       "category": "port",
       "icon": "fas:anchor",
       "coordinates": [
-        43.15710884095329,
-        27.916259765625004
+        43.2141,
+        27.9147
       ],
       "connectedCorridorIds": [
-        "east-west"
-      ]
+        "east-west",
+        "south-west"
+      ],
+      "countryCode": "BG"
     },
     {
       "id": "ventspils",
@@ -14307,28 +14243,6 @@
       "connectedCorridorIds": [
         "east-west",
         "south-west"
-      ]
-    },
-    {
-      "id": "wuhan",
-      "name": {
-        "az": "Uhan",
-        "en": "Wuhan",
-        "ru": "Ухань"
-      },
-      "description": {
-        "az": "Uhan - Şərq-Qərb dəhlizi marşrutu üzərində yerləşir.",
-        "en": "Wuhan lies on the East-West corridor route.",
-        "ru": "Ухань расположен на маршруте коридора Восток-Запад."
-      },
-      "category": "city",
-      "icon": "fas:city",
-      "coordinates": [
-        30.5928,
-        114.3055
-      ],
-      "connectedCorridorIds": [
-        "east-west"
       ]
     },
     {
@@ -14647,6 +14561,999 @@
         "south-west"
       ],
       "countryCode": "KW"
+    },
+    {
+      "id": "munich",
+      "name": {
+        "az": "Münhen",
+        "en": "Munich",
+        "ru": "Мюнхен"
+      },
+      "description": {
+        "az": "",
+        "en": "",
+        "ru": ""
+      },
+      "category": "city",
+      "icon": "fas:city",
+      "coordinates": [
+        48.1351,
+        11.582
+      ],
+      "connectedCorridorIds": [
+        "east-west"
+      ],
+      "countryCode": "DE"
+    },
+    {
+      "id": "london",
+      "name": {
+        "az": "London",
+        "en": "London",
+        "ru": "Лондон"
+      },
+      "description": {
+        "az": "",
+        "en": "",
+        "ru": ""
+      },
+      "category": "city",
+      "icon": "fas:city",
+      "coordinates": [
+        51.5074,
+        -0.1278
+      ],
+      "connectedCorridorIds": [
+        "east-west",
+        "south-west"
+      ],
+      "countryCode": "GB"
+    },
+    {
+      "id": "henyang",
+      "name": {
+        "az": "Henyang",
+        "en": "Hengyang",
+        "ru": "Хэнъян"
+      },
+      "description": {
+        "az": "",
+        "en": "",
+        "ru": ""
+      },
+      "category": "city",
+      "icon": "fas:city",
+      "coordinates": [
+        27.405522150724277,
+        112.12646484375001
+      ],
+      "connectedCorridorIds": [
+        "east-west"
+      ],
+      "countryCode": "CN"
+    },
+    {
+      "id": "tianshui",
+      "name": {
+        "az": "Tyanşuy",
+        "en": "Tianshui",
+        "ru": "Тяньшуй"
+      },
+      "description": {
+        "az": "",
+        "en": "",
+        "ru": ""
+      },
+      "category": "city",
+      "icon": "fas:city",
+      "coordinates": [
+        35.170762890131776,
+        106.63330078125001
+      ],
+      "connectedCorridorIds": [
+        "east-west"
+      ],
+      "countryCode": "CN"
+    },
+    {
+      "id": "kositse",
+      "name": {
+        "az": "Koşitse",
+        "en": "Košice",
+        "ru": "Кошице"
+      },
+      "description": {
+        "az": "",
+        "en": "",
+        "ru": ""
+      },
+      "category": "station",
+      "icon": "fas:train",
+      "coordinates": [
+        48.699700879765395,
+        21.220257812500005
+      ],
+      "connectedCorridorIds": [
+        "east-west"
+      ],
+      "countryCode": "SK"
+    },
+    {
+      "id": "vinnitsa",
+      "name": {
+        "az": "Vinnytsia",
+        "en": "Vinnitsa",
+        "ru": "Винница"
+      },
+      "description": {
+        "az": "",
+        "en": "",
+        "ru": ""
+      },
+      "category": "station",
+      "icon": "fas:train",
+      "coordinates": [
+        49.23414015975995,
+        28.328125
+      ],
+      "connectedCorridorIds": [
+        "east-west"
+      ],
+      "countryCode": "UA"
+    },
+    {
+      "id": "vadul-siret",
+      "name": {
+        "az": "Vadul-Siret",
+        "en": "Vadul-Siret",
+        "ru": "Вадул-Сирет"
+      },
+      "description": {
+        "az": "",
+        "en": "",
+        "ru": ""
+      },
+      "category": "station",
+      "icon": "fas:train",
+      "coordinates": [
+        48.02307894349862,
+        25.959625
+      ],
+      "connectedCorridorIds": [
+        "east-west"
+      ],
+      "countryCode": "UA"
+    },
+    {
+      "id": "izov",
+      "name": {
+        "az": "Izov",
+        "en": "Izov",
+        "ru": "Ізов"
+      },
+      "description": {
+        "az": "",
+        "en": "",
+        "ru": ""
+      },
+      "category": "station",
+      "icon": "fas:train",
+      "coordinates": [
+        51.14481826215655,
+        24.043990234375006
+      ],
+      "connectedCorridorIds": [
+        "east-west"
+      ],
+      "countryCode": "UA"
+    },
+    {
+      "id": "bratislava",
+      "name": {
+        "az": "Bratislava",
+        "en": "Bratislava",
+        "ru": "Братислава"
+      },
+      "description": {
+        "az": "",
+        "en": "",
+        "ru": ""
+      },
+      "category": "station",
+      "icon": "fas:train",
+      "coordinates": [
+        48.1486,
+        17.1077
+      ],
+      "connectedCorridorIds": [
+        "east-west"
+      ],
+      "countryCode": "SK"
+    },
+    {
+      "id": "hesdin",
+      "name": {
+        "az": "Hesdin",
+        "en": "Hesdin",
+        "ru": "Эсден"
+      },
+      "description": {
+        "az": "",
+        "en": "",
+        "ru": ""
+      },
+      "category": "station",
+      "icon": "fas:train",
+      "coordinates": [
+        50.374993089703594,
+        1.9335937500000002
+      ],
+      "connectedCorridorIds": [
+        "east-west"
+      ],
+      "countryCode": "FR"
+    },
+    {
+      "id": "antwerp",
+      "name": {
+        "az": "Antverpen",
+        "en": "Antwerp",
+        "ru": "Антверпен"
+      },
+      "description": {
+        "az": "",
+        "en": "",
+        "ru": ""
+      },
+      "category": "station",
+      "icon": "fas:train",
+      "coordinates": [
+        51.2194,
+        4.4025
+      ],
+      "connectedCorridorIds": [
+        "east-west"
+      ],
+      "countryCode": "BE"
+    },
+    {
+      "id": "qrand-est",
+      "name": {
+        "az": "Qrand Est",
+        "en": "Grand Est",
+        "ru": "Гранд-Эст"
+      },
+      "description": {
+        "az": "",
+        "en": "",
+        "ru": ""
+      },
+      "category": "station",
+      "icon": "fas:train",
+      "coordinates": [
+        48.692081149202245,
+        6.932373046875001
+      ],
+      "connectedCorridorIds": [
+        "east-west"
+      ],
+      "countryCode": "FR"
+    },
+    {
+      "id": "samtredia",
+      "name": {
+        "az": "Samtrediya",
+        "en": "Samtredia",
+        "ru": "Самтредиа"
+      },
+      "description": {
+        "az": "",
+        "en": "",
+        "ru": ""
+      },
+      "category": "station",
+      "icon": "fas:train",
+      "coordinates": [
+        42.1622,
+        42.3417
+      ],
+      "connectedCorridorIds": [
+        "east-west",
+        "north-west",
+        "south-west"
+      ],
+      "countryCode": "GE"
+    },
+    {
+      "id": "bolasak",
+      "name": {
+        "az": "Bolaşak",
+        "en": "Bolashak",
+        "ru": "Болашак"
+      },
+      "description": {
+        "az": "",
+        "en": "",
+        "ru": ""
+      },
+      "category": "station",
+      "icon": "fas:train",
+      "coordinates": [
+        42.46504916211386,
+        53.70563671875001
+      ],
+      "connectedCorridorIds": [
+        "east-west"
+      ],
+      "countryCode": "KZ"
+    },
+    {
+      "id": "uzen",
+      "name": {
+        "az": "Uzen",
+        "en": "Uzen",
+        "ru": "Узень"
+      },
+      "description": {
+        "az": "",
+        "en": "",
+        "ru": ""
+      },
+      "category": "station",
+      "icon": "fas:train",
+      "coordinates": [
+        43.3406,
+        52.8606
+      ],
+      "connectedCorridorIds": [
+        "east-west"
+      ],
+      "countryCode": "KZ"
+    },
+    {
+      "id": "qizilqaya",
+      "name": {
+        "az": "Qızılqaya",
+        "en": "Kyzylkaya",
+        "ru": "Кызылкая"
+      },
+      "description": {
+        "az": "",
+        "en": "",
+        "ru": ""
+      },
+      "category": "station",
+      "icon": "fas:train",
+      "coordinates": [
+        40.73757964275589,
+        55.45409375000001
+      ],
+      "connectedCorridorIds": [
+        "east-west"
+      ],
+      "countryCode": "TM"
+    },
+    {
+      "id": "naimankul",
+      "name": {
+        "az": "Naimankul",
+        "en": "Naimankul",
+        "ru": "Наиманкуль"
+      },
+      "description": {
+        "az": "",
+        "en": "",
+        "ru": ""
+      },
+      "category": "station",
+      "icon": "fas:train",
+      "coordinates": [
+        42.511247662222246,
+        58.44726562500001
+      ],
+      "connectedCorridorIds": [
+        "east-west"
+      ],
+      "countryCode": "TM"
+    },
+    {
+      "id": "shalkar",
+      "name": {
+        "az": "Şalkar",
+        "en": "Shalkar",
+        "ru": "Шалкар"
+      },
+      "description": {
+        "az": "",
+        "en": "",
+        "ru": ""
+      },
+      "category": "station",
+      "icon": "fas:train",
+      "coordinates": [
+        48.04521339672271,
+        59.69454296875001
+      ],
+      "connectedCorridorIds": [
+        "east-west"
+      ],
+      "countryCode": "KZ"
+    },
+    {
+      "id": "saksaul",
+      "name": {
+        "az": "Saksaul",
+        "en": "Saksaul",
+        "ru": "Саксаул"
+      },
+      "description": {
+        "az": "",
+        "en": "",
+        "ru": ""
+      },
+      "category": "station",
+      "icon": "fas:train",
+      "coordinates": [
+        47.3055681123155,
+        61.14430078125001
+      ],
+      "connectedCorridorIds": [
+        "east-west"
+      ],
+      "countryCode": "KZ"
+    },
+    {
+      "id": "kazaly",
+      "name": {
+        "az": "Kazali",
+        "en": "Kazaly",
+        "ru": "Казалы"
+      },
+      "description": {
+        "az": "",
+        "en": "",
+        "ru": ""
+      },
+      "category": "station",
+      "icon": "fas:train",
+      "coordinates": [
+        45.89400815866184,
+        62.13062500001
+      ],
+      "connectedCorridorIds": [
+        "east-west"
+      ],
+      "countryCode": "KZ"
+    },
+    {
+      "id": "qizilorda",
+      "name": {
+        "az": "Qızılorda",
+        "en": "Kyzylorda",
+        "ru": "Кызылорда"
+      },
+      "description": {
+        "az": "",
+        "en": "",
+        "ru": ""
+      },
+      "category": "station",
+      "icon": "fas:train",
+      "coordinates": [
+        44.86750533109348,
+        65.5635703125
+      ],
+      "connectedCorridorIds": [
+        "east-west"
+      ],
+      "countryCode": "KZ"
+    },
+    {
+      "id": "zharyk",
+      "name": {
+        "az": "Jarıq",
+        "en": "Zharyk",
+        "ru": "Жарык"
+      },
+      "description": {
+        "az": "",
+        "en": "",
+        "ru": ""
+      },
+      "category": "station",
+      "icon": "fas:train",
+      "coordinates": [
+        49.10671246448421,
+        72.84406640625001
+      ],
+      "connectedCorridorIds": [
+        "east-west"
+      ],
+      "countryCode": "KZ"
+    },
+    {
+      "id": "balkhash",
+      "name": {
+        "az": "Balxaş",
+        "en": "Balkhash",
+        "ru": "Балхаш"
+      },
+      "description": {
+        "az": "",
+        "en": "",
+        "ru": ""
+      },
+      "category": "station",
+      "icon": "fas:train",
+      "coordinates": [
+        46.842206001585396,
+        74.97718359375
+      ],
+      "connectedCorridorIds": [
+        "east-west"
+      ],
+      "countryCode": "KZ"
+    },
+    {
+      "id": "sayak",
+      "name": {
+        "az": "Sayak",
+        "en": "Sayak",
+        "ru": "Саяк"
+      },
+      "description": {
+        "az": "",
+        "en": "",
+        "ru": ""
+      },
+      "category": "station",
+      "icon": "fas:train",
+      "coordinates": [
+        46.91004707129026,
+        77.3611884765625
+      ],
+      "connectedCorridorIds": [
+        "east-west"
+      ],
+      "countryCode": "KZ"
+    },
+    {
+      "id": "aktogay",
+      "name": {
+        "az": "Ağtoğay",
+        "en": "Aktogay",
+        "ru": "Актогай"
+      },
+      "description": {
+        "az": "",
+        "en": "",
+        "ru": ""
+      },
+      "category": "station",
+      "icon": "fas:train",
+      "coordinates": [
+        47.06180431624194,
+        79.65826269531252
+      ],
+      "connectedCorridorIds": [
+        "east-west"
+      ],
+      "countryCode": "KZ"
+    },
+    {
+      "id": "altinkol",
+      "name": {
+        "az": "Altınköl",
+        "en": "Altynkol",
+        "ru": "Алтынколь"
+      },
+      "description": {
+        "az": "",
+        "en": "",
+        "ru": ""
+      },
+      "category": "station",
+      "icon": "fas:train",
+      "coordinates": [
+        44.47754219215589,
+        80.37001757812502
+      ],
+      "connectedCorridorIds": [
+        "east-west"
+      ],
+      "countryCode": "KZ"
+    },
+    {
+      "id": "alasankou",
+      "name": {
+        "az": "Alaşankou",
+        "en": "Alashankou",
+        "ru": "Алашанькоу"
+      },
+      "description": {
+        "az": "",
+        "en": "",
+        "ru": ""
+      },
+      "category": "station",
+      "icon": "fas:train",
+      "coordinates": [
+        45.175381553366805,
+        82.56218750000001
+      ],
+      "connectedCorridorIds": [
+        "east-west"
+      ],
+      "countryCode": "CN"
+    },
+    {
+      "id": "taraz",
+      "name": {
+        "az": "Taraz",
+        "en": "Taraz",
+        "ru": "Тараз"
+      },
+      "description": {
+        "az": "",
+        "en": "",
+        "ru": ""
+      },
+      "category": "station",
+      "icon": "fas:train",
+      "coordinates": [
+        42.9,
+        71.3667
+      ],
+      "connectedCorridorIds": [
+        "east-west"
+      ],
+      "countryCode": "KZ"
+    },
+    {
+      "id": "shymkent",
+      "name": {
+        "az": "Şımkent",
+        "en": "Shymkent",
+        "ru": "Шымкент"
+      },
+      "description": {
+        "az": "",
+        "en": "",
+        "ru": ""
+      },
+      "category": "station",
+      "icon": "fas:train",
+      "coordinates": [
+        42.3417,
+        69.5901
+      ],
+      "connectedCorridorIds": [
+        "east-west"
+      ],
+      "countryCode": "KZ"
+    },
+    {
+      "id": "navoi",
+      "name": {
+        "az": "Nəvai",
+        "en": "Navoi",
+        "ru": "Навои"
+      },
+      "description": {
+        "az": "",
+        "en": "",
+        "ru": ""
+      },
+      "category": "station",
+      "icon": "fas:train",
+      "coordinates": [
+        40.1033,
+        65.3689
+      ],
+      "connectedCorridorIds": [
+        "east-west"
+      ],
+      "countryCode": "UZ"
+    },
+    {
+      "id": "qarse",
+      "name": {
+        "az": "Qarşı",
+        "en": "Qarshi",
+        "ru": "Карши"
+      },
+      "description": {
+        "az": "",
+        "en": "",
+        "ru": ""
+      },
+      "category": "station",
+      "icon": "fas:train",
+      "coordinates": [
+        38.84790050977285,
+        65.84847656250001
+      ],
+      "connectedCorridorIds": [
+        "east-west"
+      ],
+      "countryCode": "UZ"
+    },
+    {
+      "id": "qumqurgan",
+      "name": {
+        "az": "Qumqurğan",
+        "en": "Kumkurgan",
+        "ru": "Кумкурган"
+      },
+      "description": {
+        "az": "",
+        "en": "",
+        "ru": ""
+      },
+      "category": "station",
+      "icon": "fas:train",
+      "coordinates": [
+        37.81926159948039,
+        67.67905566406252
+      ],
+      "connectedCorridorIds": [
+        "east-west"
+      ],
+      "countryCode": "UZ"
+    },
+    {
+      "id": "termez",
+      "name": {
+        "az": "Termiz",
+        "en": "Termez",
+        "ru": "Термез"
+      },
+      "description": {
+        "az": "",
+        "en": "",
+        "ru": ""
+      },
+      "category": "station",
+      "icon": "fas:train",
+      "coordinates": [
+        37.2242,
+        67.2783
+      ],
+      "connectedCorridorIds": [
+        "east-west"
+      ],
+      "countryCode": "UZ"
+    },
+    {
+      "id": "serexs",
+      "name": {
+        "az": "Sərəxs",
+        "en": "Sarakhs",
+        "ru": "Серахс"
+      },
+      "description": {
+        "az": "",
+        "en": "",
+        "ru": ""
+      },
+      "category": "station",
+      "icon": "fas:train",
+      "coordinates": [
+        36.543616949763646,
+        61.15676562500001
+      ],
+      "connectedCorridorIds": [
+        "east-west",
+        "north-south"
+      ],
+      "countryCode": "TM"
+    },
+    {
+      "id": "serdar",
+      "name": {
+        "az": "Sərdar",
+        "en": "Serdar",
+        "ru": "Сердар"
+      },
+      "description": {
+        "az": "",
+        "en": "",
+        "ru": ""
+      },
+      "category": "station",
+      "icon": "fas:train",
+      "coordinates": [
+        38.9764,
+        56.2757
+      ],
+      "connectedCorridorIds": [
+        "east-west"
+      ],
+      "countryCode": "TM"
+    },
+    {
+      "id": "balkanabat",
+      "name": {
+        "az": "Balkanabat",
+        "en": "Balkanabat",
+        "ru": "Балканабад"
+      },
+      "description": {
+        "az": "",
+        "en": "",
+        "ru": ""
+      },
+      "category": "station",
+      "icon": "fas:train",
+      "coordinates": [
+        39.5108,
+        54.3671
+      ],
+      "connectedCorridorIds": [
+        "east-west"
+      ],
+      "countryCode": "TM"
+    },
+    {
+      "id": "s-turkmenbasi",
+      "name": {
+        "az": "S.Türkmənbaşı",
+        "en": "Turkmenbashi",
+        "ru": "Туркменбаши"
+      },
+      "description": {
+        "az": "",
+        "en": "",
+        "ru": ""
+      },
+      "category": "station",
+      "icon": "fas:train",
+      "coordinates": [
+        37.565880999872476,
+        60.07324218750001
+      ],
+      "connectedCorridorIds": [
+        "east-west"
+      ],
+      "countryCode": "TM"
+    },
+    {
+      "id": "bacu",
+      "name": {
+        "az": "Baçu",
+        "en": "Bachu",
+        "ru": "Бачу"
+      },
+      "description": {
+        "az": "",
+        "en": "",
+        "ru": ""
+      },
+      "category": "station",
+      "icon": "fas:train",
+      "coordinates": [
+        41.25542215614569,
+        80.51482812500001
+      ],
+      "connectedCorridorIds": [
+        "east-west"
+      ],
+      "countryCode": "CN"
+    },
+    {
+      "id": "baluntay",
+      "name": {
+        "az": "Baluntay",
+        "en": "Baluntay",
+        "ru": "Балунтай"
+      },
+      "description": {
+        "az": "",
+        "en": "",
+        "ru": ""
+      },
+      "category": "station",
+      "icon": "fas:train",
+      "coordinates": [
+        42.64084904007213,
+        86.98974609375
+      ],
+      "connectedCorridorIds": [
+        "east-west"
+      ],
+      "countryCode": "CN"
+    },
+    {
+      "id": "turfan",
+      "name": {
+        "az": "Turfan",
+        "en": "Turpan",
+        "ru": "Турфан"
+      },
+      "description": {
+        "az": "",
+        "en": "",
+        "ru": ""
+      },
+      "category": "station",
+      "icon": "fas:train",
+      "coordinates": [
+        42.93969793810404,
+        89.297849609375
+      ],
+      "connectedCorridorIds": [
+        "east-west"
+      ],
+      "countryCode": "CN"
+    },
+    {
+      "id": "dashoguz",
+      "name": {
+        "az": "Daşoğuz",
+        "en": "Dashoguz",
+        "ru": "Дашогуз"
+      },
+      "description": {
+        "az": "",
+        "en": "",
+        "ru": ""
+      },
+      "category": "station",
+      "icon": "fas:train",
+      "coordinates": [
+        41.8363,
+        59.9666
+      ],
+      "connectedCorridorIds": [
+        "east-west"
+      ],
+      "countryCode": "TM"
+    },
+    {
+      "id": "kapikule",
+      "name": {
+        "az": "Kapıkule",
+        "en": "Kapıkule",
+        "ru": "Капыкуле"
+      },
+      "description": {
+        "az": "",
+        "en": "",
+        "ru": ""
+      },
+      "category": "station",
+      "icon": "fas:train",
+      "coordinates": [
+        41.71522241118974,
+        26.362148437500004
+      ],
+      "connectedCorridorIds": [
+        "east-west"
+      ],
+      "countryCode": "TR"
+    },
+    {
+      "id": "thessaloniki",
+      "name": {
+        "az": "Saloniki",
+        "en": "Thessaloniki",
+        "ru": "Салоники"
+      },
+      "description": {
+        "az": "",
+        "en": "",
+        "ru": ""
+      },
+      "category": "port",
+      "icon": "fas:anchor",
+      "coordinates": [
+        40.6401,
+        22.9444
+      ],
+      "connectedCorridorIds": [
+        "east-west"
+      ],
+      "countryCode": "GR"
     }
   ],
   "stops": [
@@ -15251,6 +16158,21 @@
         72.84406640625001
       ],
       "editorVisible": true
+    },
+    {
+      "id": "chernomorsk",
+      "name": {
+        "az": "Çernomorsk",
+        "en": "Chernomorsk",
+        "ru": "Черноморск"
+      },
+      "countryCode": "UA",
+      "coordinates": [
+        46.3017,
+        30.6569
+      ],
+      "editorVisible": true,
+      "hidden": true
     }
   ],
   "settings": {
