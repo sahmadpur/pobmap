@@ -12750,17 +12750,17 @@
     {
       "id": "istanbul-gateway",
       "name": {
-        "az": "İstanbul keçid qovşağı",
-        "en": "Istanbul Gateway",
-        "ru": "Стамбульский шлюз"
+        "az": "İstanbul",
+        "en": "Istanbul",
+        "ru": "Стамбул"
       },
       "description": {
         "az": "Dəhliz trafikinin Avropanın avtomobil, dəniz və dəmir yolu şəbəkələrinə şaxələndiyi Bosfor qovşağı.",
         "en": "A Bosporus-side gateway where corridor traffic fans into European road, sea, and rail networks.",
         "ru": "Узел на Босфоре, где трафик коридоров распределяется по европейским автомобильным, морским и железнодорожным сетям."
       },
-      "category": "port",
-      "icon": "fas:bridge",
+      "category": "city",
+      "icon": "fas:city",
       "coordinates": [
         41.012778558625435,
         28.989682085852195
@@ -12867,9 +12867,9 @@
     {
       "id": "kars-logistics-terminal",
       "name": {
-        "az": "Qars logistika terminalı",
-        "en": "Kars Logistics Terminal",
-        "ru": "Логистический терминал Карс"
+        "az": "Qars",
+        "en": "Kars",
+        "ru": "Карс"
       },
       "description": {
         "az": "Şərq-Qərb, Cənub-Qərb və Zəngəzur dəhlizi trafikləri üçün əsas Anadolu dəmir yolu ötürmə nöqtəsi.",
@@ -12877,7 +12877,7 @@
         "ru": "Ключевая анатолийская железнодорожная точка передачи потоков коридоров Восток-Запад, Юго-Запад и Зангезур."
       },
       "category": "station",
-      "icon": "fas:warehouse",
+      "icon": "fas:train",
       "coordinates": [
         40.600439086831614,
         43.09907678698981
@@ -13513,8 +13513,8 @@
         "en": "A western Azerbaijan transfer point supporting the Zangazur corridor connection.",
         "ru": "Точка перевалки в западном Азербайджане, поддерживающая связь по Зангезурскому коридору."
       },
-      "category": "station",
-      "icon": "fas:warehouse",
+      "category": "city",
+      "icon": "fas:city",
       "coordinates": [
         39.2029,
         45.4053
@@ -13523,7 +13523,8 @@
         "east-west",
         "north-west",
         "north-south",
-        "south-west"
+        "south-west",
+        "zangezur-corridor"
       ]
     },
     {
@@ -13954,17 +13955,17 @@
     {
       "id": "tbilisi-intermodal-hub",
       "name": {
-        "az": "Tbilisi intermodal qovşağı",
-        "en": "Tbilisi Intermodal Hub",
-        "ru": "Тбилисский интермодальный хаб"
+        "az": "Tbilisi",
+        "en": "Tbilisi",
+        "ru": "Тбилиси"
       },
       "description": {
         "az": "Xəzər axınlarını sonrakı dəmir yolu və avtomobil paylaması ilə birləşdirən Cənubi Qafqaz transfer nöqtəsi.",
         "en": "A South Caucasus transfer point linking Caspian traffic with onward rail and road distribution.",
         "ru": "Южнокавказский перевалочный узел, связывающий каспийские потоки с дальнейшим железнодорожным и автодорожным распределением."
       },
-      "category": "station",
-      "icon": "fas:train",
+      "category": "city",
+      "icon": "fas:city",
       "coordinates": [
         41.7151,
         44.8271
@@ -13978,17 +13979,17 @@
     {
       "id": "tehran-logistics-hub",
       "name": {
-        "az": "Tehran logistika qovşağı",
-        "en": "Tehran Logistics Hub",
-        "ru": "Логистический хаб Тегеран"
+        "az": "Tehran",
+        "en": "Tehran",
+        "ru": "Тегеран"
       },
       "description": {
         "az": "Şimal istiqamətli yük axınlarını Körfəz və Cənubi Asiya bağlantıları ilə balanslaşdıran daxili transfer mərkəzi.",
         "en": "An inland transfer hub balancing northbound cargo with Gulf and South Asia connections.",
         "ru": "Внутренний перевалочный хаб, балансирующий северные потоки грузов с направлениями к Персидскому заливу и Южной Азии."
       },
-      "category": "station",
-      "icon": "fas:industry",
+      "category": "city",
+      "icon": "fas:city",
       "coordinates": [
         35.6892,
         51.389
@@ -15787,6 +15788,128 @@
         "east-west"
       ],
       "countryCode": "PL"
+    },
+    {
+      "id": "strazde",
+      "name": {
+        "az": "Strazde",
+        "en": "Strazde",
+        "ru": "Страздэ"
+      },
+      "description": {
+        "az": "",
+        "en": "",
+        "ru": ""
+      },
+      "category": "station",
+      "icon": "fas:train",
+      "coordinates": [
+        57.129312982439714,
+        22.741574008179473
+      ],
+      "connectedCorridorIds": [
+        "north-west"
+      ],
+      "countryCode": "LV"
+    },
+    {
+      "id": "posin",
+      "name": {
+        "az": "Posin",
+        "en": "Posin",
+        "ru": "Посинь"
+      },
+      "description": {
+        "az": "",
+        "en": "",
+        "ru": ""
+      },
+      "category": "station",
+      "icon": "fas:train",
+      "coordinates": [
+        56.1289,
+        28.1811
+      ],
+      "connectedCorridorIds": [
+        "north-west"
+      ],
+      "countryCode": "RU"
+    },
+    {
+      "id": "igdir",
+      "name": {
+        "az": "İğdır",
+        "en": "Igdir",
+        "ru": "Ыгдыр"
+      },
+      "description": {
+        "az": "",
+        "en": "",
+        "ru": ""
+      },
+      "category": "station",
+      "icon": "fas:train",
+      "coordinates": [
+        39.92562614977315,
+        44.040365699646536
+      ],
+      "connectedCorridorIds": [
+        "east-west",
+        "north-west"
+      ],
+      "countryCode": "TR"
+    },
+    {
+      "id": "ordubad",
+      "name": {
+        "az": "Ordubad",
+        "en": "Ordubad",
+        "ru": "Ордубад"
+      },
+      "description": {
+        "az": "",
+        "en": "",
+        "ru": ""
+      },
+      "category": "station",
+      "icon": "fas:train",
+      "coordinates": [
+        38.8485,
+        46.1386
+      ],
+      "connectedCorridorIds": [
+        "east-west",
+        "north-south",
+        "south-west",
+        "zangezur-corridor"
+      ],
+      "countryCode": "AZ"
+    },
+    {
+      "id": "aghband",
+      "name": {
+        "az": "Ağbənd",
+        "en": "Aghband",
+        "ru": "Агбенд"
+      },
+      "description": {
+        "az": "",
+        "en": "",
+        "ru": ""
+      },
+      "category": "station",
+      "icon": "fas:train",
+      "coordinates": [
+        38.9118,
+        46.574
+      ],
+      "connectedCorridorIds": [
+        "east-west",
+        "north-south",
+        "south-west",
+        "zangezur-corridor"
+      ],
+      "countryCode": "AZ"
     }
   ],
   "stops": [
