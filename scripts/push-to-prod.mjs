@@ -31,7 +31,9 @@ const prisma = new PrismaClient({
 // against the stop registry on read.
 for (const stop of stops) {
   const stopFields = {
-    name: stop.name,
+    // A deleted built-in city keeps its `hidden` flag inside the name JSON in
+    // the database (see admin-store.ts upsertStop).
+    name: stop.hidden ? { ...stop.name, hidden: true } : stop.name,
     countryCode: stop.countryCode,
     coordinates: stop.coordinates,
     editorVisible: stop.editorVisible ?? true,

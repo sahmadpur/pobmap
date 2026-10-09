@@ -89,6 +89,8 @@ const store = {
     ? {
         defaultMapCenter: settings.defaultMapCenter,
         defaultZoom: settings.defaultZoom,
+        minZoom: settings.minZoom,
+        maxZoom: settings.maxZoom,
         defaultLanguage: settings.defaultLanguage,
         animationEnabled: settings.animationEnabled,
       }
